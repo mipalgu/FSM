@@ -129,7 +129,6 @@ public protocol State:
     _State,
     CustomStringConvertible,
     CustomDebugStringConvertible,
-    CustomReflectable,
     StateMethods,
     Transitionable
 {}
