@@ -66,7 +66,10 @@ public class UrgentTransition: Transition {
     
     public var target: State {
         get {
-            return self.ringlet.execute(self._target)
+            return self.ringlet.execute(
+                self._target,
+                previousState: self.source
+            )
         }
     }
     

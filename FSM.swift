@@ -65,6 +65,8 @@
  */
 public class FSM: FiniteStateMachine {
     
+    private let initialPreviousState: State
+    
     /**
      *  The entry state of the machine.
      */
@@ -101,11 +103,13 @@ public class FSM: FiniteStateMachine {
     public init(
         initialState: State,
         ringlet: Ringlet,
+        initialPreviousState: State = EmptyState(name: "_previous"),
         suspendState: State = EmptyState(name: "_suspend")
     ) {
+        self.initialPreviousState = initialPreviousState
         self.initialState = initialState
         self.currentState = initialState
-        self.previousState = initialState
+        self.previousState = initialPreviousState
         self.suspendState = suspendState
         self.ringlet = ringlet
     }

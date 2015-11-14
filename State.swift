@@ -125,6 +125,10 @@ public func ==(lhs: _State, rhs: _State) -> Bool {
     return lhs.name == rhs.name
 }
 
+public func !=(lhs: _State, rhs: _State) -> Bool {
+    return !(lhs == rhs)
+}
+
 public protocol State:
     _State,
     CustomStringConvertible,

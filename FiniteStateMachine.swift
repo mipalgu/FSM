@@ -134,8 +134,12 @@ public extension _FiniteStateMachine where Self: Restartable, Self: Suspendable 
 public extension _FiniteStateMachine where Self: StateExecuter, Self: Suspendable {
     
     public mutating func next() {
+        let previous: State = self.previousState
         self.previousState = self.currentState
-        self.currentState = self.ringlet.execute(self.currentState)
+        self.currentState = self.ringlet.execute(
+            self.currentState,
+            previousState: previous
+        )
     }
     
 }

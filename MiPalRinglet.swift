@@ -66,11 +66,6 @@
  */
 public class MiPalRinglet: Ringlet {
     
-    /**
-     *  Set as the last state that was executed.
-     */
-    private var oldState: State?
-    
     public init() {}
     
     /**
@@ -78,13 +73,11 @@ public class MiPalRinglet: Ringlet {
      *
      *  Returns a state representing the next state to execute.
      */
-    public func execute(state: State) -> State {
+    public func execute(state: State, previousState: State) -> State {
         // Call onEntry if the state has just been transitioned into.
-        if (false == self.isOldState(state)) {
+        if (state != previousState) {
             state.onEntry()
         }
-        // Remember that we have already executed this state.
-        self.oldState = state
         // Can we transition to another state?
         let t: Transition? = self.getTransition(state.transitions)
         if (t != nil) {
@@ -95,16 +88,6 @@ public class MiPalRinglet: Ringlet {
         // No - Execute main method and return state.
         state.main()
         return state
-    }
-    
-    /*
-     *  Check the state to see if it is the same as oldState.
-     */
-    private func isOldState(state: State) -> Bool {
-        if (self.oldState == nil) {
-            return false
-        }
-        return state == self.oldState!
     }
     
     /*
