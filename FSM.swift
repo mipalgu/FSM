@@ -65,12 +65,17 @@
  */
 public class FSM: FiniteStateMachine {
     
-    private let initialPreviousState: State
-    
     /**
      *  The entry state of the machine.
      */
     public let initialState: State
+    
+    /**
+     *  The initial state of the previous state.
+     *
+     *  previousState is set to this value on restart.
+     */
+    public let initialPreviousState: State
     
     /**
      *  The next state that needs to be executed.

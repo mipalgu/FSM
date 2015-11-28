@@ -65,6 +65,7 @@ public protocol _FiniteStateMachine {
     
     var currentState: State { get set }
     var initialState: State { get }
+    var initialPreviousState: State { get }
     var previousState: State { get set }
     var ringlet: Ringlet { get }
     var suspendedState: State? { get set }
@@ -122,7 +123,7 @@ public extension _FiniteStateMachine where Self: Restartable, Self: Suspendable 
     
     public mutating func restart() -> Void {
         self.resume()
-        self.previousState = self.currentState
+        self.previousState = self.initialPreviousState
         self.currentState = self.initialState
     }
     
