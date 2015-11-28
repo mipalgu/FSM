@@ -66,7 +66,7 @@
  *  are presented below are each executed independently within the ringlet.  See
  *  StandardRinglet for the standard order that these methods are executed in.
  */
-public protocol _State {
+public protocol _State: class {
     
     /**
      *  A label in plain english for the state - must be unique per state.
@@ -86,7 +86,7 @@ public protocol _State {
  */
 extension _State where Self: Transitionable {
     
-    public mutating func addTransition(transition: Transition) {
+    public func addTransition(transition: Transition) {
         self.transitions.append(transition)
     }
     
