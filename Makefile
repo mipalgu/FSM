@@ -3,15 +3,16 @@
 #
 # GU localisation module Makefile
 #
-ALL_TARGETS=host-local
+ALL_TARGETS=build-module
 CI_WIP=yes
 
-#XCTSCHEME=swiftfsm_local
-#XCODEPROJ=../swiftfsm.xcodeproj
+all:	all-real
 
 SWIFT_SRCS!=ls *.swift
 
-#test:
-#	xcodebuild -scheme ${XCTSCHEME} -project ${XCODEPROJ} -configuration Debug clean build test
+SWIFTCFLAGS=
+
+build-module: host-local
+	$Eenv ${BUILD_ENV} ${SWIFTC} ${SWIFT_MODULE} ${SWIFT_FRAMEWORKS} ${SWIFTCFLAGS} -emit-module ${SWIFT_SRCS} -o build.host-local/${MODULE_BASE}.swiftmodule
 
 .include "../../../mk/mipal.mk"
