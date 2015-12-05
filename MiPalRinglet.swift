@@ -79,11 +79,10 @@ public class MiPalRinglet: Ringlet {
             state.onEntry()
         }
         // Can we transition to another state?
-        let t: Transition? = state.transitions.filter{$0.canTransition()}.first
-        if (t != nil) {
+        if let t = state.transitions.filter({$0.canTransition()}).first {
             // Yes - Exit state and return the new state.
             state.onExit()
-            return t!.target
+            return t.target
         }
         // No - Execute main method and return state.
         state.main()
