@@ -3,7 +3,7 @@
 #
 # GU localisation module Makefile
 #
-ALL_TARGETS=build-module build-archive
+ALL_TARGETS=build-module
 CI_WIP=yes
 
 all:	all-real
