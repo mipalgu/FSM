@@ -20,4 +20,5 @@ build-archive:	host-local
 	ar cr build.host-local/${BIN}.a `ls build.host-local/*.o`
 
 .include "../../../mk/whiteboard.mk"    # I need the C whiteboard
+.include "../swiftfsm.mk"
 .include "../../../mk/mipal.mk"
