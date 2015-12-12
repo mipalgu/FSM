@@ -92,7 +92,7 @@ public class CallbackState: EmptyState, CallbackableState {
     }
     
     /**
-     *  This method simply calles _onEntry.
+     *  This method simply calls _onEntry.
      *
      *  This method cannot be overrided as all `CallbackState`s must use the 
      *  _onEntry property instead.
@@ -102,7 +102,7 @@ public class CallbackState: EmptyState, CallbackableState {
     }
     
     /**
-     *  This method simply calles _main.
+     *  This method simply calls _main.
      *
      *  This method cannot be overrided as all `CallbackState`s must use the
      *  _main property instead.
@@ -112,7 +112,7 @@ public class CallbackState: EmptyState, CallbackableState {
     }
     
     /**
-     *  This method simply calles _onExit.
+     *  This method simply calls _onExit.
      *
      *  This method cannot be overrided as all `CallbackState`s must use the
      *  _onExit property instead.
