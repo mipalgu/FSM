@@ -68,7 +68,7 @@ public class EmptyState: State {
      *
      *  - Requires: Must be unique for each state.
      */
-    public private(set) var name: String
+    public var name: String
     
     /**
      *  An array of transitions that this state may use to move to another
