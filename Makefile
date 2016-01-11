@@ -8,6 +8,7 @@ CI_WIP=yes
 
 all:	all-real
 
+B_D=./build.host-local
 HOST_SWIFTC=swiftc
 SWIFT_SRCS!=ls *.swift
 SWIFT_BRIDGING_HEADER=FSM-Bridging-Header.h
