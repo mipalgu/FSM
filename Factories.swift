@@ -58,7 +58,7 @@
 
 public class Factories {
     
-    public typealias FiniteStateMachineFactory = () -> FiniteStateMachine
+    public typealias FiniteStateMachineFactory = () -> [FiniteStateMachine]
     
     private static var factories: [FiniteStateMachineFactory] = []
     
