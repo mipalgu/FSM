@@ -1,5 +1,5 @@
 /*
- * WhiteboardStructure.swift 
+ * GlobalVariables.swift 
  * FSM 
  *
  * Created by Callum McColl on 16/01/2016.
@@ -56,30 +56,4 @@
  *
  */
 
-public struct WhiteboardStructure<T: GlobalVariables>: SequenceType {
-
-    public typealias Generator = AnyGenerator<T>
-
-    private let type: wb_types
-    private let wb: Whiteboard
-
-    public init(type: wb_types, wb: Whiteboard) {
-        self.type = type
-        self.wb = wb
-    }
-
-    public func generate() -> AnyGenerator<T> {
-        return AnyGenerator {
-            return self.next()
-        }
-    }
-
-    func insert(val: T) {
-        self.wb.post(val, msg: self.type)
-    }
-
-    func next() -> T {
-        return self.wb.get(self.type)
-    }
-
-}
+public protocol GlobalVariables: Equatable {}
