@@ -1,9 +1,9 @@
 /*
- * FSM.swift
- * swiftfsm
+ * FSMVariables.swift 
+ * FSM 
  *
- * Created by Callum McColl on 12/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/01/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,71 +56,4 @@
  *
  */
 
-/**
- *  A simple Finite State Machine.
- *
- *  This class conforms to `FiniteStateMachine` therefore it uses the default
- *  implementation within the protocol extensions and simply initializes the
- *  required variables from it init method.
- */
-public class FSM: FiniteStateMachine {
-    
-    /**
-     *  The entry state of the machine.
-     */
-    public let initialState: State
-    
-    /**
-     *  The initial state of the previous state.
-     *
-     *  previousState is set to this value on restart.
-     */
-    public let initialPreviousState: State
-    
-    /**
-     *  The next state that needs to be executed.
-     */
-    public var currentState: State
-    
-    /**
-     *  The last state that was executed.
-     */
-    public var previousState: State
-    
-    /**
-     *  An instance of `Ringlet` that is used to execute the states.
-     */
-    public let ringlet: Ringlet
-    
-    /**
-     *  The state that was about to be executed when the machine was suspended.
-     */
-    public var suspendedState: State? = nil
-    
-    /**
-     *  The state which is responsible for suspending the machine.
-     *
-     *  If this state is set as the current state then the machine is determined
-     *  to be suspended.
-     */
-    public let suspendState: State
-
-    public var vars: FSMVariables
-    
-    public init(
-        initialState: State,
-        ringlet: Ringlet,
-        initialPreviousState: State = EmptyState(name: "_previous"),
-        suspendState: State = EmptyState(name: "_suspend"),
-        vars: FSMVariables = EmptyFSMVariables()
-    ) {
-        self.initialPreviousState = initialPreviousState
-        self.initialState = initialState
-        self.currentState = initialState
-        self.previousState = initialPreviousState
-        self.suspendState = suspendState
-        self.ringlet = ringlet
-        self.vars = vars
-    }
-    
-}
+public protocol FSMVariables {}

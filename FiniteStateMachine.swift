@@ -70,7 +70,8 @@ public protocol _FiniteStateMachine {
     var ringlet: Ringlet { get }
     var suspendedState: State? { get set }
     var suspendState: State { get }
-    
+    var vars: FSMVariables { get set }
+
 }
 
 /**
