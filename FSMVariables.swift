@@ -56,4 +56,4 @@
  *
  */
 
-public protocol FSMVariables {}
+public protocol FSMVariables: class {}

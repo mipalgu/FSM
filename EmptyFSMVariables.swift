@@ -56,4 +56,4 @@
  *
  */
 
-public struct EmptyFSMVariables: FSMVariables {}
+public class EmptyFSMVariables: FSMVariables {}
