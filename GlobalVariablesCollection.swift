@@ -1,8 +1,8 @@
 /*
- * WhiteboardStructure.swift 
+ * GlobalVariablesCollection.swift 
  * FSM 
  *
- * Created by Callum McColl on 16/01/2016.
+ * Created by Callum McColl on 19/01/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,72 +56,12 @@
  *
  */
 
-public struct WhiteboardStructure<T: GlobalVariables>:
-    GlobalVariablesCollection
-{
+public protocol GlobalVariablesCollection: SequenceType {
 
-    public typealias Element = T
-    public typealias Generator = AnyGenerator<T>
+    typealias Element: GlobalVariables
 
-    private let type: wb_types
-    private let wb: Whiteboard
+    func get() -> Element
 
-    public init(type: wb_types, wb: Whiteboard) {
-        self.type = type
-        self.wb = wb
-    }
-
-    public func generate() -> AnyGenerator<T> {
-        let wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor> = 
-            self.wb.wbd
-        let wb: UnsafeMutablePointer<gu_simple_whiteboard> = self.wb.wb
-        let type: Int32 = Int32(self.type.rawValue)
-        let bufferLength: Int = Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) 
-        let sem: gsw_sema_t = wbd.memory.sem
-        // Stop allowing others to modify the whiteboard.
-        guard 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
-            return AnyGenerator { nil }
-        }
-        let data: [T] = getData(wb, type: type, length: bufferLength)
-        let currentIndex: Int = Int(get_current_index(wb, type))
-        // Allow others to modify the whiteboard again.
-        guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
-            return AnyGenerator { nil }
-        }
-        var i = bufferLength
-        print(data)
-        return AnyGenerator {
-            if (i <= 0) {
-                return nil
-            }
-            let j = (i + currentIndex) % bufferLength 
-            print("j: \(j)")
-            i = i - 1
-            return data[j]
-        }
-    }
-
-    private func getData(
-        wb: UnsafeMutablePointer<gu_simple_whiteboard>,
-        type: Int32,
-        length: Int
-    ) -> [T] {
-        var arr: [T] = []
-        for _ in 0 ..< length {
-            var temp: UnsafeMutablePointer<gu_simple_message> = 
-                gsw_current_message(wb, type)
-            arr.append(UnsafeMutablePointer<T>(temp).memory)
-            gsw_increment(wb, type)
-        }
-        return arr
-    }
-
-    public func get() -> T {
-        return self.wb.get(self.type)
-    }
-
-    public func post(val: T) {
-        self.wb.post(val, msg: self.type)
-    }
+    func post(val: Element) -> Void
 
 }
