@@ -69,16 +69,30 @@ public struct WhiteboardStructure<T: GlobalVariables>: SequenceType {
     }
 
     public func generate() -> AnyGenerator<T> {
+        let wbd: UnsafeMutablePointer<gu_simple_whiteboard> = self.wb.wb
+        print("version: \(wbd.memory.version)")
+        var temp: UnsafeMutablePointer<gu_simple_message> = get_all_wb_messages(wbd, Int32(self.type.rawValue))
+        var data: UnsafeMutablePointer<T> = UnsafeMutablePointer<T>(temp)
+        var arr: [T] = []
+        for i: Int in 0 ... Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) {
+            arr.append(data[i])
+        } 
+        var i = 0
         return AnyGenerator {
-            return self.next()
+            let j = i
+            i = i + 1
+            if (arr.count <= j) {
+                return nil
+            }
+            return arr[j]
         }
     }
 
-    func insert(val: T) {
+    public func insert(val: T) {
         self.wb.post(val, msg: self.type)
     }
 
-    func next() -> T {
+    public func next() -> T {
         return self.wb.get(self.type)
     }
 
