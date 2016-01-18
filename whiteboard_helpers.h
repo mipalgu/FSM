@@ -1,9 +1,9 @@
 /*
- * FSM-Bridging-Header.h
- * swiftfsm
+ * whiteboard_helpers.h 
+ * FSM 
  *
- * Created by Callum McColl on 12/12/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 18/01/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,12 +56,11 @@
  *
  */
 
-#ifndef FSM_Bridging_Header_h
-#define FSM_Bridging_Header_h
+#ifndef WHITEBOARD_HELPERS_H
+#define WHITEBOARD_HELPERS_H
 
 #include <gusimplewhiteboard/gusimplewhiteboard.h>
-#include <gusimplewhiteboard/guwhiteboardtypelist_c_generated.h>
 
-#include "whiteboard_helpers.h"
+gu_simple_message * get_all_wb_messages(gu_simple_whiteboard * wb, int msg);
 
-#endif /* FSM_Bridging_Header_h */
+#endif  /* WHITEBOARD_HELPERS_H */
