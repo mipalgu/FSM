@@ -56,4 +56,6 @@
  *
  */
 
-public class EmptyFSMVariables: FSMVariables {}
+public class EmptyFSMVariables: FSMVariables {
+    public init() {}
+}
