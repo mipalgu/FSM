@@ -63,4 +63,6 @@
 
 gu_simple_message * get_all_wb_messages(gu_simple_whiteboard * wb, int msg);
 
+u_int8_t get_current_index(gu_simple_whiteboard * wb, int msg);
+
 #endif  /* WHITEBOARD_HELPERS_H */
