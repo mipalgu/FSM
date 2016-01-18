@@ -58,10 +58,6 @@
 
 #include "whiteboard_helpers.h"
 
-gu_simple_message * get_all_wb_messages(gu_simple_whiteboard * wb, int msg) {
-    return wb->messages[get_current_index(wb, msg)];
-}
-
 u_int8_t get_current_index(gu_simple_whiteboard * wb, int msg) {
     return wb->indexes[msg];
 }
