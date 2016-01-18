@@ -69,31 +69,50 @@ public struct WhiteboardStructure<T: GlobalVariables>: SequenceType {
     }
 
     public func generate() -> AnyGenerator<T> {
-        let wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor> = self.wb.wbd
+        let wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor> = 
+            self.wb.wbd
         let wb: UnsafeMutablePointer<gu_simple_whiteboard> = self.wb.wb
+        let type: Int32 = Int32(self.type.rawValue)
+        let bufferLength: Int = Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) 
         let sem: gsw_sema_t = wbd.memory.sem
+        // Stop allowing others to modify the whiteboard.
         guard 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
         }
-        print("version: \(wb.memory.version)")
-        var temp: UnsafeMutablePointer<gu_simple_message> = get_all_wb_messages(wb, Int32(self.type.rawValue))
-        var data: UnsafeMutablePointer<T> = UnsafeMutablePointer<T>(temp)
-        var arr: [T] = []
-        for i: Int in 0 ... Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) {
-            arr.append(data[i])
-        }
+        let data: [T] = getData(wb, type: type, length: bufferLength)
+        let currentIndex: Int = Int(get_current_index(wb, type))
+        // Allow others to modify the whiteboard again.
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
         } 
-        var i = 0
+        var i = bufferLength
+        print(data)
         return AnyGenerator {
-            let j = i
-            i = i + 1
-            if (arr.count <= j) {
+            if (i <= 0) {
                 return nil
             }
-            return arr[j]
+            let j = (i + currentIndex) % bufferLength 
+            print("j: \(j)")
+            i = i - 1
+            return data[j]
         }
+    }
+
+    private func getData(
+        wb: UnsafeMutablePointer<gu_simple_whiteboard>,
+        type: Int32,
+        length: Int
+    ) -> [T] {
+        var temp: UnsafeMutablePointer<gu_simple_message> = get_all_wb_messages(
+            wb,
+            type
+        )
+        var data: UnsafeMutablePointer<T> = UnsafeMutablePointer<T>(temp)
+        var arr: [T] = []
+        for i: Int in 0 ..< length {
+            arr.append(data[i])
+        } 
+        return arr
     }
 
     public func insert(val: T) {
