@@ -84,7 +84,7 @@ public struct WhiteboardStructure<T: GlobalVariables>: SequenceType {
         // Allow others to modify the whiteboard again.
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
-        } 
+        }
         var i = bufferLength
         print(data)
         return AnyGenerator {
@@ -103,15 +103,13 @@ public struct WhiteboardStructure<T: GlobalVariables>: SequenceType {
         type: Int32,
         length: Int
     ) -> [T] {
-        var temp: UnsafeMutablePointer<gu_simple_message> = get_all_wb_messages(
-            wb,
-            type
-        )
-        var data: UnsafeMutablePointer<T> = UnsafeMutablePointer<T>(temp)
         var arr: [T] = []
-        for i: Int in 0 ..< length {
-            arr.append(data[i])
-        } 
+        for _ in 0 ..< length {
+            var temp: UnsafeMutablePointer<gu_simple_message> = 
+                gsw_current_message(wb, type)
+            arr.append(UnsafeMutablePointer<T>(temp).memory)
+            gsw_increment(wb, type)
+        }
         return arr
     }
 
