@@ -69,13 +69,21 @@ public struct WhiteboardStructure<T: GlobalVariables>: SequenceType {
     }
 
     public func generate() -> AnyGenerator<T> {
-        let wbd: UnsafeMutablePointer<gu_simple_whiteboard> = self.wb.wb
-        print("version: \(wbd.memory.version)")
-        var temp: UnsafeMutablePointer<gu_simple_message> = get_all_wb_messages(wbd, Int32(self.type.rawValue))
+        let wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor> = self.wb.wbd
+        let wb: UnsafeMutablePointer<gu_simple_whiteboard> = self.wb.wb
+        let sem: gsw_sema_t = wbd.memory.sem
+        guard 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
+            return AnyGenerator { nil }
+        }
+        print("version: \(wb.memory.version)")
+        var temp: UnsafeMutablePointer<gu_simple_message> = get_all_wb_messages(wb, Int32(self.type.rawValue))
         var data: UnsafeMutablePointer<T> = UnsafeMutablePointer<T>(temp)
         var arr: [T] = []
         for i: Int in 0 ... Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) {
             arr.append(data[i])
+        }
+        guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
+            return AnyGenerator { nil }
         } 
         var i = 0
         return AnyGenerator {
