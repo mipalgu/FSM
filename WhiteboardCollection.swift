@@ -72,28 +72,25 @@ public struct WhiteboardCollection<T: GlobalVariables>:
     }
 
     public func generate() -> AnyGenerator<T> {
-        let wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor> = 
-            self.wb.wbd
-        let wb: UnsafeMutablePointer<gu_simple_whiteboard> = self.wb.wb
         let type: Int32 = Int32(self.type.rawValue)
         let bufferLength: Int = Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) 
-        let sem: gsw_sema_t = wbd.memory.sem
+        let sem: gsw_sema_t = self.wb.wbd.memory.sem
         // Stop allowing others to modify the whiteboard.
         guard 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
         }
-        let data: [T] = getData(wb, type: type, length: bufferLength)
+        let data: [T] = getData(self.wb.wb, type: type, length: bufferLength)
         // Allow others to modify the whiteboard again.
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
         }
-        var i: Int = bufferLength
+        var i: Int = 0 
         return AnyGenerator {
-            if (i <= 0) {
+            if (i >= bufferLength) {
                 return nil
             }
-            let j = i % bufferLength 
-            i = i - 1
+            let j = i
+            i = i + 1
             return data[j]
         }
     }
@@ -105,12 +102,12 @@ public struct WhiteboardCollection<T: GlobalVariables>:
     ) -> [T] {
         var arr: [T] = []
         for _ in 0 ..< length {
+            gsw_increment(wb, type)
             arr.append(
                 UnsafeMutablePointer<T>(gsw_current_message(wb, type)).memory
             )
-            gsw_increment(wb, type)
         }
-        return arr
+        return arr.reverse()
     }
 
     public func get() -> T {
