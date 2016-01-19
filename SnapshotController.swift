@@ -56,7 +56,7 @@
  *
  */
 
-public struct SnapshotController<T: GlobalVariables, Collection: GlobalVariablesCollection where Collection.Element == T>: Snapshotable, GlobalVariablesContainer {
+public class SnapshotController<T: GlobalVariables, Collection: GlobalVariablesCollection where Collection.Element == T>: Snapshotable, GlobalVariablesContainer {
 
     public typealias Class = T
     
@@ -72,7 +72,7 @@ public struct SnapshotController<T: GlobalVariables, Collection: GlobalVariables
         self.collection = collection
     }
 
-    public mutating func takeSnapshot() {
+    public func takeSnapshot() {
         self._val = self.collection.get()
     }
 }

@@ -56,7 +56,7 @@
  *
  */
 
-public protocol GlobalVariablesContainer {
+public protocol GlobalVariablesContainer: class {
     
     typealias Class
 
