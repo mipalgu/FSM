@@ -13,7 +13,6 @@ HOST_SWIFTC=swiftc
 SWIFT_SRCS!=ls *.swift
 SWIFT_BRIDGING_HEADER=FSM-Bridging-Header.h
 SWIFTCFLAGS=-I${SRCDIR}/../.. -I${SRCDIR}/../../../Common
-C_SRCSS!=ls *.c
 
 build-module: host-local
 

@@ -62,6 +62,4 @@
 #include <gusimplewhiteboard/gusimplewhiteboard.h>
 #include <gusimplewhiteboard/guwhiteboardtypelist_c_generated.h>
 
-#include "whiteboard_helpers.h"
-
 #endif /* FSM_Bridging_Header_h */

@@ -83,7 +83,6 @@ public struct WhiteboardCollection<T: GlobalVariables>:
             return AnyGenerator { nil }
         }
         let data: [T] = getData(wb, type: type, length: bufferLength)
-        let currentIndex: Int = Int(get_current_index(wb, type))
         // Allow others to modify the whiteboard again.
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
@@ -106,9 +105,9 @@ public struct WhiteboardCollection<T: GlobalVariables>:
     ) -> [T] {
         var arr: [T] = []
         for _ in 0 ..< length {
-            var temp: UnsafeMutablePointer<gu_simple_message> = 
-                gsw_current_message(wb, type)
-            arr.append(UnsafeMutablePointer<T>(temp).memory)
+            arr.append(
+                UnsafeMutablePointer<T>(gsw_current_message(wb, type)).memory
+            )
             gsw_increment(wb, type)
         }
         return arr
