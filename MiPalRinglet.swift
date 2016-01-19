@@ -88,10 +88,12 @@ public class MiPalRinglet: Ringlet {
         if let t = state.transitions.filter({$0.canTransition()}).first {
             // Yes - Exit state and return the new state.
             state.onExit()
+            self.vars.saveSnapshot()
             return t.target
         }
         // No - Execute main method and return state.
         state.main()
+        self.vars.saveSnapshot()
         return state
     }
     

@@ -72,6 +72,10 @@ public class SnapshotController<T: GlobalVariables, Collection: GlobalVariablesC
         self.collection = collection
     }
 
+    public func saveSnapshot() {
+        self.collection.post(self._val)
+    }
+
     public func takeSnapshot() {
         self._val = self.collection.get()
     }
