@@ -66,7 +66,11 @@
  */
 public class MiPalRinglet: Ringlet {
     
-    public init() {}
+    public private(set) var vars: Snapshotable
+
+    public init(vars: Snapshotable) {
+        self.vars = vars
+    }
     
     /**
      *  Execute the ringlet.
@@ -74,6 +78,8 @@ public class MiPalRinglet: Ringlet {
      *  Returns a state representing the next state to execute.
      */
     public func execute(state: State, previousState: State) -> State {
+        // Take a snapshot
+        self.vars.takeSnapshot()
         // Call onEntry if the state has just been transitioned into.
         if (state != previousState) {
             state.onEntry()

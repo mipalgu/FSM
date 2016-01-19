@@ -64,6 +64,8 @@
  *  a state in a particular order.
  */
 public protocol Ringlet {
+
+    var vars: Snapshotable { get }
     
     /**
      *  Execute a state.
