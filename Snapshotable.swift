@@ -65,6 +65,11 @@
 public protocol Snapshotable {
     
     /**
+     *  Save the current snapshot.
+     */
+    func saveSnapshot() -> Void
+
+    /**
      *  Perform the snapshot.
      */
     mutating func takeSnapshot() -> Void
