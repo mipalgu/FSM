@@ -88,14 +88,12 @@ public struct WhiteboardCollection<T: GlobalVariables>:
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
             return AnyGenerator { nil }
         }
-        var i = bufferLength
-        print(data)
+        var i: Int = bufferLength
         return AnyGenerator {
             if (i <= 0) {
                 return nil
             }
-            let j = (i + currentIndex) % bufferLength 
-            print("j: \(j)")
+            let j = i % bufferLength 
             i = i - 1
             return data[j]
         }
