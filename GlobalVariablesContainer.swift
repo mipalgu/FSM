@@ -1,6 +1,6 @@
 /*
- * SnapshotController.swift 
- * FSM 
+ * GlobalVariablesContainer.swift 
+ * swiftfsm 
  *
  * Created by Callum McColl on 19/01/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
@@ -56,23 +56,10 @@
  *
  */
 
-public struct SnapshotController<T: GlobalVariables, Collection: GlobalVariablesCollection where Collection.Element == T>: Snapshotable, GlobalVariablesContainer {
-
-    public typealias Class = T
+public protocol GlobalVariablesContainer {
     
-    private var _val: T!
+    typealias Class
 
-    private let collection: Collection 
+    var val: Class { get }
 
-    public var val: T {
-        return self._val
-    }
-
-    public init(collection: Collection) {
-        self.collection = collection
-    }
-
-    public mutating func takeSnapshot() {
-        self._val = self.collection.get()
-    }
 }
