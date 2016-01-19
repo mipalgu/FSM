@@ -60,6 +60,6 @@ public protocol GlobalVariablesContainer: class {
     
     typealias Class
 
-    var val: Class { get }
+    var val: Class { get set }
 
 }

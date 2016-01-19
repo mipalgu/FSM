@@ -65,7 +65,11 @@ public class SnapshotController<T: GlobalVariables, Collection: GlobalVariablesC
     private let collection: Collection 
 
     public var val: T {
-        return self._val
+        get {
+            return self._val
+        } set {
+            self._val = newValue
+        }
     }
 
     public init(collection: Collection) {
