@@ -56,15 +56,15 @@
  *
  */
 
-public class SnapshotController<T: GlobalVariables, Collection: GlobalVariablesCollection where Collection.Element == T>: Snapshotable, GlobalVariablesContainer {
+public class SnapshotController<Collection: GlobalVariablesCollection>: Snapshotable, GlobalVariablesContainer {
 
-    public typealias Class = T
+    public typealias Class = Collection.Element
     
-    private var _val: T!
+    private var _val: Collection.Element!
 
     private let collection: Collection 
 
-    public var val: T {
+    public var val: Collection.Element {
         get {
             return self._val
         } set {
