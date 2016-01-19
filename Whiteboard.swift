@@ -56,7 +56,7 @@
  *
  */
 
-public protocol _Whiteboard {
+public protocol WhiteboardType {
     /// required constructor for a default whiteboard
     init()
     
@@ -71,7 +71,7 @@ public protocol _Whiteboard {
 }
 
 /// Swift convenience wrapper around gusimplewhiteboard
-public struct Whiteboard: _Whiteboard {
+public struct Whiteboard: WhiteboardType {
     /// pointer to the underlying C whiteboard implementation
     let wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor>
     

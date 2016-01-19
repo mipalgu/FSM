@@ -1,5 +1,5 @@
 /*
- * WhiteboardStructure.swift 
+ * WhiteboardCollection.swift 
  * FSM 
  *
  * Created by Callum McColl on 16/01/2016.
@@ -56,7 +56,7 @@
  *
  */
 
-public struct WhiteboardStructure<T: GlobalVariables>:
+public struct WhiteboardCollection<T: GlobalVariables>:
     GlobalVariablesCollection
 {
 
