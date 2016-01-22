@@ -79,7 +79,7 @@ public class CallbackState: EmptyState, CallbackableState {
     public let _onExit: () -> Void
     
     public init(
-        name: String,
+        _ name: String,
         transitions: [Transition] = [],
         onEntry: () -> Void = {},
         main: () -> Void = {},
@@ -88,7 +88,7 @@ public class CallbackState: EmptyState, CallbackableState {
         self._onEntry = onEntry
         self._main = main
         self._onExit = onExit
-        super.init(name: name, transitions: transitions)
+        super.init(name, transitions: transitions)
     }
     
     /**

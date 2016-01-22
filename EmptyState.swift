@@ -76,7 +76,7 @@ public class EmptyState: State {
      */
     public var transitions: [Transition]
     
-    public init(name: String, transitions: [Transition] = []) {
+    public init(_ name: String, transitions: [Transition] = []) {
         self.name = name
         self.transitions = transitions
     }

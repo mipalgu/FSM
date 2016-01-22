@@ -110,8 +110,8 @@ public class FSM: FiniteStateMachine {
     public init(
         initialState: State,
         ringlet: Ringlet,
-        initialPreviousState: State = EmptyState(name: "_previous"),
-        suspendState: State = EmptyState(name: "_suspend"),
+        initialPreviousState: State = EmptyState("_previous"),
+        suspendState: State = EmptyState("_suspend"),
         vars: FSMVariables = EmptyVariables()
     ) {
         self.initialPreviousState = initialPreviousState

@@ -81,7 +81,7 @@ public extension _FiniteStateMachine where Self: Exitable, Self: Resumeable {
     
     public mutating func exit() -> Void {
         self.resume()
-        self.currentState = EmptyState(name: "_exit")
+        self.currentState = EmptyState("_exit")
         self.previousState = self.currentState
     }
     
