@@ -1,9 +1,9 @@
 /*
- * MiPalRinglet.swift
- * swiftfsm
+ * EmptySnapshotable.swift 
+ * FSM 
  *
- * Created by Callum McColl on 12/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 22/01/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,45 +56,9 @@
  *
  */
 
-/**
- *  A standard ringlet.
- *
- *  Firstly calls onEntry if this state has just been transitioned into.  If a
- *  transition is possible then the states onExit method is called and the new
- *  state is returned.  If no transitions are possible then the main method is
- *  called and the state is returned.
- */
-public class MiPalRinglet: Ringlet {
-    
-    public private(set) var vars: Snapshotable
+public class EmptySnapshotable: Snapshotable {
 
-    public init(vars: Snapshotable = EmptySnapshotable()) {
-        self.vars = vars
-    }
-    
-    /**
-     *  Execute the ringlet.
-     *
-     *  Returns a state representing the next state to execute.
-     */
-    public func execute(state: State, previousState: State) -> State {
-        // Take a snapshot
-        self.vars.takeSnapshot()
-        // Call onEntry if the state has just been transitioned into.
-        if (state != previousState) {
-            state.onEntry()
-        }
-        // Can we transition to another state?
-        if let t = state.transitions.filter({$0.canTransition()}).first {
-            // Yes - Exit state and return the new state.
-            state.onExit()
-            self.vars.saveSnapshot()
-            return t.target
-        }
-        // No - Execute main method and return state.
-        state.main()
-        self.vars.saveSnapshot()
-        return state
-    }
-    
+    public func takeSnapshot() {}
+
+    public func saveSnapshot() {}
 }
