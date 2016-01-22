@@ -60,27 +60,20 @@ public class SnapshotController<Collection: GlobalVariablesCollection>: Snapshot
 
     public typealias Class = Collection.Element
     
-    private var _val: Collection.Element!
-
     private let collection: Collection 
 
-    public var val: Collection.Element {
-        get {
-            return self._val
-        } set {
-            self._val = newValue
-        }
-    }
+    public var val: Collection.Element 
 
     public init(collection: Collection) {
         self.collection = collection
+        self.val = self.collection.get()
     }
 
     public func saveSnapshot() {
-        self.collection.post(self._val)
+        self.collection.post(self.val)
     }
 
     public func takeSnapshot() {
-        self._val = self.collection.get()
+        self.val = self.collection.get()
     }
 }
