@@ -1,8 +1,8 @@
 /*
- * MiPalRinglet.swift
+ * KripkeMiPalRinglet.swift
  * swiftfsm
  *
- * Created by Callum McColl on 12/08/2015.
+ * Created by Callum McColl on 22/01/2016.
  * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,45 +64,34 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class MiPalRinglet: Ringlet {
+public class KripkeMiPalRinglet
+    <T where T: Snapshotable, T: GlobalVariablesContainer>
+    : MiPalRinglet, KripkeRinglet
+{
 
-    public var vars: Snapshotable
+    public typealias SnapshotType = T
 
-    public init(vars: Snapshotable = EmptySnapshotable()) {
-        self.vars = vars
-    }
+    public var globals: SnapshotType
     
-    /**
-     *  Execute the ringlet.
-     *
-     *  Returns a state representing the next state to execute.
-     */
-    public func execute(state: State, previousState: State) -> State {
-        // Take a snapshot
-        self.takeSnapshot()
-        // Call onEntry if the state has just been transitioned into.
-        if (state != previousState) {
-            state.onEntry()
+    public override var vars: Snapshotable {
+        get {
+            return self.globals
+        } set {
+            self.globals = newValue as! SnapshotType
         }
-        // Can we transition to another state?
-        if let t = state.transitions.filter({$0.canTransition()}).first {
-            // Yes - Exit state and return the new state.
-            state.onExit()
-            self.saveSnapshot()
-            return t.target
-        }
-        // No - Execute main method and return state.
-        state.main()
-        self.saveSnapshot()
-        return state
     }
 
-    internal func takeSnapshot() {
-        self.vars.takeSnapshot()
+    public init(globals: SnapshotType) {
+        self.globals = globals
+        super.init(vars: globals)
     }
 
-    internal func saveSnapshot() {
-        self.vars.saveSnapshot()
+    internal override func takeSnapshot() {
+        self.globals.takeSnapshot()
+    }
+
+    internal override func saveSnapshot() {
+        self.globals.saveSnapshot()
     }
     
 }
