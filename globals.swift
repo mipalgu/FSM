@@ -56,6 +56,8 @@
  *
  */
 
+public var DEBUG: Bool = false
+
 public func addFactory(f: Factories.FiniteStateMachineFactory) {
     let factories: Factories = Factories()
     factories.addFactory(f)
@@ -87,6 +89,38 @@ public func addUrgentTransition<T: State, U: State>(
         canTransition: canTransition
     )
     source.addTransition(t)
+}
+
+public func dprint(
+    items: Any ...,
+    separator: String = " ",
+    terminator: String = "\n"
+) {
+    if (false == DEBUG) {
+        return
+    }
+    let _ = items.map {
+        debugPrint($0, separator: separator, terminator: terminator)
+    }
+}
+
+public func dprint<Target: OutputStreamType>(
+    items: Any ...,
+    separator: String = " ",
+    terminator: String = "\n",
+    inout toStream output: Target
+) {
+    if (false == DEBUG) {
+        return
+    }
+    let _ = items.map {
+        debugPrint(
+            $0,
+            separator: separator,
+            terminator: terminator,
+            toStream: &output
+        )
+    }
 }
 
 public func getLastFactory() -> Factories.FiniteStateMachineFactory? {
