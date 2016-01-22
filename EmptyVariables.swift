@@ -1,5 +1,5 @@
 /*
- * EmptyFSMVariables.swift 
+ * EmptyVariables.swift 
  * FSM 
  *
  * Created by Callum McColl on 15/01/2016.
@@ -56,6 +56,10 @@
  *
  */
 
-public class EmptyFSMVariables: FSMVariables {
+public class EmptyVariables: FSMVariables, GlobalVariables {
     public init() {}
+}
+
+public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
+    return true
 }
