@@ -64,12 +64,20 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class MiPalRinglet: Ringlet {
-    
-    public private(set) var vars: Snapshotable
+public class MiPalRinglet<T where T: Snapshotable, T: GlobalVariablesContainer>:
+    KripkeRinglet
+{
 
-    public init(vars: Snapshotable = EmptySnapshotable()) {
-        self.vars = vars
+    public typealias SnapshotType = T
+
+    public private(set) var globals: SnapshotType
+    
+    public var vars: Snapshotable {
+        return self.globals
+    } 
+
+    public init(globals: SnapshotType) {
+        self.globals = globals 
     }
     
     /**
@@ -79,7 +87,7 @@ public class MiPalRinglet: Ringlet {
      */
     public func execute(state: State, previousState: State) -> State {
         // Take a snapshot
-        self.vars.takeSnapshot()
+        self.globals.takeSnapshot()
         // Call onEntry if the state has just been transitioned into.
         if (state != previousState) {
             state.onEntry()
@@ -88,12 +96,12 @@ public class MiPalRinglet: Ringlet {
         if let t = state.transitions.filter({$0.canTransition()}).first {
             // Yes - Exit state and return the new state.
             state.onExit()
-            self.vars.saveSnapshot()
+            self.globals.saveSnapshot()
             return t.target
         }
         // No - Execute main method and return state.
         state.main()
-        self.vars.saveSnapshot()
+        self.globals.saveSnapshot()
         return state
     }
     
