@@ -71,6 +71,10 @@ public class KripkeMiPalRinglet
 
     public typealias SnapshotType = T
 
+    public var afterGlobals: SnapshotType.Class
+
+    public var beforeGlobals: SnapshotType.Class
+
     public var globals: SnapshotType
     
     public override var vars: Snapshotable {
@@ -82,15 +86,19 @@ public class KripkeMiPalRinglet
     }
 
     public init(globals: SnapshotType) {
+        self.afterGlobals = globals.val
+        self.beforeGlobals = globals.val
         self.globals = globals
         super.init(vars: globals)
     }
 
     internal override func takeSnapshot() {
         self.globals.takeSnapshot()
+        self.beforeGlobals = self.globals.val
     }
 
     internal override func saveSnapshot() {
+        self.afterGlobals = self.globals.val
         self.globals.saveSnapshot()
     }
     
