@@ -60,6 +60,6 @@ public protocol KripkeRinglet: Ringlet {
 
     typealias SnapshotType: Snapshotable, GlobalVariablesContainer
 
-    var vars: SnapshotType { get }
+    var globals: SnapshotType { get }
 
 }
