@@ -66,6 +66,7 @@ public protocol _FiniteStateMachine {
     var currentState: State { get set }
     var initialState: State { get }
     var initialPreviousState: State { get }
+    var name: String { get }
     var previousState: State { get set }
     var ringlet: Ringlet { get }
     var suspendedState: State? { get set }
@@ -144,6 +145,14 @@ public extension _FiniteStateMachine where Self: StateExecuter, Self: Suspendabl
         )
     }
     
+}
+
+public func ==(lhs: _FiniteStateMachine, rhs: _FiniteStateMachine) -> Bool {
+    return lhs.name == rhs.name
+}
+
+public func !=(lhs: _FiniteStateMachine, rhs: _FiniteStateMachine) -> Bool {
+    return lhs.name != rhs.name
 }
 
 /**

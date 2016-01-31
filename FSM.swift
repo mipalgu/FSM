@@ -64,6 +64,8 @@
  *  required variables from it init method.
  */
 public class FSM: FiniteStateMachine {
+
+    public let name: String
     
     /**
      *  The entry state of the machine.
@@ -108,12 +110,14 @@ public class FSM: FiniteStateMachine {
     public var vars: FSMVariables
     
     public init(
+        _ name: String,
         initialState: State,
         ringlet: Ringlet,
         initialPreviousState: State = EmptyState("_previous"),
         suspendState: State = EmptyState("_suspend"),
         vars: FSMVariables = EmptyVariables()
     ) {
+        self.name = name
         self.initialPreviousState = initialPreviousState
         self.initialState = initialState
         self.currentState = initialState
