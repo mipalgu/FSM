@@ -40,7 +40,7 @@
  * - returns: A value of type `[U]`
  */
 public func <^> <T, U>(@noescape f: T -> U, a: [T]) -> [U] {
-        return a.map(f)
+    return a.map(f)
 }
 
 /**
@@ -56,7 +56,7 @@ public func <^> <T, U>(@noescape f: T -> U, a: [T]) -> [U] {
  * - returns: A value of type `[U]`
  */
 public func <*> <T, U>(fs: [T -> U], a: [T]) -> [U] {
-        return a.apply(fs)
+    return a.apply(fs)
 }
 
 /**
@@ -70,7 +70,7 @@ public func <*> <T, U>(fs: [T -> U], a: [T]) -> [U] {
  * - returns: A value of type `[U]`
  */
 public func >>- <T, U>(a: [T], f: T -> [U]) -> [U] {
-        return a.flatMap(f)
+    return a.flatMap(f)
 }
 
 /**
@@ -84,7 +84,7 @@ public func >>- <T, U>(a: [T], f: T -> [U]) -> [U] {
  * - returns: A value of type `[U]`
  */
 public func -<< <T, U>(f: T -> [U], a: [T]) -> [U] {
-      return a.flatMap(f)
+  return a.flatMap(f)
 }
 
 /**
@@ -99,7 +99,7 @@ public func -<< <T, U>(f: T -> [U], a: [T]) -> [U] {
  * - returns: A value of type `[C]`
  */
 public func >-> <A, B, C>(f: A -> [B], g: B -> [C]) -> A -> [C] {
-        return { x in f(x) >>- g }
+    return { x in f(x) >>- g }
 }
 
 /**
@@ -114,7 +114,7 @@ public func >-> <A, B, C>(f: A -> [B], g: B -> [C]) -> A -> [C] {
  * - returns: A value of type `[C]`
  */
 public func <-< <A, B, C>(f: B -> [C], g: A -> [B]) -> A -> [C] {
-        return { x in g(x) >>- f }
+    return { x in g(x) >>- f }
 }
 
 /**
@@ -125,7 +125,7 @@ public func <-< <A, B, C>(f: B -> [C], g: A -> [B]) -> A -> [C] {
  * - returns: The provided value wrapped in an array
  */
 public func pure<T>(a: T) -> [T] {
-        return [a]
+    return [a]
 }
 
 public extension Array {
@@ -141,6 +141,6 @@ public extension Array {
      * - returns: A value of type `[U]`
      */
     func apply<U>(fs: [Element -> U]) -> [U] {
-                return fs.flatMap { self.map($0) }
+            return fs.flatMap { self.map($0) }
     }
 }
