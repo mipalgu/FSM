@@ -58,7 +58,7 @@
 
 public var DEBUG: Bool = false
 
-public func addFactory(f: Factories.FiniteStateMachineFactory) {
+public func addFactory(f: FiniteStateMachineFactory) {
     let factories: Factories = Factories()
     factories.addFactory(f)
 }
@@ -123,6 +123,10 @@ public func dprint<Target: OutputStreamType>(
     }
 }
 
-public func getLastFactory() -> Factories.FiniteStateMachineFactory? {
+public func getFactoryCount() -> Int {
+    return Factories().count
+}
+
+public func getLastFactory() -> FiniteStateMachineFactory? {
     return Factories().getLast()
 }

@@ -1,9 +1,9 @@
 /*
- * Factories.swift
- * swiftfsm
+ * aliases.swift 
+ * FSM 
  *
- * Created by Callum McColl on 24/09/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/02/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,37 +56,4 @@
  *
  */
 
-public class Factories {
-    
-    public var count: Int {
-        return self.factories.count
-    }    
-
-    private static var factories: [FiniteStateMachineFactory] = []
-    
-    public private(set) var factories: [FiniteStateMachineFactory] {
-        get {
-            return Factories.factories
-        } set {
-            Factories.factories = newValue
-        }
-    }
-    
-    public init() {}
-    
-    public func addFactory(f: FiniteStateMachineFactory) {
-        self.factories.append(f)
-    }
-    
-    public func clear() {
-        self.factories = []
-    }
-    
-    public func getLast() -> FiniteStateMachineFactory? {
-        if (0 == self.factories.count) {
-            return nil
-        }
-        return self.factories[self.factories.count - 1]
-    }
-    
-}
+public typealias FiniteStateMachineFactory = () -> [FiniteStateMachine]
