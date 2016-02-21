@@ -62,6 +62,8 @@ public protocol KripkeRinglet: Ringlet {
 
     var globals: SnapshotType { get }
 
-    var snapshot: SnapshotType.Class { get }
+    var snapshotBefore: SnapshotType.Class { get }
+
+    var snapshotAfter: SnapshotType.Class { get }
 
 }

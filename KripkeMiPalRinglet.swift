@@ -73,7 +73,9 @@ public class KripkeMiPalRinglet
 
     public var globals: SnapshotType
 
-    public private(set) var snapshot: SnapshotType.Class
+    public private(set) var snapshotBefore: SnapshotType.Class
+
+    public private(set) var snapshotAfter: SnapshotType.Class
     
     public override var vars: Snapshotable {
         get {
@@ -85,16 +87,18 @@ public class KripkeMiPalRinglet
 
     public init(globals: SnapshotType) {
         self.globals = globals
-        self.snapshot = globals.val
+        self.snapshotBefore = globals.val
+        self.snapshotAfter = globals.val
         super.init(vars: globals)
     }
 
     internal override func takeSnapshot() {
         self.globals.takeSnapshot()
-        self.snapshot = self.globals.val
+        self.snapshotBefore = self.globals.val
     }
 
     internal override func saveSnapshot() {
+        self.snapshotAfter = self.globals.val
         self.globals.saveSnapshot()
     }
     
