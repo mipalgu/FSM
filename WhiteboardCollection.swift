@@ -77,15 +77,15 @@ public struct WhiteboardCollection<T: GlobalVariables>:
         let sem: gsw_sema_t = self.wb.wbd.memory.sem
         // Stop allowing others to modify the whiteboard.
         guard 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
-            return anyGenerator { nil }
+            return AnyGenerator { nil }
         }
         let data: [T] = getData(self.wb.wb, type: type, length: bufferLength)
         // Allow others to modify the whiteboard again.
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
-            return anyGenerator { nil }
+            return AnyGenerator { nil }
         }
         var i: Int = 0 
-        return anyGenerator {
+        return AnyGenerator {
             if (i >= bufferLength) {
                 return nil
             }
