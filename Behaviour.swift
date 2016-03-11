@@ -66,11 +66,18 @@ public func always<T>(value: T) -> Behaviour<T> {
     return Behaviour { (t: Time) -> T in value }
 }
 
-public func map<R, Args>(
-    _ f: ([Args]) -> R,
-    _ behaviours: Behaviour<Args> ...
-) -> Behaviour<R> {
-    return Behaviour { (t: Time) -> R in f(behaviours.map({ $0.f(t) })) }
+public func map<T, U>(
+    f: ([T]) -> U,
+    _ behaviours: Behaviour<T> ...
+) -> Behaviour<U> {
+    return Behaviour { (t: Time) -> U in f(behaviours.map({ $0.f(t) })) }
+}
+
+public func map<T, U>(
+    f: (T) -> U,
+    _ behaviour: Behaviour<T>
+) -> Behaviour<U> {
+    return Behaviour { (t: Time) -> U in f(behaviour.f(t)) }
 }
 
 public func ==<T: Equatable>(
