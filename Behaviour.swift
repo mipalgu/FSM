@@ -61,3 +61,21 @@ public struct Behaviour<T> {
     public let f: (Time) -> T
 
 }
+
+public func always<T>(value: T) -> Behaviour<T> {
+    return Behaviour { (t: Time) -> T in value }
+}
+
+public func map<R, Args>(
+    _ f: ([Args]) -> R,
+    _ behaviours: Behaviour<Args> ...
+) -> Behaviour<R> {
+    return Behaviour { (t: Time) -> R in f(behaviours.map({ $0.f(t) })) }
+}
+
+public func +<T: IntegerArithmeticType>(
+    lhs: Behaviour<T>,
+    rhs: Behaviour<T>
+) -> Behaviour<T> {
+    return Behaviour { (t: Time) -> T in lhs.f(t) + rhs.f(t) }
+}
