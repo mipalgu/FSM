@@ -79,3 +79,31 @@ public func +<T: IntegerArithmeticType>(
 ) -> Behaviour<T> {
     return Behaviour { (t: Time) -> T in lhs.f(t) + rhs.f(t) }
 }
+
+public func -<T: IntegerArithmeticType>(
+    lhs: Behaviour<T>,
+    rhs: Behaviour<T>
+) -> Behaviour<T> {
+    return Behaviour { (t: Time) -> T in lhs.f(t) - rhs.f(t) }
+}
+
+public func *<T: IntegerArithmeticType>(
+   lhs: Behaviour<T>,
+   rhs: Behaviour<T>
+) -> Behaviour<T> {
+    return Behaviour { (t: Time) -> T in lhs.f(t) * rhs.f(t) }    
+}
+
+public func /<T: IntegerArithmeticType>(
+   lhs: Behaviour<T>,
+   rhs: Behaviour<T>
+) -> Behaviour<T> {
+    return Behaviour { (t: Time) -> T in lhs.f(t) / rhs.f(t) }
+}
+
+public func %<T: IntegerArithmeticType>(
+   lhs: Behaviour<T>,
+   rhs: Behaviour<T>
+) -> Behaviour<T> {
+    return Behaviour { (t: Time) -> T in lhs.f(t) % rhs.f(t) }
+}
