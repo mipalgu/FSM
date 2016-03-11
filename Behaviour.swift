@@ -56,8 +56,8 @@
  *
  */
 
-struct Behaviour<T> {
+public struct Behaviour<T> {
 
-    let f: (Time) -> T
+    public let f: (Time) -> T
 
 }
