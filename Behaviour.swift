@@ -73,6 +73,20 @@ public func map<R, Args>(
     return Behaviour { (t: Time) -> R in f(behaviours.map({ $0.f(t) })) }
 }
 
+public func ==<T: Equatable>(
+   lhs: Behaviour<T>,
+   rhs: Behaviour<T>
+) -> Behaviour<Bool> {
+    return Behaviour { (t: Time) -> Bool in lhs.f(t) == rhs.f(t) }
+}
+
+public func !=<T: Equatable>(
+   lhs: Behaviour<T>,
+   rhs: Behaviour<T>
+) -> Behaviour<Bool> {
+    return Behaviour { (t: Time) -> Bool in lhs.f(t) != rhs.f(t) }
+}
+
 public func <<T: Comparable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
