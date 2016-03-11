@@ -1,8 +1,8 @@
 /*
- * aliases.swift 
+ * Behaviour.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/02/2016.
+ * Created by Callum McColl on 11/03/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,6 +56,8 @@
  *
  */
 
-public typealias FiniteStateMachineFactory = () -> [FiniteStateMachine]
+struct Behaviour<T> {
 
-public typealias Time = UInt
+    let f: (Time) -> T
+
+}
