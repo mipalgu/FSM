@@ -62,4 +62,11 @@ public class FRP {
         return Behaviour { (t: Time) -> T in value }
     }
 
+    public static func map<R, Args>(
+        f: ([Args]) -> R,
+        behaviours: Behaviour<Args> ...
+    ) -> Behaviour<R> {
+        return Behaviour { (t: Time) -> R in f(behaviours.map({ $0.f(t) })) }
+    }
+
 }
