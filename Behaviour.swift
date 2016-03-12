@@ -60,6 +60,10 @@ public struct Behaviour<T> {
 
     public let f: (Time) -> T
 
+    public init(f: (Time) -> T) {
+        self.f = f
+    }
+
 }
 
 public func always<T>(value: T) -> Behaviour<T> {
