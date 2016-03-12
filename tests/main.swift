@@ -58,4 +58,4 @@
 
 import XCTest
 
-XCTMain([T()])
+XCTMain([BehaviourTests()])

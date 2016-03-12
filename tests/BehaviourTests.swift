@@ -59,7 +59,7 @@
 import XCTest
 @testable import FSM
 
-class T: XCTestCase {
+class BehaviourTests: XCTestCase {
 
     var allTests: [(String, () throws -> Void)] {
         return [
