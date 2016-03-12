@@ -63,13 +63,27 @@ class T: XCTestCase {
 
     var allTests: [(String, () throws -> Void)] {
         return [
-            ("test_always", test_always)
+            ("test_always", test_always),
+            ("test_singleMap", test_singleMap),
+            ("test_multipleMap", test_multipleMap)
         ]
     }
 
     func test_always() {
         let b: Behaviour<Int> = always(4)
         XCTAssertEqual(4, b.f(1))
+    }
+
+    func test_singleMap() {
+        let b: Behaviour<Int> = always(4)
+        let m: Behaviour<Int> = map({ $0 * 2 }, b)
+        XCTAssertEqual(8, m.f(1))
+    }
+
+    func test_multipleMap() {
+        let f: ([Int]) -> Int = { $0.reduce(0, combine: +) }
+        let m: Behaviour<Int> = map(f, always(1), always(2), always(3), always(4))
+        XCTAssertEqual(10, m.f(1))
     }
 
 }
