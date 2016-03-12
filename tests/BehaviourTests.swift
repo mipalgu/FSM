@@ -74,7 +74,9 @@ class T: XCTestCase {
             ("test_lessThan", test_lessThan),
             ("test_lessThanOrEqualTo", test_lessThanOrEqualTo),
             ("test_greaterThan", test_greaterThan),
-            ("test_greaterThanOrEqualTo", test_greaterThanOrEqualTo)
+            ("test_greaterThanOrEqualTo", test_greaterThanOrEqualTo),
+            ("test_equals", test_equals),
+            ("test_notEquals", test_notEquals)
         ]
     }
 
@@ -146,6 +148,20 @@ class T: XCTestCase {
         XCTAssertTrue(b.f(1))
         let b2: Behaviour<Bool> = always(2) >= always(3)
         XCTAssertFalse(b2.f(1))
+    }
+
+    func test_equals() {
+        let b: Behaviour<Bool> = always(3) == always(3)
+        XCTAssertTrue(b.f(1))
+        let b2: Behaviour<Bool> = always(4) == always(3)
+        XCTAssertFalse(b2.f(1))
+    }
+
+    func test_notEquals() {
+        let b: Behaviour<Bool> = always(3) != always(3)
+        XCTAssertFalse(b.f(1))
+        let b2: Behaviour<Bool> = always(4) != always(3) 
+        XCTAssertTrue(b2.f(1))
     }
 
 }
