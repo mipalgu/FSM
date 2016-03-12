@@ -59,6 +59,12 @@
 #ifndef FSM_Bridging_Header_h
 #define FSM_Bridging_Header_h
 
+#ifndef WHITEBOARD_POSTER_STRING_CONVERSION
+#define WHITEBOARD_POSTER_STRING_CONVERSION
+#endif
+
 #include "../FSM-Bridging-Header.h"
+
+#include <gusimplewhiteboard/typeClassDefs/wb_count.h>
 
 #endif /* FSM_Bridging_Header_h */
