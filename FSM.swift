@@ -112,7 +112,7 @@ public class FSM: FiniteStateMachine {
     public init(
         _ name: String,
         initialState: State,
-        ringlet: Ringlet,
+        ringlet: Ringlet = MiPalRinglet(),
         initialPreviousState: State = EmptyState("_previous"),
         suspendState: State = EmptyState("_suspend"),
         vars: FSMVariables = EmptyVariables()
