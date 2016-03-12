@@ -65,7 +65,8 @@ class FunctionalOptionalTests: XCTestCase {
         return [
             ("test_functor", test_functor),
             ("test_apply", test_apply),
-            ("test_bind", test_bind)
+            ("test_bind", test_bind),
+            ("test_compose", test_compose)
         ]
     }
 
@@ -90,6 +91,15 @@ class FunctionalOptionalTests: XCTestCase {
         XCTAssertNil(num >>- half >>- half >>- half) // 2.5
         XCTAssertNotNil(half -<< half -<< num)       // 5
         XCTAssertNil(half -<< half -<< half -<< num) // 2.5
+    }
+
+    func test_compose() {
+        let num: Int = 40
+        let half: (Int) -> Int? = { 0 == $0 % 2 ? $0 / 2 : nil }
+        let quarter: (Int) -> Int? = half >-> half
+        let eighth: (Int) -> Int? = half <-< half <-< half
+        XCTAssertEqual(10, quarter(num))
+        XCTAssertEqual(5, eighth(num))
     }
 
 }
