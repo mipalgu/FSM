@@ -1,5 +1,5 @@
 /*
- * main.swift 
+ * FunctionalOptionalTests.swift 
  * tests 
  *
  * Created by Callum McColl on 12/03/2016.
@@ -57,5 +57,27 @@
  */
 
 import XCTest
+@testable import FSM
 
-XCTMain([BehaviourTests(), FunctionalOptionalTests()])
+class FunctionalOptionalTests: XCTestCase {
+
+    var allTests: [(String, () throws -> Void)] {
+        return [
+            ("test_bind", test_bind)
+        ]
+    }
+
+    /*
+     *  Returns the half of i if it is a whole number.
+     */
+    private func half(i: Int) -> Int? {
+        return (0 == i % 2 ? i / 2 : nil)
+    }
+
+    func test_bind() {
+        let num: Int? = 20
+        XCTAssertNotNil(num >>- half >>- half)       // 5
+        XCTAssertNil(num >>- half >>- half >>- half) // 2.5
+    }
+
+}
