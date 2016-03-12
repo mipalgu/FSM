@@ -65,7 +65,12 @@ class T: XCTestCase {
         return [
             ("test_always", test_always),
             ("test_singleMap", test_singleMap),
-            ("test_multipleMap", test_multipleMap)
+            ("test_multipleMap", test_multipleMap),
+            ("test_addition", test_addition),
+            ("test_subtraction", test_subtraction),
+            ("test_multiplication", test_multiplication),
+            ("test_division", test_division),
+            ("test_mod", test_mod)
         ]
     }
 
@@ -84,6 +89,31 @@ class T: XCTestCase {
         let f: ([Int]) -> Int = { $0.reduce(0, combine: +) }
         let m: Behaviour<Int> = map(f, always(1), always(2), always(3), always(4))
         XCTAssertEqual(10, m.f(1))
+    }
+
+    func test_addition() {
+        let b: Behaviour<Int> = always(3) + always(2)
+        XCTAssertEqual(5, b.f(1))
+    }
+
+    func test_subtraction() {
+        let b: Behaviour<Int> = always(3) - always(2)
+        XCTAssertEqual(1, b.f(1))
+    }
+
+    func test_multiplication() {
+        let b: Behaviour<Int> = always(3) * always(2)
+        XCTAssertEqual(6, b.f(1))
+    }
+
+    func test_division() {
+        let b: Behaviour<Int> = always(6) / always(2)
+        XCTAssertEqual(3, b.f(1))
+    }
+
+    func test_mod() {
+        let b: Behaviour<Int> = always(6) % always(2)
+        XCTAssertEqual(0, b.f(1))
     }
 
 }
