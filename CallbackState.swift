@@ -61,7 +61,7 @@
  *  methods when initializing a state so that they can more easily create simple
  *  states.
  */
-public class CallbackState: EmptyState, CallbackableState {
+public class CallbackState: State, CallbackableState {
     
     /**
      *  The actual onEntry implementation.
@@ -97,7 +97,7 @@ public class CallbackState: EmptyState, CallbackableState {
      *  This method cannot be overrided as all `CallbackState`s must use the 
      *  _onEntry property instead.
      */
-    public final override func onEntry() {
+    public override final func onEntry() {
         self._onEntry()
     }
     
@@ -107,7 +107,7 @@ public class CallbackState: EmptyState, CallbackableState {
      *  This method cannot be overrided as all `CallbackState`s must use the
      *  _main property instead.
      */
-    public final override func main() {
+    public override final func main() {
         self._main()
     }
     
@@ -117,7 +117,7 @@ public class CallbackState: EmptyState, CallbackableState {
      *  This method cannot be overrided as all `CallbackState`s must use the
      *  _onExit property instead.
      */
-    public final override func onExit() {
+    public override final func onExit() {
         self._onExit()
     }
     

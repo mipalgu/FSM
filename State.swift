@@ -66,7 +66,7 @@
  *  are presented below are each executed independently within the ringlet.  See
  *  StandardRinglet for the standard order that these methods are executed in.
  */
-public protocol _State: class {
+public protocol _State {
     
     /**
      *  A label in plain english for the state - must be unique per state.
@@ -86,7 +86,7 @@ public protocol _State: class {
  */
 extension _State where Self: Transitionable {
     
-    public func addTransition(transition: Transition) {
+    public mutating func addTransition(transition: Transition) {
         self.transitions.append(transition)
     }
     
@@ -110,29 +110,45 @@ extension _State where
     
 }
 
-extension _State where Self: CustomReflectable {
-    
-    public func customMirror() -> Mirror {
-        return Mirror(reflecting: self)
-    }
-    
-}
-
-/**
- *  Compare states names for equality by default.
- */
-public func ==(lhs: _State, rhs: _State) -> Bool {
-    return lhs.name == rhs.name
-}
-
-public func !=(lhs: _State, rhs: _State) -> Bool {
-    return !(lhs == rhs)
-}
-
-public protocol State:
+public class State:
     _State,
     CustomStringConvertible,
     CustomDebugStringConvertible,
     StateMethods,
-    Transitionable
-{}
+    Transitionable,
+    Equatable
+{
+
+    /**
+     *  The name of the state.
+     *
+     *  - Requires: Must be unique for each state.
+     */
+    public var name: String
+    
+    /**
+     *  An array of transitions that this state may use to move to another
+     *  state.
+     */
+    public var transitions: [Transition]
+    
+    public init(_ name: String, transitions: [Transition] = []) {
+        self.name = name
+        self.transitions = transitions
+    }
+
+    public func addTransition(transition: Transition) {
+        self.transitions.append(transition)
+    }
+
+    public func onEntry() {}
+
+    public func main() {}
+    
+    public func onExit() {}
+
+}
+
+public func ==(lhs: State, rhs: State) -> Bool {
+    return lhs.name == rhs.name
+}

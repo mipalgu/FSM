@@ -63,28 +63,10 @@
  */
 public class EmptyState: State {
     
-    /**
-     *  The name of the state.
-     *
-     *  - Requires: Must be unique for each state.
-     */
-    public var name: String
+    public override final func onEntry() {}
     
-    /**
-     *  An array of transitions that this state may use to move to another
-     *  state.
-     */
-    public var transitions: [Transition]
-    
-    public init(_ name: String, transitions: [Transition] = []) {
-        self.name = name
-        self.transitions = transitions
-    }
-    
-    public func onEntry() {}
-    
-    public func main() {}
-    
-    public func onExit() {}
+    public override final func main() {}
+
+    public override final func onExit() {}
     
 }

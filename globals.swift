@@ -63,9 +63,9 @@ public func addFactory(f: FiniteStateMachineFactory) {
     factories.addFactory(f)
 }
 
-public func addTransition<T: State, U: State>(
-    inout source: T,
-    target: U,
+public func addTransition<T: State>(
+    source: inout T,
+    target: State,
     canTransition: () -> Bool = {true}
 ) {
     let t: CallbackTransition = CallbackTransition(
@@ -76,9 +76,9 @@ public func addTransition<T: State, U: State>(
     source.addTransition(t)
 }
 
-public func addUrgentTransition<T: State, U: State>(
-    inout source: T,
-    target: U,
+public func addUrgentTransition<T: State>(
+    source: inout T,
+    target: State,
     ringlet: Ringlet,
     canTransition: () -> Bool = {true}
 ) {
