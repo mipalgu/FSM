@@ -63,29 +63,33 @@ class FunctionalOptionalTests: XCTestCase {
 
     var allTests: [(String, () throws -> Void)] {
         return [
+            ("test_functor", test_functor),
             ("test_apply", test_apply),
             ("test_bind", test_bind)
         ]
     }
 
-    /*
-     *  Returns the half of i if it is a whole number.
-     */
-    private func half(i: Int) -> Int? {
-        return (0 == i % 2 ? i / 2 : nil)
+    func test_functor() {
+        let num: Int? = 20
+        let half: (Int) -> Int = { $0 / 2 }
+        let expected: Int? = 10
+        XCTAssertEqual(expected, half <^> num)
     }
 
     func test_apply() {
         let num: Int? = 20
-        let f: ((Int) -> Int)? = { self.half($0)! }
+        let half: ((Int) -> Int)? = .Some({ $0 / 2 })
         let expected: Int? = 10
-        XCTAssertEqual(expected, f <*> num)
+        XCTAssertEqual(expected, half <*> num)
     }
 
     func test_bind() {
         let num: Int? = 20
+        let half: (Int) -> Int? = { 0 == $0 % 2 ? $0 / 2 : nil }
         XCTAssertNotNil(num >>- half >>- half)       // 5
         XCTAssertNil(num >>- half >>- half >>- half) // 2.5
+        XCTAssertNotNil(half -<< half -<< num)       // 5
+        XCTAssertNil(half -<< half -<< half -<< num) // 2.5
     }
 
 }
