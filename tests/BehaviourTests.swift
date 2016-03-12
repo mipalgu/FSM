@@ -70,7 +70,11 @@ class T: XCTestCase {
             ("test_subtraction", test_subtraction),
             ("test_multiplication", test_multiplication),
             ("test_division", test_division),
-            ("test_mod", test_mod)
+            ("test_mod", test_mod),
+            ("test_lessThan", test_lessThan),
+            ("test_lessThanOrEqualTo", test_lessThanOrEqualTo),
+            ("test_greaterThan", test_greaterThan),
+            ("test_greaterThanOrEqualTo", test_greaterThanOrEqualTo)
         ]
     }
 
@@ -114,6 +118,34 @@ class T: XCTestCase {
     func test_mod() {
         let b: Behaviour<Int> = always(6) % always(2)
         XCTAssertEqual(0, b.f(1))
+    }
+
+    func test_lessThan() {
+        let b: Behaviour<Bool> = always(3) < always(2)
+        XCTAssertFalse(b.f(1))
+        let b2: Behaviour<Bool> = always(2) < always(3)
+        XCTAssertTrue(b2.f(1))
+    }
+
+    func test_lessThanOrEqualTo() {
+        let b: Behaviour<Bool> = always(3) <= always(2)
+        XCTAssertFalse(b.f(1))
+        let b2: Behaviour<Bool> = always(2) <= always(3)
+        XCTAssertTrue(b2.f(1))
+    }
+
+    func test_greaterThan() {
+        let b: Behaviour<Bool> = always(3) > always(2)
+        XCTAssertTrue(b.f(1))
+        let b2: Behaviour<Bool> = always(2) > always(3)
+        XCTAssertFalse(b2.f(1))
+    }
+
+    func test_greaterThanOrEqualTo() {
+        let b: Behaviour<Bool> = always(3) >= always(2)
+        XCTAssertTrue(b.f(1))
+        let b2: Behaviour<Bool> = always(2) >= always(3)
+        XCTAssertFalse(b2.f(1))
     }
 
 }
