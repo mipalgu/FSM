@@ -64,7 +64,7 @@ public func addFactory(f: FiniteStateMachineFactory) {
 }
 
 public func addTransition<T: State>(
-    source: inout T,
+    inout source: T,
     target: State,
     canTransition: () -> Bool = {true}
 ) {
@@ -77,7 +77,7 @@ public func addTransition<T: State>(
 }
 
 public func addUrgentTransition<T: State>(
-    source: inout T,
+    inout source: T,
     target: State,
     ringlet: Ringlet,
     canTransition: () -> Bool = {true}
