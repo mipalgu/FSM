@@ -1,5 +1,5 @@
 /*
- * main.swift 
+ * WhiteboardBehaviourTests.swift 
  * tests 
  *
  * Created by Callum McColl on 12/03/2016.
@@ -57,9 +57,31 @@
  */
 
 import XCTest
+@testable import FSM
 
-XCTMain([
-    BehaviourTests(),
-    FunctionalOptionalTests(),
-    WhiteboardBehaviourTests()
-])
+#if os(OSX)
+import Darwin
+#elseif os(Linux)
+import Glibc
+#endif
+
+class WhiteboardBehaviourTests: XCTestCase {
+
+    var allTests: [(String, () throws -> Void)] {
+        return [
+            ("test_trigger", test_trigger)
+        ]
+    }
+
+    func test_trigger() {
+        let b: (Behaviour<wb_count?>, Int) = f(kCount_v)
+        //let r: (b: Behaviour<wb_count>, f: (wb_count) -> Void) = 
+        //    trigger<wb_count>(type: kCount_v)
+        //r.b.f(1)
+    }
+
+    private func f<T: GlobalVariables>(type: wb_types) -> (Behaviour<T?>, Int) {
+        return (Behaviour { (t: Time) -> T? in nil }, 0)
+    }
+
+}
