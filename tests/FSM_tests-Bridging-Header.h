@@ -63,7 +63,12 @@
 #define WHITEBOARD_POSTER_STRING_CONVERSION
 #endif
 
-#include "../FSM-Bridging-Header.h"
+#include <gusimplewhiteboard/gusimplewhiteboard.h>
+#include <gusimplewhiteboard/guwhiteboardtypelist_c_generated.h>
+
+#ifndef WHITEBOARD_POSTER_STRING_CONVERSION
+#define WHITEBOARD_POSTER_STRING_CONVERSION
+#endif
 
 #include <gusimplewhiteboard/typeClassDefs/wb_count.h>
 

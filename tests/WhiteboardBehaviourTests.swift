@@ -74,14 +74,15 @@ class WhiteboardBehaviourTests: XCTestCase {
     }
 
     func test_trigger() {
-        let b: (Behaviour<wb_count?>, Int) = f(kCount_v)
-        //let r: (b: Behaviour<wb_count>, f: (wb_count) -> Void) = 
-        //    trigger<wb_count>(type: kCount_v)
-        //r.b.f(1)
+        //let b: (Behaviour<wb_count?>, Int) = f(1)
+        let t: (b: Behaviour<wb_count?>, f: (wb_count) -> Void) =
+            trigger(kCount_v)
+        t.f(wb_count())
+        print(t.b.f(1))
     }
 
-    private func f<T: GlobalVariables>(type: wb_types) -> (Behaviour<T?>, Int) {
+    /*private func f<T: GlobalVariables>(type: Int) -> (Behaviour<T?>, Int) {
         return (Behaviour { (t: Time) -> T? in nil }, 0)
-    }
+    }*/
 
 }
