@@ -59,27 +59,51 @@
 public func trigger<T: GlobalVariables>(
     type: wb_types
 ) -> (Behaviour<T?>, (T) -> Void) {
-    //let wb: Whiteboard = Whiteboard()
-    //let sem: gsw_sema_t = wb.wbd.memory.sem
+    let wb: Whiteboard = Whiteboard()
+    let sem: gsw_sema_t = wb.wbd.memory.sem
     let b: Behaviour<T?> = Behaviour { (t: Time) -> T? in
-        //print(wb.wbd.memory)
-        return nil
-        /*guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
+        guard t > 0 && 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
             return nil
         }
-        var eventCount: UInt = UInt(wb.wbd.memory.event_counters[type.rawValue])
-        if (t > eventCount - UInt(GU_SIMPLE_WHITEBOARD_GENERATIONS)) {
+        // Get the event counter
+        let temp: UInt? =
+            withUnsafePointer(&wb.wbd.memory.wb.memory.event_counters.0) {
+                // Reference to first position in event_counters array.
+                let p: UnsafeMutablePointer<UInt16> = 
+                    UnsafeMutablePointer<UInt16>($0)
+                // Reference to the value for the type we want.
+                let p2: UnsafeMutablePointer<UInt16> = 
+                    p.advancedBy(Int(type.rawValue))
+                // Just in case.
+                if (nil == p2) {
+                    return nil
+                }
+                // Return the event count for our specific type.
+                return UInt(p2.memory)
+            }
+        print(temp)
+        guard let eventCount: UInt = temp else {
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
-        let i: Int = Int(t % UInt(GU_SIMPLE_WHITEBOARD_GENERATIONS))
-        let val: UnsafeMutablePointer<T> = (wb.wbd.memory.messages[type.rawValue][i])
-        guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
+        print("test")
+        // Check if t is valid
+        let generations: UInt = UInt(GU_SIMPLE_WHITEBOARD_GENERATIONS)
+        guard t >= eventCount - generations && t <= eventCount else {
+            gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
-        return val.memory*/
+        return nil
+        /*let i: Int = Int(t % generations)
+        let val: UnsafeMutablePointer<T> = (wb.wbd.memory.messages[type.rawValue][i])
+        if (nil == val) {
+            gsw_vacate(sem, GSW_SEM_PUTMSG) 
+            return nil
+        }
+        let v: T = val.memory
+        gsw_vacate(sem, GSW_SEM_PUTMSG) 
+        return v*/
     }
-    //let f: (T) -> Void = { wb.post($0, msg: type) }
-    let f: (T) -> Void = { (v: T) -> Void in }
+    let f: (T) -> Void = { wb.post($0, msg: type) }
     return (b, f)
 }
