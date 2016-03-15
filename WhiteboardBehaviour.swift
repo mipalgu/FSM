@@ -66,7 +66,7 @@ public func trigger<T: GlobalVariables>(
             return nil
         }
         // Get the event counter
-        let temp: UInt? =
+        let temp: Time? =
             withUnsafePointer(&wb.wbd.memory.wb.memory.event_counters.0) {
                 // Reference to first position in event_counters array.
                 let p: UnsafeMutablePointer<UInt16> = 
@@ -79,20 +79,25 @@ public func trigger<T: GlobalVariables>(
                     return nil
                 }
                 // Return the event count for our specific type.
-                return UInt(p2.memory)
+                return Time(p2.memory)
             }
         print(temp)
-        guard let eventCount: UInt = temp else {
+        guard let eventCount: Time = temp else {
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
         print("test")
         // Check if t is valid
-        let generations: UInt = UInt(GU_SIMPLE_WHITEBOARD_GENERATIONS)
-        guard t >= eventCount - generations && t <= eventCount else {
+        let generations: Time = Time(GU_SIMPLE_WHITEBOARD_GENERATIONS)
+        guard eventCount > generations && t >= eventCount - generations else {
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
+        guard t <= eventCount else {
+            gsw_vacate(sem, GSW_SEM_PUTMSG)
+            return nil
+        }
+        print("hello")
         return nil
         /*let i: Int = Int(t % generations)
         let val: UnsafeMutablePointer<T> = (wb.wbd.memory.messages[type.rawValue][i])
