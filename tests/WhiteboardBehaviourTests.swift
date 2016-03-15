@@ -77,8 +77,14 @@ class WhiteboardBehaviourTests: XCTestCase {
         //let b: (Behaviour<wb_count?>, Int) = f(1)
         let t: (b: Behaviour<wb_count?>, f: (wb_count) -> Void) =
             trigger(kCount_v)
-        t.f(wb_count())
-        print(t.b.f(1))
+        t.f(pure(1))
+        t.f(pure(2))
+        t.f(pure(3))
+        t.f(pure(4))
+        XCTAssertEqual(t.b.f(0), pure(1))
+        XCTAssertEqual(t.b.f(1), pure(2))
+        XCTAssertEqual(t.b.f(2), pure(3))
+        XCTAssertEqual(t.b.f(3), pure(4))
     }
 
     /*private func f<T: GlobalVariables>(type: Int) -> (Behaviour<T?>, Int) {

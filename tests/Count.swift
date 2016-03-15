@@ -87,3 +87,10 @@ extension wb_count: GlobalVariables {}
 public func ==(lhs: wb_count, rhs: wb_count) -> Bool {
     return lhs.description == rhs.description
 }
+
+func pure(count: Int64) -> wb_count {
+    var c: wb_count = wb_count()
+    c.count = count
+    return c
+}
+
