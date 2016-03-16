@@ -102,11 +102,8 @@ public func trigger<T: GlobalVariables>(
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
-        guard t <= eventCount else {
-            gsw_vacate(sem, GSW_SEM_PUTMSG)
-            return nil
-        }
-        print("hello")
+        print("2")
+        gsw_vacate(sem, GSW_SEM_PUTMSG) 
         return nil
         /*let i: Int = Int(t % generations)
         let val: UnsafeMutablePointer<T> = (wb.wbd.memory.messages[type.rawValue][i])
@@ -118,6 +115,9 @@ public func trigger<T: GlobalVariables>(
         gsw_vacate(sem, GSW_SEM_PUTMSG) 
         return v*/
     }
-    let f: (T) -> Void = { wb.post($0, msg: type) }
+    let f: (T) -> Void = {
+        wb.post($0, msg: type)
+        gsw_increment_event_counter(wb.wbd.memory.wb, Int32(type.rawValue))
+    }
     return (b, f)
 }
