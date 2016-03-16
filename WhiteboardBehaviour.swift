@@ -96,7 +96,9 @@ public func trigger<T: GlobalVariables>(
         print("test")
         // Check if t is valid
         let generations: Time = Time(GU_SIMPLE_WHITEBOARD_GENERATIONS)
-        guard eventCount > generations && t >= eventCount - generations else {
+        print("1")
+        let min: Time = eventCount < generations ? Time() : eventCount - generations
+        guard t <= eventCount && t >= min else {
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
