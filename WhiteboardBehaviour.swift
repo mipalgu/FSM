@@ -62,25 +62,32 @@ public func trigger<T: GlobalVariables>(
     let wb: Whiteboard = Whiteboard()
     let sem: gsw_sema_t = wb.wbd.memory.sem
     let b: Behaviour<T?> = Behaviour { (t: Time) -> T? in
-        guard t > 0 && 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
+        guard t >= 0 && 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
+            return nil
+        }
+        guard var gsw: UnsafeMutablePointer<gu_simple_whiteboard> = wb.wbd.memory.wb else {
+            gsw_vacate(sem, GSW_SEM_PUTMSG)
+            return nil
+        }
+        if (nil == gsw) {
+            gsw_vacate(sem, GSW_SEM_PUTMSG)
             return nil
         }
         // Get the event counter
-        let temp: Time? =
-            withUnsafePointer(&wb.wbd.memory.wb.memory.event_counters.0) {
-                // Reference to first position in event_counters array.
-                let p: UnsafeMutablePointer<UInt16> = 
-                    UnsafeMutablePointer<UInt16>($0)
-                // Reference to the value for the type we want.
-                let p2: UnsafeMutablePointer<UInt16> = 
-                    p.advancedBy(Int(type.rawValue))
-                // Just in case.
-                if (nil == p2) {
-                    return nil
-                }
-                // Return the event count for our specific type.
-                return Time(p2.memory)
+        let temp: Time? = withUnsafePointer(&gsw.memory.event_counters.0) {
+            // Reference to first position in event_counters array.
+            let p: UnsafeMutablePointer<UInt16> = 
+                UnsafeMutablePointer<UInt16>($0)
+            // Reference to the value for the type we want.
+            let p2: UnsafeMutablePointer<UInt16> = 
+                p.advancedBy(Int(type.rawValue))
+            // Just in case.
+            if (nil == p2) {
+                return nil
             }
+            // Return the event count for our specific type.
+            return Time(p2.memory)
+        }
         print(temp)
         guard let eventCount: Time = temp else {
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
