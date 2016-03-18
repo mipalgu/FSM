@@ -72,13 +72,13 @@ public class CArrayTests: XCTestCase {
         var i: Int = 5
         let p: UnsafeMutablePointer<Int> = withUnsafeMutablePointer(&i, { $0 }) 
         let arr: CArray<Int> = CArray(first: p, length: 1)
-        XCTAssert(arr[0], i)
+        XCTAssertEqual(arr.first, i)
     }
 
     public func testCreateWithInout() {
         var i: Int = 5
         let arr: CArray<Int> = CArray(first: &i, length: 1)
-        XCTAssert(arr[0], i)
+        XCTAssertEqual(arr.first, i)
     }
 
 }
