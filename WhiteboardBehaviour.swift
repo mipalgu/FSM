@@ -74,35 +74,19 @@ public func trigger<T: GlobalVariables>(
             return nil
         }
         // Get the event counter
-        let temp: Time? = withUnsafePointer(&gsw.memory.event_counters.0) {
-            // Reference to first position in event_counters array.
-            let p: UnsafeMutablePointer<UInt16> = 
-                UnsafeMutablePointer<UInt16>($0)
-            // Reference to the value for the type we want.
-            let p2: UnsafeMutablePointer<UInt16> = 
-                p.advancedBy(Int(type.rawValue))
-            // Just in case.
-            if (nil == p2) {
-                return nil
-            }
-            // Return the event count for our specific type.
-            return Time(p2.memory)
-        }
-        print(temp)
-        guard let eventCount: Time = temp else {
-            gsw_vacate(sem, GSW_SEM_PUTMSG) 
-            return nil
-        }
-        print("test")
+        let index: Int = Int(type.rawValue)
+        let eventCounters: CArray<UInt16> = CArray(
+            first: &gsw.memory.event_counters.0,
+            length: index
+        )
+        let eventCount: Time =  Time(eventCounters[index])
         // Check if t is valid
         let generations: Time = Time(GU_SIMPLE_WHITEBOARD_GENERATIONS)
-        print("1")
         let min: Time = eventCount < generations ? Time() : eventCount - generations
         guard t <= eventCount && t >= min else {
             gsw_vacate(sem, GSW_SEM_PUTMSG) 
             return nil
         }
-        print("2")
         gsw_vacate(sem, GSW_SEM_PUTMSG) 
         return nil
         /*let i: Int = Int(t % generations)
