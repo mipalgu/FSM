@@ -104,7 +104,7 @@ extension String.UTF16View: KripkeCollection {}
 
 extension String.UTF8View: KripkeCollection {}
 
-extension UnicodeScalar.UTF16View: KripkeCollection {}
+//extension UnicodeScalar.UTF16View: KripkeCollection {}
 
 extension UnsafeBufferPointer: KripkeCollection {}
 
@@ -144,28 +144,28 @@ extension FlattenSequence: KripkeCollection {}
 
 extension GeneratorOfOne: KripkeCollection {}
 
-extension GeneratorSequence: KripkeCollection
+extension GeneratorSequence: KripkeCollection {}
 
-extension IndexingGenerator: KripkeCollection
+extension IndexingGenerator: KripkeCollection {}
 
-extension JoinSequence: KirpkeCollection
+extension JoinSequence: KripkeCollection {}
 
-extension LazyFilterGenerator: KripkeCollection
+extension LazyFilterGenerator: KripkeCollection {}
 
-extension LazyMapGenerator: KripkeCollection
+extension LazyMapGenerator: KripkeCollection {}
 
-extension LazyFilterSequence: KripkeCollecton
+//extension LazyFilterSequence: KripkeCollecton {}
 
-extension LazySequence: KripkeCollection
+extension LazySequence: KripkeCollection {}
 
-extension PermutationGenerator: KripkeCollection
+extension PermutationGenerator: KripkeCollection {}
 
-extension RangeGenerator: KripkeCollection
+extension RangeGenerator: KripkeCollection {}
 
-extension StrideThrough: KripkeCollection
+extension StrideThrough: KripkeCollection {}
 
-extension StrideTo: KripkeCollection
+extension StrideTo: KripkeCollection {}
 
-extension UnsafeBufferPointerGenerator: KripkeCollection
+extension UnsafeBufferPointerGenerator: KripkeCollection {}
 
-extension Zip2Sequence: KripkeCollection
+extension Zip2Sequence: KripkeCollection {}
