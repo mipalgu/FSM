@@ -1,8 +1,8 @@
 /*
- * main.swift 
+ * CArrayTests.swift 
  * tests 
  *
- * Created by Callum McColl on 12/03/2016.
+ * Created by Callum McColl on 19/03/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,10 +57,28 @@
  */
 
 import XCTest
+@testable import FSM
 
-XCTMain([
-    BehaviourTests(),
-    CArrayTests(),
-    FunctionalOptionalTests(),
-    WhiteboardBehaviourTests()
-])
+public class CArrayTests: XCTestCase {
+
+    public var allTests: [(String, () throws -> Void)] {
+        return [
+            ("testCreateWithUnsafeMutablePointer", testCreateWithUnsafeMutablePointer),
+            ("testCreateWithInout", testCreateWithInout)
+        ]
+    }
+
+    public func testCreateWithUnsafeMutablePointer() {
+        var i: Int = 5
+        let p: UnsafeMutablePointer<Int> = withUnsafeMutablePointer(&i, { $0 }) 
+        let arr: CArray<Int> = CArray(first: p, length: 1)
+        XCTAssert(arr[0], i)
+    }
+
+    public func testCreateWithInout() {
+        var i: Int = 5
+        let arr: CArray<Int> = CArray(first: &i, length: 1)
+        XCTAssert(arr[0], i)
+    }
+
+}
