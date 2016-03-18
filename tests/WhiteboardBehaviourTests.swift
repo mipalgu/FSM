@@ -73,6 +73,15 @@ class WhiteboardBehaviourTests: XCTestCase {
         ]
     }
 
+    func setUp() {
+        print("setup")
+        let wb: Whiteboard = Whiteboard()
+        wb.post(wb_count(), msg: kCount_v)
+        wb.post(wb_count(), msg: kCount_v)
+        wb.post(wb_count(), msg: kCount_v)
+        wb.post(wb_count(), msg: kCount_v)
+    }
+
     func test_trigger() {
         //let b: (Behaviour<wb_count?>, Int) = f(1)
         let t: (b: Behaviour<wb_count?>, f: (wb_count) -> Void) =
