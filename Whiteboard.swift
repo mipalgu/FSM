@@ -88,7 +88,9 @@ public struct Whiteboard: WhiteboardType {
     
     /// get message template function
     public func get<T>(msg: wb_types) -> T {
-        let msgp = UnsafePointer<T>(gsw_current_message(wb, Int32(msg.rawValue)))
+        var msg: UnsafeMutablePointer<gu_simple_message> =
+            gsw_current_message(wb, Int32(msg.rawValue))
+        let msgp = UnsafePointer<T>(msg)
         return msgp.memory
     }
     
