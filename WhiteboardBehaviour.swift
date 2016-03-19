@@ -57,51 +57,41 @@
  */
 
 public func trigger<T: GlobalVariables>(
-    type: wb_types
+    type: wb_types,
+    wbd: Whiteboard = Whiteboard(),
+    atomic: Bool = true,
+    notifySubscribers: Bool = true
 ) -> (Behaviour<T?>, (T) -> Void) {
-    let wb: Whiteboard = Whiteboard()
-    let sem: gsw_sema_t = wb.wbd.memory.sem
+    let wb: GenericWhiteboard = GenericWhiteboard<T>(
+        msgType: type,
+        wb: wbd,
+        atomic: atomic,
+        notifySubscribers: notifySubscribers
+    )
     let b: Behaviour<T?> = Behaviour { (t: Time) -> T? in
-        guard t >= 0 && 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
+        guard t >= Time.min && true == wb.procure() else {
             return nil
         }
-        guard var gsw: UnsafeMutablePointer<gu_simple_whiteboard> = wb.wbd.memory.wb else {
-            gsw_vacate(sem, GSW_SEM_PUTMSG)
-            return nil
+        // Calculate the minimum time allowed.
+        let eventCount: Time =  Time(wb.eventCount)
+        let generations: Time = Time(wb.generations)
+        let min: Time
+        if (eventCount < generations) {
+            min = Time.min
+        } else {
+            min = Time.min + eventCount - generations
         }
-        if (nil == gsw) {
-            gsw_vacate(sem, GSW_SEM_PUTMSG)
-            return nil
-        }
-        // Get the event counter
-        let index: Int = Int(type.rawValue)
-        let eventCounters: CArray<UInt16> = CArray(
-            first: &gsw.memory.event_counters.0,
-            length: index
-        )
-        let eventCount: Time =  Time(eventCounters[index])
-        // Check if t is valid
-        let generations: Time = Time(GU_SIMPLE_WHITEBOARD_GENERATIONS)
-        let min: Time = eventCount < generations ? Time() : eventCount - generations
+        // Check if t is valid.
         guard t <= eventCount && t >= min else {
-            gsw_vacate(sem, GSW_SEM_PUTMSG) 
+            wb.vacate()
             return nil
         }
-        gsw_vacate(sem, GSW_SEM_PUTMSG) 
-        return nil
-        /*let i: Int = Int(t % generations)
-        let val: UnsafeMutablePointer<T> = (wb.wbd.memory.messages[type.rawValue][i])
-        if (nil == val) {
-            gsw_vacate(sem, GSW_SEM_PUTMSG) 
-            return nil
-        }
-        let v: T = val.memory
-        gsw_vacate(sem, GSW_SEM_PUTMSG) 
-        return v*/
+        // Fetch the value.
+        let i: Int = Int(t % generations)
+        let v: T = wb.messages[i] 
+        wb.vacate()
+        return v
     }
-    let f: (T) -> Void = {
-        wb.post($0, msg: type)
-        gsw_increment_event_counter(wb.wbd.memory.wb, Int32(type.rawValue))
-    }
+    let f: (T) -> Void = { wb.post($0) }
     return (b, f)
 }
