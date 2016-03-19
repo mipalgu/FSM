@@ -112,8 +112,11 @@ extension CArray: CollectionType {
     }
 
     public subscript(i: Int) -> Element {
-        let p = self.p!.advancedBy(i)
-        return p.memory
+        get {
+            return p![i]
+        } set {
+            p![i] = newValue
+        }
     }
 
 }

@@ -64,7 +64,8 @@ public class CArrayTests: XCTestCase {
     public var allTests: [(String, () throws -> Void)] {
         return [
             ("testCreateWithUnsafeMutablePointer", testCreateWithUnsafeMutablePointer),
-            ("testCreateWithInout", testCreateWithInout)
+            ("testCreateWithInout", testCreateWithInout),
+            ("testSubscript", testSubscript)
         ]
     }
 
@@ -79,6 +80,13 @@ public class CArrayTests: XCTestCase {
         var i: Int = 5
         let arr: CArray<Int> = CArray(first: &i, length: 1)
         XCTAssertEqual(arr.first, i)
+    }
+
+    public func testSubscript() {
+        var i: Int = 1
+        let arr: CArray<Int> = CArray(first: &i, length: 1)
+        arr[0] = 2
+        XCTAssertEqual(arr[0], 2)
     }
 
 }
