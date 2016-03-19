@@ -186,6 +186,7 @@ public class GenericWhiteboard<T> {
             return
         }
         self.wb.post(val, msg: self.msgType)
+        self.eventCount += 1
         self.vacate()
     }
 
