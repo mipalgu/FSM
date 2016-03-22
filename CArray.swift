@@ -61,7 +61,7 @@ public class CArray<T> {
     public typealias Element = T
 
     private let p: UnsafeMutablePointer<Element>?
-    private let length: Int
+    public let length: Int
 
     public convenience init(first: inout Element, length: Int = 0) {
         self.init(
@@ -87,13 +87,12 @@ extension CArray: SequenceType {
         }
         var pos: Int = 0
         return AnyGenerator {
-            let temp: Int = pos
-            pos = pos + 1
-            let p: UnsafeMutablePointer<Element> = self.p!.advancedBy(temp)
-            if (nil == p) {
+            if (pos >= self.length) {
                 return nil
             }
-            return p.memory
+            let v: Element = self.p![pos]
+            pos = pos + 1
+            return v 
         }
     }
 
@@ -108,14 +107,14 @@ extension CArray: CollectionType {
     }
 
     public var endIndex: Int {
-        return 0 == length ? 0 : self.length - 1
+        return 0 == length ? 0 : self.length
     }
 
     public subscript(i: Int) -> Element {
         get {
-            return p![i]
+            return p!.advancedBy(i).memory
         } set {
-            p![i] = newValue
+            p!.advancedBy(i).memory = newValue
         }
     }
 

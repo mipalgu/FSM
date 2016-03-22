@@ -63,30 +63,48 @@ public class CArrayTests: XCTestCase {
 
     public var allTests: [(String, () throws -> Void)] {
         return [
-            ("testCreateWithUnsafeMutablePointer", testCreateWithUnsafeMutablePointer),
-            ("testCreateWithInout", testCreateWithInout),
-            ("testSubscript", testSubscript)
+            ("test_createWithUnsafeMutablePointer", test_createWithUnsafeMutablePointer),
+            ("test_createWithInout", test_createWithInout),
+            ("test_subscript", test_subscript),
+            ("test_loop", test_loop)
         ]
     }
 
-    public func testCreateWithUnsafeMutablePointer() {
+    public func test_createWithUnsafeMutablePointer() {
         var i: Int = 5
         let p: UnsafeMutablePointer<Int> = withUnsafeMutablePointer(&i, { $0 }) 
         let arr: CArray<Int> = CArray(first: p, length: 1)
         XCTAssertEqual(arr.first, i)
     }
 
-    public func testCreateWithInout() {
+    public func test_createWithInout() {
         var i: Int = 5
         let arr: CArray<Int> = CArray(first: &i, length: 1)
         XCTAssertEqual(arr.first, i)
     }
 
-    public func testSubscript() {
-        var i: Int = 1
-        let arr: CArray<Int> = CArray(first: &i, length: 1)
-        arr[0] = 2
-        XCTAssertEqual(arr[0], 2)
+    public func test_subscript() {
+        var mem: (Int, Int, Int) = (1, 2, 3)
+        let arr: CArray<Int> = CArray(first: &mem.0, length: 3)
+        arr[0] = 3
+        arr[2] = 1
+        XCTAssertEqual(3, arr.count)
+        XCTAssertEqual(arr.count, arr.length)
+        XCTAssertEqual(arr[0], 3)
+        XCTAssertEqual(arr[1], 2)
+        XCTAssertEqual(arr[2], 1)
+    }
+
+    public func test_loop() {
+        var i: Int = 0
+        var mem: (Int, Int, Int) = (1, 2, 3)
+        let arr: CArray<Int> = CArray(first: &mem.0, length: 3)
+        for v: Int in arr {
+            XCTAssertEqual(arr[i], v)
+            i = i + 1
+        }
+        XCTAssertEqual(arr.count, i)
+        XCTAssertEqual(arr.length, i)
     }
 
 }
