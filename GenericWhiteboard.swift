@@ -154,6 +154,10 @@ public class GenericWhiteboard<T> {
         return Int(self.msgType.rawValue)
     }
 
+    public var nextIndex: UInt8 {
+        return (self.currentIndex + 1) % UInt8(self.generations)
+    }
+
     public var nextMessage: Message {
         get {
             return self.messages[Int(self.currentIndex) + 1 % self.generations]
