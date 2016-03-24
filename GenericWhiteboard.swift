@@ -124,16 +124,30 @@ public class GenericWhiteboard<T> {
         )
     }
 
-    public var messages: CArray<Message> {
-        let messages = CArray(
+    public var messages: ConvertibleCArray<gu_simple_message, Message> {
+        return withUnsafeMutablePointer(&self.gsw.memory.messages.0) {
+            withUnsafeMutablePointer(&$0[self.msgTypeOffset].0) {
+                ConvertibleCArray<gu_simple_message, Message>(
+                    arr: CArray<gu_simple_message>(
+                        p: $0,
+                        length: self.generations
+                    )
+                )
+            }
+        }
+        /*let messages = CArray(
             first: &self.gsw.memory.messages.0,
             length: self.totalMessageTypes
         )
+        //print(messages.map { $0 })
         let first: UnsafeMutablePointer<Message> = 
             withUnsafeMutablePointer(&messages[self.msgTypeOffset].0) {
                 UnsafeMutablePointer<Message>($0)
             }
-        return CArray(first: first, length: self.generations)
+        let temp = CArray(first: first, length: self.generations)
+        //print(temp.p)
+        //print("gmessages: \(temp.map { $0 })")
+        return temp*/
     }
 
     public var msgTypeOffset: Int {

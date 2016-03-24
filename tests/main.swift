@@ -62,5 +62,6 @@ XCTMain([
     BehaviourTests(),
     CArrayTests(),
     FunctionalOptionalTests(),
+    GenericWhiteboardTests(),
     WhiteboardBehaviourTests()
 ])

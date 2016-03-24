@@ -66,47 +66,76 @@ public class GenericWhiteboardTests: XCTestCase {
             ("test_changeIndex", test_changeIndex),
             ("test_changeIndexWithOverflow", test_changeIndexWithOverflow),
             ("test_postStoresValue", test_postStoresValue),
-            ("test_postIncrementsIndex", test_postIncrementsIndex)
+            ("test_postIncrementsIndex", test_postIncrementsIndex),
+            ("test_postIncrementsEventCount", test_postIncrementsEventCount),
+            ("test_messagesStoresTheMessage", test_messagesStoresTheMessage),
+            ("test_changeMessages", test_changeMessages)
         ]
     }
 
-    private var wb: GenericWhiteboard<wb_count> = 
-        GenericWhiteboard<wb_count>(msgType: kCount_v)
+    private var wb: Whiteboard = Whiteboard()
+    private var gwb: GenericWhiteboard<wb_count>! 
 
     public func setUp() {
-        self.wb = GenericWhiteboard<wb_count>(msgType: kCount_v)
-        for _ in 0 ..< wb.generations {
-            self.wb.post(wb_count())
+        print("setUp")
+        self.gwb = GenericWhiteboard<wb_count>(msgType: kCount_v, wb: self.wb)
+        for _ in 0 ..< gwb.generations {
+            print("post")
+            self.wb.post(wb_count(), msg: kCount_v)
         }
-        self.wb.eventCount = 0
+        self.gwb.eventCount = 0
+        self.gwb.currentIndex = 0
     }
 
     public func test_changeIndex() {
-        let i: UInt8 = wb.currentIndex
+        let i: UInt8 = gwb.currentIndex
         if (0 == i) {
-            wb.currentIndex = 1
-            XCTAssertEqual(wb.currentIndex, 1)
+            gwb.currentIndex = 1
+            XCTAssertEqual(gwb.currentIndex, 1)
             return
         }
-        wb.currentIndex = 0
-        XCTAssertEqual(wb.currentIndex, 0)
+        gwb.currentIndex = 0
+        XCTAssertEqual(gwb.currentIndex, 0)
     }
 
     public func test_changeIndexWithOverflow() {
-        let i: UInt8 = UInt8(wb.generations)
-        wb.currentIndex = i
-        XCTAssertEqual(wb.currentIndex, 0)
+        let i: UInt8 = UInt8(gwb.generations)
+        gwb.currentIndex = i
+        XCTAssertEqual(gwb.currentIndex, 0)
     }
 
     public func test_postStoresValue() {
-        wb.post(wb_count(count: 7))
-        XCTAssertEqual(wb.currentMessage.count, 7)
+        gwb.post(wb_count(count: 7))
+        XCTAssertEqual(gwb.currentMessage.count, 7)
     }
 
     public func test_postIncrementsIndex() {
-        let i: UInt8 = wb.currentIndex
-        wb.post(wb_count(count: 7))
-        XCTAssertEqual(wb.currentIndex, i + 1)
+        let i: UInt8 = gwb.currentIndex
+        gwb.post(wb_count(count: 7))
+        XCTAssertEqual(gwb.currentIndex, i + 1)
+    }
+
+    public func test_postIncrementsEventCount() {
+        let e: UInt16 = gwb.eventCount
+        gwb.post(wb_count(count: 8))
+        XCTAssertEqual(gwb.eventCount, e + 1)
+    }
+
+    public func test_messagesStoresTheMessage() {
+        let m: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        let msg: wb_count = wb_count(count: 9)
+        gwb.post(msg)
+        let m2: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        XCTAssertEqual(gwb.messages[Int(gwb.currentIndex)], msg)
+    }
+
+    public func test_changeMessages() {
+        let m: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        let msg: wb_count = wb_count(count: 10)
+        m[2] = msg
+        let m2: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        XCTAssertEqual(msg, m2[2])
+        XCTAssertEqual(m[2], m2[2])
     }
 
 }

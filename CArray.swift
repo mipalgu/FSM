@@ -60,18 +60,18 @@ public class CArray<T> {
 
     public typealias Element = T
 
-    private let p: UnsafeMutablePointer<Element>?
-    public let length: Int
+    internal var p: UnsafeMutablePointer<Element>?
+    internal var length: Int
 
     public convenience init(first: inout Element, length: Int = 0) {
         self.init(
-            first: withUnsafeMutablePointer(&first, { $0 }),
+            p: withUnsafeMutablePointer(&first, { $0 }),
             length: length
         )
     }
 
-    public init(first: UnsafeMutablePointer<Element>? = nil, length: Int = 0) {
-        self.p = first
+    public init(p: UnsafeMutablePointer<Element>? = nil, length: Int = 0) {
+        self.p = p
         self.length = length
     }
 

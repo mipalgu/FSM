@@ -1,8 +1,8 @@
 /*
- * CArrayTests.swift 
- * tests 
+ * ConvertibleCArray.swift 
+ * FSM 
  *
- * Created by Callum McColl on 19/03/2016.
+ * Created by Callum McColl on 25/03/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,55 +56,61 @@
  *
  */
 
-import XCTest
-@testable import FSM
+public class ConvertibleCArray<From, To> {
+    
+    public typealias Element = To
 
-public class CArrayTests: XCTestCase {
+    private var arr: CArray<From>
 
-    public var allTests: [(String, () throws -> Void)] {
-        return [
-            ("test_createWithUnsafeMutablePointer", test_createWithUnsafeMutablePointer),
-            ("test_createWithInout", test_createWithInout),
-            ("test_subscript", test_subscript),
-            ("test_loop", test_loop)
-        ]
+    public init(arr: CArray<From>) {
+        self.arr = arr
     }
 
-    public func test_createWithUnsafeMutablePointer() {
-        var i: Int = 5
-        let p: UnsafeMutablePointer<Int> = withUnsafeMutablePointer(&i, { $0 }) 
-        let arr: CArray<Int> = CArray(p: p, length: 1)
-        XCTAssertEqual(arr.first, i)
-    }
+}
 
-    public func test_createWithInout() {
-        var i: Int = 5
-        let arr: CArray<Int> = CArray(first: &i, length: 1)
-        XCTAssertEqual(arr.first, i)
-    }
+extension ConvertibleCArray: SequenceType {
 
-    public func test_subscript() {
-        var mem: (Int, Int, Int) = (1, 2, 3)
-        let arr: CArray<Int> = CArray(first: &mem.0, length: 3)
-        arr[0] = 3
-        arr[2] = 1
-        XCTAssertEqual(3, arr.count)
-        XCTAssertEqual(arr.count, arr.length)
-        XCTAssertEqual(arr[0], 3)
-        XCTAssertEqual(arr[1], 2)
-        XCTAssertEqual(arr[2], 1)
-    }
+    public typealias Generator = AnyGenerator<Element>
 
-    public func test_loop() {
-        var i: Int = 0
-        var mem: (Int, Int, Int) = (1, 2, 3)
-        let arr: CArray<Int> = CArray(first: &mem.0, length: 3)
-        for v: Int in arr {
-            XCTAssertEqual(arr[i], v)
-            i = i + 1
+    public func generate() -> AnyGenerator<Element> {
+        if (0 == self.arr.count) {
+            return AnyGenerator { nil }
         }
-        XCTAssertEqual(arr.count, i)
-        XCTAssertEqual(arr.length, i)
+        var pos: Int = 0
+        return AnyGenerator {
+            if (pos >= self.arr.length || nil == self.arr.p) {
+                return nil
+            }
+            let v: Element = UnsafeMutablePointer<Element>(
+                self.arr.p!.advancedBy(pos)
+            ).memory
+            pos = pos + 1
+            return v
+        }
+    }
+}
+
+extension ConvertibleCArray: CollectionType {
+
+    public typealias Index = Int
+
+    public var startIndex: Int {
+        return self.arr.startIndex
+    }
+
+    public var endIndex: Int {
+        return self.arr.endIndex
+    }
+
+    public subscript(i: Int) -> Element {
+        get {
+            return UnsafeMutablePointer<Element>(self.arr.p!.advancedBy(i)).memory
+        } set {
+            var newValue: Element = newValue
+            self.arr[i] = withUnsafeMutablePointer(&newValue) {
+                return UnsafeMutablePointer<From>($0).memory
+            }
+        }
     }
 
 }
