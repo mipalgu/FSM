@@ -68,12 +68,16 @@ public func trigger<T: GlobalVariables>(
         atomic: atomic,
         notifySubscribers: notifySubscribers
     )
+    // Create Behaviour
     let b: Behaviour<T?> = Behaviour { (t: Time) -> T? in
+        var t: Time = t
         guard t >= Time.min && true == wb.procure() else {
             return nil
         }
+        // Wrap t around if it goes above eventCount's max value.
+        t = t % Time(wb.eventCount.dynamicType.max)
         // Calculate the minimum time allowed.
-        let eventCount: Time =  Time(wb.eventCount)
+        let eventCount: Time = Time(wb.eventCount)
         let generations: Time = Time(wb.generations)
         let min: Time
         if (eventCount < generations) {
@@ -87,11 +91,10 @@ public func trigger<T: GlobalVariables>(
             return nil
         }
         // Fetch the value.
-        let i: Int = Int(t % generations)
+        let i: Int = Int((t + Time(wb.nextIndex)) % generations)
         let v: T = wb.messages[i] 
         wb.vacate()
         return v
     }
-    let f: (T) -> Void = { wb.post($0) }
-    return (b, f)
+    return (b, wb.post)
 }

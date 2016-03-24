@@ -77,10 +77,8 @@ public class GenericWhiteboardTests: XCTestCase {
     private var gwb: GenericWhiteboard<wb_count>! 
 
     public func setUp() {
-        print("setUp")
         self.gwb = GenericWhiteboard<wb_count>(msgType: kCount_v, wb: self.wb)
         for _ in 0 ..< gwb.generations {
-            print("post")
             self.wb.post(wb_count(), msg: kCount_v)
         }
         self.gwb.eventCount = 0

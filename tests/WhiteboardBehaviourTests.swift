@@ -74,12 +74,11 @@ class WhiteboardBehaviourTests: XCTestCase {
     }
 
     func setUp() {
-        print("setup")
-        let wb: Whiteboard = Whiteboard()
-        wb.post(wb_count(), msg: kCount_v)
-        wb.post(wb_count(), msg: kCount_v)
-        wb.post(wb_count(), msg: kCount_v)
-        wb.post(wb_count(), msg: kCount_v)
+        let wb: GenericWhiteboard = GenericWhiteboard<wb_count>(msgType: kCount_v)
+        for _ in 0 ..< wb.generations {
+            wb.post(wb_count())
+        }
+        wb.eventCount = 0
     }
 
     func test_trigger() {
