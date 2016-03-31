@@ -110,6 +110,10 @@ extension _State where
     
 }
 
+public func ==<T: _State, U: _State>(lhs: T, rhs: U) -> Bool {
+    return lhs.name == rhs.name
+}
+
 public class State:
     _State,
     CustomStringConvertible,
@@ -142,8 +146,4 @@ public class State:
     public func main() {}
 
     public func onExit() {}
-}
-
-public func ==(lhs: State, rhs: State) -> Bool {
-    return lhs.name == rhs.name
 }
