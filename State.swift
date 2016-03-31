@@ -137,16 +137,11 @@ public class State:
         self.transitions = transitions
     }
 
-    public func addTransition(transition: Transition) {
-        self.transitions.append(transition)
-    }
-
     public func onEntry() {}
 
     public func main() {}
-    
-    public func onExit() {}
 
+    public func onExit() {}
 }
 
 public func ==(lhs: State, rhs: State) -> Bool {
