@@ -59,13 +59,11 @@
 public class EmptyTransition: Transition {
     
     public let target: State
+
+    public private(set) var canTransition: Bool = true
     
     public init(target: State) {
         self.target = target
-    }
-    
-    public func canTransition() -> Bool {
-        return true
     }
     
 }

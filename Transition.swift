@@ -74,6 +74,6 @@ public protocol Transition {
     /**
      *  Do we meet all of the conditions to transition?
      */
-    func canTransition() -> Bool
+    var canTransition: Bool { get }
     
 }

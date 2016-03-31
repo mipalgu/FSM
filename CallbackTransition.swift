@@ -59,14 +59,14 @@
 public class CallbackTransition: EmptyTransition {
     
     public var _canTransition: () -> Bool
+
+    public override var canTransition: Bool {
+        return self._canTransition()
+    }
     
     public init(target: State, canTransition: () -> Bool = { return true }) {
         self._canTransition = canTransition
         super.init(target: target)
-    }
-    
-    public final override func canTransition() -> Bool {
-        return self._canTransition()
     }
     
 }
