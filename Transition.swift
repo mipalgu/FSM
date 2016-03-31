@@ -67,11 +67,6 @@
 public protocol Transition {
     
     /**
-     *  The state which we are transitioning from.
-     */
-    var source: State { get }
-    
-    /**
      *  The state which we are transitioning to.
      */
     var target: State { get }

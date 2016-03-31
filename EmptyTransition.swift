@@ -58,12 +58,9 @@
 
 public class EmptyTransition: Transition {
     
-    public let source: State
-    
     public let target: State
     
-    public init(source: State, target: State) {
-        self.source = source
+    public init(target: State) {
         self.target = target
     }
     
