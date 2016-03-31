@@ -82,7 +82,6 @@ class WhiteboardBehaviourTests: XCTestCase {
     }
 
     func test_trigger() {
-        //let b: (Behaviour<wb_count?>, Int) = f(1)
         let t: (b: Behaviour<wb_count?>, f: (wb_count) -> Void) =
             trigger(kCount_v)
         t.f(pure(1))
@@ -94,9 +93,5 @@ class WhiteboardBehaviourTests: XCTestCase {
         XCTAssertEqual(t.b.f(2), pure(3))
         XCTAssertEqual(t.b.f(3), pure(4))
     }
-
-    /*private func f<T: GlobalVariables>(type: Int) -> (Behaviour<T?>, Int) {
-        return (Behaviour { (t: Time) -> T? in nil }, 0)
-    }*/
 
 }
