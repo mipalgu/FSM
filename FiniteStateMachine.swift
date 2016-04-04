@@ -147,7 +147,9 @@ public extension _FiniteStateMachine where Self: StateExecuter, Self: Suspendabl
     
 }
 
-public func ==(lhs: _FiniteStateMachine, rhs: _FiniteStateMachine) -> Bool {
+public func ==<
+    T: _FiniteStateMachine, U: _FiniteStateMachine
+>(lhs: T, rhs: U) -> Bool {
     return lhs.name == rhs.name
 }
 

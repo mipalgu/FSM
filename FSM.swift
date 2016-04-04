@@ -63,7 +63,7 @@
  *  implementation within the protocol extensions and simply initializes the
  *  required variables from it init method.
  */
-public class FSM: FiniteStateMachine {
+public class FSM: FiniteStateMachine, Equatable {
 
     public let name: String
     
