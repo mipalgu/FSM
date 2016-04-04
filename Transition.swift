@@ -61,7 +61,7 @@
  *  next.
  *  
  *  Transitions may have to meet certain conditions which is why the
- *  canTransition method returns a Bool indicating whether or not this specific
+ *  canTransition property is a Bool indicating whether or not this specific
  *  transition is allowed.
  */
 public protocol Transition {
