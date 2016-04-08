@@ -169,3 +169,11 @@ public protocol FiniteStateMachine:
     StateExecuter,
     Resumeable
 {}
+
+public func ==(lhs: FiniteStateMachine, rhs: FiniteStateMachine) -> Bool {
+    return lhs.name == rhs.name
+}
+
+public func !=(lhs: FiniteStateMachine, rhs: FiniteStateMachine) -> Bool {
+    return lhs.name != rhs.name
+}
