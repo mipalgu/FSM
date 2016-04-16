@@ -61,6 +61,7 @@ import XCTest
 XCTMain([
     BehaviourTests(),
     CArrayTests(),
+    FactoriesTests(),
     FunctionalOptionalTests(),
     GenericWhiteboardTests(),
     WhiteboardBehaviourTests()

@@ -58,35 +58,41 @@
 
 public class Factories {
     
-    public var count: Int {
-        return self.factories.count
-    }    
-
-    private static var factories: [FiniteStateMachineFactory] = []
+    private static var factories: Stack<FiniteStateMachineFactory> = 
+        Stack<FiniteStateMachineFactory>()
     
-    public private(set) var factories: [FiniteStateMachineFactory] {
+    public private(set) var factories: Stack<FiniteStateMachineFactory> {
         get {
             return Factories.factories
         } set {
             Factories.factories = newValue
         }
     }
+
+    public var count: Int {
+        return self.factories.count
+    }
+
+    public var isEmpty: Bool {
+        return self.factories.isEmpty
+    }
     
     public init() {}
-    
-    public func addFactory(f: FiniteStateMachineFactory) {
-        self.factories.append(f)
-    }
-    
+
     public func clear() {
-        self.factories = []
+        self.factories.clear()
     }
-    
-    public func getLast() -> FiniteStateMachineFactory? {
-        if (0 == self.factories.count) {
-            return nil
-        }
-        return self.factories[self.factories.count - 1]
+
+    public func peek() -> FiniteStateMachineFactory? {
+        return self.factories.peek()
     }
-    
+
+    public func pop() -> FiniteStateMachineFactory {
+        return self.factories.pop()
+    }
+
+    public func push(newElement: FiniteStateMachineFactory) {
+        self.factories.push(newElement)
+    }
+
 }

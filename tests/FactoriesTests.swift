@@ -1,9 +1,9 @@
 /*
- * globals.swift
- * swiftfsm
+ * FactoriesTest.swift 
+ * tests 
  *
- * Created by Callum McColl on 8/09/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 16/04/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,49 +56,77 @@
  *
  */
 
-public var DEBUG: Bool = false
+import XCTest
+@testable import FSM
 
-public func addFactory(f: FiniteStateMachineFactory) {
-    let factories: Factories = Factories()
-    factories.push(f)
-}
+class FactoriesTests: XCTestCase {
 
-public func dprint(
-    items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n"
-) {
-    if (false == DEBUG) {
-        return
+    var allTests: [(String, () throws -> Void)] {
+        return [
+            ("test_count", test_count),
+            ("test_isEmptyWhenEmpty", test_isEmptyWhenEmpty),
+            ("test_isEmptyWhenNotEmpty", test_isEmptyWhenNotEmpty),
+            ("test_isMonostate", test_isMonostate),
+            ("test_peek", test_peek),
+            ("test_pop", test_pop)
+        ]
     }
-    let _ = items.map {
-        debugPrint($0, separator: separator, terminator: terminator)
-    }
-}
 
-public func dprint<Target: OutputStreamType>(
-    items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n",
-    inout toStream output: Target
-) {
-    if (false == DEBUG) {
-        return
+    func setUp() {
+        let f: Factories = Factories()
+        f.clear()
     }
-    let _ = items.map {
-        debugPrint(
-            $0,
-            separator: separator,
-            terminator: terminator,
-            toStream: &output
-        )
+
+    func test_count() {
+        let f: Factories = Factories()
+        XCTAssertEqual(f.count, 0)
+        f.push({[]})
+        f.push({[]})
+        XCTAssertEqual(f.count, 2)
     }
-}
 
-public func getFactoryCount() -> Int {
-    return Factories().count
-}
+    func test_isEmptyWhenEmpty() {
+        let f: Factories = Factories()
+        XCTAssert(f.isEmpty)
+    }
 
-public func getLastFactory() -> FiniteStateMachineFactory? {
-    return Factories().pop()
+    func test_isEmptyWhenNotEmpty() {
+        let f: Factories = Factories()
+        f.push({[]})
+        XCTAssertFalse(f.isEmpty)
+    }
+
+    func test_isMonostate() {
+        let f1: Factories = Factories()
+        let f2: Factories = Factories()
+        let count: Int = f1.count
+        XCTAssertEqual(f1.count, f2.count)
+        f1.push({ [] })
+        XCTAssertEqual(f1.count, f2.count)
+        XCTAssertEqual(f1.count, count + 1)
+    }
+
+    func test_peek() {
+        let f: Factories = Factories()
+        let fact: () -> [FiniteStateMachine] = {
+            [FSM("test", initialState: EmptyState("initial"))]
+        }
+        f.push({[]})
+        f.push(fact)
+        XCTAssertEqual(f.count, 2)
+        XCTAssertEqual(fact()[0].name, f.peek()!()[0].name)
+        XCTAssertEqual(f.count, 2)
+    }
+
+    func test_pop() {
+        let f: Factories = Factories()
+        f.push({[]})
+        f.push({[]})
+        XCTAssertEqual(f.count, 2)
+        let _ = f.pop()
+        XCTAssertEqual(f.count, 1)
+        let _ = f.pop()
+        XCTAssertEqual(f.count, 0)
+    }
+
 }

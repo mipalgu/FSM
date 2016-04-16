@@ -1,9 +1,9 @@
 /*
- * globals.swift
- * swiftfsm
+ * Stack.swift 
+ * FSM 
  *
- * Created by Callum McColl on 8/09/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 16/04/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,49 +56,54 @@
  *
  */
 
-public var DEBUG: Bool = false
+public struct Stack<T> {
+    
+    public typealias Element = T
 
-public func addFactory(f: FiniteStateMachineFactory) {
-    let factories: Factories = Factories()
-    factories.push(f)
+    private var data: [Element] = []
+
+    public var count: Int {
+        return self.data.count
+    }
+
+    public var isEmpty: Bool {
+        return self.data.isEmpty
+    }
+
+    public init() {}
+
+    public mutating func clear() {
+        self.data = []
+    }
+
+    public func peek() -> Element? {
+        return data.first
+    }
+
+    public mutating func pop() -> Element {
+        return data.removeFirst()
+    }
+
+    public mutating func push(newElement: Element) {
+        self.data.insert(newElement, atIndex: 0)
+    }
+
 }
 
-public func dprint(
-    items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n"
-) {
-    if (false == DEBUG) {
-        return
+extension Stack: SequenceType {
+
+    public typealias Generator = Stack 
+
+    public func generate() -> Stack<Element> {
+        return self
     }
-    let _ = items.map {
-        debugPrint($0, separator: separator, terminator: terminator)
-    }
+
 }
 
-public func dprint<Target: OutputStreamType>(
-    items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n",
-    inout toStream output: Target
-) {
-    if (false == DEBUG) {
-        return
-    }
-    let _ = items.map {
-        debugPrint(
-            $0,
-            separator: separator,
-            terminator: terminator,
-            toStream: &output
-        )
-    }
-}
+extension Stack: GeneratorType {
 
-public func getFactoryCount() -> Int {
-    return Factories().count
-}
+    public mutating func next() -> Element? {
+        return self.pop()
+    }
 
-public func getLastFactory() -> FiniteStateMachineFactory? {
-    return Factories().pop()
 }
