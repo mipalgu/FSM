@@ -58,7 +58,7 @@
 
 public var DEBUG: Bool = false
 
-public func addFactory(f: FiniteStateMachineFactory) {
+public func addFactory(f: MachineFactory) {
     let factories: Factories = Factories()
     factories.push(f)
 }
@@ -99,6 +99,10 @@ public func getFactoryCount() -> Int {
     return Factories().count
 }
 
-public func getLastFactory() -> FiniteStateMachineFactory? {
-    return Factories().pop()
+public func getLastFactory() -> MachineFactory? {
+    let f: Factories = Factories()
+    if (true == f.isEmpty) {
+        return nil
+    }
+    return f.pop()
 }

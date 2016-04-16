@@ -56,6 +56,6 @@
  *
  */
 
-public typealias FiniteStateMachineFactory = () -> [FiniteStateMachine]
+public typealias MachineFactory = () -> [FiniteStateMachine]
 
 public typealias Time = UInt
