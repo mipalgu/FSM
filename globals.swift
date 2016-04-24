@@ -60,7 +60,7 @@ public var DEBUG: Bool = false
 
 public func addFactory(f: MachineFactory) {
     let factories: Factories = Factories()
-    factories.push(f)
+    factories.push(newElement: f)
 }
 
 public func dprint(
@@ -76,11 +76,11 @@ public func dprint(
     }
 }
 
-public func dprint<Target: OutputStreamType>(
+public func dprint<Target: OutputStream>(
     items: Any ...,
     separator: String = " ",
     terminator: String = "\n",
-    inout toStream output: Target
+    toStream output: inout Target
 ) {
     if (false == DEBUG) {
         return
@@ -90,7 +90,7 @@ public func dprint<Target: OutputStreamType>(
             $0,
             separator: separator,
             terminator: terminator,
-            toStream: &output
+            to: &output
         )
     }
 }

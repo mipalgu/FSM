@@ -61,7 +61,7 @@ public struct WhiteboardCollection<T: GlobalVariables>:
 {
 
     public typealias Element = T
-    public typealias Generator = AnyGenerator<T>
+    public typealias Iterator = AnyIterator<T>
 
     private let type: wb_types
     private let wb: Whiteboard
@@ -71,21 +71,21 @@ public struct WhiteboardCollection<T: GlobalVariables>:
         self.wb = wb
     }
 
-    public func generate() -> AnyGenerator<T> {
+    public func makeIterator() -> AnyIterator<T> {
         let type: Int32 = Int32(self.type.rawValue)
         let bufferLength: Int = Int(GU_SIMPLE_WHITEBOARD_GENERATIONS) 
-        let sem: gsw_sema_t = self.wb.wbd.memory.sem
+        let sem: gsw_sema_t = self.wb.wbd.pointee.sem
         // Stop allowing others to modify the whiteboard.
         guard 0 == gsw_procure(sem, GSW_SEM_PUTMSG) else {
-            return AnyGenerator { nil }
+            return AnyIterator { nil }
         }
-        let data: [T] = getData(self.wb.wb, type: type, length: bufferLength)
+        let data: [T] = getData(wb: self.wb.wb, type: type, length: bufferLength)
         // Allow others to modify the whiteboard again.
         guard 0 == gsw_vacate(sem, GSW_SEM_PUTMSG) else {
-            return AnyGenerator { nil }
+            return AnyIterator { nil }
         }
         var i: Int = 0 
-        return AnyGenerator {
+        return AnyIterator {
             if (i >= bufferLength) {
                 return nil
             }
@@ -104,18 +104,18 @@ public struct WhiteboardCollection<T: GlobalVariables>:
         for _ in 0 ..< length {
             gsw_increment(wb, type)
             arr.append(
-                UnsafeMutablePointer<T>(gsw_current_message(wb, type)).memory
+                UnsafeMutablePointer<T>(gsw_current_message(wb, type)).pointee
             )
         }
-        return arr.reverse()
+        return arr.reversed()
     }
 
     public func get() -> T {
-        return self.wb.get(self.type)
+        return self.wb.get(msg: self.type)
     }
 
     public func post(val: T) {
-        self.wb.post(val, msg: self.type)
+        self.wb.post(val: val, msg: self.type)
     }
 
 }

@@ -77,16 +77,16 @@ public class CArray<T> {
 
 }
 
-extension CArray: SequenceType {
+extension CArray: Sequence {
 
-    public typealias Generator = AnyGenerator<Element>
+    public typealias Generator = AnyIterator<Element>
 
-    public func generate() -> AnyGenerator<Element> {
+    public func generate() -> AnyIterator<Element> {
         if (nil == self.p) {
-            return AnyGenerator { nil }
+            return AnyIterator { nil }
         }
         var pos: Int = 0
-        return AnyGenerator {
+        return AnyIterator {
             if (pos >= self.length) {
                 return nil
             }
@@ -98,7 +98,7 @@ extension CArray: SequenceType {
 
 }
 
-extension CArray: CollectionType {
+extension CArray: Collection {
 
     public typealias Index = Int
 
@@ -112,9 +112,9 @@ extension CArray: CollectionType {
 
     public subscript(i: Int) -> Element {
         get {
-            return p!.advancedBy(i).memory
+            return p![i]
         } set {
-            p!.advancedBy(i).memory = newValue
+            p![i] = newValue
         }
     }
 

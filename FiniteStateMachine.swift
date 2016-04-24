@@ -140,7 +140,7 @@ public extension _FiniteStateMachine where Self: StateExecuter, Self: Suspendabl
         let previous: State = self.previousState
         self.previousState = self.currentState
         self.currentState = self.ringlet.execute(
-            self.currentState,
+            state: self.currentState,
             previousState: previous
         )
     }

@@ -58,7 +58,7 @@
 
 public protocol KripkeRinglet: Ringlet {
 
-    typealias SnapshotType: Snapshotable, GlobalVariablesContainer
+    associatedtype SnapshotType: Snapshotable, GlobalVariablesContainer
 
     var globals: SnapshotType { get }
 

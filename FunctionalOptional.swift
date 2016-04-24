@@ -126,7 +126,7 @@ public func <-< <A, B, C>(f: B -> C?, g: A -> B?) -> A -> C? {
  * - returns: The provided value wrapped in `.Some`
  */
 public func pure<T>(a: T) -> T? {
-    return .Some(a)
+    return .some(a)
 }
 
 public extension Optional {
@@ -140,7 +140,7 @@ public extension Optional {
      *
      * - returns: A value of type `Optional<U>`
      */
-    func apply<U>(f: (Wrapped -> U)?) -> U? {
+    func apply<U>(_ f: (Wrapped -> U)?) -> U? {
             return f.flatMap { self.map($0) }
     }
 }

@@ -70,7 +70,7 @@ public class SnapshotController<Collection: GlobalVariablesCollection>: Snapshot
     }
 
     public func saveSnapshot() {
-        self.collection.post(self.val)
+        self.collection.post(val: self.val)
     }
 
     public func takeSnapshot() {

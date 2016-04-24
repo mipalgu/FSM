@@ -1,5 +1,5 @@
 /*
- * FunctionalSequenceType.swift 
+ * FunctionalSequence.swift 
  * FSM 
  *
  * Created by Callum McColl on 20/02/2016.
@@ -40,8 +40,8 @@
  * - returns: A value of type `[U]`
  */
 public func <^> <
-    T, U, S: SequenceType
-    where S.Generator.Element == T
+    T, U, S: Sequence
+    where S.Iterator.Element == T
 >(@noescape f: T -> U, a: S) -> [U] {
     return a.map(f)
 }
@@ -59,8 +59,8 @@ public func <^> <
  * - returns: A value of type `[U]`
  */
 public func <*> <
-    T, U, S: SequenceType
-    where S.Generator.Element == T
+    T, U, S: Sequence
+    where S.Iterator.Element == T
 >(fs: [T -> U], a: S) -> [U] {
     return a.apply(fs)
 }
@@ -76,8 +76,8 @@ public func <*> <
  * - returns: A value of type `[U]`
  */
 public func >>- <
-    T, U, S: SequenceType
-    where S.Generator.Element == T
+    T, U, S: Sequence
+    where S.Iterator.Element == T
 >(a: S, f: T -> [U]) -> [U] {
     return a.flatMap(f)
 }
@@ -93,8 +93,8 @@ public func >>- <
  * - returns: A value of type `[U]`
  */
 public func -<< <
-    T, U, S: SequenceType
-    where S.Generator.Element == T
+    T, U, S: Sequence
+    where S.Iterator.Element == T
 >(f: T -> [U], a: [T]) -> [U] {
   return a.flatMap(f)
 }
@@ -132,7 +132,7 @@ public func <-< <A, B, C>(f: B -> [C], g: A -> [B]) -> A -> [C] {
 /**
  *  Default implementation of functional operations.
  */
-public extension SequenceType {
+public extension Sequence {
     /**
      * apply an array of functions to `self`
      *
@@ -145,9 +145,9 @@ public extension SequenceType {
      * - returns: A value of type `[U]`
      */
     func apply<
-        U, S: SequenceType
-        where S.Generator.Element == (Self.Generator.Element) -> U
-    >(transform: S) -> [U] {
+        U, S: Sequence
+        where S.Iterator.Element == (Self.Iterator.Element) -> U
+    >(_ transform: S) -> [U] {
             return transform.flatMap { self.map($0) }
     }
 }

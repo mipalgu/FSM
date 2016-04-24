@@ -68,29 +68,29 @@ public class ConvertibleCArray<From, To> {
 
 }
 
-extension ConvertibleCArray: SequenceType {
+extension ConvertibleCArray: Sequence {
 
-    public typealias Generator = AnyGenerator<Element>
+    public typealias Generator = AnyIterator<Element>
 
-    public func generate() -> AnyGenerator<Element> {
+    public func generate() -> AnyIterator<Element> {
         if (0 == self.arr.count) {
-            return AnyGenerator { nil }
+            return AnyIterator { nil }
         }
         var pos: Int = 0
-        return AnyGenerator {
+        return AnyIterator {
             if (pos >= self.arr.length || nil == self.arr.p) {
                 return nil
             }
             let v: Element = UnsafeMutablePointer<Element>(
-                self.arr.p!.advancedBy(pos)
-            ).memory
+                self.arr.p!.advanced(by: pos)
+            ).pointee
             pos = pos + 1
             return v
         }
     }
 }
 
-extension ConvertibleCArray: CollectionType {
+extension ConvertibleCArray: Collection {
 
     public typealias Index = Int
 
@@ -104,11 +104,11 @@ extension ConvertibleCArray: CollectionType {
 
     public subscript(i: Int) -> Element {
         get {
-            return UnsafeMutablePointer<Element>(self.arr.p!.advancedBy(i)).memory
+            return UnsafeMutablePointer<Element>(self.arr.p!.advanced(by: i)).pointee
         } set {
             var newValue: Element = newValue
             self.arr[i] = withUnsafeMutablePointer(&newValue) {
-                return UnsafeMutablePointer<From>($0).memory
+                return UnsafeMutablePointer<From>($0).pointee
             }
         }
     }

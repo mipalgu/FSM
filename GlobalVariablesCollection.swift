@@ -56,9 +56,9 @@
  *
  */
 
-public protocol GlobalVariablesCollection: SequenceType {
+public protocol GlobalVariablesCollection: Sequence {
 
-    typealias Element: GlobalVariables
+    associatedtype Element: GlobalVariables
 
     func get() -> Element
 

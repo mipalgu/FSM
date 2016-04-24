@@ -92,7 +92,7 @@ public class Factories {
     }
 
     public func push(newElement: MachineFactory) {
-        self.factories.push(newElement)
+        self.factories.push(newElement: newElement)
     }
 
 }

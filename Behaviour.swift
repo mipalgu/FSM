@@ -126,35 +126,35 @@ public func >=<T: Comparable>(
     return Behaviour { (t: Time) -> Bool in lhs.f(t) >= rhs.f(t) }
 }
 
-public func +<T: IntegerArithmeticType>(
+public func +<T: IntegerArithmetic>(
     lhs: Behaviour<T>,
     rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return Behaviour { (t: Time) -> T in lhs.f(t) + rhs.f(t) }
 }
 
-public func -<T: IntegerArithmeticType>(
+public func -<T: IntegerArithmetic>(
     lhs: Behaviour<T>,
     rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return Behaviour { (t: Time) -> T in lhs.f(t) - rhs.f(t) }
 }
 
-public func *<T: IntegerArithmeticType>(
+public func *<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return Behaviour { (t: Time) -> T in lhs.f(t) * rhs.f(t) }    
 }
 
-public func /<T: IntegerArithmeticType>(
+public func /<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return Behaviour { (t: Time) -> T in lhs.f(t) / rhs.f(t) }
 }
 
-public func %<T: IntegerArithmeticType>(
+public func %<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {

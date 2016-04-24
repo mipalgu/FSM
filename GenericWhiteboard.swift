@@ -80,7 +80,7 @@ public class GenericWhiteboard<T> {
 
     public var currentMessage: Message {
         get {
-            return self.wb.get(msgType)
+            return self.wb.get(msg: msgType)
         } set {
             if (false == self.procure()) {
                 return
@@ -103,8 +103,9 @@ public class GenericWhiteboard<T> {
     }
 
     public var eventCounters: CArray<UInt16> {
+        var temp: UInt16 = self.gsw.pointee.event_counters.0
         return CArray(
-            first: &self.gsw.memory.event_counters.0,
+            first: &temp,
             length: self.totalMessageTypes
         )
     }
@@ -114,18 +115,18 @@ public class GenericWhiteboard<T> {
     }
 
     public var gsw: UnsafeMutablePointer<gu_simple_whiteboard> {
-        return self.wb.wbd.memory.wb
+        return self.wb.wbd.pointee.wb
     }
 
     public var indexes: CArray<UInt8> {
         return CArray(
-            first: &self.gsw.memory.indexes.0,
+            first: &self.gsw.pointee.indexes.0,
             length: self.totalMessageTypes
         )
     }
 
     public var messages: ConvertibleCArray<gu_simple_message, Message> {
-        return withUnsafeMutablePointer(&self.gsw.memory.messages.0) {
+        return withUnsafeMutablePointer(&self.gsw.pointee.messages.0) {
             withUnsafeMutablePointer(&$0[self.msgTypeOffset].0) {
                 ConvertibleCArray<gu_simple_message, Message>(
                     arr: CArray<gu_simple_message>(
@@ -136,7 +137,7 @@ public class GenericWhiteboard<T> {
             }
         }
         /*let messages = CArray(
-            first: &self.gsw.memory.messages.0,
+            first: &self.gsw.pointee.messages.0,
             length: self.totalMessageTypes
         )
         //print(messages.map { $0 })
@@ -172,11 +173,11 @@ public class GenericWhiteboard<T> {
     }
 
     public var numTypes: UInt16 {
-        return self.gsw.memory.num_types
+        return self.gsw.pointee.num_types
     }
 
     public var subscribed: UInt16 {
-        return self.gsw.memory.subscribed
+        return self.gsw.pointee.subscribed
     }
 
     public var totalMessageTypes: Int {
@@ -184,7 +185,7 @@ public class GenericWhiteboard<T> {
     }
 
     public var version: UInt16 {
-        return self.gsw.memory.version
+        return self.gsw.pointee.version
     }
 
     public init(
@@ -203,14 +204,14 @@ public class GenericWhiteboard<T> {
         if (false == self.procure()) {
             return
         }
-        self.wb.post(val, msg: self.msgType)
+        self.wb.post(val: val, msg: self.msgType)
         self.eventCount += 1
         self.vacate()
     }
 
     public func procure() -> Bool {
         if (true == self.atomic && false == self.procured) {
-            let sem = self.wb.wbd.memory.sem
+            let sem = self.wb.wbd.pointee.sem
             self.procured = 0 == gsw_procure(sem, GSW_SEM_PUTMSG)
             return self.procured
         }
@@ -219,7 +220,7 @@ public class GenericWhiteboard<T> {
 
     public func vacate() -> Bool {
         if (true == self.procured) {
-            let sem = self.wb.wbd.memory.sem
+            let sem = self.wb.wbd.pointee.sem
             return 0 == gsw_vacate(sem, GSW_SEM_PUTMSG)
         }
         return true

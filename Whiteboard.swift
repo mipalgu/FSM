@@ -77,7 +77,7 @@ public struct Whiteboard: WhiteboardType {
     
     /// return ta pointer to the underlying C whiteboard infrastructure
     public var wb: UnsafeMutablePointer<gu_simple_whiteboard> {
-        return wbd.memory.wb
+        return wbd.pointee.wb
     }
     
     /// convenience class variable denoting the number of defined wb types
@@ -88,17 +88,17 @@ public struct Whiteboard: WhiteboardType {
     
     /// get message template function
     public func get<T>(msg: wb_types) -> T {
-        var msg: UnsafeMutablePointer<gu_simple_message> =
+        let msg: UnsafeMutablePointer<gu_simple_message> =
             gsw_current_message(wb, Int32(msg.rawValue))
         let msgp = UnsafePointer<T>(msg)
-        return msgp.memory
+        return msgp.pointee
     }
     
     /// post message template function
     public func post<T>(val: T, msg: wb_types) {
         let msgno = Int32(msg.rawValue)
         let msgp = UnsafeMutablePointer<T>(gsw_next_message(wb, msgno))
-        msgp.memory = val
+        msgp?.pointee = val
         gsw_increment(wb, msgno)
     }
 }

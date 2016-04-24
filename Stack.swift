@@ -85,12 +85,12 @@ public struct Stack<T> {
     }
 
     public mutating func push(newElement: Element) {
-        self.data.insert(newElement, atIndex: 0)
+        self.data.insert(newElement, at: 0)
     }
 
 }
 
-extension Stack: SequenceType {
+extension Stack: Sequence {
 
     public typealias Generator = Stack 
 
@@ -100,7 +100,7 @@ extension Stack: SequenceType {
 
 }
 
-extension Stack: GeneratorType {
+extension Stack: IteratorProtocol {
 
     public mutating func next() -> Element? {
         return self.pop()
