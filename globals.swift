@@ -64,7 +64,7 @@ public func addFactory(f: MachineFactory) {
 }
 
 public func dprint(
-    items: Any ...,
+    _ items: Any ...,
     separator: String = " ",
     terminator: String = "\n"
 ) {
@@ -77,7 +77,7 @@ public func dprint(
 }
 
 public func dprint<Target: OutputStream>(
-    items: Any ...,
+    _ items: Any ...,
     separator: String = " ",
     terminator: String = "\n",
     toStream output: inout Target
