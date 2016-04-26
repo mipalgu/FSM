@@ -67,31 +67,31 @@ import Glibc
 
 class WhiteboardBehaviourTests: XCTestCase {
 
-    var allTests: [(String, () throws -> Void)] {
+    static var allTests: [(String, WhiteboardBehaviourTests -> () throws -> Void)] {
         return [
             ("test_trigger", test_trigger)
         ]
     }
 
-    func setUp() {
+    override func setUp() {
         let wb: GenericWhiteboard = GenericWhiteboard<wb_count>(msgType: kCount_v)
         for _ in 0 ..< wb.generations {
-            wb.post(wb_count())
+            wb.post(val: wb_count())
         }
         wb.eventCount = 0
     }
 
     func test_trigger() {
         let t: (b: Behaviour<wb_count?>, f: (wb_count) -> Void) =
-            trigger(kCount_v)
-        t.f(pure(1))
-        t.f(pure(2))
-        t.f(pure(3))
-        t.f(pure(4))
-        XCTAssertEqual(t.b.f(0), pure(1))
-        XCTAssertEqual(t.b.f(1), pure(2))
-        XCTAssertEqual(t.b.f(2), pure(3))
-        XCTAssertEqual(t.b.f(3), pure(4))
+            trigger(type: kCount_v)
+        t.f(pure(count: 1))
+        t.f(pure(count: 2))
+        t.f(pure(count: 3))
+        t.f(pure(count: 4))
+        XCTAssertEqual(t.b.at(0), wb_count(count: 1))
+        XCTAssertEqual(t.b.at(1), wb_count(count: 2))
+        XCTAssertEqual(t.b.at(2), wb_count(count: 3))
+        XCTAssertEqual(t.b.at(3), wb_count(count: 4))
     }
 
 }

@@ -61,7 +61,7 @@ import XCTest
 
 class BehaviourTests: XCTestCase {
 
-    var allTests: [(String, () throws -> Void)] {
+    static var allTests: [(String, BehaviourTests -> () throws -> Void)] {
         return [
             ("test_always", test_always),
             ("test_singleMap", test_singleMap),
@@ -82,86 +82,86 @@ class BehaviourTests: XCTestCase {
 
     func test_always() {
         let b: Behaviour<Int> = always(4)
-        XCTAssertEqual(4, b.f(1))
+        XCTAssertEqual(4, b.at(1))
     }
 
     func test_singleMap() {
         let b: Behaviour<Int> = always(4)
-        let m: Behaviour<Int> = map({ $0 * 2 }, b)
-        XCTAssertEqual(8, m.f(1))
+        let m: Behaviour<Int> = { $0 * 2 } <^> b
+        XCTAssertEqual(8, m.at(1))
     }
 
     func test_multipleMap() {
         let f: ([Int]) -> Int = { $0.reduce(0, combine: +) }
-        let m: Behaviour<Int> = map(f, always(1), always(2), always(3), always(4))
-        XCTAssertEqual(10, m.f(1))
+        let m: Behaviour<Int> = f <^> [always(1), always(2), always(3), always(4)]
+        XCTAssertEqual(10, m.at(1))
     }
 
     func test_addition() {
         let b: Behaviour<Int> = always(3) + always(2)
-        XCTAssertEqual(5, b.f(1))
+        XCTAssertEqual(5, b.at(1))
     }
 
     func test_subtraction() {
         let b: Behaviour<Int> = always(3) - always(2)
-        XCTAssertEqual(1, b.f(1))
+        XCTAssertEqual(1, b.at(1))
     }
 
     func test_multiplication() {
         let b: Behaviour<Int> = always(3) * always(2)
-        XCTAssertEqual(6, b.f(1))
+        XCTAssertEqual(6, b.at(1))
     }
 
     func test_division() {
         let b: Behaviour<Int> = always(6) / always(2)
-        XCTAssertEqual(3, b.f(1))
+        XCTAssertEqual(3, b.at(1))
     }
 
     func test_mod() {
         let b: Behaviour<Int> = always(6) % always(2)
-        XCTAssertEqual(0, b.f(1))
+        XCTAssertEqual(0, b.at(1))
     }
 
     func test_lessThan() {
         let b: Behaviour<Bool> = always(3) < always(2)
-        XCTAssertFalse(b.f(1))
+        XCTAssertFalse(b.at(1))
         let b2: Behaviour<Bool> = always(2) < always(3)
-        XCTAssertTrue(b2.f(1))
+        XCTAssertTrue(b2.at(1))
     }
 
     func test_lessThanOrEqualTo() {
         let b: Behaviour<Bool> = always(3) <= always(2)
-        XCTAssertFalse(b.f(1))
+        XCTAssertFalse(b.at(1))
         let b2: Behaviour<Bool> = always(2) <= always(3)
-        XCTAssertTrue(b2.f(1))
+        XCTAssertTrue(b2.at(1))
     }
 
     func test_greaterThan() {
         let b: Behaviour<Bool> = always(3) > always(2)
-        XCTAssertTrue(b.f(1))
+        XCTAssertTrue(b.at(1))
         let b2: Behaviour<Bool> = always(2) > always(3)
-        XCTAssertFalse(b2.f(1))
+        XCTAssertFalse(b2.at(1))
     }
 
     func test_greaterThanOrEqualTo() {
         let b: Behaviour<Bool> = always(3) >= always(2)
-        XCTAssertTrue(b.f(1))
+        XCTAssertTrue(b.at(1))
         let b2: Behaviour<Bool> = always(2) >= always(3)
-        XCTAssertFalse(b2.f(1))
+        XCTAssertFalse(b2.at(1))
     }
 
     func test_equals() {
         let b: Behaviour<Bool> = always(3) == always(3)
-        XCTAssertTrue(b.f(1))
+        XCTAssertTrue(b.at(1))
         let b2: Behaviour<Bool> = always(4) == always(3)
-        XCTAssertFalse(b2.f(1))
+        XCTAssertFalse(b2.at(1))
     }
 
     func test_notEquals() {
         let b: Behaviour<Bool> = always(3) != always(3)
-        XCTAssertFalse(b.f(1))
+        XCTAssertFalse(b.at(1))
         let b2: Behaviour<Bool> = always(4) != always(3) 
-        XCTAssertTrue(b2.f(1))
+        XCTAssertTrue(b2.at(1))
     }
 
 }

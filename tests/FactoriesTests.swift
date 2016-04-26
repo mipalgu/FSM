@@ -61,7 +61,7 @@ import XCTest
 
 class FactoriesTests: XCTestCase {
 
-    var allTests: [(String, () throws -> Void)] {
+    static var allTests: [(String, FactoriesTests -> () throws -> Void)] {
         return [
             ("test_count", test_count),
             ("test_isEmptyWhenEmpty", test_isEmptyWhenEmpty),
@@ -72,7 +72,7 @@ class FactoriesTests: XCTestCase {
         ]
     }
 
-    func setUp() {
+    override func setUp() {
         let f: Factories = Factories()
         f.clear()
     }

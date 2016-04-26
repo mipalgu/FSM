@@ -61,7 +61,7 @@ import XCTest
 
 public class GenericWhiteboardTests: XCTestCase {
 
-    public var allTests: [(String, () throws -> Void)] {
+    public static var allTests: [(String, GenericWhiteboardTests -> () throws -> Void)] {
         return [
             ("test_changeIndex", test_changeIndex),
             ("test_changeIndexWithOverflow", test_changeIndexWithOverflow),
@@ -76,10 +76,10 @@ public class GenericWhiteboardTests: XCTestCase {
     private var wb: Whiteboard = Whiteboard()
     private var gwb: GenericWhiteboard<wb_count>! 
 
-    public func setUp() {
+    public override func setUp() {
         self.gwb = GenericWhiteboard<wb_count>(msgType: kCount_v, wb: self.wb)
         for _ in 0 ..< gwb.generations {
-            self.wb.post(wb_count(), msg: kCount_v)
+            self.wb.post(val: wb_count(), msg: kCount_v)
         }
         self.gwb.eventCount = 0
         self.gwb.currentIndex = 0
@@ -103,26 +103,26 @@ public class GenericWhiteboardTests: XCTestCase {
     }
 
     public func test_postStoresValue() {
-        gwb.post(wb_count(count: 7))
+        gwb.post(val: wb_count(count: 7))
         XCTAssertEqual(gwb.currentMessage.count, 7)
     }
 
     public func test_postIncrementsIndex() {
         let i: UInt8 = gwb.currentIndex
-        gwb.post(wb_count(count: 7))
+        gwb.post(val: wb_count(count: 7))
         XCTAssertEqual(gwb.currentIndex, i + 1)
     }
 
     public func test_postIncrementsEventCount() {
         let e: UInt16 = gwb.eventCount
-        gwb.post(wb_count(count: 8))
+        gwb.post(val: wb_count(count: 8))
         XCTAssertEqual(gwb.eventCount, e + 1)
     }
 
     public func test_messagesStoresTheMessage() {
         let m: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
         let msg: wb_count = wb_count(count: 9)
-        gwb.post(msg)
+        gwb.post(val: msg)
         let m2: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
         XCTAssertEqual(gwb.messages[Int(gwb.currentIndex)], msg)
     }

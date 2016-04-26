@@ -61,7 +61,7 @@ import XCTest
 
 class FunctionalOptionalTests: XCTestCase {
 
-    var allTests: [(String, () throws -> Void)] {
+    static var allTests: [(String, FunctionalOptionalTests -> () throws -> Void)] {
         return [
             ("test_functor", test_functor),
             ("test_apply", test_apply),
@@ -79,7 +79,7 @@ class FunctionalOptionalTests: XCTestCase {
 
     func test_apply() {
         let num: Int? = 20
-        let half: ((Int) -> Int)? = .Some({ $0 / 2 })
+        let half: ((Int) -> Int)? = .some({ $0 / 2 })
         let expected: Int? = 10
         XCTAssertEqual(expected, half <*> num)
     }

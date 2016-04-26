@@ -61,7 +61,7 @@ import XCTest
 
 public class CArrayTests: XCTestCase {
 
-    public var allTests: [(String, () throws -> Void)] {
+    public static var allTests: [(String, CArrayTests -> () throws -> Void)] {
         return [
             ("test_createWithUnsafeMutablePointer", test_createWithUnsafeMutablePointer),
             ("test_createWithInout", test_createWithInout),
