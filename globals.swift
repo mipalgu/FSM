@@ -58,7 +58,7 @@
 
 public var DEBUG: Bool = false
 
-public func addFactory(f: MachineFactory) {
+public func addFactory(_ f: MachineFactory) {
     let factories: Factories = Factories()
     factories.push(newElement: f)
 }
