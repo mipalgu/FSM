@@ -1,5 +1,5 @@
 /*
- * SnapshotController.swift 
+ * SnapshotCollectionController.swift 
  * FSM 
  *
  * Created by Callum McColl on 19/01/2016.
@@ -56,7 +56,7 @@
  *
  */
 
-public class SnapshotController<Collection: GlobalVariablesCollection>: Snapshotable, GlobalVariablesContainer {
+public class SnapshotCollectionController<Collection: GlobalVariablesCollection>: Snapshotable, GlobalVariablesContainer {
 
     public typealias Class = Collection.Element
     
