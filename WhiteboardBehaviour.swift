@@ -69,7 +69,7 @@ public func trigger<T: GlobalVariables>(
         notifySubscribers: notifySubscribers
     )
     // Create Behaviour
-    let b: Behaviour<T?> = Behaviour { (t: Time) -> T? in
+    let b: Behaviour<T?> = pure { (t: Time) -> T? in
         var t: Time = t
         guard t >= Time.min && true == wb.procure() else {
             return nil
