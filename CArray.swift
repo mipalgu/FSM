@@ -118,4 +118,8 @@ extension CArray: Collection {
         }
     }
 
+    public func index(after i: Index) -> Index {
+        return i + 1
+    }
+
 }
