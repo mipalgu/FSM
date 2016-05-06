@@ -56,7 +56,7 @@
  *
  */
 
-public protocol Restartable {
+public protocol Restartable: OptimizedStateExecuter {
     
     mutating func restart() -> Void
     
