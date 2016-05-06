@@ -85,7 +85,7 @@ public class MiPalRinglet: Ringlet {
             state.onEntry()
         }
         // Can we transition to another state?
-        if let t = state.transitions.filter({$0.canTransition}).first {
+        if let t = state.transitions.lazy.filter({$0.canTransition}).first {
             // Yes - Exit state and return the new state.
             state.onExit()
             self.saveSnapshot()
