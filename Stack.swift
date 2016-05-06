@@ -84,7 +84,7 @@ public struct Stack<T> {
         return data.removeFirst()
     }
 
-    public mutating func push(newElement: Element) {
+    public mutating func push(_ newElement: Element) {
         self.data.insert(newElement, at: 0)
     }
 

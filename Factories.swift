@@ -91,8 +91,8 @@ public class Factories {
         return self.factories.pop()
     }
 
-    public func push(newElement: MachineFactory) {
-        self.factories.push(newElement: newElement)
+    public func push(_ newElement: MachineFactory) {
+        self.factories.push(newElement)
     }
 
 }

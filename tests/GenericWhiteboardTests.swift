@@ -120,10 +120,10 @@ public class GenericWhiteboardTests: XCTestCase {
     }
 
     public func test_messagesStoresTheMessage() {
-        let m: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        let _: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
         let msg: wb_count = wb_count(count: 9)
         gwb.post(val: msg)
-        let m2: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        let _: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
         XCTAssertEqual(gwb.messages[Int(gwb.currentIndex)], msg)
     }
 

@@ -42,7 +42,7 @@
 public func <^> <
     T, U, S: Sequence
     where S.Iterator.Element == T
->(@noescape f: T -> U, a: S) -> [U] {
+>(f: @noescape T -> U, a: S) -> [U] {
     return a.map(f)
 }
 

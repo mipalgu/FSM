@@ -58,105 +58,144 @@
 
 public struct Behaviour<T> {
 
-    public let f: (Time) -> T
+    public let at: (Time) -> T
 
-    public init(f: (Time) -> T) {
-        self.f = f
+    private init(at: (Time) -> T) {
+        self.at = at
+    }
+
+    public func map<U>(_ f: T -> U) -> Behaviour<U> {
+        return pure { (t: Time) -> U in f(self.at(t)) }
+    }
+
+    public func apply<U>(_ f: Behaviour<T -> U>) -> Behaviour<U> {
+        return pure { (t: Time) -> U in f.at(t)(self.at(t)) }
+    }
+
+    public func flatMap<U>(_ f: T -> Behaviour<U>) -> Behaviour<U> {
+        return pure { (t: Time) -> U in f(self.at(t)).at(t) }
     }
 
 }
 
-public func always<T>(value: T) -> Behaviour<T> {
-    return Behaviour { (t: Time) -> T in value }
+public func always<T>(_ value: T) -> Behaviour<T> {
+    return pure { (t: Time) -> T in value }
 }
 
-public func map<T, U>(
-    f: ([T]) -> U,
-    _ behaviours: Behaviour<T> ...
-) -> Behaviour<U> {
-    return Behaviour { (t: Time) -> U in f(behaviours.map({ $0.f(t) })) }
+public func pure<T>(_ f: Time -> T) -> Behaviour<T> {
+    return Behaviour(at: f)
 }
 
-public func map<T, U>(
-    f: (T) -> U,
-    _ behaviour: Behaviour<T>
-) -> Behaviour<U> {
-    return Behaviour { (t: Time) -> U in f(behaviour.f(t)) }
+public func <^>
+    <T, U, S: Sequence where S.Iterator.Element == Behaviour<T>>
+(f: [T] -> U, s: S) -> Behaviour<U> {
+    return pure { (t: Time) -> U in f(s.map({ $0.at(t) })) }
+}
+
+public func <^> <T, U>(f: T -> U, b: Behaviour<T>) -> Behaviour<U> {
+    return b.map(f)
+}
+
+public func <*> <T, U>(f: Behaviour<T -> U>, b: Behaviour<T>) -> Behaviour<U> {
+    return b.apply(f)
+}
+
+public func >>- <T, U>(b: Behaviour<T>, f: T -> Behaviour<U>) -> Behaviour<U> {
+    return b.flatMap(f) 
+}
+
+public func -<< <T, U>(f: T -> Behaviour<U>, b: Behaviour<T>) -> Behaviour<U> {
+    return b.flatMap(f)
+}
+
+public func >-> <A, B, C>(f: A -> Behaviour<B>, g: B -> Behaviour<C>) -> A -> Behaviour<C> {
+    return { (x: A) -> Behaviour<C> in f(x) >>- g }
+}
+
+public func <-< <A, B, C>(f: B -> Behaviour<C>, g: A -> Behaviour<B>) -> A -> Behaviour<C> {
+    return { (x: A) -> Behaviour<C> in g(x) >>- f }
 }
 
 public func ==<T: Equatable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<Bool> {
-    return Behaviour { (t: Time) -> Bool in lhs.f(t) == rhs.f(t) }
+    return pure { (t: Time) -> Bool in lhs.at(t) == rhs.at(t) }
 }
 
 public func !=<T: Equatable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<Bool> {
-    return Behaviour { (t: Time) -> Bool in lhs.f(t) != rhs.f(t) }
+    return pure { (t: Time) -> Bool in lhs.at(t) != rhs.at(t) }
 }
 
 public func <<T: Comparable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<Bool> {
-    return Behaviour { (t: Time) -> Bool in lhs.f(t) < rhs.f(t)}
+    return pure { (t: Time) -> Bool in lhs.at(t) < rhs.at(t)}
 }
 
 public func <=<T: Comparable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<Bool> {
-    return Behaviour { (t: Time) -> Bool in lhs.f(t) <= rhs.f(t) }
+    return pure { (t: Time) -> Bool in lhs.at(t) <= rhs.at(t) }
 }
 
 public func ><T: Comparable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<Bool> {
-    return Behaviour { (t: Time) -> Bool in lhs.f(t) > rhs.f(t) }
+    return pure { (t: Time) -> Bool in lhs.at(t) > rhs.at(t) }
 }
 
 public func >=<T: Comparable>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<Bool> {
-    return Behaviour { (t: Time) -> Bool in lhs.f(t) >= rhs.f(t) }
+    return pure { (t: Time) -> Bool in lhs.at(t) >= rhs.at(t) }
 }
 
 public func +<T: IntegerArithmetic>(
     lhs: Behaviour<T>,
     rhs: Behaviour<T>
 ) -> Behaviour<T> {
-    return Behaviour { (t: Time) -> T in lhs.f(t) + rhs.f(t) }
+    return pure { (t: Time) -> T in lhs.at(t) + rhs.at(t) }
 }
 
 public func -<T: IntegerArithmetic>(
     lhs: Behaviour<T>,
     rhs: Behaviour<T>
 ) -> Behaviour<T> {
-    return Behaviour { (t: Time) -> T in lhs.f(t) - rhs.f(t) }
+    return pure { (t: Time) -> T in lhs.at(t) - rhs.at(t) }
 }
 
 public func *<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
-    return Behaviour { (t: Time) -> T in lhs.f(t) * rhs.f(t) }    
+    return pure { (t: Time) -> T in lhs.at(t) * rhs.at(t) }    
 }
 
 public func /<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
-    return Behaviour { (t: Time) -> T in lhs.f(t) / rhs.f(t) }
+    return pure { (t: Time) -> T in lhs.at(t) / rhs.at(t) }
 }
 
 public func %<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
-    return Behaviour { (t: Time) -> T in lhs.f(t) % rhs.f(t) }
+    return pure { (t: Time) -> T in lhs.at(t) % rhs.at(t) }
+}
+
+public func +(
+    lhs: Behaviour<String>,
+    rhs: Behaviour<String>
+) -> Behaviour<String> {
+    return pure { (t: Time) -> String in lhs.at(t) + rhs.at(t) }
 }

@@ -60,7 +60,7 @@ public var DEBUG: Bool = false
 
 public func addFactory(_ f: MachineFactory) {
     let factories: Factories = Factories()
-    factories.push(newElement: f)
+    factories.push(f)
 }
 
 public func dprint(
