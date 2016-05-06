@@ -69,8 +69,6 @@ public protocol _FiniteStateMachine {
     var name: String { get }
     var previousState: State { get set }
     var ringlet: Ringlet { get }
-    var suspendedState: State? { get set }
-    var suspendState: State { get }
     var vars: FSMVariables { get set }
 
 }

@@ -58,6 +58,10 @@
 
 public protocol Suspendable {
     
+    var suspendedState: State? { get set }
+
+    var suspendState: State { get }
+
     func isSuspended() -> Bool
     
     mutating func suspend() -> Void
