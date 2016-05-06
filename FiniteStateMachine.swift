@@ -158,7 +158,8 @@ public class FiniteStateMachine:
     Exitable,
     Equatable,
     Restartable,
-    Resumeable
+    Resumeable,
+    VariablesContainer
 {
 
     /**
