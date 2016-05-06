@@ -58,6 +58,12 @@
 
 public protocol StateExecuter {
     
+    var currentState: State { get set }
+
+    var previousState: State { get set }
+
+    var ringlet: Ringlet { get }
+
     /**
      *  Execute the next state.
      */
