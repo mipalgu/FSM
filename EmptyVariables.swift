@@ -56,7 +56,7 @@
  *
  */
 
-public class EmptyVariables: FSMVariables, GlobalVariables {
+public class EmptyVariables: Variables, GlobalVariables {
     public init() {}
 }
 

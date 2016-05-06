@@ -213,7 +213,7 @@ public class FiniteStateMachine:
      *  Variables that are shared between all states of this Finite State
      *  Machine.
      */
-    public var vars: FSMVariables
+    public var vars: Variables
     
     public init(
         _ name: String,
@@ -221,7 +221,7 @@ public class FiniteStateMachine:
         ringlet: Ringlet = MiPalRinglet(),
         initialPreviousState: State = EmptyState("_previous"),
         suspendState: State = EmptyState("_suspend"),
-        vars: FSMVariables = EmptyVariables()
+        vars: Variables = EmptyVariables()
     ) {
         self.name = name
         self.initialPreviousState = initialPreviousState

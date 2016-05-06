@@ -58,6 +58,6 @@
 
 public protocol VariablesContainer {
 
-    var vars: FSMVariables { get set }
+    var vars: Variables { get set }
 
 }

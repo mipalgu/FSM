@@ -1,5 +1,5 @@
 /*
- * FSMVariables.swift 
+ * Variables.swift 
  * FSM 
  *
  * Created by Callum McColl on 15/01/2016.
@@ -56,4 +56,4 @@
  *
  */
 
-public protocol FSMVariables: class {}
+public protocol Variables: class {}
