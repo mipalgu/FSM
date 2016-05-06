@@ -56,7 +56,7 @@
  *
  */
 
-public protocol Suspendable {
+public protocol Suspendable: StateExecuter {
     
     var suspendedState: State? { get set }
 
