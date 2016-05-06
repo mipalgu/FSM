@@ -58,7 +58,7 @@
 
 /**
  *  This contains implementation details for Finite State Machines.  Do not use
- *  this protocol directyl.  If you want to create your own implementation of a
+ *  this protocol directly.  If you want to create your own implementation of a
  *  Finite State Machine then instead use `FiniteStateMachine`.
  */
 public protocol FiniteStateMachineType {
@@ -219,17 +219,19 @@ public class FiniteStateMachine:
         _ name: String,
         initialState: State,
         ringlet: Ringlet = MiPalRinglet(),
+        vars: Variables = EmptyVariables(),
         initialPreviousState: State = EmptyState("_previous"),
-        suspendState: State = EmptyState("_suspend"),
-        vars: Variables = EmptyVariables()
+        suspendedState: State? = nil,
+        suspendState: State = EmptyState("_suspend")
     ) {
-        self.name = name
+        self.currentState = initialState
         self.initialPreviousState = initialPreviousState
         self.initialState = initialState
-        self.currentState = initialState
+        self.name = name
         self.previousState = initialPreviousState
-        self.suspendState = suspendState
         self.ringlet = ringlet
+        self.suspendedState = suspendedState
+        self.suspendState = suspendState
         self.vars = vars
     }
     
