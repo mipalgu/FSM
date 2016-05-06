@@ -59,7 +59,7 @@
 /**
  *  A standard ringlet.
  *
- *  Firstly calls onEntry if this state has just been transitioned into.  If a
+ *  Firstly calls onEntry if we have just transitioned to this state.  If a
  *  transition is possible then the states onExit method is called and the new
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
@@ -80,16 +80,16 @@ public class MiPalRinglet: Ringlet {
     public func execute(state: State, previousState: State) -> State {
         // Take a snapshot
         self.takeSnapshot()
-        // Call onEntry if the state has just been transitioned into.
+        // Call onEntry if we have just transitioned to this state. 
         if (state != previousState) {
             state.onEntry()
         }
         // Can we transition to another state?
-        if let t = state.transitions.lazy.filter({$0.canTransition}).first {
+        if let s: State = state.transitions.lazy.flatMap({ $0() }).first {
             // Yes - Exit state and return the new state.
             state.onExit()
             self.saveSnapshot()
-            return t.target
+            return s
         }
         // No - Execute main method and return state.
         state.main()

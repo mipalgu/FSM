@@ -64,6 +64,9 @@
  *  canTransition property is a Bool indicating whether or not this specific
  *  transition is allowed.
  */
+
+public typealias Transition = () -> State? 
+/*
 public protocol Transition {
     
     /**
@@ -76,4 +79,4 @@ public protocol Transition {
      */
     var canTransition: Bool { get }
     
-}
+}*/
