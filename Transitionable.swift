@@ -58,6 +58,12 @@
 
 public protocol Transitionable {
     
+    /**
+     *  All possible transitions that the state can use to move to another
+     *  state.
+     */
+    var transitions: [Transition] { get set }
+
     mutating func addTransition(transition: Transition) -> Void
     
 }

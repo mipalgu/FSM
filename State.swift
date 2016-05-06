@@ -73,12 +73,6 @@ public protocol _State {
      */
     var name: String { get }
     
-    /**
-     *  All possible transitions that the state can use to move to another
-     *  state.
-     */
-    var transitions: [Transition] { get set }
-    
 }
 
 /**
