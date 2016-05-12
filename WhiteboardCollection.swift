@@ -66,7 +66,7 @@ public struct WhiteboardCollection<T: GlobalVariables>:
     private let type: wb_types
     private let wb: Whiteboard
 
-    public init(type: wb_types, wb: Whiteboard) {
+    public init(type: wb_types, wb: Whiteboard = Whiteboard()) {
         self.type = type
         self.wb = wb
     }
