@@ -71,12 +71,12 @@ public struct Transition {
 
     let f: () -> State?
 
-    public init(f: () -> State?) {
+    public init(_ f: () -> State?) {
         self.f = f 
     }
 
-    public init(canTransition: () -> Bool, target: (Bool) -> State?) {
-        self.init(f: { target(canTransition()) })
+    public init(_ canTransition: () -> Bool, _ target: State) {
+        self.init({ canTransition() ? target : nil })
     }
 
 }
