@@ -65,7 +65,21 @@
  *  transition is allowed.
  */
 
-public typealias Transition = () -> State? 
+//public typealias Transition = () -> State? 
+
+public struct Transition {
+
+    let f: () -> State?
+
+    public init(f: () -> State?) {
+        self.f = f 
+    }
+
+    public init(canTransition: () -> Bool, target: (Bool) -> State?) {
+        self.init(f: { target(canTransition()) })
+    }
+
+}
 /*
 public protocol Transition {
     
