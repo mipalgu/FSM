@@ -60,13 +60,13 @@ public func trigger<T: GlobalVariables>(
     type: wb_types,
     wbd: Whiteboard = Whiteboard(),
     atomic: Bool = true,
-    notifySubscribers: Bool = true
+    shouldNotifySubscribers: Bool = true
 ) -> (Behaviour<T?>, (T) -> Void) {
     let wb: GenericWhiteboard = GenericWhiteboard<T>(
         msgType: type,
         wb: wbd,
         atomic: atomic,
-        notifySubscribers: notifySubscribers
+        shouldNotifySubscribers: shouldNotifySubscribers
     )
     // Create Behaviour
     let b: Behaviour<T?> = pure { (t: Time) -> T? in

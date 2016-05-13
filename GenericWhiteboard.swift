@@ -62,7 +62,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
 
     private let atomic: Bool
     private let msgType: wb_types
-    private let notifySubscribers: Bool
+    private let shouldNotifySubscribers: Bool
     private var procuredCount: UInt8 = 0
     private let wb: Whiteboard
 
@@ -210,11 +210,11 @@ public class GenericWhiteboard<T: GlobalVariables> {
         msgType: wb_types,
         wb: Whiteboard = Whiteboard(),
         atomic: Bool = true,
-        notifySubscribers: Bool = true
+        shouldNotifySubscribers: Bool = true
     ) {
         self.atomic = atomic
         self.msgType = msgType
-        self.notifySubscribers = notifySubscribers
+        self.shouldNotifySubscribers = shouldNotifySubscribers
         self.wb = wb
     }
 
@@ -225,13 +225,21 @@ public class GenericWhiteboard<T: GlobalVariables> {
         return m
     }
 
+    public func notifySubscribers() {
+        if (false == self.shouldNotifySubscribers) {
+            return
+        }
+        gsw_signal_subscribers(self.wb.wb)
+    }
+
     public func post(val: Message) {
         if (false == self.procure()) {
             return
         }
         self.wb.post(val: val, msg: self.msgType)
-        gsw_increment_event_counter(self.wb.wb, Int32(self.msgType.rawValue));
+        gsw_increment_event_counter(self.wb.wb, Int32(self.msgType.rawValue))
         self.vacate()
+        self.notifySubscribers()
     }
 
     public func procure() -> Bool {
