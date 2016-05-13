@@ -103,9 +103,8 @@ public class GenericWhiteboard<T> {
     }
 
     public var eventCounters: CArray<UInt16> {
-        var temp: UInt16 = self.gsw.pointee.event_counters.0
         return CArray(
-            first: &temp,
+            first: &self.gsw.pointee.event_counters.0,
             length: self.totalMessageTypes
         )
     }
@@ -205,7 +204,7 @@ public class GenericWhiteboard<T> {
             return
         }
         self.wb.post(val: val, msg: self.msgType)
-        self.eventCount += 1
+        gsw_increment_event_counter(self.wb.wb, Int32(self.msgType.rawValue));
         self.vacate()
     }
 
