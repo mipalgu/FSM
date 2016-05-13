@@ -56,7 +56,7 @@
  *
  */
 
-public class GenericWhiteboard<T> {
+public class GenericWhiteboard<T: GlobalVariables> {
     
     public typealias Message = T
 
@@ -152,6 +152,20 @@ public class GenericWhiteboard<T> {
         return temp*/
     }
 
+    public var orderedMessages: [Message] {
+        let _ = self.procure()
+        let m: ConvertibleCArray<gu_simple_message, Message> = self.messages
+        var i: Int = Int(self.currentIndex)
+        let generations: Int = self.generations
+        var arr: [Message] = []
+        for _ in 0 ..< generations {
+            arr.append(m[i])
+            i = 0 == i ? generations - 1 : i - 1
+        }
+        self.vacate()
+        return arr
+    }
+
     public var msgTypeOffset: Int {
         return Int(self.msgType.rawValue)
     }
@@ -244,6 +258,26 @@ public class GenericWhiteboard<T> {
             self.procuredCount = 0
         }
         return vacated
+    }
+
+}
+
+extension GenericWhiteboard: GlobalVariablesCollection {
+
+    public typealias Element = Message
+    public typealias Iterator = AnyIterator<Element> 
+
+    public func makeIterator() -> AnyIterator<Element> {
+        let messages: [Element] = self.orderedMessages
+        var i: Int = 0
+        return AnyIterator {
+           if (i >= messages.count) {
+                return nil
+           } 
+           let j = i
+           i = i + 1
+           return messages[j]
+        } 
     }
 
 }

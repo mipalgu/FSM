@@ -69,7 +69,8 @@ public class GenericWhiteboardTests: XCTestCase {
             ("test_postIncrementsIndex", test_postIncrementsIndex),
             ("test_postIncrementsEventCount", test_postIncrementsEventCount),
             ("test_messagesStoresTheMessage", test_messagesStoresTheMessage),
-            ("test_changeMessages", test_changeMessages)
+            ("test_changeMessages", test_changeMessages),
+            ("test_iteration", test_iteration)
         ]
     }
 
@@ -134,6 +135,19 @@ public class GenericWhiteboardTests: XCTestCase {
         let m2: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
         XCTAssertEqual(msg, m2[2])
         XCTAssertEqual(m[2], m2[2])
+    }
+
+    public func test_iteration() {
+        XCTAssertEqual(gwb.orderedMessages.count, gwb.generations)
+        for i in 0 ..< gwb.generations {
+            self.gwb.post(val: wb_count(count: Int64(i)))
+        }
+        var i: Int = gwb.generations - 1
+        for count: wb_count in gwb {
+            XCTAssertEqual(count, wb_count(count: Int64(i)))
+            i = i - 1
+        }
+        XCTAssertEqual(gwb.orderedMessages, [3, 2, 1, 0].map({wb_count(count: $0)}))
     }
 
 }
