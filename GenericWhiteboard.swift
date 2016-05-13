@@ -63,12 +63,15 @@ public class GenericWhiteboard<T> {
     private let atomic: Bool
     private let msgType: wb_types
     private let notifySubscribers: Bool
-    private var procured: Bool = false
+    private var procuredCount: UInt8 = 0
     private let wb: Whiteboard
 
     public var currentIndex: UInt8 {
         get {
-            return self.indexes[self.msgTypeOffset]
+            let _ = self.procure()
+            let index: UInt8 = self.indexes[self.msgTypeOffset]
+            self.vacate()
+            return index
         } set {
             if (false == self.procure()) {
                 return
@@ -80,19 +83,18 @@ public class GenericWhiteboard<T> {
 
     public var currentMessage: Message {
         get {
-            return self.wb.get(msg: msgType)
+            return self.get()
         } set {
-            if (false == self.procure()) {
-                return
-            }
-            self.messages[Int(self.currentIndex)] = newValue
-            self.vacate()
+            self.post(val: newValue)
         }
     }
 
     public var eventCount: UInt16 {
         get {
-            return self.eventCounters[self.msgTypeOffset]
+            let _ = self.procure()
+            let e: UInt16 = self.eventCounters[self.msgTypeOffset]
+            self.vacate()
+            return e
         } set {
             if (false == self.procure()) {
                 return
@@ -160,7 +162,10 @@ public class GenericWhiteboard<T> {
 
     public var nextMessage: Message {
         get {
-            return self.messages[Int(self.currentIndex) + 1 % self.generations]
+            let _ = self.procure()
+            let m: Message = self.messages[Int(self.currentIndex) + 1 % self.generations]
+            self.vacate()
+            return m
         } set {
             if (false == self.procure()) {
                 return
@@ -199,6 +204,13 @@ public class GenericWhiteboard<T> {
         self.wb = wb
     }
 
+    public func get() -> Message {
+        let _ = self.procure()
+        let m: Message = self.wb.get(msg: self.msgType)
+        self.vacate()
+        return m
+    }
+
     public func post(val: Message) {
         if (false == self.procure()) {
             return
@@ -209,20 +221,29 @@ public class GenericWhiteboard<T> {
     }
 
     public func procure() -> Bool {
-        if (true == self.atomic && false == self.procured) {
-            let sem = self.wb.wbd.pointee.sem
-            self.procured = 0 == gsw_procure(sem, GSW_SEM_PUTMSG)
-            return self.procured
+        if (false == self.atomic || self.procuredCount > 0) {
+            self.procuredCount = self.procuredCount + 1
+            return true
         }
-        return true
+        let sem = self.wb.wbd.pointee.sem
+        let procured: Bool = 0 == gsw_procure(sem, GSW_SEM_PUTMSG)
+        if (true == procured) {
+            self.procuredCount = self.procuredCount + 1
+        }
+        return procured
     }
 
     public func vacate() -> Bool {
-        if (true == self.procured) {
-            let sem = self.wb.wbd.pointee.sem
-            return 0 == gsw_vacate(sem, GSW_SEM_PUTMSG)
+        if (false == self.atomic || self.procuredCount > 1) {
+            self.procuredCount = self.procuredCount - 1
+            return true
         }
-        return true
+        let sem = self.wb.wbd.pointee.sem
+        let vacated: Bool = 0 == gsw_vacate(sem, GSW_SEM_PUTMSG)
+        if (true == vacated) {
+            self.procuredCount = 0
+        }
+        return vacated
     }
 
 }
