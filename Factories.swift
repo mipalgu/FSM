@@ -58,10 +58,10 @@
 
 public class Factories {
     
-    private static var factories: Stack<MachineFactory> = 
-        Stack<MachineFactory>()
+    private static var factories: Stack<FSMArrayFactory> = 
+        Stack<FSMArrayFactory>()
     
-    public private(set) var factories: Stack<MachineFactory> {
+    public private(set) var factories: Stack<FSMArrayFactory> {
         get {
             return Factories.factories
         } set {
@@ -83,15 +83,15 @@ public class Factories {
         self.factories.clear()
     }
 
-    public func peek() -> MachineFactory? {
+    public func peek() -> FSMArrayFactory? {
         return self.factories.peek()
     }
 
-    public func pop() -> MachineFactory {
+    public func pop() -> FSMArrayFactory {
         return self.factories.pop()
     }
 
-    public func push(_ newElement: MachineFactory) {
+    public func push(_ newElement: FSMArrayFactory) {
         self.factories.push(newElement)
     }
 
