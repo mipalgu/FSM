@@ -6,6 +6,8 @@
 ALL_TARGETS=build-module
 CI_WIP=yes
 
+IN_FSM=yes
+
 all:	all-real
 
 HOST_SWIFTC=swiftc
