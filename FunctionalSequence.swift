@@ -42,7 +42,7 @@
 public func <^> <
     T, U, S: Sequence
     where S.Iterator.Element == T
->(f: @noescape T -> U, a: S) -> [U] {
+>(f: @noescape (T) -> U, a: S) -> [U] {
     return a.map(f)
 }
 
@@ -61,7 +61,7 @@ public func <^> <
 public func <*> <
     T, U, S: Sequence
     where S.Iterator.Element == T
->(fs: [T -> U], a: S) -> [U] {
+>(fs: [(T) -> U], a: S) -> [U] {
     return a.apply(fs)
 }
 
@@ -78,7 +78,7 @@ public func <*> <
 public func >>- <
     T, U, S: Sequence
     where S.Iterator.Element == T
->(a: S, f: T -> [U]) -> [U] {
+>(a: S, f: (T) -> [U]) -> [U] {
     return a.flatMap(f)
 }
 
@@ -95,7 +95,7 @@ public func >>- <
 public func -<< <
     T, U, S: Sequence
     where S.Iterator.Element == T
->(f: T -> [U], a: [T]) -> [U] {
+>(f: (T) -> [U], a: [T]) -> [U] {
   return a.flatMap(f)
 }
 
@@ -110,7 +110,7 @@ public func -<< <
  *
  * - returns: A value of type `[C]`
  */
-public func >-> <A, B, C>(f: A -> [B], g: B -> [C]) -> A -> [C] {
+public func >-> <A, B, C>(f: (A) -> [B], g: (B) -> [C]) -> (A) -> [C] {
     return { x in f(x) >>- g }
 }
 
@@ -125,7 +125,7 @@ public func >-> <A, B, C>(f: A -> [B], g: B -> [C]) -> A -> [C] {
  *
  * - returns: A value of type `[C]`
  */
-public func <-< <A, B, C>(f: B -> [C], g: A -> [B]) -> A -> [C] {
+public func <-< <A, B, C>(f: (B) -> [C], g: (A) -> [B]) -> (A) -> [C] {
     return { x in g(x) >>- f }
 }
 
