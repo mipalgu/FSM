@@ -7,7 +7,6 @@ ALL_TARGETS=build-module
 CI_WIP=yes
 IN_FSM=yes
 
-HOST_SWIFTC=swiftc
 SWIFT_SRCS!=ls *.swift
 SWIFT_BRIDGING_HEADER=FSM-Bridging-Header.h
 
