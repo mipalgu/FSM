@@ -83,8 +83,13 @@ public struct Whiteboard: WhiteboardType {
     /// convenience class variable denoting the number of defined wb types
     public static var number_of_messages: Int32 { return GSW_NUM_TYPES_DEFINED }
     
-    /// constructor for the default, singleton whiteboard
-    public init() { wbd = get_local_singleton_whiteboard() }
+    public init() {
+        self.init(wbd: get_local_singleton_whiteboard())
+    }
+
+    public init(wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor>) {
+        self.wbd = wbd
+    }
     
     /// get message template function
     public func get<T>(msg: wb_types) -> T {
