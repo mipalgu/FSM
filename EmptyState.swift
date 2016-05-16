@@ -58,10 +58,8 @@
 
 /**
  *  A state that does nothing.
- *
- *  This class provides a tempalte for all other states to inherit.
  */
-public class EmptyState: State {
+public final class EmptyState: State {
     
     public override final func onEntry() {}
     
