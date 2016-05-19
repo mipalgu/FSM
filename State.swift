@@ -108,7 +108,7 @@ public func ==<T: _State, U: _State>(lhs: T, rhs: U) -> Bool {
     return lhs.name == rhs.name
 }
 
-public class State:
+public class State<T: TransitionType where T.Target: State>:
     _State,
     CustomStringConvertible,
     CustomDebugStringConvertible,
@@ -128,9 +128,9 @@ public class State:
      *  An array of transitions that this state may use to move to another
      *  state.
      */
-    public var transitions: [Transition]
+    public var transitions: [T]
     
-    public init(_ name: String, transitions: [Transition] = []) {
+    public init(_ name: String, transitions: [T] = []) {
         self.name = name
         self.transitions = transitions
     }
