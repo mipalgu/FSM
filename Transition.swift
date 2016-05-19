@@ -71,14 +71,14 @@ public protocol TransitionType {
     
     associatedtype Target
 
-    var canTransition: () -> Bool
-    var target: Target
+    var canTransition: () -> Bool { get }
+    var target: Target { get }
 
 }
 
-public struct Transition<S: State> {
+public struct Transition<S: State>: TransitionType {
 
-    typealias Target = S
+    public typealias Target = S
 
     public let canTransition: () -> Bool
     public let target: Target
@@ -89,20 +89,21 @@ public struct Transition<S: State> {
     }
 
     public func map<S2: State>(_ f: @noescape (S) -> S2) -> Transition<S2> {
-        return Transition(self.canTransition, f(self.state))
+        return Transition<S2>(f(self.target), self.canTransition)
     }
 
     public func apply<S2: State>(_ t: Transition<S2>) -> Transition<S> {
-        return Transition(t.canTransition, self.target)
+        return Transition(self.target, t.canTransition)
     }
 
     public func flatMap<S2: State>(
         _ f: @noescape (S) -> Transition<S2>
     ) -> Transition<S2> {
-        return f(self.state)
+        return f(self.target)
     }
 
 }
+
 /*
 public protocol Transition {
     
