@@ -67,16 +67,39 @@
 
 //public typealias Transition = () -> State? 
 
-public struct Transition {
+public protocol TransitionType {
+    
+    associatedtype Target
 
-    let f: () -> State?
+    var canTransition: () -> Bool
+    var target: Target
 
-    public init(_ f: () -> State?) {
-        self.f = f 
+}
+
+public struct Transition<S: State> {
+
+    typealias Target = S
+
+    public let canTransition: () -> Bool
+    public let target: Target
+
+    public init(_ target: Target, _ canTransition: () -> Bool = { true }) {
+        self.canTransition = canTransition
+        self.target = target
     }
 
-    public init(_ canTransition: () -> Bool, _ target: State) {
-        self.init({ canTransition() ? target : nil })
+    public func map<S2: State>(_ f: @noescape (S) -> S2) -> Transition<S2> {
+        return Transition(self.canTransition, f(self.state))
+    }
+
+    public func apply<S2: State>(_ t: Transition<S2>) -> Transition<S> {
+        return Transition(t.canTransition, self.target)
+    }
+
+    public func flatMap<S2: State>(
+        _ f: @noescape (S) -> Transition<S2>
+    ) -> Transition<S2> {
+        return f(self.state)
     }
 
 }
