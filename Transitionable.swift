@@ -66,6 +66,6 @@ public protocol Transitionable {
      */
     var transitions: [Trans] { get set }
 
-    mutating func addTransition(_ : Trans) -> Void
+    mutating func addTransition(_ : Trans ...) -> Void
     
 }

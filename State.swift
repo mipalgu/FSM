@@ -80,8 +80,8 @@ public protocol _State {
  */
 extension _State where Self: Transitionable {
     
-    public mutating func addTransition(_ transition: Trans) {
-        self.transitions.append(transition)
+    public mutating func addTransition(_ transitions: Trans ...) {
+        self.transitions.append(contentsOf: transitions)
     }
     
 }
