@@ -80,7 +80,7 @@ public class CallbackState: State, CallbackableState {
     
     public init(
         _ name: String,
-        transitions: [Transition] = [],
+        transitions: [Trans] = [],
         onEntry: () -> Void = {},
         main: () -> Void = {},
         onExit: () -> Void = {}

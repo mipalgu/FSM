@@ -80,7 +80,7 @@ public protocol _State {
  */
 extension _State where Self: Transitionable {
     
-    public mutating func addTransition(_ transition: Transition) {
+    public mutating func addTransition(_ transition: Trans) {
         self.transitions.append(transition)
     }
     
@@ -108,7 +108,7 @@ public func ==<T: _State, U: _State>(lhs: T, rhs: U) -> Bool {
     return lhs.name == rhs.name
 }
 
-public class State<T: TransitionType where T.Target: State>:
+public class State:
     _State,
     CustomStringConvertible,
     CustomDebugStringConvertible,
@@ -116,6 +116,8 @@ public class State<T: TransitionType where T.Target: State>:
     Transitionable,
     Equatable
 {
+
+    public typealias Trans = Transition<State>
 
     /**
      *  The name of the state.
@@ -128,9 +130,9 @@ public class State<T: TransitionType where T.Target: State>:
      *  An array of transitions that this state may use to move to another
      *  state.
      */
-    public var transitions: [T]
+    public var transitions: [Trans]
     
-    public init(_ name: String, transitions: [T] = []) {
+    public init(_ name: String, transitions: [Trans] = []) {
         self.name = name
         self.transitions = transitions
     }
