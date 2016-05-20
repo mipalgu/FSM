@@ -61,7 +61,7 @@
  *  this protocol directly.  If you want to create your own implementation of a
  *  Finite State Machine then instead use `FiniteStateMachine`.
  */
-public protocol FiniteStateMachineType {
+public protocol FiniteStateMachineType: StateExecuter {
     
     var initialState: State { get }
     var name: String { get }
