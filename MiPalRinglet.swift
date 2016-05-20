@@ -85,11 +85,11 @@ public class MiPalRinglet: Ringlet {
             state.onEntry()
         }
         // Can we transition to another state?
-        if let s = state.transitions.lazy.flatMap({ $0.canTransition() ? $0.target : nil }).first {
+        if let t = state.transitions.lazy.filter({ $0.canTransition() }).first {
             // Yes - Exit state and return the new state.
             state.onExit()
             self.saveSnapshot()
-            return s
+            return t.target
         }
         // No - Execute main method and return state.
         state.main()
