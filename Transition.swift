@@ -104,6 +104,24 @@ public struct Transition<S: State>: TransitionType {
 
 }
 
+public func <^> <
+    T: State, U: State
+>(_ f: @noescape (T) -> U, a: Transition<T>) -> Transition<U> {
+    return a.map(f)
+}
+
+public func <*> <
+    T: State, U: State
+>(_ f: Transition<U>, a: Transition<T>) -> Transition<T> {
+    return a.apply(f)
+}
+
+public func >>- <
+    T: State, U: State
+>(a: Transition<T>, _ f: @noescape (T) -> Transition<U>) -> Transition<U> {
+    return a.flatMap(f)
+}
+
 /*
 public protocol Transition {
     
