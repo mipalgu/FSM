@@ -29,11 +29,11 @@
  */
 
 /**
- * Wrap a value in a minimal context of `[]`
+ *  Wrap a value in a minimal context of `[]`
  *
- * - parameter a: A value of type `T`
+ *  - Parameter a: A value of type `T`
  *
- * - returns: The provided value wrapped in an array
+ *  - Returns: The provided value wrapped in an array
  */
 public func pure<T>(a: T) -> [T] {
     return [a]
