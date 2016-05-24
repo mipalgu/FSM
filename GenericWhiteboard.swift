@@ -76,7 +76,8 @@ public class GenericWhiteboard<T: GlobalVariables> {
             if (false == self.procure()) {
                 return
             }
-            self.indexes[self.msgTypeOffset] = (newValue % UInt8(generations))
+            var indexes: CArray<UInt8> = self.indexes
+            indexes[self.msgTypeOffset] = (newValue % UInt8(generations))
             self.vacate()
         }
     }
@@ -99,7 +100,8 @@ public class GenericWhiteboard<T: GlobalVariables> {
             if (false == self.procure()) {
                 return
             }
-            self.eventCounters[self.msgTypeOffset] = newValue
+            var eventCounters: CArray<UInt16> = self.eventCounters
+            eventCounters[self.msgTypeOffset] = newValue
             self.vacate()
         }
     }
@@ -184,8 +186,8 @@ public class GenericWhiteboard<T: GlobalVariables> {
             if (false == self.procure()) {
                 return
             }
-            self.messages[Int(self.currentIndex + 1) % self.generations] =
-                newValue
+            var m: ConvertibleCArray<gu_simple_message, Message> = self.messages
+            m[Int(self.currentIndex + 1) % self.generations] = newValue
             self.vacate()
         }
     }

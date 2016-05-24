@@ -66,7 +66,7 @@
  *  This becomes combersome as we would like to be able to use them just like
  *  normal Swift arrays.  The CArray wrapper provides this functionality.
  */
-public class CArray<T> {
+public struct CArray<T> {
 
     /**
      *  The type of the elements.
@@ -94,7 +94,7 @@ public class CArray<T> {
      *      - first: The first element in the array.
      *      - length: The total length of the array.
      */
-    public convenience init(first: inout Element, length: Int = 0) {
+    public init(first: inout Element, length: Int = 0) {
         self.init(
             p: withUnsafeMutablePointer(&first, { $0 }),
             length: length

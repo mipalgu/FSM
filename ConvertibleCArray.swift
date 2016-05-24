@@ -60,23 +60,23 @@
  *  Provides a wrapper for C arrays that contain a certain type but need to be
  *  converted to a second type.
  *
- *  For instance a use case for this class is with the gusimplewhiteboard.  The
+ *  For instance a use case for this struct is with the gusimplewhiteboard.  The
  *  individual messages in the whiteboard are stored as gu_simple_messages, but
  *  the developer would like to cast these to the message that they are using.
  *  By using a ConvertibleCArray we can convert from the gu_simple_message to a
  *  wb_point for instance.
  *
- *  This class uses an underlying `CArray` which actually stores the values.
- *  Therefore this class works much like a proxy where it delegates most of its
- *  implementation to the underlying `CArray`.  Where this class actually provides
- *  a difference in the implementation from `CArray` is when 
+ *  This struct uses an underlying `CArray` which actually stores the values.
+ *  Therefore this struct works much like a proxy where it delegates most of its
+ *  implementation to the underlying `CArray`.  Where this struct actually
+ *  provides a difference in the implementation from `CArray` is when 
  *  retrieving/modifying the elements in the array.  When retrieving an element
- *  from the array, this class does delegate to the underlying array, however
- *  the class then converts the retrieved value to `To`.  When modifying
- *  elements this class does the reverse where it first converts the new element
- *  to `From` before delegating to the underlying `CArray`.
+ *  from the array, this struct does delegate to the underlying array, however
+ *  the struct then converts the retrieved value to `To`.  When modifying
+ *  elements this struct does the reverse where it first converts the new
+ *  element to `From` before delegating to the underlying `CArray`.
  */
-public class ConvertibleCArray<From, To> {
+public struct ConvertibleCArray<From, To> {
     
     /**
      *  The element that we are converting to.
