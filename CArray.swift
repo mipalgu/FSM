@@ -56,13 +56,44 @@
  *
  */
 
+/**
+ *  A C array wrapper.
+ *
+ *  When attempting to use C arrays swift interprets them as tuples.  Therefore
+ *  if I reference an int C array with a length of 4, I get a tuple containing
+ *  4 ints: (Int, Int, Int, Int).
+ *
+ *  This becomes combersome as we would like to be able to use them just like
+ *  normal Swift arrays.  The CArray wrapper provides this functionality.
+ */
 public class CArray<T> {
 
+    /**
+     *  The type of the elements.
+     */
     public typealias Element = T
 
+    /**
+     *  A pointer to the first element in the array.
+     */
     internal var p: UnsafeMutablePointer<Element>?
+
+    /**
+     *  The total length of the array.
+     */
     internal var length: Int
 
+    /**
+     *  Create an array from a reference to the first element.
+     *
+     *  This may be helpful we attempting to create a CArray from a tuple.
+     *  Simply pass a reference to the first element in the tuple and the size
+     *  of the tuple to create the CArray.
+     *
+     *  - Parameters:
+     *      - first: The first element in the array.
+     *      - length: The total length of the array.
+     */
     public convenience init(first: inout Element, length: Int = 0) {
         self.init(
             p: withUnsafeMutablePointer(&first, { $0 }),
@@ -70,6 +101,13 @@ public class CArray<T> {
         )
     }
 
+    /**
+     *  Create the CArray from an UnsafeMutablePointer to the first element.
+     *
+     *  - Parameters:
+     *      - p: The UnsafeMutablePointer to the first element.
+     *      - length: The length of the array.
+     */
     public init(p: UnsafeMutablePointer<Element>? = nil, length: Int = 0) {
         self.p = p
         self.length = length
@@ -77,11 +115,24 @@ public class CArray<T> {
 
 }
 
+/**
+ *  Make the CArray a Sequence.
+ *
+ *  This will allow operations such as map and filter to be used.
+ */
 extension CArray: Sequence {
 
-    public typealias Generator = AnyIterator<Element>
+    /**
+     *  The iterator that generates each element with a call to next().
+     */
+    public typealias Iterator = AnyIterator<Element>
 
-    public func generate() -> AnyIterator<Element> {
+    /**
+     *  Create the iterator that iterates over the elements in the array..
+     *
+     *  - Returns: the newly created iterator.
+     */
+    public func makeIterator() -> AnyIterator<Element> {
         if (nil == self.p) {
             return AnyIterator { nil }
         }
@@ -98,18 +149,41 @@ extension CArray: Sequence {
 
 }
 
+/**
+ *  Make the CArray a Collection.
+ *
+ *  This allows modification/retrieval of elements through indexes.
+ */
 extension CArray: Collection {
 
+    /**
+     *  The index type - just an Int.
+     */
     public typealias Index = Int
 
+    /**
+     *  The first element is at position 0 in the array.
+     */
     public var startIndex: Int {
         return 0
     }
 
+    /**
+     *  The last element is at `length` - 1 in the array..
+     */
     public var endIndex: Int {
-        return 0 == length ? 0 : self.length
+        return 0 == length ? 0 : self.length - 1
     }
 
+    /**
+     *  Access the element at the specific position.
+     *
+     *  - Parameter i: The position of the element in the array to access.
+     *
+     *  - Complexity: O(1)
+     *
+     *  - Precondition: 0 <= `i` < `length`
+     */
     public subscript(i: Int) -> Element {
         get {
             return p![i]
@@ -118,6 +192,13 @@ extension CArray: Collection {
         }
     }
 
+    /**
+     *  Returns the position immediately after the given index.
+     *
+     *  - Parameter i: A valid index of the `CArray`.
+     *
+     *  - Returns: The index value immediatly after `i`.
+     */
     public func index(after i: Index) -> Index {
         return i + 1
     }
