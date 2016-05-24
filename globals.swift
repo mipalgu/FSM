@@ -59,7 +59,7 @@
 public var DEBUG: Bool = false
 
 public func addFactory(_ f: FSMArrayFactory) {
-    let factories: Factories = Factories()
+    var factories: Factories = Factories()
     factories.push(f)
 }
 
@@ -100,7 +100,7 @@ public func getFactoryCount() -> Int {
 }
 
 public func getLastFactory() -> FSMArrayFactory? {
-    let f: Factories = Factories()
+    var f: Factories = Factories()
     if (true == f.isEmpty) {
         return nil
     }

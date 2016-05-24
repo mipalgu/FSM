@@ -81,13 +81,21 @@ public struct Factories {
             Factories.factories = newValue
         }
     }
+    
+    public var count: Int {
+        return self.factories.count
+    }
+    
+    public var isEmpty: Bool {
+        return self.factories.isEmpty
+    }
 
     public init() {}
 
     /**
      *  Clear the stack of all elements.
      */
-    public func clear() {
+    public mutating func clear() {
         self.factories.clear()
     }
 
@@ -110,7 +118,7 @@ public struct Factories {
      *
      *  - Returns: The latest element on the stack.
      */
-    public func pop() -> FSMArrayFactory {
+    public mutating func pop() -> FSMArrayFactory {
         return self.factories.pop()
     }
 
@@ -119,7 +127,7 @@ public struct Factories {
      *
      *  - Parameter newElement: The new element to add to the stack.
      */
-    public func push(_ newElement: FSMArrayFactory) {
+    public mutating func push(_ newElement: FSMArrayFactory) {
         self.factories.push(newElement)
     }
 

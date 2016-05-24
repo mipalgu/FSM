@@ -81,7 +81,7 @@ public extension FiniteStateMachineType where Self: Exitable, Self: Resumeable {
      *  executed.
      */
     var hasFinished: Bool {
-        return false == self.isSuspended() &&
+        return false == self.isSuspended &&
             0 == self.currentState.transitions.count &&
             self.currentState == self.previousState
     }

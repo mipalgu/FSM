@@ -58,7 +58,7 @@
 
 public protocol Suspendable: StateExecuter {
     
-    func isSuspended: Bool
+    var isSuspended: Bool { get }
 
     var suspendedState: State? { get set }
 
