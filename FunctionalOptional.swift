@@ -29,116 +29,149 @@
  */
 
 /**
- * map a function over an optional value
+ *  Map a function over an optional value.
  *
- * - If the value is `.None`, the function will not be evaluated and this will return `.None`
- * - If the value is `.Some`, the function will be applied to the unwrapped value
+ *  - If the value is `.none`, the function will not be evaluated and this will
+ *  return `.none`.
  *
- * - parameter f: A transformation function from type `T` to type `U`
- * - parameter a: A value of type `Optional<T>`
+ *  - If the value is `.some`, the function will be applied to the unwrapped
+ *  value.
  *
- * - returns: A value of type `Optional<U>`
+ *  - Parameter f: A transformation function from type `T` to type `U`.
+ *
+ *  - Parameter a: A value of type `Optional<T>`.
+ *
+ *  - Returns: A value of type `Optional<U>`.
  */
 public func <^> <T, U>(f: @noescape (T) -> U, a: T?) -> U? {
     return a.map(f)
 }
 
 /**
- * apply an optional function to an optional value
+ *  Apply an optional function to an optional value.
  *
- * - If either the value or the function are `.None`, the function will not be evaluated and this will return `.None`
- * - If both the value and the function are `.Some`, the function will be applied to the unwrapped value
+ *  - If either the value or the function are `.none`, the function will not be
+ *  evaluated and this will return `.none`.
  *
- * - parameter f: An optional transformation function from type `T` to type `U`
- * - parameter a: A value of type `Optional<T>`
+ *  - If both the value and the function are `.some`, the function will be
+ *  applied to the unwrapped value.
  *
- * - returns: A value of type `Optional<U>`
+ * - Parameter f: An optional transformation function from type `T` to type `U`.
+ *
+ * - Parameter a: A value of type `Optional<T>`.
+ *
+ * - Returns: A value of type `Optional<U>`.
  */
 public func <*> <T, U>(f: ((T) -> U)?, a: T?) -> U? {
     return a.apply(f)
 }
 
 /**
- * flatMap a function over an optional value (left associative)
+ *  FlatMap a function over an optional value (left associative).
  *
- * - If the value is `.None`, the function will not be evaluated and this will return `.None`
- * - If the value is `.Some`, the function will be applied to the unwrapped value
+ *  - If the value is `.none`, the function will not be evaluated and this will
+ *  return `.none`.
+ * 
+ *  - If the value is `.some`, the function will be applied to the unwrapped
+ *  value.
  *
- * - parameter f: A transformation function from type `T` to type `Optional<U>`
- * - parameter a: A value of type `Optional<T>`
+ * - Parameter f: A transformation function from type `T` to type `Optional<U>`.
  *
- * - returns: A value of type `Optional<U>`
+ * - Parameter a: A value of type `Optional<T>`.
+ *
+ * - Returns: A value of type `Optional<U>`.
  */
 public func >>- <T, U>(a: T?, f: @noescape (T) -> U?) -> U? {
     return a.flatMap(f)
 }
 
 /**
- * flatMap a function over an optional value (right associative)
+ *  FlatMap a function over an optional value (right associative).
  *
- * - If the value is `.None`, the function will not be evaluated and this will return `.None`
- * - If the value is `.Some`, the function will be applied to the unwrapped value
+ *  - If the value is `.none`, the function will not be evaluated and this will
+ *  return `.none`.
  *
- * - parameter a: A value of type `Optional<T>`
- * - parameter f: A transformation function from type `T` to type `Optional<U>`
+ * - If the value is `.some`, the function will be applied to the unwrapped
+ *  value.
  *
- * - returns: A value of type `Optional<U>`
+ * - Parameter a: A value of type `Optional<T>`.
+ *
+ * - Parameter f: A transformation function from type `T` to type `Optional<U>`.
+ *
+ * - Returns: A value of type `Optional<U>`.
  */
 public func -<< <T, U>(f: @noescape (T) -> U?, a: T?) -> U? {
     return a.flatMap(f)
 }
 
 /**
- * compose two functions that produce optional values, from left to right
+ *  Compose two functions that produce optional values, from left to right.
  *
- * - If the result of the first function is `.None`, the second function will not be inoked and this will return `.None`
- * - If the result of the first function is `.Some`, the value is unwrapped and passed to the second function which may return `.None`
+ *  - If the result of the first function is `.none`, the second function will
+ *  not be inoked and this will return `.none`.
  *
- * - parameter f: A transformation function from type `A` to type `Optional<B>`
- * - parameter g: A transformation function from type `B` to type `Optional<C>`
+ *  - If the result of the first function is `.some`, the value is unwrapped
+ *  and passed to the second function which may return `.none`.
  *
- * - returns: A function from type `A` to type `Optional<C>`
+ *  - Parameter f: A transformation function from type `A` to type
+ *  `Optional<B>`.
+ *
+ *  - Parameter g: A transformation function from type `B` to type
+ *  `Optional<C>`.
+ *
+ * - Returns: A function from type `A` to type `Optional<C>`.
  */
 public func >-> <A, B, C>(f: (A) -> B?, g: (B) -> C?) -> (A) -> C? {
     return { x in f(x) >>- g }
 }
 
 /**
- * compose two functions that produce optional values, from right to left
+ *  Compose two functions that produce optional values, from right to left.
  *
- * - If the result of the first function is `.None`, the second function will not be inoked and this will return `.None`
- * - If the result of the first function is `.Some`, the value is unwrapped and passed to the second function which may return `.None`
+ *  - If the result of the first function is `.none`, the second function will
+ *  not be invoked and this will return `.none`.
  *
- * - parameter f: A transformation function from type `B` to type `Optional<C>`
- * - parameter g: A transformation function from type `A` to type `Optional<B>`
+ *  - If the result of the first function is `.some`, the value is unwrapped and
+ *  passed to the second function which may return `.none`.
  *
- * - returns: A function from type `A` to type `Optional<C>`
+ *  - Parameter f: A transformation function from type `B` to type
+ *  `Optional<C>`.
+ *
+ *  - Parameter g: A transformation function from type `A` to type
+ *  `Optional<B>`.
+ *
+ *  - Returns: A function from type `A` to type `Optional<C>`.
  */
 public func <-< <A, B, C>(f: (B) -> C?, g: (A) -> B?) -> (A) -> C? {
     return { x in g(x) >>- f }
 }
 
 /**
- * Wrap a value in a minimal context of `.Some`
+ *  Wrap a value in a minimal context of `.some`.
  *
- * - parameter a: A value of type `T`
+ *  - Parameter a: A value of type `T`.
  *
- * - returns: The provided value wrapped in `.Some`
+ *  - Returns: The provided value wrapped in `.some`.
  */
 public func pure<T>(a: T) -> T? {
     return .some(a)
 }
 
 public extension Optional {
+
     /**
-     * apply an optional function to `self`
+     *  Apply an optional function to `self`.
      *
-     * - If either self or the function are `.None`, the function will not be evaluated and this will return `.None`
-     * - If both self and the function are `.Some`, the function will be applied to the unwrapped value
+     *  - If either self or the function are `.none`, the function will not be
+     *  evaluated and this will return `.none`.
      *
-     * - parameter f: An optional transformation function from type `Wrapped` to type `U`
+     *  - If both self and the function are `.some`, the function will be
+     *  applied to the unwrapped value.
      *
-     * - returns: A value of type `Optional<U>`
+     *  - Parameter f: An optional transformation function from type `Wrapped`
+     *  to type `U`.
+     *
+     *  - Returns: A value of type `Optional<U>`.
      */
     func apply<U>(_ f: ((Wrapped) -> U)?) -> U? {
             return f.flatMap { self.map($0) }
