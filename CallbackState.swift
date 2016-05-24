@@ -63,7 +63,7 @@
  *
  *  This class cannot be subclasses.
  */
-public final class CallbackState: State, CallbackableState {
+public final class CallbackState: State {
     
     /**
      *  The actual onEntry implementation.
