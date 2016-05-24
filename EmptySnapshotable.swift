@@ -56,9 +56,20 @@
  *
  */
 
+/**
+ *  Provides an implementation of the `Snapshotable` protocol that does nothing.
+ *
+ *  This is useful if for instance there is nothing to take snapshots of.
+ */
 public class EmptySnapshotable: Snapshotable {
 
+    /**
+     *  Does nothing.
+     */
     public func takeSnapshot() {}
 
+    /**
+     *  Does nothing.
+     */
     public func saveSnapshot() {}
 }
