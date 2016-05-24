@@ -56,8 +56,19 @@
  *
  */
 
-public class EmptyVariables: Variables, GlobalVariables {
+/**
+ *  An empty set of variables.
+ *
+ *  This class is useful for when there are no variables and classes such as
+ *  `FiniteStateMachine` are asking for some.
+ */
+public final class EmptyVariables: Variables, GlobalVariables {
+
+    /**
+     * Just initialize the class with no properties.
+     */
     public init() {}
+
 }
 
 public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
