@@ -75,7 +75,7 @@ public func trigger<T: GlobalVariables>(
             return nil
         }
         // Wrap t around if it goes above eventCount's max value.
-        t = t % Time(wb.eventCount.dynamicType.max)
+        t = Time.min + (0 == t ? 0 : t % Time(wb.eventCount.dynamicType.max))
         // Calculate the minimum time allowed.
         let eventCount: Time = Time(wb.eventCount)
         let generations: Time = Time(wb.generations)
