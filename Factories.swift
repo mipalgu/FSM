@@ -56,11 +56,24 @@
  *
  */
 
-public class Factories {
+/**
+ *  A stack of `FSMArrayFactory`s.
+ *
+ *  Uses an underlying `Stack` of `FSMArrayFactory`s.  This struct therefore
+ *  delegates most of it's implementation to the underlying stack.
+ *
+ *  The underlying stack `factories` is static and a getter/setter has been
+ *  provided.  This therefore makes this struct a monostate where the underlying
+ *  stack is shared between each instance of Factories.
+ */
+public struct Factories {
     
     private static var factories: Stack<FSMArrayFactory> = 
         Stack<FSMArrayFactory>()
     
+    /**
+     *  Provides access to the underlying `factories` stack.
+     */
     public private(set) var factories: Stack<FSMArrayFactory> {
         get {
             return Factories.factories
@@ -69,30 +82,97 @@ public class Factories {
         }
     }
 
-    public var count: Int {
-        return self.factories.count
-    }
-
-    public var isEmpty: Bool {
-        return self.factories.isEmpty
-    }
-    
     public init() {}
 
+    /**
+     *  Clear the stack of all elements.
+     */
     public func clear() {
         self.factories.clear()
     }
 
+    /**
+     *  Retrieve the element that was added last to the stack.
+     *
+     *  If the stack is empty then nil is returned.
+     *
+     *  - Returns: The latest element on the stack or .None if the stack is
+     *  empty.
+     */
     public func peek() -> FSMArrayFactory? {
         return self.factories.peek()
     }
 
+    /**
+     *  Retrieve the element that was added last to the stack
+     *
+     *  - Precondition: The stack is not empty.
+     *
+     *  - Returns: The latest element on the stack.
+     */
     public func pop() -> FSMArrayFactory {
         return self.factories.pop()
     }
 
+    /**
+     *  Add an element to the stack.
+     *
+     *  - Parameter newElement: The new element to add to the stack.
+     */
     public func push(_ newElement: FSMArrayFactory) {
         self.factories.push(newElement)
+    }
+
+}
+
+/**
+ *  Make Factories a Sequence.
+ *
+ *  This lets you iterate through the factories using for loops, and gives
+ *  access to higher order functions such as map and filter.
+ */
+extension Factories: Sequence {
+
+    /**
+     *  Factories contain FSMArrayFactory elements.
+     */
+    public typealias Element = FSMArrayFactory
+
+    /**
+     *  Factories is its own Iterator.
+     */
+    public typealias Iterator = Factories
+
+    /**
+     *  Just returns self.
+     *
+     *  - Returns: self.
+     */
+    public func makeIterator() -> Iterator {
+        return self
+    }
+
+}
+
+/**
+ *  Make Factories conform to the IteratorProtocol..
+ *
+ *  This allows Factories to become its own `Iterator`.
+ */
+extension Factories: IteratorProtocol {
+
+    /**
+     *  Returns the next element on the stack.
+     *
+     *  - Warning: Once returned the element is removed from the stack.
+     *
+     *  - Returns: The last element that was added to the stack.
+     */
+    public mutating func next() -> Element? {
+        if (nil == self.peek()) {
+            return nil
+        }
+        return self.pop()
     }
 
 }
