@@ -60,8 +60,10 @@
  *  Provides a way for developers to pass in the onEntry, main and onExit
  *  methods when initializing a state so that they can more easily create simple
  *  states.
+ *
+ *  This class cannot be subclasses.
  */
-public class CallbackState: State, CallbackableState {
+public final class CallbackState: State, CallbackableState {
     
     /**
      *  The actual onEntry implementation.
@@ -92,30 +94,30 @@ public class CallbackState: State, CallbackableState {
     }
     
     /**
-     *  This method simply calls _onEntry.
+     *  This method simply calls `_onEntry`.
      *
      *  This method cannot be overrided as all `CallbackState`s must use the 
-     *  _onEntry property instead.
+     *  `_onEntry` property instead.
      */
     public override final func onEntry() {
         self._onEntry()
     }
     
     /**
-     *  This method simply calls _main.
+     *  This method simply calls `_main`.
      *
      *  This method cannot be overrided as all `CallbackState`s must use the
-     *  _main property instead.
+     *  `_main` property instead.
      */
     public override final func main() {
         self._main()
     }
     
     /**
-     *  This method simply calls _onExit.
+     *  This method simply calls `_onExit`.
      *
      *  This method cannot be overrided as all `CallbackState`s must use the
-     *  _onExit property instead.
+     *  `_onExit` property instead.
      */
     public override final func onExit() {
         self._onExit()
