@@ -56,23 +56,72 @@
  *
  */
 
+/**
+ *  Provides a wrapper for C arrays that contain a certain type but need to be
+ *  converted to a second type.
+ *
+ *  For instance a use case for this class is with the gusimplewhiteboard.  The
+ *  individual messages in the whiteboard are stored as gu_simple_messages, but
+ *  the developer would like to cast these to the message that they are using.
+ *  By using a ConvertibleCArray we can convert from the gu_simple_message to a
+ *  wb_point for instance.
+ *
+ *  This class uses an underlying `CArray` which actually stores the values.
+ *  Therefore this class works much like a proxy where it delegates most of its
+ *  implementation to the underlying `CArray`.  Where this class actually provides
+ *  a difference in the implementation from `CArray` is when 
+ *  retrieving/modifying the elements in the array.  When retrieving an element
+ *  from the array, this class does delegate to the underlying array, however
+ *  the class then converts the retrieved value to `To`.  When modifying
+ *  elements this class does the reverse where it first converts the new element
+ *  to `From` before delegating to the underlying `CArray`.
+ */
 public class ConvertibleCArray<From, To> {
     
+    /**
+     *  The element that we are converting to.
+     */
     public typealias Element = To
 
+    /**
+     *  The array that actually stores the `From` data.
+     */
     private var arr: CArray<From>
 
+    /**
+     *  Create the Convertible CArray from a CArray.
+     *
+     *  - Parameter arr: The CArray that contains the elements that we are
+     *  attempting to convert.
+     */
     public init(arr: CArray<From>) {
         self.arr = arr
     }
 
 }
 
+/**
+ *  Turn the ConvertibleCArray in a Sequence.
+ *
+ *  This allows us to use the function that sequence gives us, such as map and
+ *  filter.
+ */
 extension ConvertibleCArray: Sequence {
 
-    public typealias Generator = AnyIterator<Element>
+    /**
+     *  The iterator that iterates over all of the elements and converts them.
+     */
+    public typealias Iterator = AnyIterator<Element>
 
-    public func generate() -> AnyIterator<Element> {
+    /**
+     *  Create the iterator that iterates over all the elements of the array.
+     *
+     *  The iterator retrieves each element from the underlying CArray and then
+     *  converts each element.
+     *
+     *  - Returns: The newly created iterator.
+     */
+    public func makeIterator() -> AnyIterator<Element> {
         if (0 == self.arr.count) {
             return AnyIterator { nil }
         }
@@ -90,18 +139,44 @@ extension ConvertibleCArray: Sequence {
     }
 }
 
+/**
+ *  Turn the ConvertibleCArray into a Collection.
+ *
+ *  This allows us to retrieve/modify elements from their position in the array.
+ */
 extension ConvertibleCArray: Collection {
 
-    public typealias Index = Int
+    /**
+     *  Specifies that we use ints to retrieve/modify elements.
+     */
+    public typealias Index = CArray<From>.Index
 
+    /**
+     *  We start at element 0.
+     */
     public var startIndex: Int {
         return self.arr.startIndex
     }
 
+    /**
+     *  The last position is the length of the array - 1.
+     */
     public var endIndex: Int {
         return self.arr.endIndex
     }
 
+    /**
+     *  Access the element at a specific position.
+     *
+     *  This will retrieve the element at `i` from the underlying CArray and
+     *  then convert the element.
+     *
+     *  - Parameter i: The position of the element in the array to access.
+     *
+     *  - Complexity: O(1).
+     *
+     *  - Precondition: `startIndex` <= `i` < `endIndex`
+     */
     public subscript(i: Int) -> Element {
         get {
             return UnsafeMutablePointer<Element>(self.arr.p!.advanced(by: i)).pointee
@@ -113,8 +188,15 @@ extension ConvertibleCArray: Collection {
         }
     }
 
+    /**
+     *  Returns the position immediately after the given index.
+     *
+     *  - Parameter i: A valid index of the `ConvertibleCArray`.
+     *
+     *  - Returns: The index value immediately after `i`.
+     */
     public func index(after i: Index) -> Index {
-        return i + 1
+        return self.arr.index(after: i)
     }
 
 }
