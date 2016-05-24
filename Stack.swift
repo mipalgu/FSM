@@ -103,6 +103,9 @@ extension Stack: Sequence {
 extension Stack: IteratorProtocol {
 
     public mutating func next() -> Element? {
+        if (nil == self.peek()) {
+            return nil
+        }
         return self.pop()
     }
 
