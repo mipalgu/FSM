@@ -57,9 +57,11 @@
  */
 
 /**
- *  This contains implementation details for Finite State Machines.  Do not use
- *  this protocol directly.  If you want to create your own implementation of a
- *  Finite State Machine then instead use `FiniteStateMachine`.
+ *  Contains implementation details for Finite State Machines.
+ *
+ *  - Warning: Do not use this protocol directly.  If you wish to create your
+ *  own implementation of a Finite State Machine then instead make a subclass
+ *  of `FiniteStateMachine`.
  */
 public protocol FiniteStateMachineType: StateExecuter {
     
@@ -69,17 +71,28 @@ public protocol FiniteStateMachineType: StateExecuter {
 }
 
 /**
- *  Make finite state machines exitable by default.
+ *  Provide default implementations for when a Finite State Machine is Exitable.
  */
 public extension FiniteStateMachineType where Self: Exitable, Self: Resumeable {
     
+    /**
+     *  Finite State Machine are finished if they are not suspended,
+     *  `currentState` is an accepting state and `currentState` has already been
+     *  executed.
+     */
     var hasFinished: Bool {
         return false == self.isSuspended() &&
             0 == self.currentState.transitions.count &&
             self.currentState == self.previousState
     }
 
-    public mutating func exit() -> Void {
+    /**
+     *  The Finite State Machine is resumed and `currentState` is set to an
+     *  accepting state, `previousState` is set to `currentState`.
+     *
+     *  This therefore make `hasFinished` true.
+     */
+    public mutating func exit() {
         self.resume()
         self.currentState = EmptyState("_exit")
         self.previousState = self.currentState
@@ -87,9 +100,23 @@ public extension FiniteStateMachineType where Self: Exitable, Self: Resumeable {
     
 }
 
+/**
+ *  Provide default implemtations for when a Finite State Machine is Resumeable.
+ */
 public extension FiniteStateMachineType where Self: Resumeable {
 
-    public mutating func resume() -> Void {
+    /**
+     *  Resume the Finite State Machine.
+     *
+     *  Sets `currentState` to `suspendedState` and sets `suspendedState` to
+     *  nil.
+     *
+     *  The effectively resumes the Finite State Machine so that it may continue
+     *  executing.
+     *
+     *  - Precondition: The Finite State Machine must be suspended.
+     */
+    public mutating func resume() {
         if (nil == self.suspendedState) {
             return
         }
@@ -100,15 +127,32 @@ public extension FiniteStateMachineType where Self: Resumeable {
 }
 
 /**
- *  Make finite state machines suspendable by default.
+ *  Provide default implementations for when a Finite State Machine is
+ *  Suspendable.
  */
 public extension FiniteStateMachineType where Self: Suspendable {
     
-    public func isSuspended() -> Bool {
+    /**
+     *  Is the Finite State Machine currently suspended?
+     *  
+     *  This is only true if `suspendState` equals `currentState`.
+     */
+    var isSuspended: Bool {
         return self.suspendState == self.currentState
     }
     
-    public mutating func suspend() -> Void {
+    /**
+     *  Suspend the Finite State Machine.
+     *
+     *  Sets `suspendedState` to `currentState` and sets`currentState` to
+     *  `suspendState`.
+     *
+     *  - Precondition: The Finite State Machine must not be suspended.
+     */
+    public mutating func suspend() {
+        if (true == self.isSuspended) {
+            return
+        }
         self.suspendedState = self.currentState
         self.currentState = self.suspendState
     }
@@ -116,11 +160,20 @@ public extension FiniteStateMachineType where Self: Suspendable {
 }
 
 /**
- *  Make finite state machines restartable by default.
+ *  Provide default implementations for when a Finite State Machine is
+ *  Restartable and Resumeable.
  */
 public extension FiniteStateMachineType where Self: Restartable, Self: Resumeable {
     
-    public mutating func restart() -> Void {
+    /**
+     *  Restart the Finite State Machine.
+     *
+     *  Effectively sets `currentState` to `initialState`.
+     *
+     *  If the Finite State Machine was suspended before `restart()` is called
+     *  then the Finite State Machine is resumed.
+     */
+    public mutating func restart() {
         self.resume()
         self.previousState = self.initialPreviousState
         self.currentState = self.initialState
@@ -129,10 +182,21 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
 }
 
 /**
- *  Make finite state machines state executers by default.
+ *  Provide default implementations for when a Finite State Machine is a
+ *  StateExecuter.
  */
 public extension FiniteStateMachineType where Self: StateExecuter {
     
+    /**
+     *  Executes `currentState`.
+     *
+     *  Once `currentState` is executed, `previousState` is set to
+     *  `currentState` and the state that is to be executed next is set to
+     *  `currentState`.
+     *
+     *  This method uses `ringlet` to execute the `currentState` and the state
+     *  that is returned from `ringlet.execute` is the next state to execute.
+     */
     public mutating func next() {
         let previous: State = self.previousState
         self.previousState = self.currentState
@@ -144,6 +208,9 @@ public extension FiniteStateMachineType where Self: StateExecuter {
     
 }
 
+/**
+ *  Compare each Finite State Machines name for equality.
+ */
 public func ==<
     T: FiniteStateMachineType, U: FiniteStateMachineType
 >(lhs: T, rhs: U) -> Bool {
@@ -151,7 +218,37 @@ public func ==<
 }
 
 /**
- *  A common interface for finite state machines.
+ *  A Finite State Machine.
+ *
+ *  Finite State Machines (FSMs) are defined as an algorithm that can be in any
+ *  number of a finite set of states.  Each state therefore represents a single
+ *  situation that a Finite State Machine can be in, and executes certain logic.
+ *
+ *  An FSM must contain a state that is labelled the initial state, which
+ *  represents where the FSM starts its execution.  The `initialState` property
+ *  represents this state.
+ *
+ *  The actual execution logic is seperated into seperate types that conform to
+ *  the `Ringlet` protocol.  The FSM therefore delegates the execution of its 
+ *  states to `ringlet`.
+ *
+ *  The FSM keeps track of what to execute with the `currentState` and
+ *  `previousState` properties.  The `currentState` represents the next state to
+ *  execute and the `previousState` represents the last state that was executed.
+ *  
+ *  An FSM is capable of being suspended, in which case the FSM uses the 
+ *  `suspendState` and `suspendedState`.  Instead of doing something similar to
+ *  making `currentState` an optional state when we suspend, the FSM first sets
+ *  the `suspendedState` to `currentState` and then sets `currentState` to
+ *  `suspendState`.  `suspendState` therefore represents the state that is
+ *  executed when the FSM is suspended.  The `suspendedState` represents the
+ *  next state to execute once the FSM is resumed after being suspended.
+ *
+ *  An FSM is also a `VariablesContainer`.  Every state that is executed has
+ *  access to FSM local variables, or rather variables that are shared amongst
+ *  all the states of an FSM.  The FSM therefore stores these variables in
+ *  `vars`.
+ *  
  */
 public class FiniteStateMachine:
     FiniteStateMachineType,
@@ -170,14 +267,14 @@ public class FiniteStateMachine:
     public let name: String
     
     /**
-     *  The entry state of the machine.
+     *  The entry state of the FSM.
      */
     public let initialState: State
     
     /**
      *  The initial state of the previous state.
      *
-     *  previousState is set to this value on restart.
+     *  `previousState` is set to this value on restart.
      */
     public let initialPreviousState: State
     
@@ -197,21 +294,19 @@ public class FiniteStateMachine:
     public let ringlet: Ringlet
     
     /**
-     *  The state that was about to be executed when the machine was suspended.
+     *  The state that was about to be executed when the FSM was suspended.
      */
     public var suspendedState: State? = nil
     
     /**
-     *  The state which is responsible for suspending the machine.
+     *  The state which is responsible for suspending the FSM.
      *
-     *  If this state is set as the current state then the machine is determined
-     *  to be suspended.
+     *  If this state is set as the current state then the FSM is suspended.
      */
     public let suspendState: State
 
     /**
-     *  Variables that are shared between all states of this Finite State
-     *  Machine.
+     *  Variables that are shared between all states of this FSM.
      */
     public var vars: Variables
     
@@ -237,4 +332,10 @@ public class FiniteStateMachine:
     
 }
 
+/**
+ *  Provide the ability to create a `FiniteStateMachine` by using the shorter
+ *  `FSM` type.
+ *
+ *  This is just some syntactic sugar.
+ */
 public typealias FSM = FiniteStateMachine
