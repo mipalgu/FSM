@@ -58,13 +58,25 @@
 
 /**
  *  A state that does nothing.
+ *
+ *  Useful if you need an accepting state that does nothing but symbolize the
+ *  end of the FSM.
  */
 public final class EmptyState: State {
     
+    /**
+     *  Does nothing.
+     */
     public override final func onEntry() {}
     
+    /**
+     *  Does nothing.
+     */
     public override final func main() {}
 
+    /**
+     *  Does nothing.
+     */
     public override final func onExit() {}
     
 }
