@@ -73,16 +73,16 @@ public protocol FiniteStateMachineType: StateExecuter {
  */
 public extension FiniteStateMachineType where Self: Exitable, Self: Resumeable {
     
+    var hasFinished: Bool {
+        return false == self.isSuspended() &&
+            0 == self.currentState.transitions.count &&
+            self.currentState == self.previousState
+    }
+
     public mutating func exit() -> Void {
         self.resume()
         self.currentState = EmptyState("_exit")
         self.previousState = self.currentState
-    }
-    
-    public func hasFinished() -> Bool {
-        return false == self.isSuspended() &&
-            0 == self.currentState.transitions.count &&
-            self.currentState == self.previousState
     }
     
 }

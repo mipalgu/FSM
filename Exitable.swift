@@ -56,10 +56,21 @@
  *
  */
 
+/**
+ *  Specifies that a conforming type can stop what it is doing.
+ */
 public protocol Exitable {
     
+    /**
+     *  Have we finished?
+     */
+    var hasFinished: Bool { get }
+
+    /**
+     *  Tells conforming that they are to exit. 
+     *
+     *  This implies that `hasFinished` is set to true when this is executed.
+     */
     mutating func exit() -> Void
-    
-    func hasFinished() -> Bool
     
 }
