@@ -159,6 +159,29 @@ public func trigger<T>() -> (Behaviour<T?>, (T) -> Void) {
     )
 }
 
+/// Create a Behaviour that only remembers a certain amount of values.
+///
+/// - Parameter remember: The amount of values to remember.
+///
+/// - Returns: A tuple that contains:
+///     - The Behaviour.
+///     - A function that can be called to insert values into the Behaviour.
+///
+/// - SeeAlso: `Behaviour`
+public func trigger<T>(remember: Int) -> (Behaviour<T?>, (T) -> Void) {
+    var data: [T] = []
+    data.reserveCapacity(remember)
+    var t: Time = Time.min
+    return (
+        pure { data[$0 == 0 ? 0 : Int($0) % remember] },
+        {
+            let i: Int = Int(t)
+            t = t + 1
+            data[i == 0 ? 0 : i % remember] = $0
+        }
+    )
+}
+
 public func <^>
     <T, U, S: Sequence where S.Iterator.Element == Behaviour<T>>
 (f: ([T]) -> U, s: S) -> Behaviour<U> {
