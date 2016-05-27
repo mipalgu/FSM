@@ -1,0 +1,457 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F2B159951CF42B0700D43564 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159681CF42B0700D43564 /* aliases.swift */; };
+		F2B159961CF42B0700D43564 /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159691CF42B0700D43564 /* Behaviour.swift */; };
+		F2B159971CF42B0700D43564 /* CallbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596A1CF42B0700D43564 /* CallbackState.swift */; };
+		F2B159981CF42B0700D43564 /* CArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596B1CF42B0700D43564 /* CArray.swift */; };
+		F2B159991CF42B0700D43564 /* ConvertibleCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596C1CF42B0700D43564 /* ConvertibleCArray.swift */; };
+		F2B1599A1CF42B0700D43564 /* EmptySnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596D1CF42B0700D43564 /* EmptySnapshotable.swift */; };
+		F2B1599B1CF42B0700D43564 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596E1CF42B0700D43564 /* EmptyState.swift */; };
+		F2B1599C1CF42B0700D43564 /* EmptyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596F1CF42B0700D43564 /* EmptyVariables.swift */; };
+		F2B1599D1CF42B0700D43564 /* Exitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159701CF42B0700D43564 /* Exitable.swift */; };
+		F2B1599E1CF42B0700D43564 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159711CF42B0700D43564 /* Factories.swift */; };
+		F2B1599F1CF42B0700D43564 /* FiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159721CF42B0700D43564 /* FiniteStateMachine.swift */; };
+		F2B159A11CF42B0700D43564 /* FunctionalArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159741CF42B0700D43564 /* FunctionalArray.swift */; };
+		F2B159A21CF42B0700D43564 /* FunctionalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159751CF42B0700D43564 /* FunctionalOperators.swift */; };
+		F2B159A31CF42B0700D43564 /* FunctionalOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159761CF42B0700D43564 /* FunctionalOptional.swift */; };
+		F2B159A41CF42B0700D43564 /* FunctionalSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159771CF42B0700D43564 /* FunctionalSequence.swift */; };
+		F2B159A51CF42B0700D43564 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159781CF42B0700D43564 /* GenericWhiteboard.swift */; };
+		F2B159A61CF42B0700D43564 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159791CF42B0700D43564 /* globals.swift */; };
+		F2B159A71CF42B0700D43564 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597A1CF42B0700D43564 /* GlobalVariables.swift */; };
+		F2B159A81CF42B0700D43564 /* GlobalVariablesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597B1CF42B0700D43564 /* GlobalVariablesCollection.swift */; };
+		F2B159A91CF42B0700D43564 /* GlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597C1CF42B0700D43564 /* GlobalVariablesContainer.swift */; };
+		F2B159AA1CF42B0700D43564 /* KripkeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597D1CF42B0700D43564 /* KripkeCollection.swift */; };
+		F2B159AB1CF42B0700D43564 /* KripkeMiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597E1CF42B0700D43564 /* KripkeMiPalRinglet.swift */; };
+		F2B159AC1CF42B0700D43564 /* KripkeRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597F1CF42B0700D43564 /* KripkeRinglet.swift */; };
+		F2B159AD1CF42B0700D43564 /* MiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159801CF42B0700D43564 /* MiPalRinglet.swift */; };
+		F2B159AE1CF42B0700D43564 /* MutableSnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159811CF42B0700D43564 /* MutableSnapshotable.swift */; };
+		F2B159AF1CF42B0700D43564 /* OptimizedStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159821CF42B0700D43564 /* OptimizedStateExecuter.swift */; };
+		F2B159B01CF42B0700D43564 /* Restartable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159831CF42B0700D43564 /* Restartable.swift */; };
+		F2B159B11CF42B0700D43564 /* Resumeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159841CF42B0700D43564 /* Resumeable.swift */; };
+		F2B159B21CF42B0700D43564 /* Ringlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159851CF42B0700D43564 /* Ringlet.swift */; };
+		F2B159B31CF42B0700D43564 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159861CF42B0700D43564 /* Snapshotable.swift */; };
+		F2B159B41CF42B0700D43564 /* SnapshotCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159871CF42B0700D43564 /* SnapshotCollectionController.swift */; };
+		F2B159B51CF42B0700D43564 /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159881CF42B0700D43564 /* SnapshotController.swift */; };
+		F2B159B61CF42B0700D43564 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159891CF42B0700D43564 /* Stack.swift */; };
+		F2B159B71CF42B0700D43564 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598A1CF42B0700D43564 /* State.swift */; };
+		F2B159B81CF42B0700D43564 /* StateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598B1CF42B0700D43564 /* StateExecuter.swift */; };
+		F2B159B91CF42B0700D43564 /* StateMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598C1CF42B0700D43564 /* StateMethods.swift */; };
+		F2B159BA1CF42B0700D43564 /* Suspendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598D1CF42B0700D43564 /* Suspendable.swift */; };
+		F2B159BB1CF42B0700D43564 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598E1CF42B0700D43564 /* Transition.swift */; };
+		F2B159BC1CF42B0700D43564 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598F1CF42B0700D43564 /* Transitionable.swift */; };
+		F2B159BD1CF42B0700D43564 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159901CF42B0700D43564 /* Variables.swift */; };
+		F2B159BE1CF42B0700D43564 /* VariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159911CF42B0700D43564 /* VariablesContainer.swift */; };
+		F2B159BF1CF42B0700D43564 /* Whiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159921CF42B0700D43564 /* Whiteboard.swift */; };
+		F2B159C01CF42B0700D43564 /* WhiteboardBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159931CF42B0700D43564 /* WhiteboardBehaviour.swift */; };
+		F2B159C11CF42B0700D43564 /* WhiteboardCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */; };
+		F2B159E01CF5509700D43564 /* gusimplewhiteboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */; };
+		F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F2B159611CF42A9700D43564 /* liblibFSM.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = liblibFSM.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2B159681CF42B0700D43564 /* aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aliases.swift; sourceTree = "<group>"; };
+		F2B159691CF42B0700D43564 /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
+		F2B1596A1CF42B0700D43564 /* CallbackState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackState.swift; sourceTree = "<group>"; };
+		F2B1596B1CF42B0700D43564 /* CArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CArray.swift; sourceTree = "<group>"; };
+		F2B1596C1CF42B0700D43564 /* ConvertibleCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertibleCArray.swift; sourceTree = "<group>"; };
+		F2B1596D1CF42B0700D43564 /* EmptySnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySnapshotable.swift; sourceTree = "<group>"; };
+		F2B1596E1CF42B0700D43564 /* EmptyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
+		F2B1596F1CF42B0700D43564 /* EmptyVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyVariables.swift; sourceTree = "<group>"; };
+		F2B159701CF42B0700D43564 /* Exitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exitable.swift; sourceTree = "<group>"; };
+		F2B159711CF42B0700D43564 /* Factories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
+		F2B159721CF42B0700D43564 /* FiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiniteStateMachine.swift; sourceTree = "<group>"; };
+		F2B159731CF42B0700D43564 /* FSM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2B159741CF42B0700D43564 /* FunctionalArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalArray.swift; sourceTree = "<group>"; };
+		F2B159751CF42B0700D43564 /* FunctionalOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOperators.swift; sourceTree = "<group>"; };
+		F2B159761CF42B0700D43564 /* FunctionalOptional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOptional.swift; sourceTree = "<group>"; };
+		F2B159771CF42B0700D43564 /* FunctionalSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalSequence.swift; sourceTree = "<group>"; };
+		F2B159781CF42B0700D43564 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWhiteboard.swift; sourceTree = "<group>"; };
+		F2B159791CF42B0700D43564 /* globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
+		F2B1597A1CF42B0700D43564 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
+		F2B1597B1CF42B0700D43564 /* GlobalVariablesCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesCollection.swift; sourceTree = "<group>"; };
+		F2B1597C1CF42B0700D43564 /* GlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesContainer.swift; sourceTree = "<group>"; };
+		F2B1597D1CF42B0700D43564 /* KripkeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeCollection.swift; sourceTree = "<group>"; };
+		F2B1597E1CF42B0700D43564 /* KripkeMiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeMiPalRinglet.swift; sourceTree = "<group>"; };
+		F2B1597F1CF42B0700D43564 /* KripkeRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRinglet.swift; sourceTree = "<group>"; };
+		F2B159801CF42B0700D43564 /* MiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalRinglet.swift; sourceTree = "<group>"; };
+		F2B159811CF42B0700D43564 /* MutableSnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableSnapshotable.swift; sourceTree = "<group>"; };
+		F2B159821CF42B0700D43564 /* OptimizedStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizedStateExecuter.swift; sourceTree = "<group>"; };
+		F2B159831CF42B0700D43564 /* Restartable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restartable.swift; sourceTree = "<group>"; };
+		F2B159841CF42B0700D43564 /* Resumeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resumeable.swift; sourceTree = "<group>"; };
+		F2B159851CF42B0700D43564 /* Ringlet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ringlet.swift; sourceTree = "<group>"; };
+		F2B159861CF42B0700D43564 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
+		F2B159871CF42B0700D43564 /* SnapshotCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotCollectionController.swift; sourceTree = "<group>"; };
+		F2B159881CF42B0700D43564 /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
+		F2B159891CF42B0700D43564 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		F2B1598A1CF42B0700D43564 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		F2B1598B1CF42B0700D43564 /* StateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateExecuter.swift; sourceTree = "<group>"; };
+		F2B1598C1CF42B0700D43564 /* StateMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMethods.swift; sourceTree = "<group>"; };
+		F2B1598D1CF42B0700D43564 /* Suspendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suspendable.swift; sourceTree = "<group>"; };
+		F2B1598E1CF42B0700D43564 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		F2B1598F1CF42B0700D43564 /* Transitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitionable.swift; sourceTree = "<group>"; };
+		F2B159901CF42B0700D43564 /* Variables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
+		F2B159911CF42B0700D43564 /* VariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesContainer.swift; sourceTree = "<group>"; };
+		F2B159921CF42B0700D43564 /* Whiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Whiteboard.swift; sourceTree = "<group>"; };
+		F2B159931CF42B0700D43564 /* WhiteboardBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviour.swift; sourceTree = "<group>"; };
+		F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardCollection.swift; sourceTree = "<group>"; };
+		F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gusimplewhiteboard.c; path = ../../gusimplewhiteboard/gusimplewhiteboard.c; sourceTree = "<group>"; };
+		F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = guwhiteboardtypelist_c_typestrings_generated.c; path = ../../gusimplewhiteboard/guwhiteboardtypelist_c_typestrings_generated.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F2B1595E1CF42A9700D43564 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F2B159581CF42A9700D43564 = {
+			isa = PBXGroup;
+			children = (
+				F2B159681CF42B0700D43564 /* aliases.swift */,
+				F2B159691CF42B0700D43564 /* Behaviour.swift */,
+				F2B1596A1CF42B0700D43564 /* CallbackState.swift */,
+				F2B1596B1CF42B0700D43564 /* CArray.swift */,
+				F2B1596C1CF42B0700D43564 /* ConvertibleCArray.swift */,
+				F2B1596D1CF42B0700D43564 /* EmptySnapshotable.swift */,
+				F2B1596E1CF42B0700D43564 /* EmptyState.swift */,
+				F2B1596F1CF42B0700D43564 /* EmptyVariables.swift */,
+				F2B159701CF42B0700D43564 /* Exitable.swift */,
+				F2B159711CF42B0700D43564 /* Factories.swift */,
+				F2B159721CF42B0700D43564 /* FiniteStateMachine.swift */,
+				F2B159731CF42B0700D43564 /* FSM-Bridging-Header.h */,
+				F2B159741CF42B0700D43564 /* FunctionalArray.swift */,
+				F2B159751CF42B0700D43564 /* FunctionalOperators.swift */,
+				F2B159761CF42B0700D43564 /* FunctionalOptional.swift */,
+				F2B159771CF42B0700D43564 /* FunctionalSequence.swift */,
+				F2B159781CF42B0700D43564 /* GenericWhiteboard.swift */,
+				F2B159791CF42B0700D43564 /* globals.swift */,
+				F2B1597A1CF42B0700D43564 /* GlobalVariables.swift */,
+				F2B1597B1CF42B0700D43564 /* GlobalVariablesCollection.swift */,
+				F2B1597C1CF42B0700D43564 /* GlobalVariablesContainer.swift */,
+				F2B1597D1CF42B0700D43564 /* KripkeCollection.swift */,
+				F2B1597E1CF42B0700D43564 /* KripkeMiPalRinglet.swift */,
+				F2B1597F1CF42B0700D43564 /* KripkeRinglet.swift */,
+				F2B159801CF42B0700D43564 /* MiPalRinglet.swift */,
+				F2B159811CF42B0700D43564 /* MutableSnapshotable.swift */,
+				F2B159821CF42B0700D43564 /* OptimizedStateExecuter.swift */,
+				F2B159831CF42B0700D43564 /* Restartable.swift */,
+				F2B159841CF42B0700D43564 /* Resumeable.swift */,
+				F2B159851CF42B0700D43564 /* Ringlet.swift */,
+				F2B159861CF42B0700D43564 /* Snapshotable.swift */,
+				F2B159871CF42B0700D43564 /* SnapshotCollectionController.swift */,
+				F2B159881CF42B0700D43564 /* SnapshotController.swift */,
+				F2B159891CF42B0700D43564 /* Stack.swift */,
+				F2B1598A1CF42B0700D43564 /* State.swift */,
+				F2B1598B1CF42B0700D43564 /* StateExecuter.swift */,
+				F2B1598C1CF42B0700D43564 /* StateMethods.swift */,
+				F2B1598D1CF42B0700D43564 /* Suspendable.swift */,
+				F2B1598E1CF42B0700D43564 /* Transition.swift */,
+				F2B1598F1CF42B0700D43564 /* Transitionable.swift */,
+				F2B159901CF42B0700D43564 /* Variables.swift */,
+				F2B159911CF42B0700D43564 /* VariablesContainer.swift */,
+				F2B159921CF42B0700D43564 /* Whiteboard.swift */,
+				F2B159931CF42B0700D43564 /* WhiteboardBehaviour.swift */,
+				F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */,
+				F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */,
+				F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */,
+				F2B159621CF42A9700D43564 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F2B159621CF42A9700D43564 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F2B159611CF42A9700D43564 /* liblibFSM.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F2B1595F1CF42A9700D43564 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F2B159601CF42A9700D43564 /* libFSM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "libFSM" */;
+			buildPhases = (
+				F2B1595D1CF42A9700D43564 /* Sources */,
+				F2B1595E1CF42A9700D43564 /* Frameworks */,
+				F2B1595F1CF42A9700D43564 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libFSM;
+			productName = FSM;
+			productReference = F2B159611CF42A9700D43564 /* liblibFSM.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2B159591CF42A9700D43564 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Callum McColl";
+				TargetAttributes = {
+					F2B159601CF42A9700D43564 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = F2B1595C1CF42A9700D43564 /* Build configuration list for PBXProject "FSM" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F2B159581CF42A9700D43564;
+			productRefGroup = F2B159621CF42A9700D43564 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F2B159601CF42A9700D43564 /* libFSM */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F2B1595D1CF42A9700D43564 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2B159A41CF42B0700D43564 /* FunctionalSequence.swift in Sources */,
+				F2B159991CF42B0700D43564 /* ConvertibleCArray.swift in Sources */,
+				F2B159A91CF42B0700D43564 /* GlobalVariablesContainer.swift in Sources */,
+				F2B1599B1CF42B0700D43564 /* EmptyState.swift in Sources */,
+				F2B159BA1CF42B0700D43564 /* Suspendable.swift in Sources */,
+				F2B159971CF42B0700D43564 /* CallbackState.swift in Sources */,
+				F2B159981CF42B0700D43564 /* CArray.swift in Sources */,
+				F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */,
+				F2B159C01CF42B0700D43564 /* WhiteboardBehaviour.swift in Sources */,
+				F2B159B91CF42B0700D43564 /* StateMethods.swift in Sources */,
+				F2B1599F1CF42B0700D43564 /* FiniteStateMachine.swift in Sources */,
+				F2B159B51CF42B0700D43564 /* SnapshotController.swift in Sources */,
+				F2B159B01CF42B0700D43564 /* Restartable.swift in Sources */,
+				F2B159B41CF42B0700D43564 /* SnapshotCollectionController.swift in Sources */,
+				F2B159A21CF42B0700D43564 /* FunctionalOperators.swift in Sources */,
+				F2B159A31CF42B0700D43564 /* FunctionalOptional.swift in Sources */,
+				F2B159BB1CF42B0700D43564 /* Transition.swift in Sources */,
+				F2B159A51CF42B0700D43564 /* GenericWhiteboard.swift in Sources */,
+				F2B159BC1CF42B0700D43564 /* Transitionable.swift in Sources */,
+				F2B159B71CF42B0700D43564 /* State.swift in Sources */,
+				F2B1599A1CF42B0700D43564 /* EmptySnapshotable.swift in Sources */,
+				F2B159BD1CF42B0700D43564 /* Variables.swift in Sources */,
+				F2B159951CF42B0700D43564 /* aliases.swift in Sources */,
+				F2B159B81CF42B0700D43564 /* StateExecuter.swift in Sources */,
+				F2B159AF1CF42B0700D43564 /* OptimizedStateExecuter.swift in Sources */,
+				F2B159B61CF42B0700D43564 /* Stack.swift in Sources */,
+				F2B159961CF42B0700D43564 /* Behaviour.swift in Sources */,
+				F2B159AB1CF42B0700D43564 /* KripkeMiPalRinglet.swift in Sources */,
+				F2B159BF1CF42B0700D43564 /* Whiteboard.swift in Sources */,
+				F2B159B11CF42B0700D43564 /* Resumeable.swift in Sources */,
+				F2B159AC1CF42B0700D43564 /* KripkeRinglet.swift in Sources */,
+				F2B159E01CF5509700D43564 /* gusimplewhiteboard.c in Sources */,
+				F2B159C11CF42B0700D43564 /* WhiteboardCollection.swift in Sources */,
+				F2B159A71CF42B0700D43564 /* GlobalVariables.swift in Sources */,
+				F2B1599D1CF42B0700D43564 /* Exitable.swift in Sources */,
+				F2B159A81CF42B0700D43564 /* GlobalVariablesCollection.swift in Sources */,
+				F2B1599E1CF42B0700D43564 /* Factories.swift in Sources */,
+				F2B159A11CF42B0700D43564 /* FunctionalArray.swift in Sources */,
+				F2B159A61CF42B0700D43564 /* globals.swift in Sources */,
+				F2B159AD1CF42B0700D43564 /* MiPalRinglet.swift in Sources */,
+				F2B159B21CF42B0700D43564 /* Ringlet.swift in Sources */,
+				F2B159AE1CF42B0700D43564 /* MutableSnapshotable.swift in Sources */,
+				F2B1599C1CF42B0700D43564 /* EmptyVariables.swift in Sources */,
+				F2B159AA1CF42B0700D43564 /* KripkeCollection.swift in Sources */,
+				F2B159B31CF42B0700D43564 /* Snapshotable.swift in Sources */,
+				F2B159BE1CF42B0700D43564 /* VariablesContainer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F2B159631CF42A9700D43564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F2B159641CF42A9700D43564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F2B159661CF42A9700D43564 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/build.host\"",
+					"\"$(SRCROOT)/../../gusimplewhiteboard\"",
+					"\"$(SRCROOT)/../../../Common\"",
+					"\"$(SRCROOT)/../../cdl/gucdlmodule\"",
+					"\"$(SRCROOT)/../../cdl/Engine\"",
+					"\"/usr/local/include\"",
+					"\"/opt/local/include\"",
+				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "../../../Common/** ../../ ../../gusimplewhiteboard/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "FSM-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "../../gusimplewhiteboard/ ../../ ../../../Common";
+			};
+			name = Debug;
+		};
+		F2B159671CF42A9700D43564 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/build.host\"",
+					"\"$(SRCROOT)/../../gusimplewhiteboard\"",
+					"\"$(SRCROOT)/../../../Common\"",
+					"\"$(SRCROOT)/../../cdl/gucdlmodule\"",
+					"\"$(SRCROOT)/../../cdl/Engine\"",
+					"\"/usr/local/include\"",
+					"\"/opt/local/include\"",
+				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "../../../Common/** ../../ ../../gusimplewhiteboard/**";
+				SWIFT_OBJC_BRIDGING_HEADER = "FSM-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "../../gusimplewhiteboard/ ../../ ../../../Common";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F2B1595C1CF42A9700D43564 /* Build configuration list for PBXProject "FSM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2B159631CF42A9700D43564 /* Debug */,
+				F2B159641CF42A9700D43564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "libFSM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2B159661CF42A9700D43564 /* Debug */,
+				F2B159671CF42A9700D43564 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F2B159591CF42A9700D43564 /* Project object */;
+}
