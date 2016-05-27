@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2A59C991CF830D600E218C3 /* libFSM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F2B159611CF42A9700D43564 /* libFSM.dylib */; };
+		F2A59CAB1CF8311B00E218C3 /* BehaviourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */; };
+		F2A59CAC1CF8311B00E218C3 /* CArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */; };
+		F2A59CAD1CF8311B00E218C3 /* Count.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA11CF8311B00E218C3 /* Count.swift */; };
+		F2A59CAE1CF8311B00E218C3 /* FactoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA21CF8311B00E218C3 /* FactoriesTests.swift */; };
+		F2A59CAF1CF8311B00E218C3 /* FunctionalOptionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA41CF8311B00E218C3 /* FunctionalOptionalTests.swift */; };
+		F2A59CB01CF8311B00E218C3 /* GenericWhiteboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */; };
+		F2A59CB11CF8311B00E218C3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2A59CA61CF8311B00E218C3 /* Info.plist */; };
+		F2A59CB41CF8311B00E218C3 /* WhiteboardBehaviourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */; };
 		F2B159951CF42B0700D43564 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159681CF42B0700D43564 /* aliases.swift */; };
 		F2B159961CF42B0700D43564 /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159691CF42B0700D43564 /* Behaviour.swift */; };
 		F2B159971CF42B0700D43564 /* CallbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596A1CF42B0700D43564 /* CallbackState.swift */; };
@@ -55,8 +64,31 @@
 		F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F2A59C9A1CF830D600E218C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F2B159591CF42A9700D43564 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2B159601CF42A9700D43564;
+			remoteInfo = libFSM;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		F2B159611CF42A9700D43564 /* liblibFSM.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = liblibFSM.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A59C941CF830D600E218C3 /* FSMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FSMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2A59C981CF830D600E218C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviourTests.swift; sourceTree = "<group>"; };
+		F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CArrayTests.swift; sourceTree = "<group>"; };
+		F2A59CA11CF8311B00E218C3 /* Count.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Count.swift; sourceTree = "<group>"; };
+		F2A59CA21CF8311B00E218C3 /* FactoriesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoriesTests.swift; sourceTree = "<group>"; };
+		F2A59CA31CF8311B00E218C3 /* FSM_tests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM_tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		F2A59CA41CF8311B00E218C3 /* FunctionalOptionalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOptionalTests.swift; sourceTree = "<group>"; };
+		F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWhiteboardTests.swift; sourceTree = "<group>"; };
+		F2A59CA61CF8311B00E218C3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A59CA71CF8311B00E218C3 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F2A59CA91CF8311B00E218C3 /* wb_count.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wb_count.h; sourceTree = "<group>"; };
+		F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviourTests.swift; sourceTree = "<group>"; };
+		F2B159611CF42A9700D43564 /* libFSM.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFSM.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B159681CF42B0700D43564 /* aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aliases.swift; sourceTree = "<group>"; };
 		F2B159691CF42B0700D43564 /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
 		F2B1596A1CF42B0700D43564 /* CallbackState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackState.swift; sourceTree = "<group>"; };
@@ -107,6 +139,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F2A59C911CF830D600E218C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A59C991CF830D600E218C3 /* libFSM.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2B1595E1CF42A9700D43564 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -117,6 +157,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F2A59C951CF830D600E218C3 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */,
+				F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */,
+				F2A59CA11CF8311B00E218C3 /* Count.swift */,
+				F2A59CA21CF8311B00E218C3 /* FactoriesTests.swift */,
+				F2A59CA31CF8311B00E218C3 /* FSM_tests-Bridging-Header.h */,
+				F2A59CA41CF8311B00E218C3 /* FunctionalOptionalTests.swift */,
+				F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */,
+				F2A59CA61CF8311B00E218C3 /* Info.plist */,
+				F2A59CA71CF8311B00E218C3 /* main.swift */,
+				F2A59CA91CF8311B00E218C3 /* wb_count.h */,
+				F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */,
+				F2A59C981CF830D600E218C3 /* Info.plist */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
 		F2B159581CF42A9700D43564 = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +226,7 @@
 				F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */,
 				F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */,
 				F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */,
+				F2A59C951CF830D600E218C3 /* tests */,
 				F2B159621CF42A9700D43564 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -174,7 +234,8 @@
 		F2B159621CF42A9700D43564 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F2B159611CF42A9700D43564 /* liblibFSM.dylib */,
+				F2B159611CF42A9700D43564 /* libFSM.dylib */,
+				F2A59C941CF830D600E218C3 /* FSMTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,9 +253,27 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		F2B159601CF42A9700D43564 /* libFSM */ = {
+		F2A59C931CF830D600E218C3 /* FSMTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "libFSM" */;
+			buildConfigurationList = F2A59C9C1CF830D600E218C3 /* Build configuration list for PBXNativeTarget "FSMTests" */;
+			buildPhases = (
+				F2A59C901CF830D600E218C3 /* Sources */,
+				F2A59C911CF830D600E218C3 /* Frameworks */,
+				F2A59C921CF830D600E218C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F2A59C9B1CF830D600E218C3 /* PBXTargetDependency */,
+			);
+			name = FSMTests;
+			productName = tests;
+			productReference = F2A59C941CF830D600E218C3 /* FSMTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F2B159601CF42A9700D43564 /* FSM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "FSM" */;
 			buildPhases = (
 				F2B1595D1CF42A9700D43564 /* Sources */,
 				F2B1595E1CF42A9700D43564 /* Frameworks */,
@@ -204,9 +283,9 @@
 			);
 			dependencies = (
 			);
-			name = libFSM;
+			name = FSM;
 			productName = FSM;
-			productReference = F2B159611CF42A9700D43564 /* liblibFSM.dylib */;
+			productReference = F2B159611CF42A9700D43564 /* libFSM.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -215,9 +294,13 @@
 		F2B159591CF42A9700D43564 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Callum McColl";
 				TargetAttributes = {
+					F2A59C931CF830D600E218C3 = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					F2B159601CF42A9700D43564 = {
 						CreatedOnToolsVersion = 7.3;
 					};
@@ -235,12 +318,38 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F2B159601CF42A9700D43564 /* libFSM */,
+				F2B159601CF42A9700D43564 /* FSM */,
+				F2A59C931CF830D600E218C3 /* FSMTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F2A59C921CF830D600E218C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A59CB11CF8311B00E218C3 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		F2A59C901CF830D600E218C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A59CB41CF8311B00E218C3 /* WhiteboardBehaviourTests.swift in Sources */,
+				F2A59CAE1CF8311B00E218C3 /* FactoriesTests.swift in Sources */,
+				F2A59CAF1CF8311B00E218C3 /* FunctionalOptionalTests.swift in Sources */,
+				F2A59CAC1CF8311B00E218C3 /* CArrayTests.swift in Sources */,
+				F2A59CAB1CF8311B00E218C3 /* BehaviourTests.swift in Sources */,
+				F2A59CAD1CF8311B00E218C3 /* Count.swift in Sources */,
+				F2A59CB01CF8311B00E218C3 /* GenericWhiteboardTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2B1595D1CF42A9700D43564 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,7 +405,62 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F2A59C9B1CF830D600E218C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2B159601CF42A9700D43564 /* FSM */;
+			targetProxy = F2A59C9A1CF830D600E218C3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F2A59C9D1CF830D600E218C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../gusimplewhiteboard\"",
+					"\"/usr/local/include\"",
+					"\"/opt/local/include\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/tests\"",
+					"\"$(SRCROOT)/../../\"",
+					"\"$(SRCROOT)/../../../Common\"",
+				);
+				INFOPLIST_FILE = tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = au.net.mipal.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "tests/FSM_tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		F2A59C9E1CF830D600E218C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../gusimplewhiteboard\"",
+					"\"/usr/local/include\"",
+					"\"/opt/local/include\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/tests\"",
+					"\"$(SRCROOT)/../../\"",
+					"\"$(SRCROOT)/../../../Common\"",
+				);
+				INFOPLIST_FILE = tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = au.net.mipal.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "tests/FSM_tests-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
 		F2B159631CF42A9700D43564 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -434,6 +598,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F2A59C9C1CF830D600E218C3 /* Build configuration list for PBXNativeTarget "FSMTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F2A59C9D1CF830D600E218C3 /* Debug */,
+				F2A59C9E1CF830D600E218C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		F2B1595C1CF42A9700D43564 /* Build configuration list for PBXProject "FSM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -443,13 +615,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "libFSM" */ = {
+		F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "FSM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F2B159661CF42A9700D43564 /* Debug */,
 				F2B159671CF42A9700D43564 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

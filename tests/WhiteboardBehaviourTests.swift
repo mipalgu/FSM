@@ -67,7 +67,7 @@ import Glibc
 
 class WhiteboardBehaviourTests: XCTestCase {
 
-    static var allTests: [(String, WhiteboardBehaviourTests -> () throws -> Void)] {
+    static var allTests: [(String, (WhiteboardBehaviourTests) -> () throws -> Void)] {
         return [
             ("test_trigger", test_trigger)
         ]

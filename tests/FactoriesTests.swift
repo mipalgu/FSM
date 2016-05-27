@@ -61,7 +61,7 @@ import XCTest
 
 class FactoriesTests: XCTestCase {
 
-    static var allTests: [(String, FactoriesTests -> () throws -> Void)] {
+    static var allTests: [(String, (FactoriesTests) -> () throws -> Void)] {
         return [
             ("test_count", test_count),
             ("test_isEmptyWhenEmpty", test_isEmptyWhenEmpty),
@@ -73,12 +73,12 @@ class FactoriesTests: XCTestCase {
     }
 
     override func setUp() {
-        let f: Factories = Factories()
+        var f: Factories = Factories()
         f.clear()
     }
 
     func test_count() {
-        let f: Factories = Factories()
+        var f: Factories = Factories()
         XCTAssertEqual(f.count, 0)
         f.push({[]})
         f.push({[]})
@@ -91,13 +91,13 @@ class FactoriesTests: XCTestCase {
     }
 
     func test_isEmptyWhenNotEmpty() {
-        let f: Factories = Factories()
+        var f: Factories = Factories()
         f.push({[]})
         XCTAssertFalse(f.isEmpty)
     }
 
     func test_isMonostate() {
-        let f1: Factories = Factories()
+        var f1: Factories = Factories()
         let f2: Factories = Factories()
         let count: Int = f1.count
         XCTAssertEqual(f1.count, f2.count)
@@ -107,7 +107,7 @@ class FactoriesTests: XCTestCase {
     }
 
     func test_peek() {
-        let f: Factories = Factories()
+        var f: Factories = Factories()
         let fact: () -> [FiniteStateMachine] = {
             [FSM("test", initialState: EmptyState("initial"))]
         }
@@ -119,7 +119,7 @@ class FactoriesTests: XCTestCase {
     }
 
     func test_pop() {
-        let f: Factories = Factories()
+        var f: Factories = Factories()
         f.push({[]})
         f.push({[]})
         XCTAssertEqual(f.count, 2)

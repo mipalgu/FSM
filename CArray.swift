@@ -172,7 +172,7 @@ extension CArray: Collection {
      *  The last element is at `length` - 1 in the array..
      */
     public var endIndex: Int {
-        return 0 == length ? 0 : self.length - 1
+        return length
     }
 
     /**

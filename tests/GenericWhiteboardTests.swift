@@ -129,7 +129,7 @@ public class GenericWhiteboardTests: XCTestCase {
     }
 
     public func test_changeMessages() {
-        let m: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
+        var m: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
         let msg: wb_count = wb_count(count: 10)
         m[2] = msg
         let m2: ConvertibleCArray<gu_simple_message, wb_count> = gwb.messages
