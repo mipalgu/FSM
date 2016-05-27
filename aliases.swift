@@ -56,6 +56,9 @@
  *
  */
 
+/// A function that creates an array of `FiniteStateMachine`s.
 public typealias FSMArrayFactory = () -> [FiniteStateMachine]
 
+/// A counter that represents time and starts at 0 where 0 represents the
+/// beginning of time.
 public typealias Time = UInt

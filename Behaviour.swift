@@ -56,6 +56,53 @@
  *
  */
 
+/// Behaviours represent values that change in time.
+///
+/// Semantically behaviours are just functions of time:
+///
+///     Behaviour<T> = (Time) -> T
+///
+/// This allows us to ask what the value of a Behaviour is at a given time. 
+///
+/// - SeeAlso: `Time`
+///
+/// # Creating Behaviours
+///
+/// ## Converting To Behaviours
+///
+/// Any function of time can be turned into a Behaviour through the use of
+/// `pure`:
+///
+///     let b: Behaviour<Int> = pure { (t: Time) -> Int in Int(t) }
+///
+/// ## Constants
+///
+/// You can define values that do not change using `always`:
+///
+///     let b: Behaviour<Int> = always(5)
+///     b.at(1)   // 5
+///     b.at(100) // 5
+///
+/// - SeeAlso: `pure`
+/// - SeeAlso: `always` 
+///
+/// # Working with Behaviours.
+///
+/// In a few cases behaviours can be treated much like normal values.  For
+/// instance we can modify numerical Behaviours as if they were normal values:
+///
+///     let alwaysTwo: Behaviour<Int> = always(2)
+///     let alwaysThree: Behaviour<Int> = always(3)
+///     let alwaysFive: Behaviour<Int> = alwaysTwo + alwaysThree
+///
+/// However there are cases where this simple arithmetic is not enough.  For
+/// instance how would you go about changes a value in a Behaviour at a specific
+/// time?
+///
+/// ## Triggers
+///
+/// 
+///
 public struct Behaviour<T> {
 
     public let at: (Time) -> T
@@ -78,10 +125,23 @@ public struct Behaviour<T> {
 
 }
 
+/// Create a Behaviour that never changes.
+///
+/// - Parameter value: The value that is constant in time.
+///
+/// - Returns: The new Behaviour that contains `value` for all values of `Time`.
 public func always<T>(_ value: T) -> Behaviour<T> {
     return pure { (t: Time) -> T in value }
 }
 
+/// Lifts a function of time so that it becomes a `Behaviour`.
+///
+/// - Parameter f: The function of time.
+///
+/// - Returns: The new Behaviour.
+///
+/// - SeeAlso: `Behaviour`
+/// - SeeAlso: `Time`
 public func pure<T>(_ f: (Time) -> T) -> Behaviour<T> {
     return Behaviour(at: f)
 }
