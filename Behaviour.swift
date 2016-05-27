@@ -71,38 +71,67 @@
 /// ## Converting To Behaviours
 ///
 /// Any function of time can be turned into a Behaviour through the use of
-/// `pure`:
+/// `pure<T>(_:)`:
 ///
-///     let b: Behaviour<Int> = pure { (t: Time) -> Int in Int(t) }
+/// ```swift
+/// let b: Behaviour<Int> = pure { (t: Time) -> Int in Int(t) }
+/// ```
+///
+/// - SeeAlso: `pure(_:)`
 ///
 /// ## Constants
 ///
-/// You can define values that do not change using `always`:
+/// You can define values that do not change using `always(_:)`:
 ///
-///     let b: Behaviour<Int> = always(5)
-///     b.at(1)   // 5
-///     b.at(100) // 5
+/// ```swift
+/// let b: Behaviour<Int> = always(5)
+/// b.at(1)   // 5
+/// b.at(100) // 5
+/// ```
 ///
-/// - SeeAlso: `pure`
-/// - SeeAlso: `always` 
+/// - SeeAlso: `always(_:)` 
 ///
 /// # Working with Behaviours.
 ///
 /// In a few cases behaviours can be treated much like normal values.  For
 /// instance we can modify numerical Behaviours as if they were normal values:
 ///
-///     let alwaysTwo: Behaviour<Int> = always(2)
-///     let alwaysThree: Behaviour<Int> = always(3)
-///     let alwaysFive: Behaviour<Int> = alwaysTwo + alwaysThree
+/// ```swift
+/// let alwaysTwo: Behaviour<Int> = always(2)
+/// let alwaysThree: Behaviour<Int> = always(3)
+/// let alwaysFive: Behaviour<Int> = alwaysTwo + alwaysThree
+/// ```
 ///
 /// However there are cases where this simple arithmetic is not enough.  For
 /// instance how would you go about changes a value in a Behaviour at a specific
 /// time?
 ///
+/// - SeeAlso: `always(_:)`
+///
 /// ## Triggers
 ///
-/// 
+/// In order to modify the value of a Behaviour at a specific time you must use
+/// a trigger.  Triggers are function that return a tuple.
 ///
+/// ```swift
+/// let t: (b: Behaviour<Int?>, m: (Int) -> Void) = trigger()
+/// ```
+///
+/// As you can see the `trigger` function above creates a Behaviour that
+/// contains an Int optional.  By using the modification function `m` you can
+/// feed values into the Behaviour.  For example:
+///
+/// ```swift
+/// let t: (b: Behaviour<Int?>, m: (Int) -> Void) = trigger()
+/// t.b.at(0)   // nil
+/// t.m(5)
+/// t.m(6)
+/// t.at(0)     // 5
+/// t.at(1)     // 6
+/// ```
+///
+/// - SeeAlso: `trigger()`
+/// - SeeAlso: `trigger(_:)`
 public struct Behaviour<T> {
 
     public let at: (Time) -> T
@@ -130,6 +159,8 @@ public struct Behaviour<T> {
 /// - Parameter value: The value that is constant in time.
 ///
 /// - Returns: The new Behaviour that contains `value` for all values of `Time`.
+///
+/// - SeeAlso: Behaviour
 public func always<T>(_ value: T) -> Behaviour<T> {
     return pure { (t: Time) -> T in value }
 }
@@ -146,6 +177,18 @@ public func pure<T>(_ f: (Time) -> T) -> Behaviour<T> {
     return Behaviour(at: f)
 }
 
+/// Create a Behaviour<T> and a function to insert values into it.
+///
+/// - Returns: A tuple which contains:
+///     - The Behaviour.
+///     - A function that can be called to insert values into the Behaviour.
+///
+/// - Attention: The Behaviour that is created by this function uses an array to
+/// store all the values.  If you do not need to access past values then you
+/// should consider using a different trigger.
+///
+/// - SeeAlso: `trigger(_:)`
+/// - SeeAlso: `Behaviour`
 public func trigger<T>() -> (Behaviour<T?>, (T) -> Void) {
     var data: [T] = []
     var t: Time = Time.min
