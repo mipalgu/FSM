@@ -146,6 +146,19 @@ public func pure<T>(_ f: (Time) -> T) -> Behaviour<T> {
     return Behaviour(at: f)
 }
 
+public func trigger<T>() -> (Behaviour<T?>, (T) -> Void) {
+    var data: [T] = []
+    var t: Time = Time.min
+    return (
+        pure { data[Int($0)] },
+        { 
+            let i: Int = Int(t)
+            t = t + 1
+            data[i] = $0
+        }
+    )
+}
+
 public func <^>
     <T, U, S: Sequence where S.Iterator.Element == Behaviour<T>>
 (f: ([T]) -> U, s: S) -> Behaviour<U> {
