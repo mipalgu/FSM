@@ -113,13 +113,13 @@
 /// ```swift
 /// let alwaysFive: Behaviour<Int> = always(5)
 /// let alternating: Behaviour<Int> = alwaysFive >>- { (val: Int) -> Behaviour<Int> in
-///     pure { $0 % 2 == 0 ? val * 2 : val }
+///     pure { $0 % 2 == 0 ? val : val * 2 }
 /// }
 /// alternating.at(0) // 5
 /// alternating.at(1) // 10
 /// alternating.at(2) // 5
 /// alternating.at(3) // 10
-/// let switch: Behaviour<Bool> = alternating == 5
+/// let switch: Behaviour<Bool> = alternating == alwaysFive
 /// switch.at(0) // true
 /// switch.at(1) // false
 /// switch.at(2) // true
