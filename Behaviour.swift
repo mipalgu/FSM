@@ -90,8 +90,11 @@
 /// ```
 ///
 /// - SeeAlso: `always(_:)` 
+/// - SeeAlso: `Behaviour.at`
 ///
 /// # Working with Behaviours.
+///
+/// ## Arithmetic
 ///
 /// In a few cases behaviours can be treated much like normal values.  For
 /// instance we can modify numerical Behaviours as if they were normal values:
@@ -102,11 +105,34 @@
 /// let alwaysFive: Behaviour<Int> = alwaysTwo + alwaysThree
 /// ```
 ///
+/// ## Comparisons
+///
+/// Like numerical arithmetic we are able to use logical comparisons on
+/// behaviours.
+///
+/// ```swift
+/// let alwaysFive: Behaviour<Int> = always(5)
+/// let alternating: Behaviour<Int> = alwaysFive >>- { (val: Int) -> Behaviour<Int> in
+///     pure { $0 % 2 == 0 ? val * 2 : val }
+/// }
+/// alternating.at(0) // 5
+/// alternating.at(1) // 10
+/// alternating.at(2) // 5
+/// alternating.at(3) // 10
+/// let switch: Behaviour<Bool> = alternating == 5
+/// switch.at(0) // true
+/// switch.at(1) // false
+/// switch.at(2) // true
+/// switch.at(3) // false
+/// ```
+///
 /// However there are cases where this simple arithmetic is not enough.  For
-/// instance how would you go about changes a value in a Behaviour at a specific
-/// time?
+/// instance how would you go about changing a value in a Behaviour at a
+/// specific time?
 ///
 /// - SeeAlso: `always(_:)`
+/// - SeeAlso: `pure(_:)`
+/// - SeeAlso: `>>-(_:, _:)`
 ///
 /// ## Triggers
 ///
@@ -134,20 +160,44 @@
 /// - SeeAlso: `trigger(_:)`
 public struct Behaviour<T> {
 
+    /// Extract a value at a specific time.
+    ///
+    /// - Parameter _: The time when you want the value.
+    ///
+    /// - Returns: The value.
     public let at: (Time) -> T
 
     private init(at: (Time) -> T) {
         self.at = at
     }
 
+    /// Creates a new Behaviour where the value is the given function applied
+    /// to the value at the given time.
+    ///
+    /// - Parameter f: The function to apply to the value.
+    ///
+    /// - Returns: The new Behaviour.
     public func map<U>(_ f: (T) -> U) -> Behaviour<U> {
         return pure { (t: Time) -> U in f(self.at(t)) }
     }
 
+    /// Create a new Behaviour by applying the function within the given
+    /// Behaviour at the given time to the value of the current Behaviour at the
+    /// given time.
+    ///
+    /// - Parameter f: The Behaviour that contains all the functions to apply.
+    ///
+    /// - Returns: The new Behaviour.
     public func apply<U>(_ f: Behaviour<(T) -> U>) -> Behaviour<U> {
         return pure { (t: Time) -> U in f.at(t)(self.at(t)) }
     }
 
+    /// Create a new Behaviour that is the result of applying the function to
+    /// the value of the current Behaviour at a given time.
+    ///
+    /// - Parameter f: The function that creates the new Behaviour from a value.
+    ///
+    /// - Returns: The new Behaviour.
     public func flatMap<U>(_ f: (T) -> Behaviour<U>) -> Behaviour<U> {
         return pure { (t: Time) -> U in f(self.at(t)).at(t) }
     }
