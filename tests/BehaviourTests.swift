@@ -61,7 +61,7 @@ import XCTest
 
 class BehaviourTests: XCTestCase {
 
-    static var allTests: [(String, BehaviourTests -> () throws -> Void)] {
+    static var allTests: [(String, (BehaviourTests) -> () throws -> Void)] {
         return [
             ("test_always", test_always),
             ("test_singleMap", test_singleMap),

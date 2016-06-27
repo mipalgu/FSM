@@ -61,7 +61,7 @@ import XCTest
 
 class FunctionalOptionalTests: XCTestCase {
 
-    static var allTests: [(String, FunctionalOptionalTests -> () throws -> Void)] {
+    static var allTests: [(String, (FunctionalOptionalTests) -> () throws -> Void)] {
         return [
             ("test_functor", test_functor),
             ("test_apply", test_apply),

@@ -61,7 +61,7 @@ import XCTest
 
 public class GenericWhiteboardTests: XCTestCase {
 
-    public static var allTests: [(String, GenericWhiteboardTests -> () throws -> Void)] {
+    public static var allTests: [(String, (GenericWhiteboardTests) -> () throws -> Void)] {
         return [
             ("test_changeIndex", test_changeIndex),
             ("test_changeIndexWithOverflow", test_changeIndexWithOverflow),

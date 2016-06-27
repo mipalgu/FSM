@@ -58,7 +58,13 @@
  * Fifth Floor, Boston, MA  02110-1301, USA. 
  */ 
 
- import FSM
+import FSM
+
+#if os(OSX)
+import Darwin
+#elseif os(Linux)
+import Glibc
+#endif
 
 /** 
  * Test Comment 
