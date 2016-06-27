@@ -243,11 +243,13 @@ public func trigger<T>() -> (Behaviour<T?>, (T) -> Void) {
     var data: [T] = []
     var t: Time = Time.min
     return (
-        pure { data[Int($0)] },
+        pure { 
+            let temp: Int = Int($0)
+            return temp >= data.count || temp < 0 ? nil : data[temp] 
+        },
         { 
-            let i: Int = Int(t)
+            data.append($0)
             t = t + 1
-            data[i] = $0
         }
     )
 }
