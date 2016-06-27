@@ -268,11 +268,15 @@ public func trigger<T>(remember: Int) -> (Behaviour<T?>, (T) -> Void) {
     data.reserveCapacity(remember)
     var t: Time = Time.min
     return (
-        pure { data[$0 == 0 ? 0 : Int($0) % remember] },
+        pure {
+            if ($0 < 0 || $0 > t || ($0 == 0 && t == 0) || $0 < t - Time(remember)) {
+                return nil
+            }
+            return data[$0 == 0 ? 0 : Int($0) % remember]
+        },
         {
-            let i: Int = Int(t)
+            data.insert($0, at: t == 0 ? 0 : Int(t) % remember)
             t = t + 1
-            data[i == 0 ? 0 : i % remember] = $0
         }
     )
 }

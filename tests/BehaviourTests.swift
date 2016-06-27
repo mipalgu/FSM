@@ -77,7 +77,8 @@ class BehaviourTests: XCTestCase {
             ("test_greaterThanOrEqualTo", test_greaterThanOrEqualTo),
             ("test_equals", test_equals),
             ("test_notEquals", test_notEquals),
-            ("test_trigger", test_trigger)
+            ("test_trigger", test_trigger),
+            ("test_triggerWithRemember", test_triggerWithRemember)
         ]
     }
 
@@ -166,15 +167,26 @@ class BehaviourTests: XCTestCase {
     }
 
     func test_trigger() {
-        print("start")
         let t: (b: Behaviour<Int?>, m: (Int) -> ()) = trigger()
-        print("yo")
         XCTAssertNil(t.b.at(0))
-        print("yo2")
         t.m(5)
         t.m(6)
         XCTAssertEqual(5, t.b.at(0))
         XCTAssertEqual(6, t.b.at(1))
+    }
+
+    func test_triggerWithRemember() {
+        let t: (b: Behaviour<Int?>, m: (Int) -> ()) = trigger(remember: 3)
+        XCTAssertNil(t.b.at(0))
+        t.m(5)
+        t.m(6)
+        t.m(7)
+        XCTAssertEqual(5, t.b.at(0))
+        XCTAssertEqual(6, t.b.at(1))
+        XCTAssertEqual(7, t.b.at(2))
+        t.m(8)
+        XCTAssertNil(t.b.at(0))
+        XCTAssertEqual(8, t.b.at(3))
     }
 
 }
