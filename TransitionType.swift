@@ -1,9 +1,9 @@
 /*
- * Transition.swift
- * swiftfsm
+ * TransitionType.swift 
+ * FSM 
  *
- * Created by Callum McColl on 11/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 29/06/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,63 +56,20 @@
  *
  */
 
-public struct Transition<S: State>: TransitionType {
-
-    public typealias Target = S
-
-    public let canTransition: () -> Bool
-    public let target: Target
-
-    public init(_ target: Target, _ canTransition: () -> Bool = { true }) {
-        self.canTransition = canTransition
-        self.target = target
-    }
-
-    public func map<S2: State>(_ f: @noescape (S) -> S2) -> Transition<S2> {
-        return Transition<S2>(f(self.target), self.canTransition)
-    }
-
-    public func apply<S2: State>(_ t: Transition<S2>) -> Transition<S> {
-        return Transition(self.target, t.canTransition)
-    }
-
-    public func flatMap<S2: State>(
-        _ f: @noescape (S) -> Transition<S2>
-    ) -> Transition<S2> {
-        return f(self.target)
-    }
-
-}
-
-public func <^> <
-    T: State, U: State
->(_ f: @noescape (T) -> U, a: Transition<T>) -> Transition<U> {
-    return a.map(f)
-}
-
-public func <*> <
-    T: State, U: State
->(_ f: Transition<U>, a: Transition<T>) -> Transition<T> {
-    return a.apply(f)
-}
-
-public func >>- <
-    T: State, U: State
->(a: Transition<T>, _ f: @noescape (T) -> Transition<U>) -> Transition<U> {
-    return a.flatMap(f)
-}
-
-/*
-public protocol Transition {
+/**
+ *  A transition which allows the current state to change from one state to the
+ *  next.
+ *  
+ *  Transitions may have to meet certain conditions which is why the
+ *  canTransition property is a Bool indicating whether or not this specific
+ *  transition is allowed.
+ */
+public protocol TransitionType {
     
-    /**
-     *  The state which we are transitioning to.
-     */
-    var target: State { get }
-    
-    /**
-     *  Do we meet all of the conditions to transition?
-     */
-    var canTransition: Bool { get }
-    
-}*/
+    associatedtype Target
+
+    var canTransition: () -> Bool { get }
+    var target: Target { get }
+
+}
+
