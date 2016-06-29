@@ -104,7 +104,10 @@ extension _State where
     
 }
 
-public func ==<T: _State, U: _State>(lhs: T, rhs: U) -> Bool {
+public func ==<
+    T: _State, U: _State
+    where T: Equatable, U: Equatable
+>(lhs: T, rhs: U) -> Bool {
     return lhs.name == rhs.name
 }
 

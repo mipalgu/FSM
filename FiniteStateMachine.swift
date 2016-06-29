@@ -213,6 +213,7 @@ public extension FiniteStateMachineType where Self: StateExecuter {
  */
 public func ==<
     T: FiniteStateMachineType, U: FiniteStateMachineType
+    where T: Equatable, U: Equatable
 >(lhs: T, rhs: U) -> Bool {
     return lhs.name == rhs.name
 }
