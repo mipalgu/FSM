@@ -1,9 +1,9 @@
 /*
- * State.swift
- * swiftfsm
+ * StateType.swift 
+ * FSM 
  *
- * Created by Callum McColl on 11/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 29/06/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,38 +56,57 @@
  *
  */
 
-public class State:
-    StateType,
-    CustomStringConvertible,
-    CustomDebugStringConvertible,
-    StateMethods,
-    Transitionable,
-    Equatable
-{
-
-    public typealias Trans = Transition<State>
-
-    /**
-     *  The name of the state.
-     *
-     *  - Requires: Must be unique for each state.
-     */
-    public var name: String
+/**
+ *  A simple state.
+ *
+ *  Implement this protocol for any states that you wish to create within your
+ *  machines.
+ *
+ *  The state executes in what is known as a Ringlet.  The three methods that
+ *  are presented below are each executed independently within the ringlet.  See
+ *  StandardRinglet for the standard order that these methods are executed in.
+ */
+public protocol StateType {
     
     /**
-     *  An array of transitions that this state may use to move to another
-     *  state.
+     *  A label in plain english for the state - must be unique per state.
      */
-    public var transitions: [Trans]
+    var name: String { get }
     
-    public init(_ name: String, transitions: [Trans] = []) {
-        self.name = name
-        self.transitions = transitions
+}
+
+/**
+ *  Default implementation for adding transitions to a state.
+ */
+extension StateType where Self: Transitionable {
+    
+    public mutating func addTransition(_ transitions: Trans ...) {
+        self.transitions.append(contentsOf: transitions)
     }
+    
+}
 
-    public func onEntry() {}
+/**
+ *  Make states printable and debug printable by default.
+ */
+extension StateType where
+    Self: CustomStringConvertible,
+    Self: CustomDebugStringConvertible
+{
+    
+    public var description: String {
+        return name
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
+    
+}
 
-    public func main() {}
-
-    public func onExit() {}
+public func ==<
+    T: StateType, U: StateType
+    where T: Equatable, U: Equatable
+>(lhs: T, rhs: U) -> Bool {
+    return lhs.name == rhs.name
 }
