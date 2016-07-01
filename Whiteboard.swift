@@ -90,6 +90,10 @@ public struct Whiteboard: WhiteboardType {
     public init(wbd: UnsafeMutablePointer<gu_simple_whiteboard_descriptor>) {
         self.wbd = wbd
     }
+
+    public init(named name: String) {
+        self.wbd = gsw_new_whiteboard(name)
+    }
     
     /// get message template function
     public func get<T>(msg: wb_types) -> T {
