@@ -58,6 +58,8 @@
 
 public var DEBUG: Bool = false
 
+public var STOP: Bool = false
+
 public func addFactory(_ f: FSMArrayFactory) {
     var factories: Factories = Factories()
     factories.push(f)
@@ -105,4 +107,8 @@ public func getLastFactory() -> FSMArrayFactory? {
         return nil
     }
     return f.pop()
+}
+
+public func stopAll() {
+    STOP = true
 }
