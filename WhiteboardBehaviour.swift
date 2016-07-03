@@ -87,13 +87,13 @@ public func trigger<T: GlobalVariables>(
         }
         // Check if t is valid.
         guard t <= eventCount && t >= min else {
-            wb.vacate()
+            let _ = wb.vacate()
             return nil
         }
         // Fetch the value.
         let i: Int = Int((t + Time(wb.nextIndex)) % generations)
         let v: T = wb.messages[i] 
-        wb.vacate()
+        let _ = wb.vacate()
         return v
     }
     return (b, wb.post)

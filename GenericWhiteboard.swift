@@ -70,7 +70,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
         get {
             let _ = self.procure()
             let index: UInt8 = self.indexes[self.msgTypeOffset]
-            self.vacate()
+            let _ = self.vacate()
             return index
         } set {
             if (false == self.procure()) {
@@ -78,7 +78,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
             }
             var indexes: CArray<UInt8> = self.indexes
             indexes[self.msgTypeOffset] = (newValue % UInt8(generations))
-            self.vacate()
+            let _ = self.vacate()
         }
     }
 
@@ -94,7 +94,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
         get {
             let _ = self.procure()
             let e: UInt16 = self.eventCounters[self.msgTypeOffset]
-            self.vacate()
+            let _ = self.vacate()
             return e
         } set {
             if (false == self.procure()) {
@@ -102,7 +102,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
             }
             var eventCounters: CArray<UInt16> = self.eventCounters
             eventCounters[self.msgTypeOffset] = newValue
-            self.vacate()
+            let _ = self.vacate()
         }
     }
 
@@ -164,7 +164,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
             arr.append(m[i])
             i = 0 == i ? generations - 1 : i - 1
         }
-        self.vacate()
+        let _ = self.vacate()
         return arr
     }
 
@@ -180,7 +180,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
         get {
             let _ = self.procure()
             let m: Message = self.messages[Int(self.currentIndex) + 1 % self.generations]
-            self.vacate()
+            let _ = self.vacate()
             return m
         } set {
             if (false == self.procure()) {
@@ -188,7 +188,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
             }
             var m: ConvertibleCArray<gu_simple_message, Message> = self.messages
             m[Int(self.currentIndex + 1) % self.generations] = newValue
-            self.vacate()
+            let _ = self.vacate()
         }
     }
 
@@ -223,7 +223,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
     public func get() -> Message {
         let _ = self.procure()
         let m: Message = self.wb.get(msg: self.msgType)
-        self.vacate()
+        let _ = self.vacate()
         return m
     }
 
@@ -240,7 +240,7 @@ public class GenericWhiteboard<T: GlobalVariables> {
         }
         self.wb.post(val: val, msg: self.msgType)
         gsw_increment_event_counter(self.wb.wb, Int32(self.msgType.rawValue))
-        self.vacate()
+        let _ = self.vacate()
         self.notifySubscribers()
     }
 
