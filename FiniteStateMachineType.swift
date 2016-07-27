@@ -65,7 +65,7 @@
  */
 public protocol FiniteStateMachineType: StateExecuter {
     
-    var initialState: State { get }
+    var initialState: _StateType { get }
     var name: String { get }
 
 }
@@ -73,7 +73,7 @@ public protocol FiniteStateMachineType: StateExecuter {
 /**
  *  Provide default implementations for when a Finite State Machine is Exitable.
  */
-public extension FiniteStateMachineType where Self: Exitable, Self: Resumeable {
+public extension FiniteStateMachineType where Self._StateType: Transitionable, Self._StateType: Equatable, Self: Exitable, Self: Resumeable {
     
     /**
      *  Finite State Machine are finished if they are not suspended,
@@ -130,7 +130,7 @@ public extension FiniteStateMachineType where Self: Resumeable {
  *  Provide default implementations for when a Finite State Machine is
  *  Suspendable.
  */
-public extension FiniteStateMachineType where Self: Suspendable {
+public extension FiniteStateMachineType where Self._StateType: Equatable, Self: Suspendable {
     
     /**
      *  Is the Finite State Machine currently suspended?
@@ -185,7 +185,7 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
  *  Provide default implementations for when a Finite State Machine is a
  *  StateExecuter.
  */
-public extension FiniteStateMachineType where Self: StateExecuter {
+public extension FiniteStateMachineType where Self: StateExecuter, Self: StateExecuterDelegator {
     
     /**
      *  Executes `currentState`.
@@ -198,7 +198,7 @@ public extension FiniteStateMachineType where Self: StateExecuter {
      *  that is returned from `ringlet.execute` is the next state to execute.
      */
     public mutating func next() {
-        let previous: State = self.previousState
+        let previous: _StateType = self.previousState
         self.previousState = self.currentState
         self.currentState = self.ringlet.execute(
             state: self.currentState,

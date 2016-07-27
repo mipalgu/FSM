@@ -58,6 +58,6 @@
 
 public protocol OptimizedStateExecuter: StateExecuter {
 
-    var initialPreviousState: State { get }
+    var initialPreviousState: _StateType { get }
 
 }

@@ -60,9 +60,9 @@ public protocol Suspendable: StateExecuter {
     
     var isSuspended: Bool { get }
 
-    var suspendedState: State? { get set }
+    var suspendedState: _StateType? { get set }
 
-    var suspendState: State { get }
+    var suspendState: _StateType { get }
     
     mutating func suspend() -> Void
     

@@ -89,7 +89,7 @@
  *  `vars`.
  *  
  */
-public class FiniteStateMachine:
+public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where S: Equatable, S: Transitionable, S == R._StateType>:
     FiniteStateMachineType,
     Exitable,
     Equatable,
@@ -97,6 +97,10 @@ public class FiniteStateMachine:
     Resumeable,
     VariablesContainer
 {
+
+    public typealias _StateType = S
+
+    public typealias RingletType = R
 
     /**
      *  The unique name for the FSM.
@@ -108,55 +112,55 @@ public class FiniteStateMachine:
     /**
      *  The entry state of the FSM.
      */
-    public let initialState: State
+    public let initialState: _StateType
     
     /**
      *  The initial state of the previous state.
      *
      *  `previousState` is set to this value on restart.
      */
-    public let initialPreviousState: State
+    public let initialPreviousState: _StateType
     
     /**
      *  The next state that needs to be executed.
      */
-    public var currentState: State
+    public var currentState: _StateType
     
     /**
      *  The last state that was executed.
      */
-    public var previousState: State
+    public var previousState: _StateType
     
     /**
      *  An instance of `Ringlet` that is used to execute the states.
      */
-    public let ringlet: Ringlet
+    public let ringlet: RingletType
     
     /**
      *  The state that was about to be executed when the FSM was suspended.
      */
-    public var suspendedState: State? = nil
+    public var suspendedState: _StateType? = nil
     
     /**
      *  The state which is responsible for suspending the FSM.
      *
      *  If this state is set as the current state then the FSM is suspended.
      */
-    public let suspendState: State
+    public let suspendState: _StateType
 
     /**
      *  Variables that are shared between all states of this FSM.
      */
-    public var vars: Variables
+    public var vars: Vars
     
     public init(
         _ name: String,
-        initialState: State,
-        ringlet: Ringlet = MiPalRinglet(),
-        vars: Variables = EmptyVariables(),
-        initialPreviousState: State = EmptyState("_previous"),
-        suspendedState: State? = nil,
-        suspendState: State = EmptyState("_suspend")
+        initialState: _StateType,
+        ringlet: RingletType,
+        vars: Vars,
+        initialPreviousState: _StateType,
+        suspendedState: _StateType?,
+        suspendState: _StateType
     ) {
         self.currentState = initialState
         self.initialPreviousState = initialPreviousState
@@ -167,6 +171,79 @@ public class FiniteStateMachine:
         self.suspendedState = suspendedState
         self.suspendState = suspendState
         self.vars = vars
+    }
+
+    public convenience init(
+        _ name: String,
+        initialState: State
+    ) {
+        self.init(
+            name,
+            initialState: initialState,
+            ringlet: MiPalRinglet(),
+            vars: EmptyVariables(),
+            initialPreviousState: EmptyState("_previous"),
+            suspendedState: nil,
+            suspendState = EmptyState("_suspend")
+        )
+    }
+
+    public convenience init(
+        _ name: String,
+        initialState: _StateType,
+        ringlet: RingletType,
+        initialPreviousState: _StateType,
+        suspendedState: _StateType,
+        suspendState: _StateType
+    ) {
+        self.init(
+            name,
+            initialState: initialState,
+            ringlet: ringlet,
+            vars: EmptyVariables(),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState, suspendState
+        )
+    }
+
+    public convenience init<R: Ringlet where R._StateType == State>(
+        _ name: String,
+        initialState: State,
+        ringlet: R,
+        vars: Vars,
+        initialPreviousState: State = EmptyState("_previous"),
+        suspendedState: State? = nil,
+        suspendState: State = EmptyState("_suspend")
+    ) {
+        self.init(
+            name,
+            initialState: initialState,
+            ringlet: ringlet,
+            vars: vars,
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState
+        )
+    }
+
+    public convenience init(
+        _ name: String,
+        initialState: State,
+        vars: Vars,
+        initialPreviousState: State = EmptyState("_previous"),
+        suspendedState: State? = nil,
+        suspendState: State = EmptyState("_suspend")
+    ) {
+        self.init(
+            name,
+            initialState: initialState,
+            ringlet: MiPalRinglet(),
+            vars: vars,
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState
+        )
     }
     
 }

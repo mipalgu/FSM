@@ -65,6 +65,8 @@
  */
 public protocol Ringlet {
 
+    associatedtype _StateType: StateType
+
     var vars: Snapshotable { get }
     
     /**
@@ -74,6 +76,6 @@ public protocol Ringlet {
      *  state results in a transition then the new state is returned, otherwise
      *  the same state passed into this method is returned.
      */
-    func execute(state: State, previousState: State) -> State
+    func execute(state: _StateType, previousState: _StateType) -> _StateType
     
 }
