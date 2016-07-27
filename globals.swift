@@ -78,7 +78,7 @@ public func dprint(
     }
 }
 
-public func dprint<Target: OutputStream>(
+public func dprint<Target: TextOutputStream>(
     _ items: Any ...,
     separator: String = " ",
     terminator: String = "\n",
