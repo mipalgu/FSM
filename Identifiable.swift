@@ -1,8 +1,8 @@
 /*
- * VariablesContainer.swift 
+ * Identifiable.swift 
  * FSM 
  *
- * Created by Callum McColl on 06/05/2016.
+ * Created by Callum McColl on 28/07/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,10 +56,15 @@
  *
  */
 
-public protocol VariablesContainer {
+public protocol Identifiable: Equatable {
 
-    associatedtype Vars: Variables
+    /**
+     *  A label in plain english for the object - must be unique per object.
+     */
+    var name: String { get }
 
-    var vars: Vars { get set }
+}
 
+public func ==<T: Identifiable, U: Identifiable>(lhs: T, rhs: U) -> Bool {
+    return lhs.name == rhs.name
 }

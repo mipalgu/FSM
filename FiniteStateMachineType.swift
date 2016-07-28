@@ -63,17 +63,16 @@
  *  own implementation of a Finite State Machine then instead make a subclass
  *  of `FiniteStateMachine`.
  */
-public protocol FiniteStateMachineType: StateExecuter {
+public protocol FiniteStateMachineType: Identifiable, StateExecuter {
     
     var initialState: _StateType { get }
-    var name: String { get }
 
 }
 
 /**
  *  Provide default implementations for when a Finite State Machine is Exitable.
  */
-public extension FiniteStateMachineType where Self._StateType: Transitionable, Self._StateType: Equatable, Self: Exitable, Self: Resumeable {
+public extension FiniteStateMachineType where Self._StateType: Transitionable, Self._StateType: Equatable, Self: ExitableStateExecuter, Self: Resumeable {
     
     /**
      *  Finite State Machine are finished if they are not suspended,
@@ -94,7 +93,7 @@ public extension FiniteStateMachineType where Self._StateType: Transitionable, S
      */
     public mutating func exit() {
         self.resume()
-        self.currentState = EmptyState("_exit")
+        self.currentState = self.exitState
         self.previousState = self.currentState
     }
     
@@ -185,7 +184,7 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
  *  Provide default implementations for when a Finite State Machine is a
  *  StateExecuter.
  */
-public extension FiniteStateMachineType where Self: StateExecuter, Self: StateExecuterDelegator {
+public extension FiniteStateMachineType where Self: StateExecuter, Self: StateExecuterDelegator, Self._StateType == Self.RingletType._StateType {
     
     /**
      *  Executes `currentState`.
@@ -207,14 +206,3 @@ public extension FiniteStateMachineType where Self: StateExecuter, Self: StateEx
     }
     
 }
-
-/**
- *  Compare each Finite State Machines name for equality.
- */
-public func ==<
-    T: FiniteStateMachineType, U: FiniteStateMachineType
-    where T: Equatable, U: Equatable
->(lhs: T, rhs: U) -> Bool {
-    return lhs.name == rhs.name
-}
-

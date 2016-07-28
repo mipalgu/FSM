@@ -1,8 +1,8 @@
 /*
- * VariablesContainer.swift 
+ * ExitableStateExecuter.swift 
  * FSM 
  *
- * Created by Callum McColl on 06/05/2016.
+ * Created by Callum McColl on 27/07/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,10 +56,8 @@
  *
  */
 
-public protocol VariablesContainer {
+public protocol ExitableStateExecuter: StateExecuter, Exitable {
 
-    associatedtype Vars: Variables
-
-    var vars: Vars { get set }
+    var exitState: _StateType { get }
 
 }

@@ -89,19 +89,40 @@
  *  `vars`.
  *  
  */
-public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where S: Equatable, S: Transitionable, S == R._StateType>:
+public struct FiniteStateMachine<
+    R: Ringlet,
+    V: Variables
+    where R._StateType: Transitionable
+>: ExitableStateExecuter,
     FiniteStateMachineType,
-    Exitable,
-    Equatable,
     Restartable,
     Resumeable,
+    StateExecuterDelegator,
     VariablesContainer
 {
 
-    public typealias _StateType = S
+    /**
+     *  The next state that needs to be executed.
+     */
+    public var currentState: R._StateType
 
-    public typealias RingletType = R
+    /**
+     *  The state that is used to exit the FSM.
+     */
+    public let exitState: R._StateType
 
+    /**
+     *  The initial state of the previous state.
+     *
+     *  `previousState` is set to this value on restart.
+     */
+    public let initialPreviousState: R._StateType
+    
+    /**
+     *  The entry state of the FSM.
+     */
+    public let initialState: R._StateType
+    
     /**
      *  The unique name for the FSM.
      *
@@ -110,59 +131,44 @@ public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where 
     public let name: String
     
     /**
-     *  The entry state of the FSM.
-     */
-    public let initialState: _StateType
-    
-    /**
-     *  The initial state of the previous state.
-     *
-     *  `previousState` is set to this value on restart.
-     */
-    public let initialPreviousState: _StateType
-    
-    /**
-     *  The next state that needs to be executed.
-     */
-    public var currentState: _StateType
-    
-    /**
      *  The last state that was executed.
      */
-    public var previousState: _StateType
+    public var previousState: R._StateType
     
     /**
      *  An instance of `Ringlet` that is used to execute the states.
      */
-    public let ringlet: RingletType
+    public let ringlet: R
     
     /**
      *  The state that was about to be executed when the FSM was suspended.
      */
-    public var suspendedState: _StateType? = nil
+    public var suspendedState: R._StateType? = nil
     
     /**
      *  The state which is responsible for suspending the FSM.
      *
      *  If this state is set as the current state then the FSM is suspended.
      */
-    public let suspendState: _StateType
+    public let suspendState: R._StateType
 
     /**
      *  Variables that are shared between all states of this FSM.
      */
-    public var vars: Vars
+    public var vars: V
     
     public init(
         _ name: String,
-        initialState: _StateType,
-        ringlet: RingletType,
-        vars: Vars,
-        initialPreviousState: _StateType,
-        suspendedState: _StateType?,
-        suspendState: _StateType
+        initialState: R._StateType,
+        ringlet: R,
+        vars: V,
+        initialPreviousState: R._StateType,
+        suspendedState: R._StateType?,
+        suspendState: R._StateType,
+        exitState: R._StateType
     ) {
         self.currentState = initialState
+        self.exitState = exitState
         self.initialPreviousState = initialPreviousState
         self.initialState = initialState
         self.name = name
@@ -173,9 +179,9 @@ public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where 
         self.vars = vars
     }
 
-    public convenience init(
+    /*public convenience init<S, R, V where S == State, R == MiPalRinglet, V == EmptyVariables>(
         _ name: String,
-        initialState: State
+        initialState: S
     ) {
         self.init(
             name,
@@ -184,7 +190,7 @@ public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where 
             vars: EmptyVariables(),
             initialPreviousState: EmptyState("_previous"),
             suspendedState: nil,
-            suspendState = EmptyState("_suspend")
+            suspendState: EmptyState("_suspend")
         )
     }
 
@@ -244,7 +250,7 @@ public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where 
             suspendedState: suspendedState,
             suspendState: suspendState
         )
-    }
+    }*/
     
 }
 
@@ -254,4 +260,4 @@ public class FiniteStateMachine<S: StateType, R: Ringlet, Vars: Variables where 
  *
  *  This is just some syntactic sugar.
  */
-public typealias FSM = FiniteStateMachine
+//public typealias FSM = FiniteStateMachine
