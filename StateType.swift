@@ -66,14 +66,7 @@
  *  are presented below are each executed independently within the ringlet.  See
  *  StandardRinglet for the standard order that these methods are executed in.
  */
-public protocol StateType {
-    
-    /**
-     *  A label in plain english for the state - must be unique per state.
-     */
-    var name: String { get }
-    
-}
+public protocol StateType: Identifiable {}
 
 /**
  *  Default implementation for adding transitions to a state.
@@ -102,11 +95,4 @@ extension StateType where
         return description
     }
     
-}
-
-public func ==<
-    T: StateType, U: StateType
-    where T: Equatable, U: Equatable
->(lhs: T, rhs: U) -> Bool {
-    return lhs.name == rhs.name
 }
