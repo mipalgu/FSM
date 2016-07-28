@@ -92,19 +92,13 @@
 public class FiniteStateMachine<
     R: Ringlet,
     V: Variables
-    where R._StateType: Transitionable
->: AnyFiniteStateMachine<R._StateType>,
+    where R._StateType: Transitionable, R._StateType: AnyState
+>: AnyScheduleableFiniteStateMachine<R._StateType>,
     ExitableStateExecuter,
     Restartable,
-    Resumeable,
     StateExecuterDelegator,
     VariablesContainer
 {
-
-    /**
-     *  The next state that needs to be executed.
-     */
-    public var currentState: R._StateType
 
     /**
      *  The state that is used to exit the FSM.
@@ -117,29 +111,12 @@ public class FiniteStateMachine<
      *  `previousState` is set to this value on restart.
      */
     public let initialPreviousState: R._StateType
-    
-    /**
-     *  The last state that was executed.
-     */
-    public var previousState: R._StateType
-    
+
     /**
      *  An instance of `Ringlet` that is used to execute the states.
      */
     public let ringlet: R
     
-    /**
-     *  The state that was about to be executed when the FSM was suspended.
-     */
-    public var suspendedState: R._StateType? = nil
-    
-    /**
-     *  The state which is responsible for suspending the FSM.
-     *
-     *  If this state is set as the current state then the FSM is suspended.
-     */
-    public let suspendState: R._StateType
-
     /**
      *  Variables that are shared between all states of this FSM.
      */
@@ -155,93 +132,17 @@ public class FiniteStateMachine<
         suspendState: R._StateType,
         exitState: R._StateType
     ) {
-        self.currentState = initialState
         self.exitState = exitState
         self.initialPreviousState = initialPreviousState
-        self.previousState = initialPreviousState
         self.ringlet = ringlet
-        self.suspendedState = suspendedState
-        self.suspendState = suspendState
         self.vars = vars
-        super.init(name, initialState: initialState)
-    }
-
-    /*public convenience init<R: MiPalRinglet>(_ name: String, initialState: State, ringlet: R = MiPalRinglet()) {
-        self.init(
+        super.init(
             name,
             initialState: initialState,
-            ringlet: ringlet,
-            vars: EmptyVariables(),
-            initialPreviousState: EmptyState("_previous"),
-            suspendedState: nil,
-            suspendState: EmptyState("_suspend")
-        )
-    }
-
-    public convenience init(
-        _ name: String,
-        initialState: _StateType,
-        ringlet: RingletType,
-        initialPreviousState: _StateType,
-        suspendedState: _StateType,
-        suspendState: _StateType
-    ) {
-        self.init(
-            name,
-            initialState: initialState,
-            ringlet: ringlet,
-            vars: EmptyVariables(),
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState, suspendState
-        )
-    }
-
-    public convenience init<R: Ringlet where R._StateType == State>(
-        _ name: String,
-        initialState: State,
-        ringlet: R,
-        vars: Vars,
-        initialPreviousState: State = EmptyState("_previous"),
-        suspendedState: State? = nil,
-        suspendState: State = EmptyState("_suspend")
-    ) {
-        self.init(
-            name,
-            initialState: initialState,
-            ringlet: ringlet,
-            vars: vars,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState
         )
     }
 
-    public convenience init(
-        _ name: String,
-        initialState: State,
-        vars: Vars,
-        initialPreviousState: State = EmptyState("_previous"),
-        suspendedState: State? = nil,
-        suspendState: State = EmptyState("_suspend")
-    ) {
-        self.init(
-            name,
-            initialState: initialState,
-            ringlet: MiPalRinglet(),
-            vars: vars,
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState: suspendState
-        )
-    }*/
-    
 }
-
-/**
- *  Provide the ability to create a `FiniteStateMachine` by using the shorter
- *  `FSM` type.
- *
- *  This is just some syntactic sugar.
- */
-//public typealias FSM = FiniteStateMachine
