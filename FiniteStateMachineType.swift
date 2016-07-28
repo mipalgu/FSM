@@ -92,9 +92,20 @@ public extension FiniteStateMachineType where
 }
 
 public extension FiniteStateMachineType where
+    Self: Finishable,
+    Self: Suspendable
+{
+
+    var hasFinished: Bool {
+        return false == self.isSuspended &&
+            self.currentState == self.previousState
+    }
+
+}
+
+public extension FiniteStateMachineType where
     Self._StateType: Transitionable,
     Self: Finishable,
-    Self: StateExecuter,
     Self: Suspendable
 {
 
@@ -192,6 +203,14 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
     
 }
 
+public extension FiniteStateMachineType where Self: StateExecuter {
+
+    public mutating func next() {
+        print("THIS SHOULD NOT HAPPEN")
+    }
+
+}
+
 /**
  *  Provide default implementations for when a Finite State Machine is a
  *  StateExecuter.
@@ -217,4 +236,12 @@ public extension FiniteStateMachineType where Self: StateExecuter, Self: StateEx
         )
     }
     
+}
+
+public extension FiniteStateMachineType where Self: StateExecuterDelegator, Self.RingletType: KripkeRinglet, Self: StateContainer {
+
+    public var snapshots: [Snapshot] {
+        return self.ringlet.snapshots
+    }
+
 }
