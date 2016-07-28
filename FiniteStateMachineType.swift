@@ -72,18 +72,10 @@ public protocol FiniteStateMachineType: Identifiable, StateContainer {
 /**
  *  Provide default implementations for when a Finite State Machine is Exitable.
  */
-public extension FiniteStateMachineType where Self._StateType: Transitionable, Self._StateType: Equatable, Self: ExitableStateExecuter, Self: Resumeable {
-    
-    /**
-     *  Finite State Machine are finished if they are not suspended,
-     *  `currentState` is an accepting state and `currentState` has already been
-     *  executed.
-     */
-    var hasFinished: Bool {
-        return false == self.isSuspended &&
-            0 == self.currentState.transitions.count &&
-            self.currentState == self.previousState
-    }
+public extension FiniteStateMachineType where
+    Self: ExitableStateExecuter,
+    Self: Resumeable
+{
 
     /**
      *  The Finite State Machine is resumed and `currentState` is set to an
@@ -97,6 +89,26 @@ public extension FiniteStateMachineType where Self._StateType: Transitionable, S
         self.previousState = self.currentState
     }
     
+}
+
+public extension FiniteStateMachineType where
+    Self._StateType: Transitionable,
+    Self: Finishable,
+    Self: StateExecuter,
+    Self: Suspendable
+{
+
+    /**
+     *  Finite State Machine are finished if they are not suspended,
+     *  `currentState` is an accepting state and `currentState` has already been
+     *  executed.
+     */
+    var hasFinished: Bool {
+        return false == self.isSuspended &&
+            0 == self.currentState.transitions.count &&
+            self.currentState == self.previousState
+    }
+
 }
 
 /**
