@@ -57,12 +57,19 @@
  */
 
 public class State:
-    AnyState,
+    StateType,
     CustomStringConvertible,
     CustomDebugStringConvertible,
     StateMethods,
     Transitionable
 {
+
+    /**
+     *  The name of the state.
+     *
+     *  - Requires: Must be unique for each state.
+     */
+    public var name: String
 
     /**
      *  An array of transitions that this state may use to move to another
@@ -71,8 +78,8 @@ public class State:
     public var transitions: [Transition<State>]
     
     public init(_ name: String, transitions: [Transition<State>] = []) {
+        self.name = name
         self.transitions = transitions
-        super.init(name)
     }
 
     public func onEntry() {}

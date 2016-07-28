@@ -58,15 +58,14 @@
 
 public class AnyState: StateType {
 
-    /**
-     *  The name of the state.
-     *
-     *  - Requires: Must be unique for each state.
-     */
-    public var name: String
+    public let _name: () -> String
 
-    public init(_ name: String) {
-        self.name = name
+    public var name: String {
+        return self._name()
+    }
+
+    public init<S: StateType>(_ base: S) {
+        self._name = { base.name }
     }
 
 }

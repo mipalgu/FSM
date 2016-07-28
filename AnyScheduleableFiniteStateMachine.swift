@@ -56,51 +56,114 @@
  *
  */
 
- public class AnyScheduleableFiniteStateMachine<
-    S: AnyState
->: AnyFiniteStateMachine<S>,
+public class AnyScheduleableFiniteStateMachine:
+    FiniteStateMachineType,
     StateExecuter,
     Finishable,
-    Resumeable
+    Resumeable,
+    SnapshotContainer
 {
-     
-    public typealias _StateType = S 
 
-    /**
-     *  The next state that needs to be executed.
-     */
-    public var currentState: _StateType
+    public typealias _StateType = AnyState
 
-    /**
-     *  The last state that was executed.
-     */
-    public var previousState: _StateType
+    private let _currentState: () -> AnyState
 
+    private let _hasFinished: () -> Bool
 
-    /**
-     *  The state that was about to be executed when the FSM was suspended.
-     */
-    public var suspendedState: _StateType?
+    private let _initialState: () -> AnyState
 
-    /**
-     *  The state which is responsible for suspending the FSM.
-     *
-     *  If this state is set as the current state then the FSM is suspended.
-     */
-    public var suspendState: _StateType
+    private let _isSuspended: () -> Bool
 
-    public init(
-        _ name: String,
-        initialState: _StateType,
-        initialPreviousState: _StateType,
-        suspendedState: _StateType? = nil,
-        suspendState: _StateType
-    ) {
-        self.currentState = initialState
-        self.previousState = initialPreviousState
-        self.suspendedState = suspendedState
-        self.suspendState = suspendState
-        super.init(name, initialState: initialState)
+    private let _name: () -> String
+
+    private let _next: () -> Void
+
+    private let _previousState: () -> AnyState
+
+    private let _resume: () -> Void
+
+    private let _snapshots: () -> [Snapshot]
+
+    private let _suspend: () -> Void
+
+    private let _suspendedState: () -> AnyState?
+
+    private let _suspendState: () -> AnyState
+
+    public var currentState: AnyState {
+        get {
+            return self._currentState()
+        } set {}
+    }
+
+    public var hasFinished: Bool {
+        return self._hasFinished()
+    }
+
+    public var initialState: AnyState {
+        return self._initialState()
+    }
+
+    public var isSuspended: Bool {
+        return self._isSuspended()
+    }
+
+    public var name: String {
+        return self._name()
+    }
+
+    public var previousState: AnyState {
+        get {
+            return self._previousState()
+        } set {}
+    }
+
+    public var snapshots: [Snapshot] {
+        return self._snapshots()
+    }
+
+    public var suspendedState: AnyState? {
+        get {
+            return self._suspendedState()
+        } set {}
+    }
+
+    public var suspendState: AnyState {
+        return self._suspendState()
+    }
+
+    public init<
+        FSM: FiniteStateMachineType where
+        FSM: StateExecuter,
+        FSM: Finishable,
+        FSM: Resumeable,
+        FSM: SnapshotContainer
+    >(_ base: FSM) {
+        var base = base
+        self._currentState = { AnyState(base.currentState) }
+        self._hasFinished = { base.hasFinished }
+        self._initialState = { AnyState(base.initialState) }
+        self._isSuspended = { base.isSuspended }
+        self._name = { base.name }
+        self._next = { base.next() }
+        self._previousState = { AnyState(base.previousState) }
+        self._resume = { base.resume() }
+        self._snapshots = { base.snapshots }
+        self._suspend = { base.suspend() }
+        self._suspendedState = { { AnyState($0) } <^> base.suspendedState }
+        self._suspendState = { AnyState(base.suspendState) }
+    }
+
+    public func next() {
+        self._next()
+    }
+
+    public func resume() {
+        self._resume()
+    }
+
+    public func suspend() {
+        self._suspend()
     }
 
  }

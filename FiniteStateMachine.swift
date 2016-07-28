@@ -92,13 +92,19 @@
 public class FiniteStateMachine<
     R: Ringlet,
     V: Variables
-    where R._StateType: Transitionable, R._StateType: AnyState
->: AnyScheduleableFiniteStateMachine<R._StateType>,
+    where R._StateType: Transitionable
+>: FiniteStateMachineType,
     ExitableStateExecuter,
     Restartable,
+    Resumeable,
+    SnapshotContainer,
     StateExecuterDelegator,
     VariablesContainer
 {
+
+    public typealias _StateType = R._StateType
+
+    public var currentState: R._StateType
 
     /**
      *  The state that is used to exit the FSM.
@@ -112,10 +118,22 @@ public class FiniteStateMachine<
      */
     public let initialPreviousState: R._StateType
 
+    public let initialState: R._StateType
+
+    public let name: String
+
+    public var previousState: R._StateType
+
     /**
      *  An instance of `Ringlet` that is used to execute the states.
      */
     public let ringlet: R
+
+    public var snapshots: [Snapshot] = []
+
+    public var suspendedState: R._StateType?
+
+    public let suspendState: R._StateType
     
     /**
      *  Variables that are shared between all states of this FSM.
@@ -132,17 +150,16 @@ public class FiniteStateMachine<
         suspendState: R._StateType,
         exitState: R._StateType
     ) {
+        self.currentState = initialState
         self.exitState = exitState
+        self.initialState = initialState
         self.initialPreviousState = initialPreviousState
+        self.name = name
+        self.previousState = initialPreviousState
         self.ringlet = ringlet
+        self.suspendedState = suspendedState
+        self.suspendState = suspendState
         self.vars = vars
-        super.init(
-            name,
-            initialState: initialState,
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState: suspendState
-        )
     }
 
 }

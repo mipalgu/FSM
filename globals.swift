@@ -60,9 +60,15 @@ public var DEBUG: Bool = false
 
 public var STOP: Bool = false
 
-public func addFactory(_ f: FSMArrayFactory) {
+public func addFactory<
+    FSM: FiniteStateMachineType where
+    FSM: StateExecuter,
+    FSM: Finishable,
+    FSM: Resumeable,
+    FSM: SnapshotContainer
+>(_ f: () -> [FSM]) {
     var factories: Factories = Factories()
-    factories.push(f)
+    factories.push({ { AnyScheduleableFiniteStateMachine($0) } <^> f() })
 }
 
 public func dprint(
