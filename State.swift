@@ -71,8 +71,8 @@ public class State:
     public var transitions: [Transition<State>]
     
     public init(_ name: String, transitions: [Transition<State>] = []) {
-        self.name = name
         self.transitions = transitions
+        super.init(name)
     }
 
     public func onEntry() {}
