@@ -82,7 +82,7 @@ public final class CallbackState: State {
     
     public init(
         _ name: String,
-        transitions: [Trans] = [],
+        transitions: [Transition<State>] = [],
         onEntry: () -> Void = {},
         main: () -> Void = {},
         onExit: () -> Void = {}

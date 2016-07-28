@@ -61,11 +61,8 @@ public class State:
     CustomStringConvertible,
     CustomDebugStringConvertible,
     StateMethods,
-    Transitionable,
-    Equatable
+    Transitionable
 {
-
-    public typealias Trans = Transition<State>
 
     /**
      *  The name of the state.
@@ -78,9 +75,9 @@ public class State:
      *  An array of transitions that this state may use to move to another
      *  state.
      */
-    public var transitions: [Trans]
+    public var transitions: [Transition<State>]
     
-    public init(_ name: String, transitions: [Trans] = []) {
+    public init(_ name: String, transitions: [Transition<State>] = []) {
         self.name = name
         self.transitions = transitions
     }
