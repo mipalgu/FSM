@@ -1,9 +1,9 @@
 /*
- * State.swift
- * swiftfsm
+ * AnyState.swift 
+ * FSM 
  *
- * Created by Callum McColl on 11/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 28/07/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,28 +56,17 @@
  *
  */
 
-public class State:
-    AnyState,
-    CustomStringConvertible,
-    CustomDebugStringConvertible,
-    StateMethods,
-    Transitionable
-{
+public class AnyState: StateType {
 
     /**
-     *  An array of transitions that this state may use to move to another
-     *  state.
+     *  The name of the state.
+     *
+     *  - Requires: Must be unique for each state.
      */
-    public var transitions: [Transition<State>]
-    
-    public init(_ name: String, transitions: [Transition<State>] = []) {
+    public var name: String
+
+    public init(_ name: String) {
         self.name = name
-        self.transitions = transitions
     }
 
-    public func onEntry() {}
-
-    public func main() {}
-
-    public func onExit() {}
 }
