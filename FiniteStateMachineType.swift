@@ -63,7 +63,7 @@
  *  own implementation of a Finite State Machine then instead make a subclass
  *  of `FiniteStateMachine`.
  */
-public protocol FiniteStateMachineType: Identifiable, StateExecuter {
+public protocol FiniteStateMachineType: Identifiable, StateContainer {
     
     var initialState: _StateType { get }
 

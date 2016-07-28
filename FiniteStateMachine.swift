@@ -89,12 +89,12 @@
  *  `vars`.
  *  
  */
-public struct FiniteStateMachine<
+public class FiniteStateMachine<
     R: Ringlet,
     V: Variables
     where R._StateType: Transitionable
->: ExitableStateExecuter,
-    FiniteStateMachineType,
+>: AnyFiniteStateMachine<R._StateType>,
+    ExitableStateExecuter,
     Restartable,
     Resumeable,
     StateExecuterDelegator,
@@ -117,18 +117,6 @@ public struct FiniteStateMachine<
      *  `previousState` is set to this value on restart.
      */
     public let initialPreviousState: R._StateType
-    
-    /**
-     *  The entry state of the FSM.
-     */
-    public let initialState: R._StateType
-    
-    /**
-     *  The unique name for the FSM.
-     *
-     *  Used for equality checks.
-     */
-    public let name: String
     
     /**
      *  The last state that was executed.
@@ -170,23 +158,19 @@ public struct FiniteStateMachine<
         self.currentState = initialState
         self.exitState = exitState
         self.initialPreviousState = initialPreviousState
-        self.initialState = initialState
-        self.name = name
         self.previousState = initialPreviousState
         self.ringlet = ringlet
         self.suspendedState = suspendedState
         self.suspendState = suspendState
         self.vars = vars
+        super.init(name, initialState: initialState)
     }
 
-    /*public convenience init<S, R, V where S == State, R == MiPalRinglet, V == EmptyVariables>(
-        _ name: String,
-        initialState: S
-    ) {
+    /*public convenience init<R: MiPalRinglet>(_ name: String, initialState: State, ringlet: R = MiPalRinglet()) {
         self.init(
             name,
             initialState: initialState,
-            ringlet: MiPalRinglet(),
+            ringlet: ringlet,
             vars: EmptyVariables(),
             initialPreviousState: EmptyState("_previous"),
             suspendedState: nil,

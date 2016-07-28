@@ -1,9 +1,9 @@
 /*
- * StateExecuter.swift
- * swiftfsm
+ * AnyFiniteStateMachine.swift 
+ * FSM 
  *
- * Created by Callum McColl on 23/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 28/07/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,15 +56,25 @@
  *
  */
 
-public protocol StateExecuter: StateContainer {
+public class AnyFiniteStateMachine<S: StateType>: FiniteStateMachineType {
 
-    var currentState: _StateType { get set }
-
-    var previousState: _StateType { get set }
+    public typealias _StateType = S
 
     /**
-     *  Execute the next state.
+     *  The entry state of the FSM.
      */
-    mutating func next()
+    public let initialState: S
     
+    /**
+     *  The unique name for the FSM.
+     *
+     *  Used for equality checks.
+     */
+    public let name: String
+
+    public init(_ name: String, initialState: S) {
+        self.name = name
+        self.initialState = initialState
+    }
+
 }

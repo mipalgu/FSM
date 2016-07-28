@@ -1,9 +1,9 @@
 /*
- * StateExecuter.swift
- * swiftfsm
+ * StateContainer.swift 
+ * FSM 
  *
- * Created by Callum McColl on 23/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 28/07/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,15 +56,8 @@
  *
  */
 
-public protocol StateExecuter: StateContainer {
+public protocol StateContainer {
 
-    var currentState: _StateType { get set }
+    associatedtype _StateType: StateType
 
-    var previousState: _StateType { get set }
-
-    /**
-     *  Execute the next state.
-     */
-    mutating func next()
-    
 }
