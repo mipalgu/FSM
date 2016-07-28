@@ -65,41 +65,65 @@
  *  called and the state is returned.
  */
 public class KripkeMiPalRinglet
-    <T where T: Snapshotable, T: GlobalVariablesContainer>
-    : MiPalRinglet, KripkeRinglet
+    <T, V: Variables where T: Snapshotable, T: GlobalVariablesContainer>
+    : MiPalRinglet<T>, KripkeRinglet
 {
 
     public typealias SnapshotType = T
 
-    public var globals: SnapshotType
-
-    public private(set) var snapshotBefore: SnapshotType.Class
-
-    public private(set) var snapshotAfter: SnapshotType.Class
+    private var fsmVars: V
     
-    public override var vars: Snapshotable {
-        get {
-            return self.globals
-        } set {
-            self.globals = newValue as! SnapshotType
-        }
-    }
+    public private(set) var snapshots: [Snapshot] = []
 
-    public init(globals: SnapshotType) {
-        self.globals = globals
-        self.snapshotBefore = globals.val
-        self.snapshotAfter = globals.val
+    public init(globals: SnapshotType, fsmVars: V) {
+        self.fsmVars = fsmVars
         super.init(vars: globals)
     }
 
-    internal override func takeSnapshot() {
-        self.globals.takeSnapshot()
-        self.snapshotBefore = self.globals.val
+    /**
+     *  Execute the ringlet while taking snapshots of all the variables.
+     *
+     *  Returns a state representing the next state to execute.
+     */
+    public override func execute(state: State, previousState: State) -> State {
+        self.snapshots = []
+        // Take a snapshot
+        self.takeSnapshot()
+        self.record(state: state)
+        // Call onEntry if we have just transitioned to this state. 
+        if (state != previousState) {
+            state.onEntry()
+            self.record(state: state)
+        }
+        // Can we transition to another state?
+        if let t = state.transitions.lazy.filter({ self.valid(transition: $0, state: state) }).first {
+            // Yes - Exit state and return the new state.
+            state.onExit()
+            self.record(state: state)
+            self.saveSnapshot()
+            return t.target
+        }
+        // No - Execute main method and return state.
+        state.main()
+        self.record(state: state)
+        self.saveSnapshot()
+        return state
     }
 
-    internal override func saveSnapshot() {
-        self.snapshotAfter = self.globals.val
-        self.globals.saveSnapshot()
+    private func record(state: State) {
+        self.snapshots.append(
+            Snapshot(
+                globals: Mirror(reflecting: self.vars.val),
+                fsmVars: Mirror(reflecting: self.fsmVars),
+                state: Mirror(reflecting: state)
+            )
+        )
     }
-    
+
+    private func valid(transition: Transition<State>, state: State) -> Bool {
+        let valid: Bool = transition.canTransition()
+        self.record(state: state)
+        return valid
+    }
+
 }

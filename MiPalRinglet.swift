@@ -64,11 +64,13 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class MiPalRinglet: Ringlet {
+public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
-    public var vars: Snapshotable
+    public typealias _StateType = State
 
-    public init(vars: Snapshotable = EmptySnapshotable()) {
+    public var vars: S
+
+    public init(vars: S) {
         self.vars = vars
     }
     

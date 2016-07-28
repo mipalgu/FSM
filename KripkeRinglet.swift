@@ -56,14 +56,8 @@
  *
  */
 
-public protocol KripkeRinglet: Ringlet {
+public protocol KripkeRinglet: Ringlet, SnapshotContainer {
 
     associatedtype SnapshotType: Snapshotable, GlobalVariablesContainer
-
-    var globals: SnapshotType { get }
-
-    var snapshotBefore: SnapshotType.Class { get }
-
-    var snapshotAfter: SnapshotType.Class { get }
 
 }

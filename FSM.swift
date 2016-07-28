@@ -63,11 +63,11 @@ public func FSM(
     suspendedState: State? = nil,
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
-) -> FiniteStateMachine<MiPalRinglet, EmptyVariables> {
-    return FiniteStateMachine(
+) -> FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, EmptyVariables> {
+    return FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, EmptyVariables>(
         name,
         initialState: initialState,
-        ringlet: MiPalRinglet(),
+        ringlet: MiPalRingletFactory.make(),
         vars: EmptyVariables(),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
@@ -85,7 +85,7 @@ public func FSM<R: Ringlet>(
     suspendState: R._StateType,
     exitState: R._StateType
 ) -> FiniteStateMachine<R, EmptyVariables> {
-    return FiniteStateMachine(
+    return FiniteStateMachine<R, EmptyVariables>(
         name,
         initialState: initialState,
         ringlet: ringlet,
@@ -105,11 +105,11 @@ public func FSM<V: Variables>(
     suspendedState: State? = nil,
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
-) -> FiniteStateMachine<MiPalRinglet, V> {
-    return FiniteStateMachine(
+) -> FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, V> {
+    return FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, V>(
         name,
         initialState: initialState,
-        ringlet: MiPalRinglet(),
+        ringlet: MiPalRingletFactory.make(),
         vars: vars,
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
@@ -128,7 +128,7 @@ public func FSM<R: Ringlet, V: Variables>(
     suspendState: R._StateType,
     exitState: R._StateType
 ) -> FiniteStateMachine<R, V> {
-    return FiniteStateMachine(
+    return FiniteStateMachine<R, V>(
         name,
         initialState: initialState,
         ringlet: ringlet,
