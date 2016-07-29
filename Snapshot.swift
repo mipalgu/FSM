@@ -58,10 +58,10 @@
 
 public struct Snapshot {
 
-    public let globals: Mirror
+    public let globals: Any
 
-    public let fsmVars: Mirror
+    public let fsmVars: Any
 
-    public let state: Mirror
+    public let state: Any
 
 }
