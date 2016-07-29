@@ -1,8 +1,8 @@
 /*
- * FiniteStateMachine.swift
+ * KripkeFiniteStateMachine.swift
  * swiftfsm
  *
- * Created by Callum McColl on 12/08/2015.
+ * Created by Callum McColl on 29/07/2016.
  * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,8 @@
  */
 
 /**
- *  A Finite State Machine.
+ *  A Finite State Machine that is able to have a Kripke Structure generated
+ *  from it.
  *
  *  Finite State Machines (FSMs) are defined as an algorithm that can be in any
  *  number of a finite set of states.  Each state therefore represents a single
@@ -89,8 +90,8 @@
  *  `vars`.
  *  
  */
-public struct FiniteStateMachine<
-    R: Ringlet,
+public struct KripkeFiniteStateMachine<
+    R: KripkeRinglet,
     V: Variables
     where R._StateType: Transitionable
 >: FiniteStateMachineType,
@@ -128,12 +129,6 @@ public struct FiniteStateMachine<
      *  An instance of `Ringlet` that is used to execute the states.
      */
     public let ringlet: R
-
-    /**
-     *  We need to be a SnapshotContainer to be scheduleable so we will just
-     *  use an empty array as we are never taking snapshots.
-     */
-    public let snapshots: [Snapshot] = []
 
     public var suspendedState: R._StateType?
 

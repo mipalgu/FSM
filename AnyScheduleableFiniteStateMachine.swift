@@ -56,7 +56,7 @@
  *
  */
 
-public class AnyScheduleableFiniteStateMachine:
+public struct AnyScheduleableFiniteStateMachine:
     FiniteStateMachineType,
     StateExecuter,
     Finishable,

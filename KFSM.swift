@@ -65,7 +65,7 @@ public func KFSM(
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<KripkeMiPalRinglet<
+        KripkeFiniteStateMachine<KripkeMiPalRinglet<
             EmptyGlobalVariablesContainer,
             EmptyVariables
         >, EmptyVariables>(
@@ -114,7 +114,7 @@ public func KFSM<V: Variables>(
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine { 
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<KripkeMiPalRinglet<
+        KripkeFiniteStateMachine<KripkeMiPalRinglet<
             EmptyGlobalVariablesContainer,
             EmptyVariables
         >, V>(
@@ -144,7 +144,7 @@ public func KFSM<
     exitState: R._StateType
 ) -> AnyScheduleableFiniteStateMachine {
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<R, V>(
+        KripkeFiniteStateMachine<R, V>(
             name,
             initialState: initialState,
             ringlet: ringlet,

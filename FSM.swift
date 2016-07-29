@@ -147,4 +147,3 @@ public func FSM<R: Ringlet, V: Variables where R._StateType: Transitionable>(
         )
     )
 }
-

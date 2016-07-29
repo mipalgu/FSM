@@ -222,12 +222,13 @@ public extension FiniteStateMachineType where
 }
 
 public extension FiniteStateMachineType where
+    Self: SnapshotContainer,
     Self: StateExecuterDelegator,
-    Self.RingletType: SnapshotContainer,
-    Self: SnapshotContainer
+    Self.RingletType: SnapshotContainer
 {
 
     public var snapshots: [Snapshot] {
+        dprint("get ringlet snapshots: \(self.ringlet.snapshots)")
         return self.ringlet.snapshots
     }
 
