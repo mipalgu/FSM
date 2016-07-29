@@ -96,7 +96,7 @@ public class KripkeMiPalRinglet
             self.record(state: state)
         }
         // Can we transition to another state?
-        if let t = state.transitions.lazy.filter({ self.valid(transition: $0, state: state) }).first {
+        if let t = state.transitions.lazy.filter(self.isValid(forState: state)).first {
             // Yes - Exit state and return the new state.
             state.onExit()
             self.record(state: state)
@@ -113,17 +113,20 @@ public class KripkeMiPalRinglet
     private func record(state: State) {
         self.snapshots.append(
             Snapshot(
-                globals: Mirror(reflecting: self.vars.val),
-                fsmVars: Mirror(reflecting: self.fsmVars),
-                state: Mirror(reflecting: state)
+                globals: self.vars.val,
+                fsmVars: self.fsmVars,
+                state: state
             )
         )
+        dprint(self.snapshots)
     }
 
-    private func valid(transition: Transition<State>, state: State) -> Bool {
-        let valid: Bool = transition.canTransition()
-        self.record(state: state)
-        return valid
+    private func isValid(forState state: State) -> (Transition<State>) -> Bool {
+        return {
+            let valid: Bool = $0.canTransition()
+            self.record(state: state)
+            return valid
+        }
     }
 
 }
