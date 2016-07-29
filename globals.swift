@@ -82,7 +82,7 @@ public func dprint(
         return
     }
     let _ = items.map {
-        debugPrint($0, separator: separator, terminator: terminator)
+        print($0, separator: separator, terminator: terminator)
     }
 }
 
@@ -96,7 +96,7 @@ public func dprint<Target: TextOutputStream>(
         return
     }
     let _ = items.map {
-        debugPrint(
+        print(
             $0,
             separator: separator,
             terminator: terminator,
