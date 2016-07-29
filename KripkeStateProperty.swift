@@ -61,9 +61,9 @@
  */
 public struct KripkeStateProperty: Equatable {
     
-    var type: KripkeStatePropertyTypes
+    public let type: KripkeStatePropertyTypes
     
-    var value: Any
+    public let value: Any
     
     public init(type: KripkeStatePropertyTypes, value: Any) {
         self.type = type
