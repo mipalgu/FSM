@@ -228,7 +228,6 @@ public extension FiniteStateMachineType where
 {
 
     public var snapshots: [KripkeStatePropertyList] {
-        dprint("get ringlet snapshots: \(self.ringlet.snapshots)")
         return self.ringlet.snapshots
     }
 
