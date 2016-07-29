@@ -58,6 +58,8 @@
 
 public var DEBUG: Bool = false
 
+public var KRIPKE: Bool = false
+
 public var STOP: Bool = false
 
 public func addFactory<

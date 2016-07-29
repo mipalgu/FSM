@@ -64,12 +64,173 @@ public func FSM(
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, EmptyVariables>(
+    dprint("1")
+    if (true == KRIPKE) {
+        return FSM(
             name,
             initialState: initialState,
-            ringlet: MiPalRingletFactory.make(),
-            vars: EmptyVariables(),
+            ringlet: KripkeMiPalRingletFactory.make(),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
+    }
+    return FSM(
+        name,
+        initialState: initialState,
+        ringlet: MiPalRingletFactory.make(),
+        initialPreviousState: initialPreviousState,
+        suspendedState: suspendedState,
+        suspendState: suspendState,
+        exitState: exitState
+    )
+}
+
+public func FSM<G: GlobalVariablesContainer where G: Snapshotable>(
+    _ name: String,
+    initialState: State,
+    globals: G,
+    initialPreviousState: State = EmptyState("_previous"),
+    suspendedState: State? = nil,
+    suspendState: State = EmptyState("_suspend"),
+    exitState: State = EmptyState("_exit")
+) -> AnyScheduleableFiniteStateMachine {
+    dprint("2")
+    if (true == KRIPKE) {
+        return FSM(
+            name,
+            initialState: initialState,
+            ringlet: KripkeMiPalRinglet(
+                globals: globals,
+                fsmVars: EmptyVariables()
+            ),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
+    }
+    return FSM(
+        name,
+        initialState: initialState,
+        ringlet: MiPalRinglet(vars: globals),
+        initialPreviousState: initialPreviousState,
+        suspendedState: suspendedState,
+        suspendState: suspendState,
+        exitState: exitState
+    )
+}
+
+public func FSM<V: Variables>(
+    _ name: String,
+    initialState: State,
+    fsmVars: V,
+    initialPreviousState: State = EmptyState("_previous"),
+    suspendedState: State? = nil,
+    suspendState: State = EmptyState("_suspend"),
+    exitState: State = EmptyState("_exit")
+) -> AnyScheduleableFiniteStateMachine {
+    dprint("3")
+    if (true == KRIPKE) {
+        return FSM(
+            name,
+            initialState: initialState,
+            ringlet: KripkeMiPalRinglet(
+                globals: EmptyGlobalVariablesContainer(),
+                fsmVars: fsmVars
+            ),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
+    }
+    return FSM(
+        name,
+        initialState: initialState,
+        ringlet: MiPalRingletFactory.make(),
+        initialPreviousState: initialPreviousState,
+        suspendedState: suspendedState,
+        suspendState: suspendState,
+        exitState: exitState
+    )
+}
+
+public func FSM<
+    G: GlobalVariablesContainer,
+    V: Variables where G: Snapshotable
+>(
+    _ name: String,
+    initialState: State,
+    globals: G,
+    fsmVars: V,
+    initialPreviousState: State = EmptyState("_previous"),
+    suspendedState: State? = nil,
+    suspendState: State = EmptyState("_suspend"),
+    exitState: State = EmptyState("_exit")
+) -> AnyScheduleableFiniteStateMachine {
+    dprint("4")
+    if (true == KRIPKE) {
+        return FSM(
+            name,
+            initialState: initialState,
+            ringlet: KripkeMiPalRinglet(globals: globals, fsmVars: fsmVars),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
+    }
+    return FSM(
+        name,
+        initialState: initialState,
+        ringlet: MiPalRinglet(vars: globals),
+        initialPreviousState: initialPreviousState,
+        suspendedState: suspendedState,
+        suspendState: suspendState,
+        exitState: exitState
+    )
+}
+
+public func FSM<R: Ringlet where R._StateType == State>(
+    _ name: String,
+    initialState: State,
+    ringlet: R,
+    initialPreviousState: State = EmptyState("_previous"),
+    suspendedState: State? = nil,
+    suspendState: State = EmptyState("_suspend"),
+    exitState: State = EmptyState("_exit")
+) -> AnyScheduleableFiniteStateMachine {
+    dprint("5")
+    return AnyScheduleableFiniteStateMachine(
+        FiniteStateMachine<R, EmptyVariables>(
+            name,
+            initialState: initialState,
+            ringlet: ringlet,
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
+    )
+}
+
+public func FSM<R: KripkeRinglet where R._StateType == State>(
+    _ name: String,
+    initialState: State,
+    ringlet: R,
+    initialPreviousState: State = EmptyState("_previous"),
+    suspendedState: State? = nil,
+    suspendState: State = EmptyState("_suspend"),
+    exitState: State = EmptyState("_exit")
+) -> AnyScheduleableFiniteStateMachine {
+    dprint("6")
+    return AnyScheduleableFiniteStateMachine(
+        KripkeFiniteStateMachine<R, EmptyVariables>(
+            name,
+            initialState: initialState,
+            ringlet: ringlet,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
@@ -87,12 +248,12 @@ public func FSM<R: Ringlet where R._StateType: Transitionable>(
     suspendState: R._StateType,
     exitState: R._StateType
 ) -> AnyScheduleableFiniteStateMachine {
+    dprint("7")
     return AnyScheduleableFiniteStateMachine(
         FiniteStateMachine<R, EmptyVariables>(
             name,
             initialState: initialState,
             ringlet: ringlet,
-            vars: EmptyVariables(),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
@@ -101,45 +262,21 @@ public func FSM<R: Ringlet where R._StateType: Transitionable>(
     )
 }
 
-public func FSM<V: Variables>(
-    _ name: String,
-    initialState: State,
-    vars: V,
-    initialPreviousState: State = EmptyState("_previous"),
-    suspendedState: State? = nil,
-    suspendState: State = EmptyState("_suspend"),
-    exitState: State = EmptyState("_exit")
-) -> AnyScheduleableFiniteStateMachine { 
-    return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, V>(
-            name,
-            initialState: initialState,
-            ringlet: MiPalRingletFactory.make(),
-            vars: vars,
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState: suspendState,
-            exitState: exitState
-        )
-    )
-}
-
-public func FSM<R: Ringlet, V: Variables where R._StateType: Transitionable>(
+public func FSM<R: KripkeRinglet where R._StateType: Transitionable>(
     _ name: String,
     initialState: R._StateType,
     ringlet: R,
-    vars: V,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType,
     suspendState: R._StateType,
     exitState: R._StateType
 ) -> AnyScheduleableFiniteStateMachine {
+    dprint("8")
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<R, V>(
+        KripkeFiniteStateMachine<R, EmptyVariables>(
             name,
             initialState: initialState,
             ringlet: ringlet,
-            vars: vars,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
