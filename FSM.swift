@@ -63,20 +63,22 @@ public func FSM(
     suspendedState: State? = nil,
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
-) -> FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, EmptyVariables> {
-    return FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, EmptyVariables>(
-        name,
-        initialState: initialState,
-        ringlet: MiPalRingletFactory.make(),
-        vars: EmptyVariables(),
-        initialPreviousState: initialPreviousState,
-        suspendedState: suspendedState,
-        suspendState: suspendState,
-        exitState: exitState
+) -> AnyScheduleableFiniteStateMachine {
+    return AnyScheduleableFiniteStateMachine(
+        FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, EmptyVariables>(
+            name,
+            initialState: initialState,
+            ringlet: MiPalRingletFactory.make(),
+            vars: EmptyVariables(),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
     )
 }
 
-public func FSM<R: Ringlet>(
+public func FSM<R: Ringlet where R._StateType: Transitionable>(
     _ name: String,
     initialState: R._StateType,
     ringlet: R,
@@ -84,16 +86,18 @@ public func FSM<R: Ringlet>(
     suspendedState: R._StateType,
     suspendState: R._StateType,
     exitState: R._StateType
-) -> FiniteStateMachine<R, EmptyVariables> {
-    return FiniteStateMachine<R, EmptyVariables>(
-        name,
-        initialState: initialState,
-        ringlet: ringlet,
-        vars: EmptyVariables(),
-        initialPreviousState: initialPreviousState,
-        suspendedState: suspendedState,
-        suspendState: suspendState,
-        exitState: exitState
+) -> AnyScheduleableFiniteStateMachine {
+    return AnyScheduleableFiniteStateMachine(
+        FiniteStateMachine<R, EmptyVariables>(
+            name,
+            initialState: initialState,
+            ringlet: ringlet,
+            vars: EmptyVariables(),
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
     )
 }
 
@@ -105,20 +109,22 @@ public func FSM<V: Variables>(
     suspendedState: State? = nil,
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
-) -> FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, V> {
-    return FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, V>(
-        name,
-        initialState: initialState,
-        ringlet: MiPalRingletFactory.make(),
-        vars: vars,
-        initialPreviousState: initialPreviousState,
-        suspendedState: suspendedState,
-        suspendState: suspendState,
-        exitState: exitState
+) -> AnyScheduleableFiniteStateMachine { 
+    return AnyScheduleableFiniteStateMachine(
+        FiniteStateMachine<MiPalRinglet<EmptySnapshotable>, V>(
+            name,
+            initialState: initialState,
+            ringlet: MiPalRingletFactory.make(),
+            vars: vars,
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
     )
 }
 
-public func FSM<R: Ringlet, V: Variables>(
+public func FSM<R: Ringlet, V: Variables where R._StateType: Transitionable>(
     _ name: String,
     initialState: R._StateType,
     ringlet: R,
@@ -127,16 +133,18 @@ public func FSM<R: Ringlet, V: Variables>(
     suspendedState: R._StateType,
     suspendState: R._StateType,
     exitState: R._StateType
-) -> FiniteStateMachine<R, V> {
-    return FiniteStateMachine<R, V>(
-        name,
-        initialState: initialState,
-        ringlet: ringlet,
-        vars: vars,
-        initialPreviousState: initialPreviousState,
-        suspendedState: suspendedState,
-        suspendState: suspendState,
-        exitState: exitState
+) -> AnyScheduleableFiniteStateMachine {
+    return AnyScheduleableFiniteStateMachine(
+        FiniteStateMachine<R, V>(
+            name,
+            initialState: initialState,
+            ringlet: ringlet,
+            vars: vars,
+            initialPreviousState: initialPreviousState,
+            suspendedState: suspendedState,
+            suspendState: suspendState,
+            exitState: exitState
+        )
     )
 }
 
