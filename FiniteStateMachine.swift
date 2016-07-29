@@ -98,8 +98,7 @@ public struct FiniteStateMachine<
     Restartable,
     Resumeable,
     SnapshotContainer,
-    StateExecuterDelegator,
-    VariablesContainer
+    StateExecuterDelegator
 {
 
     public typealias _StateType = R._StateType
@@ -139,16 +138,10 @@ public struct FiniteStateMachine<
 
     public let suspendState: R._StateType
     
-    /**
-     *  Variables that are shared between all states of this FSM.
-     */
-    public var vars: V
-    
     public init(
         _ name: String,
         initialState: R._StateType,
         ringlet: R,
-        vars: V,
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
         suspendState: R._StateType,
@@ -163,7 +156,6 @@ public struct FiniteStateMachine<
         self.ringlet = ringlet
         self.suspendedState = suspendedState
         self.suspendState = suspendState
-        self.vars = vars
     }
 
 }
