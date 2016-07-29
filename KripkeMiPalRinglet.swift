@@ -123,7 +123,6 @@ public class KripkeMiPalRinglet<
                 state: state
             )
         )
-        dprint(self.snapshots)
     }
 
     private func isValid(forState state: State) -> (Transition<State>) -> Bool {
