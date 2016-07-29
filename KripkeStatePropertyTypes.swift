@@ -1,9 +1,9 @@
 /*
- * KripkeMiPalRingletFactory.swift 
- * FSM 
+ * KripkeStatePropertyTypes.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 29/07/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 19/11/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,18 +56,62 @@
  *
  */
 
-public class KripkeMiPalRingletFactory {
+/**
+ *  Supported types for Kripke Structures.
+ */
+public enum KripkeStatePropertyTypes: Equatable {
+    case Bool
+    case Int, Int8, Int16, Int32, Int64
+    case UInt, UInt8, UInt16, UInt32, UInt64
+    case Float, Float80, Double
+    case String
+    case EmptyCollection
+    case Collection([KripkeStateProperty])
+    case Some
+}
 
-    public static func make()-> KripkeMiPalRinglet<
-        EmptyGlobalVariablesContainer,
-        EmptyVariables,
-        MirrorPropertyExtractor
-    > {
-        return KripkeMiPalRinglet(
-            globals: EmptyGlobalVariablesContainer(),
-            fsmVars: EmptyVariables(),
-            extractor: MirrorPropertyExtractor()
-        )
+public func ==(
+    lhs: KripkeStatePropertyTypes,
+    rhs: KripkeStatePropertyTypes
+) -> Bool {
+    switch (lhs, rhs) {
+        case (.Bool, .Bool):
+            return true
+        case (.Int, .Int):
+            return true
+        case (.Int8, .Int8):
+            return true
+        case (.Int16, .Int16):
+            return true
+        case (.Int32, .Int32):
+            return true
+        case (.Int64, .Int64):
+            return true
+        case (.UInt, .UInt):
+            return true
+        case (.UInt8, .UInt8):
+            return true
+        case (.UInt16, .UInt16):
+            return true
+        case (.UInt32, .UInt32):
+            return true
+        case (.UInt64, .UInt64):
+            return true
+        case (.Float, .Float):
+            return true
+        case (.Float80, .Float80):
+            return true
+        case (.Double, .Double):
+            return true
+        case (.String, .String):
+            return true
+        case (.EmptyCollection, .EmptyCollection):
+            return true
+        case (let .Collection(p1), let .Collection(p2)):
+            return p1 == p2
+        case (.Some, .Some):
+            return true
+        default:
+            return false
     }
-
 }

@@ -1,8 +1,8 @@
 /*
- * KripkeMiPalRingletFactory.swift 
- * FSM 
+ * KripkeStatePropertyList.swift 
+ * swiftfsm 
  *
- * Created by Callum McColl on 29/07/2016.
+ * Created by Callum McColl on 22/02/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,18 +56,81 @@
  *
  */
 
-public class KripkeMiPalRingletFactory {
+public struct KripkeStatePropertyList: Equatable {
 
-    public static func make()-> KripkeMiPalRinglet<
-        EmptyGlobalVariablesContainer,
-        EmptyVariables,
-        MirrorPropertyExtractor
-    > {
-        return KripkeMiPalRinglet(
-            globals: EmptyGlobalVariablesContainer(),
-            fsmVars: EmptyVariables(),
-            extractor: MirrorPropertyExtractor()
-        )
+    public let stateProperties: [String: KripkeStateProperty]
+
+    public let fsmProperties: [String: KripkeStateProperty]
+
+    public let globalProperties: [String: KripkeStateProperty]
+
+    public init(
+        stateProperties: [String: KripkeStateProperty] = [:],
+        fsmProperties: [String: KripkeStateProperty] = [:],
+        globalProperties: [String: KripkeStateProperty] = [:]
+    ) {
+        self.stateProperties = stateProperties
+        self.fsmProperties = fsmProperties
+        self.globalProperties = globalProperties
     }
 
+}
+
+extension KripkeStatePropertyList: CustomStringConvertible {
+
+    public var description: String {
+        let lists: [String: [String: KripkeStateProperty]] = [
+            "stateProperties": self.stateProperties,
+            "fsmProperties": self.fsmProperties,
+            "globalProperties": self.globalProperties
+        ]
+        var str: String = ""
+        lists.forEach {
+            str += "\n\t" + $0 + " {"
+            var list: String = ""
+            $1.forEach {
+               list += "\n\t\t\($0)=\($1.value)," 
+            }
+            if (false == list.isEmpty) {
+                var temp: String.CharacterView = list.characters
+                temp.removeLast()
+                str += String(temp)
+            }
+            str += "\n\t}\n"
+        }
+        return str
+    }
+
+}
+
+public func ==(
+    lhs: KripkeStatePropertyList,
+    rhs: KripkeStatePropertyList
+) -> Bool {
+    return lhs.globalProperties == rhs.globalProperties &&
+        lhs.fsmProperties == rhs.fsmProperties &&
+        lhs.stateProperties == rhs.stateProperties
+}
+
+/**
+ *  Compare a list of properties for equality.
+ */
+public func ==(
+    lhs: [String: KripkeStateProperty],
+    rhs: [String: KripkeStateProperty]
+) -> Bool {
+    // Check if they are the same size
+    if (lhs.count != rhs.count) {
+        return false
+    }
+    // Check values
+    for key: String in lhs.keys {
+        if (nil == rhs[key]) {
+            return false
+        }
+        if (false == (lhs[key]! == rhs[key]!)) {
+            return false
+        }
+    }
+    return true
 }

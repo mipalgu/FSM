@@ -103,7 +103,8 @@ public func FSM<G: GlobalVariablesContainer where G: Snapshotable>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: globals,
-                fsmVars: EmptyVariables()
+                fsmVars: EmptyVariables(),
+                extractor: MirrorPropertyExtractor()
             ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -138,7 +139,8 @@ public func FSM<V: Variables>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: EmptyGlobalVariablesContainer(),
-                fsmVars: fsmVars
+                fsmVars: fsmVars,
+                extractor: MirrorPropertyExtractor()
             ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -175,7 +177,11 @@ public func FSM<
         return FSM(
             name,
             initialState: initialState,
-            ringlet: KripkeMiPalRinglet(globals: globals, fsmVars: fsmVars),
+            ringlet: KripkeMiPalRinglet(
+                globals: globals,
+                fsmVars: fsmVars,
+                extractor: MirrorPropertyExtractor()
+            ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,

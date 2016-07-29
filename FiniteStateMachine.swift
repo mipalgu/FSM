@@ -132,7 +132,7 @@ public struct FiniteStateMachine<
      *  We need to be a SnapshotContainer to be scheduleable so we will just
      *  use an empty array as we are never taking snapshots.
      */
-    public let snapshots: [Snapshot] = []
+    public let snapshots: [KripkeStatePropertyList] = []
 
     public var suspendedState: R._StateType?
 

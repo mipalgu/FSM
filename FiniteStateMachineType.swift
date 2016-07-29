@@ -227,7 +227,7 @@ public extension FiniteStateMachineType where
     Self.RingletType: SnapshotContainer
 {
 
-    public var snapshots: [Snapshot] {
+    public var snapshots: [KripkeStatePropertyList] {
         dprint("get ringlet snapshots: \(self.ringlet.snapshots)")
         return self.ringlet.snapshots
     }

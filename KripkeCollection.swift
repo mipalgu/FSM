@@ -1,8 +1,8 @@
 /*
- * KripkeMiPalRingletFactory.swift 
+ * KripkeCollection.swift 
  * FSM 
  *
- * Created by Callum McColl on 29/07/2016.
+ * Created by Callum McColl on 18/03/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,18 +56,24 @@
  *
  */
 
-public class KripkeMiPalRingletFactory {
+public protocol KripkeCollection {
 
-    public static func make()-> KripkeMiPalRinglet<
-        EmptyGlobalVariablesContainer,
-        EmptyVariables,
-        MirrorPropertyExtractor
-    > {
-        return KripkeMiPalRinglet(
-            globals: EmptyGlobalVariablesContainer(),
-            fsmVars: EmptyVariables(),
-            extractor: MirrorPropertyExtractor()
-        )
+    func toArray() -> [Any]
+
+}
+
+extension Sequence where Self: KripkeCollection {
+
+    public func toArray() -> [Any] {
+        return self.map { $0 as Any }
     }
 
 }
+
+extension Array: KripkeCollection {}
+
+extension Set: KripkeCollection {}
+
+extension Dictionary: KripkeCollection {}
+
+extension AnySequence: KripkeCollection {}

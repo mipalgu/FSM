@@ -64,19 +64,24 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class KripkeMiPalRinglet
-    <T, V: Variables where T: Snapshotable, T: GlobalVariablesContainer>
-    : MiPalRinglet<T>, KripkeRinglet
+public class KripkeMiPalRinglet<
+    G: GlobalVariablesContainer,
+    V: Variables,
+    E: PropertiesExtractor where G: Snapshotable
+> : MiPalRinglet<G>, KripkeRinglet
 {
 
-    public typealias SnapshotType = T
+    public typealias SnapshotType = G
+
+    private let extractor: E
 
     private var fsmVars: V
     
-    public private(set) var snapshots: [Snapshot] = []
+    public private(set) var snapshots: [KripkeStatePropertyList] = []
 
-    public init(globals: SnapshotType, fsmVars: V) {
+    public init(globals: SnapshotType, fsmVars: V, extractor: E) {
         self.fsmVars = fsmVars
+        self.extractor = extractor
         super.init(vars: globals)
     }
 
@@ -112,7 +117,7 @@ public class KripkeMiPalRinglet
 
     private func record(state: State) {
         self.snapshots.append(
-            Snapshot(
+            self.extractor.extract(
                 globals: self.vars.val,
                 fsmVars: self.fsmVars,
                 state: state

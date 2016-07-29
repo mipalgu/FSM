@@ -82,7 +82,7 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _resume: () -> Void
 
-    private let _snapshots: () -> [Snapshot]
+    private let _snapshots: () -> [KripkeStatePropertyList]
 
     private let _suspend: () -> Void
 
@@ -118,7 +118,7 @@ public struct AnyScheduleableFiniteStateMachine:
         } set {}
     }
 
-    public var snapshots: [Snapshot] {
+    public var snapshots: [KripkeStatePropertyList] {
         return self._snapshots()
     }
 

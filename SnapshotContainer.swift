@@ -58,6 +58,6 @@
 
 public protocol SnapshotContainer {
 
-    var snapshots: [Snapshot] { get }
+    var snapshots: [KripkeStatePropertyList] { get }
 
 }

@@ -1,8 +1,8 @@
 /*
- * Snapshot.swift 
- * FSM 
+ * PropertiesExtractor.swift 
+ * swiftfsm 
  *
- * Created by Callum McColl on 28/07/2016.
+ * Created by Callum McColl on 29/07/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,12 +56,12 @@
  *
  */
 
-public struct Snapshot {
+public protocol PropertiesExtractor {
 
-    public let globals: Any
-
-    public let fsmVars: Any
-
-    public let state: Any
+    func extract<G: GlobalVariables, F: Variables, S: StateType>(
+        globals: G,
+        fsmVars: F,
+        state: S
+    ) -> KripkeStatePropertyList
 
 }
