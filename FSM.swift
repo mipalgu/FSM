@@ -64,7 +64,6 @@ public func FSM(
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    dprint("1")
     if (true == KRIPKE) {
         return FSM(
             name,
@@ -96,7 +95,6 @@ public func FSM<G: GlobalVariablesContainer where G: Snapshotable>(
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    dprint("2")
     if (true == KRIPKE) {
         return FSM(
             name,
@@ -132,7 +130,6 @@ public func FSM<V: Variables>(
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    dprint("3")
     if (true == KRIPKE) {
         return FSM(
             name,
@@ -172,7 +169,6 @@ public func FSM<
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    dprint("4")
     if (true == KRIPKE) {
         return FSM(
             name,
@@ -208,7 +204,6 @@ public func FSM<R: Ringlet where R._StateType == State>(
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    dprint("5")
     return AnyScheduleableFiniteStateMachine(
         FiniteStateMachine<R, EmptyVariables>(
             name,
@@ -231,7 +226,6 @@ public func FSM<R: KripkeRinglet where R._StateType == State>(
     suspendState: State = EmptyState("_suspend"),
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    dprint("6")
     return AnyScheduleableFiniteStateMachine(
         KripkeFiniteStateMachine<R, EmptyVariables>(
             name,
@@ -243,4 +237,25 @@ public func FSM<R: KripkeRinglet where R._StateType == State>(
             exitState: exitState
         )
     )
+}
+
+
+public func FSM<
+    FSM: FiniteStateMachineType where
+    FSM: StateExecuter,
+    FSM: Finishable,
+    FSM: Resumeable,
+    FSM: SnapshotContainer
+>(_ fsm: FSM) -> AnyScheduleableFiniteStateMachine {
+    return AnyScheduleableFiniteStateMachine(fsm)
+}
+
+public func FSMS<
+    FSM: FiniteStateMachineType where
+    FSM: StateExecuter,
+    FSM: Finishable,
+    FSM: Resumeable,
+    FSM: SnapshotContainer
+>(_ fsms: FSM ...) -> [AnyScheduleableFiniteStateMachine] {
+    return fsms.map { AnyScheduleableFiniteStateMachine($0) }
 }
