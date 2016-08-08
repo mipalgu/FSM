@@ -58,14 +58,14 @@
 
 public protocol Transitionable {
     
-    associatedtype Trans: TransitionType
+    associatedtype _TransitionType: TransitionType
 
     /**
      *  All possible transitions that the state can use to move to another
      *  state.
      */
-    var transitions: [Trans] { get set }
+    var transitions: [_TransitionType] { get set }
 
-    mutating func addTransition(_ : Trans ...) -> Void
+    mutating func addTransition(_ : _TransitionType ...) -> Void
     
 }

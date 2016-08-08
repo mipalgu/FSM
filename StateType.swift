@@ -73,7 +73,7 @@ public protocol StateType: Identifiable {}
  */
 extension StateType where Self: Transitionable {
     
-    public mutating func addTransition(_ transitions: Trans ...) {
+    public mutating func addTransition(_ transitions: _TransitionType ...) {
         self.transitions.append(contentsOf: transitions)
     }
     
