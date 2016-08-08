@@ -1,5 +1,5 @@
 /*
- * StateMethods.swift
+ * MiPalActions.swift
  * swiftfsm
  *
  * Created by Callum McColl on 9/09/2015.
@@ -56,7 +56,7 @@
  *
  */
 
-public protocol StateMethods {
+public protocol MiPalActions {
     
     func onEntry() -> Void
     func main() -> Void

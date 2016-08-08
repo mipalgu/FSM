@@ -60,7 +60,7 @@ public class State:
     StateType,
     CustomStringConvertible,
     CustomDebugStringConvertible,
-    StateMethods,
+    MiPalActions,
     Transitionable
 {
 
