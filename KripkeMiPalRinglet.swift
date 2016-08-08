@@ -82,7 +82,7 @@ public class KripkeMiPalRinglet<
     public init(globals: SnapshotType, fsmVars: V, extractor: E) {
         self.fsmVars = fsmVars
         self.extractor = extractor
-        super.init(vars: globals)
+        super.init(globals: globals)
     }
 
     /**
@@ -118,7 +118,7 @@ public class KripkeMiPalRinglet<
     private func record(state: State) {
         self.snapshots.append(
             self.extractor.extract(
-                globals: self.vars.val,
+                globals: self.globals.val,
                 fsmVars: self.fsmVars,
                 state: state
             )

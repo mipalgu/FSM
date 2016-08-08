@@ -68,10 +68,10 @@ public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
     public typealias _StateType = State
 
-    public var vars: S
+    public var globals: S
 
-    public init(vars: S) {
-        self.vars = vars
+    public init(globals: S) {
+        self.globals = globals
     }
     
     /**
@@ -100,11 +100,11 @@ public class MiPalRinglet<S: Snapshotable>: Ringlet {
     }
 
     internal func takeSnapshot() {
-        self.vars.takeSnapshot()
+        self.globals.takeSnapshot()
     }
 
     internal func saveSnapshot() {
-        self.vars.saveSnapshot()
+        self.globals.saveSnapshot()
     }
     
 }

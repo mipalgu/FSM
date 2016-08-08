@@ -59,7 +59,7 @@
 public class MiPalRingletFactory {
 
     public static func make() -> MiPalRinglet<EmptySnapshotable> {
-        return MiPalRinglet(vars: EmptySnapshotable())
+        return MiPalRinglet(globals: EmptySnapshotable())
     }
 
 }

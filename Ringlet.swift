@@ -69,7 +69,7 @@ public protocol Ringlet {
 
     associatedtype SnapshotType: Snapshotable
 
-    var vars: SnapshotType { get }
+    var globals: SnapshotType { get }
     
     /**
      *  Execute a state.

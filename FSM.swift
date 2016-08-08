@@ -113,7 +113,7 @@ public func FSM<G: GlobalVariablesContainer where G: Snapshotable>(
     return FSM(
         name,
         initialState: initialState,
-        ringlet: MiPalRinglet(vars: globals),
+        ringlet: MiPalRinglet(globals: globals),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,
@@ -187,7 +187,7 @@ public func FSM<
     return FSM(
         name,
         initialState: initialState,
-        ringlet: MiPalRinglet(vars: globals),
+        ringlet: MiPalRinglet(globals: globals),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,
