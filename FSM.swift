@@ -205,7 +205,7 @@ public func FSM<R: Ringlet where R._StateType == State>(
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<R, EmptyVariables>(
+        FiniteStateMachine<R>(
             name,
             initialState: initialState,
             ringlet: ringlet,
@@ -227,7 +227,7 @@ public func FSM<R: KripkeRinglet where R._StateType == State>(
     exitState: State = EmptyState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
     return AnyScheduleableFiniteStateMachine(
-        KripkeFiniteStateMachine<R, EmptyVariables>(
+        KripkeFiniteStateMachine<R>(
             name,
             initialState: initialState,
             ringlet: ringlet,

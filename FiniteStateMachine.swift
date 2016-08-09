@@ -90,9 +90,7 @@
  *  
  */
 public struct FiniteStateMachine<
-    R: Ringlet,
-    V: Variables
-    where R._StateType: Transitionable
+    R: Ringlet where R._StateType: Transitionable
 >: FiniteStateMachineType,
     ExitableStateExecuter,
     Restartable,

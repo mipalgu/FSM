@@ -91,9 +91,7 @@
  *  
  */
 public struct KripkeFiniteStateMachine<
-    R: KripkeRinglet,
-    V: Variables
-    where R._StateType: Transitionable
+    R: KripkeRinglet where R._StateType: Transitionable
 >: FiniteStateMachineType,
     ExitableStateExecuter,
     Restartable,
