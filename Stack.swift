@@ -92,9 +92,9 @@ public struct Stack<T> {
 
 extension Stack: Sequence {
 
-    public typealias Generator = Stack 
+    public typealias Iterator = Stack 
 
-    public func generate() -> Stack<Element> {
+    public func makeIterator() -> Stack<Element> {
         return self
     }
 
