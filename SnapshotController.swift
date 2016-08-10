@@ -90,14 +90,7 @@ public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariabl
     }
 
     public func takeSnapshot() {
-        let now = self.now()
-        if (now == Time.min) {
-            if let v = self.behaviour.at(now) {
-                self.val = v
-            }
-            return
-        }
-        if let v = self.behaviour.at(self.now() - 1) {
+        if let v = self.behaviour.at(self.now()) {
             self.val = v
         }
     }

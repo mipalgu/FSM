@@ -91,11 +91,10 @@ public func trigger<T: GlobalVariables>(
             return nil
         }
         // Fetch the value.
-        let i: Int = Int((t + Time(wb.nextIndex)) % generations)
+        let i: Int = Int(0 == t ? 0 : t % generations)
         let v: T = wb.messages[i] 
         let _ = wb.vacate()
         return v
     }
-    var now: Time = Time.min
-    return (b, { now = now + 1; wb.post(val: $0) }, { now })
+    return (b, { wb.post(val: $0) }, { Time(wb.eventCount) })
 }
