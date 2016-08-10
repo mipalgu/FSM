@@ -61,7 +61,7 @@ public func trigger<T: GlobalVariables>(
     wbd: Whiteboard = Whiteboard(),
     atomic: Bool = true,
     shouldNotifySubscribers: Bool = true
-) -> (Behaviour<T?>, (T) -> Void) {
+) -> (Behaviour<T?>, (T) -> Void, () -> Time) {
     let wb: GenericWhiteboard = GenericWhiteboard<T>(
         msgType: type,
         wb: wbd,
@@ -96,5 +96,6 @@ public func trigger<T: GlobalVariables>(
         let _ = wb.vacate()
         return v
     }
-    return (b, wb.post)
+    var now: Time = Time.min
+    return (b, { now = now + 1; wb.post(val: $0) }, { now })
 }

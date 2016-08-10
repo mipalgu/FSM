@@ -60,19 +60,29 @@ public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariabl
 
     public typealias Class = T 
     
-    private let behaviour: Behaviour<Class>
+    private let behaviour: Behaviour<Class?>
 
     private let now: () -> Time
 
     private let post: (Class) -> Void
 
-    public var val: Class 
+    public var val: Class
 
-    public init(b: Behaviour<Class>, now: () -> Time, post: (Class) -> Void) {
+    public init(b: Behaviour<Class?>, post: (Class) -> Void, now: () -> Time)  {
         self.behaviour = b
         self.now = now
         self.post = post
-        self.val = b.at(now())
+        if let v = b.at(now()) {
+            self.val = v
+        } else {
+            self.val = Class()
+        }
+    }
+
+    public convenience init(
+        _ t: (Behaviour<Class?>, (Class) -> Void, () -> Time)
+    ) {
+        self.init(b: t.0, post: t.1, now: t.2)
     }
 
     public func saveSnapshot() {
@@ -80,6 +90,15 @@ public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariabl
     }
 
     public func takeSnapshot() {
-        self.val = self.behaviour.at(self.now())
+        let now = self.now()
+        if (now == Time.min) {
+            if let v = self.behaviour.at(now) {
+                self.val = v
+            }
+            return
+        }
+        if let v = self.behaviour.at(self.now() - 1) {
+            self.val = v
+        }
     }
 }

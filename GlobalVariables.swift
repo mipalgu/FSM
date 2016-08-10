@@ -56,4 +56,8 @@
  *
  */
 
-public protocol GlobalVariables: Equatable {}
+public protocol GlobalVariables: Equatable {
+
+    init()
+
+}
