@@ -7,6 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F236047C1D5C6A2700A33322 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604341D5C6A2700A33322 /* aliases.swift */; };
+		F236047D1D5C6A2700A33322 /* AnyScheduleableFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604351D5C6A2700A33322 /* AnyScheduleableFiniteStateMachine.swift */; };
+		F236047E1D5C6A2700A33322 /* AnyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604361D5C6A2700A33322 /* AnyState.swift */; };
+		F236047F1D5C6A2700A33322 /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604371D5C6A2700A33322 /* Behaviour.swift */; };
+		F23604801D5C6A2700A33322 /* CallbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604381D5C6A2700A33322 /* CallbackState.swift */; };
+		F23604811D5C6A2700A33322 /* CArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604391D5C6A2700A33322 /* CArray.swift */; };
+		F23604821D5C6A2700A33322 /* ConvertibleCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236043A1D5C6A2700A33322 /* ConvertibleCArray.swift */; };
+		F23604831D5C6A2700A33322 /* EmptyGlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236043B1D5C6A2700A33322 /* EmptyGlobalVariablesContainer.swift */; };
+		F23604841D5C6A2700A33322 /* EmptySnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236043C1D5C6A2700A33322 /* EmptySnapshotable.swift */; };
+		F23604851D5C6A2700A33322 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236043D1D5C6A2700A33322 /* EmptyState.swift */; };
+		F23604861D5C6A2700A33322 /* EmptyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236043E1D5C6A2700A33322 /* EmptyVariables.swift */; };
+		F23604871D5C6A2700A33322 /* Exitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236043F1D5C6A2700A33322 /* Exitable.swift */; };
+		F23604881D5C6A2700A33322 /* ExitableStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604401D5C6A2700A33322 /* ExitableStateExecuter.swift */; };
+		F23604891D5C6A2700A33322 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604411D5C6A2700A33322 /* Factories.swift */; };
+		F236048A1D5C6A2700A33322 /* Finishable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604421D5C6A2700A33322 /* Finishable.swift */; };
+		F236048B1D5C6A2700A33322 /* FiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604431D5C6A2700A33322 /* FiniteStateMachine.swift */; };
+		F236048C1D5C6A2700A33322 /* FiniteStateMachineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604441D5C6A2700A33322 /* FiniteStateMachineType.swift */; };
+		F236048D1D5C6A2700A33322 /* FSM-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = F23604451D5C6A2700A33322 /* FSM-Bridging-Header.h */; };
+		F236048E1D5C6A2700A33322 /* FSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604461D5C6A2700A33322 /* FSM.swift */; };
+		F236048F1D5C6A2700A33322 /* FunctionalArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236044A1D5C6A2700A33322 /* FunctionalArray.swift */; };
+		F23604901D5C6A2700A33322 /* FunctionalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236044B1D5C6A2700A33322 /* FunctionalOperators.swift */; };
+		F23604911D5C6A2700A33322 /* FunctionalOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236044C1D5C6A2700A33322 /* FunctionalOptional.swift */; };
+		F23604921D5C6A2700A33322 /* FunctionalSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236044D1D5C6A2700A33322 /* FunctionalSequence.swift */; };
+		F23604931D5C6A2700A33322 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236044E1D5C6A2700A33322 /* GenericWhiteboard.swift */; };
+		F23604941D5C6A2700A33322 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236044F1D5C6A2700A33322 /* globals.swift */; };
+		F23604951D5C6A2700A33322 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604501D5C6A2700A33322 /* GlobalVariables.swift */; };
+		F23604961D5C6A2700A33322 /* GlobalVariablesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604511D5C6A2700A33322 /* GlobalVariablesCollection.swift */; };
+		F23604971D5C6A2700A33322 /* GlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604521D5C6A2700A33322 /* GlobalVariablesContainer.swift */; };
+		F23604981D5C6A2700A33322 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604541D5C6A2700A33322 /* Identifiable.swift */; };
+		F23604991D5C6A2700A33322 /* KripkeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604561D5C6A2700A33322 /* KripkeCollection.swift */; };
+		F236049A1D5C6A2700A33322 /* KripkeFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604571D5C6A2700A33322 /* KripkeFiniteStateMachine.swift */; };
+		F236049B1D5C6A2700A33322 /* KripkeMiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604581D5C6A2700A33322 /* KripkeMiPalRinglet.swift */; };
+		F236049C1D5C6A2700A33322 /* KripkeMiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604591D5C6A2700A33322 /* KripkeMiPalRingletFactory.swift */; };
+		F236049D1D5C6A2700A33322 /* KripkeRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236045A1D5C6A2700A33322 /* KripkeRinglet.swift */; };
+		F236049E1D5C6A2700A33322 /* KripkeStateProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236045B1D5C6A2700A33322 /* KripkeStateProperty.swift */; };
+		F236049F1D5C6A2700A33322 /* KripkeStatePropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236045C1D5C6A2700A33322 /* KripkeStatePropertyList.swift */; };
+		F23604A01D5C6A2700A33322 /* KripkeStatePropertyTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236045D1D5C6A2700A33322 /* KripkeStatePropertyTypes.swift */; };
+		F23604A11D5C6A2700A33322 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = F236045E1D5C6A2700A33322 /* Makefile */; };
+		F23604A21D5C6A2700A33322 /* MiPalActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236045F1D5C6A2700A33322 /* MiPalActions.swift */; };
+		F23604A31D5C6A2700A33322 /* MiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604601D5C6A2700A33322 /* MiPalRinglet.swift */; };
+		F23604A41D5C6A2700A33322 /* MiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604611D5C6A2700A33322 /* MiPalRingletFactory.swift */; };
+		F23604A51D5C6A2700A33322 /* MirrorPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604621D5C6A2700A33322 /* MirrorPropertyExtractor.swift */; };
+		F23604A61D5C6A2700A33322 /* MutableSnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604631D5C6A2700A33322 /* MutableSnapshotable.swift */; };
+		F23604A71D5C6A2700A33322 /* OptimizedStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604641D5C6A2700A33322 /* OptimizedStateExecuter.swift */; };
+		F23604A81D5C6A2700A33322 /* PropertiesExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604651D5C6A2700A33322 /* PropertiesExtractor.swift */; };
+		F23604A91D5C6A2700A33322 /* Restartable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604661D5C6A2700A33322 /* Restartable.swift */; };
+		F23604AA1D5C6A2700A33322 /* Resumeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604671D5C6A2700A33322 /* Resumeable.swift */; };
+		F23604AB1D5C6A2700A33322 /* Ringlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604681D5C6A2700A33322 /* Ringlet.swift */; };
+		F23604AC1D5C6A2700A33322 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604691D5C6A2700A33322 /* Snapshotable.swift */; };
+		F23604AD1D5C6A2700A33322 /* SnapshotCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236046A1D5C6A2700A33322 /* SnapshotCollectionController.swift */; };
+		F23604AE1D5C6A2700A33322 /* SnapshotContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236046B1D5C6A2700A33322 /* SnapshotContainer.swift */; };
+		F23604AF1D5C6A2700A33322 /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236046C1D5C6A2700A33322 /* SnapshotController.swift */; };
+		F23604B01D5C6A2700A33322 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236046D1D5C6A2700A33322 /* Stack.swift */; };
+		F23604B11D5C6A2700A33322 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236046E1D5C6A2700A33322 /* State.swift */; };
+		F23604B21D5C6A2700A33322 /* StateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236046F1D5C6A2700A33322 /* StateContainer.swift */; };
+		F23604B31D5C6A2700A33322 /* StateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604701D5C6A2700A33322 /* StateExecuter.swift */; };
+		F23604B41D5C6A2700A33322 /* StateExecuterDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604711D5C6A2700A33322 /* StateExecuterDelegator.swift */; };
+		F23604B51D5C6A2700A33322 /* StateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604721D5C6A2700A33322 /* StateType.swift */; };
+		F23604B61D5C6A2700A33322 /* Suspendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604731D5C6A2700A33322 /* Suspendable.swift */; };
+		F23604B71D5C6A2700A33322 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604741D5C6A2700A33322 /* Transition.swift */; };
+		F23604B81D5C6A2700A33322 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604751D5C6A2700A33322 /* Transitionable.swift */; };
+		F23604B91D5C6A2700A33322 /* TransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604761D5C6A2700A33322 /* TransitionType.swift */; };
+		F23604BA1D5C6A2700A33322 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604771D5C6A2700A33322 /* Variables.swift */; };
+		F23604BB1D5C6A2700A33322 /* VariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604781D5C6A2700A33322 /* VariablesContainer.swift */; };
+		F23604BC1D5C6A2700A33322 /* Whiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23604791D5C6A2700A33322 /* Whiteboard.swift */; };
+		F23604BD1D5C6A2700A33322 /* WhiteboardBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236047A1D5C6A2700A33322 /* WhiteboardBehaviour.swift */; };
+		F23604BE1D5C6A2700A33322 /* WhiteboardCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236047B1D5C6A2700A33322 /* WhiteboardCollection.swift */; };
 		F2A59C991CF830D600E218C3 /* libFSM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F2B159611CF42A9700D43564 /* libFSM.dylib */; };
 		F2A59CAB1CF8311B00E218C3 /* BehaviourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */; };
 		F2A59CAC1CF8311B00E218C3 /* CArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */; };
@@ -16,50 +83,6 @@
 		F2A59CB01CF8311B00E218C3 /* GenericWhiteboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */; };
 		F2A59CB11CF8311B00E218C3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2A59CA61CF8311B00E218C3 /* Info.plist */; };
 		F2A59CB41CF8311B00E218C3 /* WhiteboardBehaviourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */; };
-		F2B159951CF42B0700D43564 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159681CF42B0700D43564 /* aliases.swift */; };
-		F2B159961CF42B0700D43564 /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159691CF42B0700D43564 /* Behaviour.swift */; };
-		F2B159971CF42B0700D43564 /* CallbackState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596A1CF42B0700D43564 /* CallbackState.swift */; };
-		F2B159981CF42B0700D43564 /* CArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596B1CF42B0700D43564 /* CArray.swift */; };
-		F2B159991CF42B0700D43564 /* ConvertibleCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596C1CF42B0700D43564 /* ConvertibleCArray.swift */; };
-		F2B1599A1CF42B0700D43564 /* EmptySnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596D1CF42B0700D43564 /* EmptySnapshotable.swift */; };
-		F2B1599B1CF42B0700D43564 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596E1CF42B0700D43564 /* EmptyState.swift */; };
-		F2B1599C1CF42B0700D43564 /* EmptyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1596F1CF42B0700D43564 /* EmptyVariables.swift */; };
-		F2B1599D1CF42B0700D43564 /* Exitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159701CF42B0700D43564 /* Exitable.swift */; };
-		F2B1599E1CF42B0700D43564 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159711CF42B0700D43564 /* Factories.swift */; };
-		F2B1599F1CF42B0700D43564 /* FiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159721CF42B0700D43564 /* FiniteStateMachine.swift */; };
-		F2B159A11CF42B0700D43564 /* FunctionalArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159741CF42B0700D43564 /* FunctionalArray.swift */; };
-		F2B159A21CF42B0700D43564 /* FunctionalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159751CF42B0700D43564 /* FunctionalOperators.swift */; };
-		F2B159A31CF42B0700D43564 /* FunctionalOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159761CF42B0700D43564 /* FunctionalOptional.swift */; };
-		F2B159A41CF42B0700D43564 /* FunctionalSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159771CF42B0700D43564 /* FunctionalSequence.swift */; };
-		F2B159A51CF42B0700D43564 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159781CF42B0700D43564 /* GenericWhiteboard.swift */; };
-		F2B159A61CF42B0700D43564 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159791CF42B0700D43564 /* globals.swift */; };
-		F2B159A71CF42B0700D43564 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597A1CF42B0700D43564 /* GlobalVariables.swift */; };
-		F2B159A81CF42B0700D43564 /* GlobalVariablesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597B1CF42B0700D43564 /* GlobalVariablesCollection.swift */; };
-		F2B159A91CF42B0700D43564 /* GlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597C1CF42B0700D43564 /* GlobalVariablesContainer.swift */; };
-		F2B159AA1CF42B0700D43564 /* KripkeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597D1CF42B0700D43564 /* KripkeCollection.swift */; };
-		F2B159AB1CF42B0700D43564 /* KripkeMiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597E1CF42B0700D43564 /* KripkeMiPalRinglet.swift */; };
-		F2B159AC1CF42B0700D43564 /* KripkeRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1597F1CF42B0700D43564 /* KripkeRinglet.swift */; };
-		F2B159AD1CF42B0700D43564 /* MiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159801CF42B0700D43564 /* MiPalRinglet.swift */; };
-		F2B159AE1CF42B0700D43564 /* MutableSnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159811CF42B0700D43564 /* MutableSnapshotable.swift */; };
-		F2B159AF1CF42B0700D43564 /* OptimizedStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159821CF42B0700D43564 /* OptimizedStateExecuter.swift */; };
-		F2B159B01CF42B0700D43564 /* Restartable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159831CF42B0700D43564 /* Restartable.swift */; };
-		F2B159B11CF42B0700D43564 /* Resumeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159841CF42B0700D43564 /* Resumeable.swift */; };
-		F2B159B21CF42B0700D43564 /* Ringlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159851CF42B0700D43564 /* Ringlet.swift */; };
-		F2B159B31CF42B0700D43564 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159861CF42B0700D43564 /* Snapshotable.swift */; };
-		F2B159B41CF42B0700D43564 /* SnapshotCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159871CF42B0700D43564 /* SnapshotCollectionController.swift */; };
-		F2B159B51CF42B0700D43564 /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159881CF42B0700D43564 /* SnapshotController.swift */; };
-		F2B159B61CF42B0700D43564 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159891CF42B0700D43564 /* Stack.swift */; };
-		F2B159B71CF42B0700D43564 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598A1CF42B0700D43564 /* State.swift */; };
-		F2B159B81CF42B0700D43564 /* StateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598B1CF42B0700D43564 /* StateExecuter.swift */; };
-		F2B159B91CF42B0700D43564 /* StateMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598C1CF42B0700D43564 /* StateMethods.swift */; };
-		F2B159BA1CF42B0700D43564 /* Suspendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598D1CF42B0700D43564 /* Suspendable.swift */; };
-		F2B159BB1CF42B0700D43564 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598E1CF42B0700D43564 /* Transition.swift */; };
-		F2B159BC1CF42B0700D43564 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B1598F1CF42B0700D43564 /* Transitionable.swift */; };
-		F2B159BD1CF42B0700D43564 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159901CF42B0700D43564 /* Variables.swift */; };
-		F2B159BE1CF42B0700D43564 /* VariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159911CF42B0700D43564 /* VariablesContainer.swift */; };
-		F2B159BF1CF42B0700D43564 /* Whiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159921CF42B0700D43564 /* Whiteboard.swift */; };
-		F2B159C01CF42B0700D43564 /* WhiteboardBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159931CF42B0700D43564 /* WhiteboardBehaviour.swift */; };
-		F2B159C11CF42B0700D43564 /* WhiteboardCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */; };
 		F2B159E01CF5509700D43564 /* gusimplewhiteboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */; };
 		F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */; };
 /* End PBXBuildFile section */
@@ -75,6 +98,76 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F23604341D5C6A2700A33322 /* aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aliases.swift; sourceTree = "<group>"; };
+		F23604351D5C6A2700A33322 /* AnyScheduleableFiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyScheduleableFiniteStateMachine.swift; sourceTree = "<group>"; };
+		F23604361D5C6A2700A33322 /* AnyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyState.swift; sourceTree = "<group>"; };
+		F23604371D5C6A2700A33322 /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
+		F23604381D5C6A2700A33322 /* CallbackState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackState.swift; sourceTree = "<group>"; };
+		F23604391D5C6A2700A33322 /* CArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CArray.swift; sourceTree = "<group>"; };
+		F236043A1D5C6A2700A33322 /* ConvertibleCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertibleCArray.swift; sourceTree = "<group>"; };
+		F236043B1D5C6A2700A33322 /* EmptyGlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyGlobalVariablesContainer.swift; sourceTree = "<group>"; };
+		F236043C1D5C6A2700A33322 /* EmptySnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySnapshotable.swift; sourceTree = "<group>"; };
+		F236043D1D5C6A2700A33322 /* EmptyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
+		F236043E1D5C6A2700A33322 /* EmptyVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyVariables.swift; sourceTree = "<group>"; };
+		F236043F1D5C6A2700A33322 /* Exitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exitable.swift; sourceTree = "<group>"; };
+		F23604401D5C6A2700A33322 /* ExitableStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitableStateExecuter.swift; sourceTree = "<group>"; };
+		F23604411D5C6A2700A33322 /* Factories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
+		F23604421D5C6A2700A33322 /* Finishable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Finishable.swift; sourceTree = "<group>"; };
+		F23604431D5C6A2700A33322 /* FiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiniteStateMachine.swift; sourceTree = "<group>"; };
+		F23604441D5C6A2700A33322 /* FiniteStateMachineType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiniteStateMachineType.swift; sourceTree = "<group>"; };
+		F23604451D5C6A2700A33322 /* FSM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM-Bridging-Header.h"; sourceTree = "<group>"; };
+		F23604461D5C6A2700A33322 /* FSM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSM.swift; sourceTree = "<group>"; };
+		F23604471D5C6A2700A33322 /* FSM.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = FSM.xcodeproj; sourceTree = "<group>"; };
+		F236044A1D5C6A2700A33322 /* FunctionalArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalArray.swift; sourceTree = "<group>"; };
+		F236044B1D5C6A2700A33322 /* FunctionalOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOperators.swift; sourceTree = "<group>"; };
+		F236044C1D5C6A2700A33322 /* FunctionalOptional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOptional.swift; sourceTree = "<group>"; };
+		F236044D1D5C6A2700A33322 /* FunctionalSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalSequence.swift; sourceTree = "<group>"; };
+		F236044E1D5C6A2700A33322 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWhiteboard.swift; sourceTree = "<group>"; };
+		F236044F1D5C6A2700A33322 /* globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
+		F23604501D5C6A2700A33322 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
+		F23604511D5C6A2700A33322 /* GlobalVariablesCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesCollection.swift; sourceTree = "<group>"; };
+		F23604521D5C6A2700A33322 /* GlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesContainer.swift; sourceTree = "<group>"; };
+		F23604531D5C6A2700A33322 /* GNUmakefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GNUmakefile; sourceTree = "<group>"; };
+		F23604541D5C6A2700A33322 /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		F23604551D5C6A2700A33322 /* jazzy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jazzy.json; sourceTree = "<group>"; };
+		F23604561D5C6A2700A33322 /* KripkeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeCollection.swift; sourceTree = "<group>"; };
+		F23604571D5C6A2700A33322 /* KripkeFiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeFiniteStateMachine.swift; sourceTree = "<group>"; };
+		F23604581D5C6A2700A33322 /* KripkeMiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeMiPalRinglet.swift; sourceTree = "<group>"; };
+		F23604591D5C6A2700A33322 /* KripkeMiPalRingletFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeMiPalRingletFactory.swift; sourceTree = "<group>"; };
+		F236045A1D5C6A2700A33322 /* KripkeRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRinglet.swift; sourceTree = "<group>"; };
+		F236045B1D5C6A2700A33322 /* KripkeStateProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStateProperty.swift; sourceTree = "<group>"; };
+		F236045C1D5C6A2700A33322 /* KripkeStatePropertyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertyList.swift; sourceTree = "<group>"; };
+		F236045D1D5C6A2700A33322 /* KripkeStatePropertyTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertyTypes.swift; sourceTree = "<group>"; };
+		F236045E1D5C6A2700A33322 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		F236045F1D5C6A2700A33322 /* MiPalActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalActions.swift; sourceTree = "<group>"; };
+		F23604601D5C6A2700A33322 /* MiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalRinglet.swift; sourceTree = "<group>"; };
+		F23604611D5C6A2700A33322 /* MiPalRingletFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalRingletFactory.swift; sourceTree = "<group>"; };
+		F23604621D5C6A2700A33322 /* MirrorPropertyExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MirrorPropertyExtractor.swift; sourceTree = "<group>"; };
+		F23604631D5C6A2700A33322 /* MutableSnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableSnapshotable.swift; sourceTree = "<group>"; };
+		F23604641D5C6A2700A33322 /* OptimizedStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizedStateExecuter.swift; sourceTree = "<group>"; };
+		F23604651D5C6A2700A33322 /* PropertiesExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertiesExtractor.swift; sourceTree = "<group>"; };
+		F23604661D5C6A2700A33322 /* Restartable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restartable.swift; sourceTree = "<group>"; };
+		F23604671D5C6A2700A33322 /* Resumeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resumeable.swift; sourceTree = "<group>"; };
+		F23604681D5C6A2700A33322 /* Ringlet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ringlet.swift; sourceTree = "<group>"; };
+		F23604691D5C6A2700A33322 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
+		F236046A1D5C6A2700A33322 /* SnapshotCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotCollectionController.swift; sourceTree = "<group>"; };
+		F236046B1D5C6A2700A33322 /* SnapshotContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotContainer.swift; sourceTree = "<group>"; };
+		F236046C1D5C6A2700A33322 /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
+		F236046D1D5C6A2700A33322 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		F236046E1D5C6A2700A33322 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		F236046F1D5C6A2700A33322 /* StateContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateContainer.swift; sourceTree = "<group>"; };
+		F23604701D5C6A2700A33322 /* StateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateExecuter.swift; sourceTree = "<group>"; };
+		F23604711D5C6A2700A33322 /* StateExecuterDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateExecuterDelegator.swift; sourceTree = "<group>"; };
+		F23604721D5C6A2700A33322 /* StateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateType.swift; sourceTree = "<group>"; };
+		F23604731D5C6A2700A33322 /* Suspendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suspendable.swift; sourceTree = "<group>"; };
+		F23604741D5C6A2700A33322 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		F23604751D5C6A2700A33322 /* Transitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitionable.swift; sourceTree = "<group>"; };
+		F23604761D5C6A2700A33322 /* TransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionType.swift; sourceTree = "<group>"; };
+		F23604771D5C6A2700A33322 /* Variables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
+		F23604781D5C6A2700A33322 /* VariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesContainer.swift; sourceTree = "<group>"; };
+		F23604791D5C6A2700A33322 /* Whiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Whiteboard.swift; sourceTree = "<group>"; };
+		F236047A1D5C6A2700A33322 /* WhiteboardBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviour.swift; sourceTree = "<group>"; };
+		F236047B1D5C6A2700A33322 /* WhiteboardCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardCollection.swift; sourceTree = "<group>"; };
 		F2A59C941CF830D600E218C3 /* FSMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FSMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A59C981CF830D600E218C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviourTests.swift; sourceTree = "<group>"; };
@@ -89,51 +182,6 @@
 		F2A59CA91CF8311B00E218C3 /* wb_count.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wb_count.h; sourceTree = "<group>"; };
 		F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviourTests.swift; sourceTree = "<group>"; };
 		F2B159611CF42A9700D43564 /* libFSM.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFSM.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2B159681CF42B0700D43564 /* aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aliases.swift; sourceTree = "<group>"; };
-		F2B159691CF42B0700D43564 /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
-		F2B1596A1CF42B0700D43564 /* CallbackState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackState.swift; sourceTree = "<group>"; };
-		F2B1596B1CF42B0700D43564 /* CArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CArray.swift; sourceTree = "<group>"; };
-		F2B1596C1CF42B0700D43564 /* ConvertibleCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertibleCArray.swift; sourceTree = "<group>"; };
-		F2B1596D1CF42B0700D43564 /* EmptySnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySnapshotable.swift; sourceTree = "<group>"; };
-		F2B1596E1CF42B0700D43564 /* EmptyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
-		F2B1596F1CF42B0700D43564 /* EmptyVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyVariables.swift; sourceTree = "<group>"; };
-		F2B159701CF42B0700D43564 /* Exitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exitable.swift; sourceTree = "<group>"; };
-		F2B159711CF42B0700D43564 /* Factories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
-		F2B159721CF42B0700D43564 /* FiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiniteStateMachine.swift; sourceTree = "<group>"; };
-		F2B159731CF42B0700D43564 /* FSM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM-Bridging-Header.h"; sourceTree = "<group>"; };
-		F2B159741CF42B0700D43564 /* FunctionalArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalArray.swift; sourceTree = "<group>"; };
-		F2B159751CF42B0700D43564 /* FunctionalOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOperators.swift; sourceTree = "<group>"; };
-		F2B159761CF42B0700D43564 /* FunctionalOptional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOptional.swift; sourceTree = "<group>"; };
-		F2B159771CF42B0700D43564 /* FunctionalSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalSequence.swift; sourceTree = "<group>"; };
-		F2B159781CF42B0700D43564 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWhiteboard.swift; sourceTree = "<group>"; };
-		F2B159791CF42B0700D43564 /* globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
-		F2B1597A1CF42B0700D43564 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
-		F2B1597B1CF42B0700D43564 /* GlobalVariablesCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesCollection.swift; sourceTree = "<group>"; };
-		F2B1597C1CF42B0700D43564 /* GlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesContainer.swift; sourceTree = "<group>"; };
-		F2B1597D1CF42B0700D43564 /* KripkeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeCollection.swift; sourceTree = "<group>"; };
-		F2B1597E1CF42B0700D43564 /* KripkeMiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeMiPalRinglet.swift; sourceTree = "<group>"; };
-		F2B1597F1CF42B0700D43564 /* KripkeRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRinglet.swift; sourceTree = "<group>"; };
-		F2B159801CF42B0700D43564 /* MiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalRinglet.swift; sourceTree = "<group>"; };
-		F2B159811CF42B0700D43564 /* MutableSnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableSnapshotable.swift; sourceTree = "<group>"; };
-		F2B159821CF42B0700D43564 /* OptimizedStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizedStateExecuter.swift; sourceTree = "<group>"; };
-		F2B159831CF42B0700D43564 /* Restartable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restartable.swift; sourceTree = "<group>"; };
-		F2B159841CF42B0700D43564 /* Resumeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resumeable.swift; sourceTree = "<group>"; };
-		F2B159851CF42B0700D43564 /* Ringlet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ringlet.swift; sourceTree = "<group>"; };
-		F2B159861CF42B0700D43564 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
-		F2B159871CF42B0700D43564 /* SnapshotCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotCollectionController.swift; sourceTree = "<group>"; };
-		F2B159881CF42B0700D43564 /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
-		F2B159891CF42B0700D43564 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		F2B1598A1CF42B0700D43564 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		F2B1598B1CF42B0700D43564 /* StateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateExecuter.swift; sourceTree = "<group>"; };
-		F2B1598C1CF42B0700D43564 /* StateMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateMethods.swift; sourceTree = "<group>"; };
-		F2B1598D1CF42B0700D43564 /* Suspendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suspendable.swift; sourceTree = "<group>"; };
-		F2B1598E1CF42B0700D43564 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
-		F2B1598F1CF42B0700D43564 /* Transitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitionable.swift; sourceTree = "<group>"; };
-		F2B159901CF42B0700D43564 /* Variables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
-		F2B159911CF42B0700D43564 /* VariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesContainer.swift; sourceTree = "<group>"; };
-		F2B159921CF42B0700D43564 /* Whiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Whiteboard.swift; sourceTree = "<group>"; };
-		F2B159931CF42B0700D43564 /* WhiteboardBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviour.swift; sourceTree = "<group>"; };
-		F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardCollection.swift; sourceTree = "<group>"; };
 		F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gusimplewhiteboard.c; path = ../../gusimplewhiteboard/gusimplewhiteboard.c; sourceTree = "<group>"; };
 		F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = guwhiteboardtypelist_c_typestrings_generated.c; path = ../../gusimplewhiteboard/guwhiteboardtypelist_c_typestrings_generated.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +205,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F23604481D5C6A2700A33322 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F2A59C951CF830D600E218C3 /* tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,51 +232,76 @@
 		F2B159581CF42A9700D43564 = {
 			isa = PBXGroup;
 			children = (
-				F2B159681CF42B0700D43564 /* aliases.swift */,
-				F2B159691CF42B0700D43564 /* Behaviour.swift */,
-				F2B1596A1CF42B0700D43564 /* CallbackState.swift */,
-				F2B1596B1CF42B0700D43564 /* CArray.swift */,
-				F2B1596C1CF42B0700D43564 /* ConvertibleCArray.swift */,
-				F2B1596D1CF42B0700D43564 /* EmptySnapshotable.swift */,
-				F2B1596E1CF42B0700D43564 /* EmptyState.swift */,
-				F2B1596F1CF42B0700D43564 /* EmptyVariables.swift */,
-				F2B159701CF42B0700D43564 /* Exitable.swift */,
-				F2B159711CF42B0700D43564 /* Factories.swift */,
-				F2B159721CF42B0700D43564 /* FiniteStateMachine.swift */,
-				F2B159731CF42B0700D43564 /* FSM-Bridging-Header.h */,
-				F2B159741CF42B0700D43564 /* FunctionalArray.swift */,
-				F2B159751CF42B0700D43564 /* FunctionalOperators.swift */,
-				F2B159761CF42B0700D43564 /* FunctionalOptional.swift */,
-				F2B159771CF42B0700D43564 /* FunctionalSequence.swift */,
-				F2B159781CF42B0700D43564 /* GenericWhiteboard.swift */,
-				F2B159791CF42B0700D43564 /* globals.swift */,
-				F2B1597A1CF42B0700D43564 /* GlobalVariables.swift */,
-				F2B1597B1CF42B0700D43564 /* GlobalVariablesCollection.swift */,
-				F2B1597C1CF42B0700D43564 /* GlobalVariablesContainer.swift */,
-				F2B1597D1CF42B0700D43564 /* KripkeCollection.swift */,
-				F2B1597E1CF42B0700D43564 /* KripkeMiPalRinglet.swift */,
-				F2B1597F1CF42B0700D43564 /* KripkeRinglet.swift */,
-				F2B159801CF42B0700D43564 /* MiPalRinglet.swift */,
-				F2B159811CF42B0700D43564 /* MutableSnapshotable.swift */,
-				F2B159821CF42B0700D43564 /* OptimizedStateExecuter.swift */,
-				F2B159831CF42B0700D43564 /* Restartable.swift */,
-				F2B159841CF42B0700D43564 /* Resumeable.swift */,
-				F2B159851CF42B0700D43564 /* Ringlet.swift */,
-				F2B159861CF42B0700D43564 /* Snapshotable.swift */,
-				F2B159871CF42B0700D43564 /* SnapshotCollectionController.swift */,
-				F2B159881CF42B0700D43564 /* SnapshotController.swift */,
-				F2B159891CF42B0700D43564 /* Stack.swift */,
-				F2B1598A1CF42B0700D43564 /* State.swift */,
-				F2B1598B1CF42B0700D43564 /* StateExecuter.swift */,
-				F2B1598C1CF42B0700D43564 /* StateMethods.swift */,
-				F2B1598D1CF42B0700D43564 /* Suspendable.swift */,
-				F2B1598E1CF42B0700D43564 /* Transition.swift */,
-				F2B1598F1CF42B0700D43564 /* Transitionable.swift */,
-				F2B159901CF42B0700D43564 /* Variables.swift */,
-				F2B159911CF42B0700D43564 /* VariablesContainer.swift */,
-				F2B159921CF42B0700D43564 /* Whiteboard.swift */,
-				F2B159931CF42B0700D43564 /* WhiteboardBehaviour.swift */,
-				F2B159941CF42B0700D43564 /* WhiteboardCollection.swift */,
+				F23604341D5C6A2700A33322 /* aliases.swift */,
+				F23604351D5C6A2700A33322 /* AnyScheduleableFiniteStateMachine.swift */,
+				F23604361D5C6A2700A33322 /* AnyState.swift */,
+				F23604371D5C6A2700A33322 /* Behaviour.swift */,
+				F23604381D5C6A2700A33322 /* CallbackState.swift */,
+				F23604391D5C6A2700A33322 /* CArray.swift */,
+				F236043A1D5C6A2700A33322 /* ConvertibleCArray.swift */,
+				F236043B1D5C6A2700A33322 /* EmptyGlobalVariablesContainer.swift */,
+				F236043C1D5C6A2700A33322 /* EmptySnapshotable.swift */,
+				F236043D1D5C6A2700A33322 /* EmptyState.swift */,
+				F236043E1D5C6A2700A33322 /* EmptyVariables.swift */,
+				F236043F1D5C6A2700A33322 /* Exitable.swift */,
+				F23604401D5C6A2700A33322 /* ExitableStateExecuter.swift */,
+				F23604411D5C6A2700A33322 /* Factories.swift */,
+				F23604421D5C6A2700A33322 /* Finishable.swift */,
+				F23604431D5C6A2700A33322 /* FiniteStateMachine.swift */,
+				F23604441D5C6A2700A33322 /* FiniteStateMachineType.swift */,
+				F23604451D5C6A2700A33322 /* FSM-Bridging-Header.h */,
+				F23604461D5C6A2700A33322 /* FSM.swift */,
+				F23604471D5C6A2700A33322 /* FSM.xcodeproj */,
+				F236044A1D5C6A2700A33322 /* FunctionalArray.swift */,
+				F236044B1D5C6A2700A33322 /* FunctionalOperators.swift */,
+				F236044C1D5C6A2700A33322 /* FunctionalOptional.swift */,
+				F236044D1D5C6A2700A33322 /* FunctionalSequence.swift */,
+				F236044E1D5C6A2700A33322 /* GenericWhiteboard.swift */,
+				F236044F1D5C6A2700A33322 /* globals.swift */,
+				F23604501D5C6A2700A33322 /* GlobalVariables.swift */,
+				F23604511D5C6A2700A33322 /* GlobalVariablesCollection.swift */,
+				F23604521D5C6A2700A33322 /* GlobalVariablesContainer.swift */,
+				F23604531D5C6A2700A33322 /* GNUmakefile */,
+				F23604541D5C6A2700A33322 /* Identifiable.swift */,
+				F23604551D5C6A2700A33322 /* jazzy.json */,
+				F23604561D5C6A2700A33322 /* KripkeCollection.swift */,
+				F23604571D5C6A2700A33322 /* KripkeFiniteStateMachine.swift */,
+				F23604581D5C6A2700A33322 /* KripkeMiPalRinglet.swift */,
+				F23604591D5C6A2700A33322 /* KripkeMiPalRingletFactory.swift */,
+				F236045A1D5C6A2700A33322 /* KripkeRinglet.swift */,
+				F236045B1D5C6A2700A33322 /* KripkeStateProperty.swift */,
+				F236045C1D5C6A2700A33322 /* KripkeStatePropertyList.swift */,
+				F236045D1D5C6A2700A33322 /* KripkeStatePropertyTypes.swift */,
+				F236045E1D5C6A2700A33322 /* Makefile */,
+				F236045F1D5C6A2700A33322 /* MiPalActions.swift */,
+				F23604601D5C6A2700A33322 /* MiPalRinglet.swift */,
+				F23604611D5C6A2700A33322 /* MiPalRingletFactory.swift */,
+				F23604621D5C6A2700A33322 /* MirrorPropertyExtractor.swift */,
+				F23604631D5C6A2700A33322 /* MutableSnapshotable.swift */,
+				F23604641D5C6A2700A33322 /* OptimizedStateExecuter.swift */,
+				F23604651D5C6A2700A33322 /* PropertiesExtractor.swift */,
+				F23604661D5C6A2700A33322 /* Restartable.swift */,
+				F23604671D5C6A2700A33322 /* Resumeable.swift */,
+				F23604681D5C6A2700A33322 /* Ringlet.swift */,
+				F23604691D5C6A2700A33322 /* Snapshotable.swift */,
+				F236046A1D5C6A2700A33322 /* SnapshotCollectionController.swift */,
+				F236046B1D5C6A2700A33322 /* SnapshotContainer.swift */,
+				F236046C1D5C6A2700A33322 /* SnapshotController.swift */,
+				F236046D1D5C6A2700A33322 /* Stack.swift */,
+				F236046E1D5C6A2700A33322 /* State.swift */,
+				F236046F1D5C6A2700A33322 /* StateContainer.swift */,
+				F23604701D5C6A2700A33322 /* StateExecuter.swift */,
+				F23604711D5C6A2700A33322 /* StateExecuterDelegator.swift */,
+				F23604721D5C6A2700A33322 /* StateType.swift */,
+				F23604731D5C6A2700A33322 /* Suspendable.swift */,
+				F23604741D5C6A2700A33322 /* Transition.swift */,
+				F23604751D5C6A2700A33322 /* Transitionable.swift */,
+				F23604761D5C6A2700A33322 /* TransitionType.swift */,
+				F23604771D5C6A2700A33322 /* Variables.swift */,
+				F23604781D5C6A2700A33322 /* VariablesContainer.swift */,
+				F23604791D5C6A2700A33322 /* Whiteboard.swift */,
+				F236047A1D5C6A2700A33322 /* WhiteboardBehaviour.swift */,
+				F236047B1D5C6A2700A33322 /* WhiteboardCollection.swift */,
 				F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */,
 				F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */,
 				F2A59C951CF830D600E218C3 /* tests */,
@@ -247,6 +325,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F236048D1D5C6A2700A33322 /* FSM-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +395,12 @@
 			mainGroup = F2B159581CF42A9700D43564;
 			productRefGroup = F2B159621CF42A9700D43564 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F23604481D5C6A2700A33322 /* Products */;
+					ProjectRef = F23604471D5C6A2700A33322 /* FSM.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F2B159601CF42A9700D43564 /* FSM */,
@@ -354,52 +439,74 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2B159A41CF42B0700D43564 /* FunctionalSequence.swift in Sources */,
-				F2B159991CF42B0700D43564 /* ConvertibleCArray.swift in Sources */,
-				F2B159A91CF42B0700D43564 /* GlobalVariablesContainer.swift in Sources */,
-				F2B1599B1CF42B0700D43564 /* EmptyState.swift in Sources */,
-				F2B159BA1CF42B0700D43564 /* Suspendable.swift in Sources */,
-				F2B159971CF42B0700D43564 /* CallbackState.swift in Sources */,
-				F2B159981CF42B0700D43564 /* CArray.swift in Sources */,
+				F23604B41D5C6A2700A33322 /* StateExecuterDelegator.swift in Sources */,
+				F23604A51D5C6A2700A33322 /* MirrorPropertyExtractor.swift in Sources */,
+				F23604961D5C6A2700A33322 /* GlobalVariablesCollection.swift in Sources */,
+				F23604BA1D5C6A2700A33322 /* Variables.swift in Sources */,
+				F23604971D5C6A2700A33322 /* GlobalVariablesContainer.swift in Sources */,
+				F23604B81D5C6A2700A33322 /* Transitionable.swift in Sources */,
+				F23604B11D5C6A2700A33322 /* State.swift in Sources */,
+				F23604831D5C6A2700A33322 /* EmptyGlobalVariablesContainer.swift in Sources */,
+				F236047D1D5C6A2700A33322 /* AnyScheduleableFiniteStateMachine.swift in Sources */,
+				F23604BB1D5C6A2700A33322 /* VariablesContainer.swift in Sources */,
+				F23604A01D5C6A2700A33322 /* KripkeStatePropertyTypes.swift in Sources */,
+				F236048E1D5C6A2700A33322 /* FSM.swift in Sources */,
+				F23604951D5C6A2700A33322 /* GlobalVariables.swift in Sources */,
+				F23604B61D5C6A2700A33322 /* Suspendable.swift in Sources */,
+				F23604811D5C6A2700A33322 /* CArray.swift in Sources */,
+				F23604AF1D5C6A2700A33322 /* SnapshotController.swift in Sources */,
+				F23604B01D5C6A2700A33322 /* Stack.swift in Sources */,
+				F23604901D5C6A2700A33322 /* FunctionalOperators.swift in Sources */,
+				F23604A21D5C6A2700A33322 /* MiPalActions.swift in Sources */,
+				F23604881D5C6A2700A33322 /* ExitableStateExecuter.swift in Sources */,
+				F23604AD1D5C6A2700A33322 /* SnapshotCollectionController.swift in Sources */,
+				F236048C1D5C6A2700A33322 /* FiniteStateMachineType.swift in Sources */,
+				F23604871D5C6A2700A33322 /* Exitable.swift in Sources */,
+				F23604911D5C6A2700A33322 /* FunctionalOptional.swift in Sources */,
+				F23604B21D5C6A2700A33322 /* StateContainer.swift in Sources */,
+				F23604851D5C6A2700A33322 /* EmptyState.swift in Sources */,
+				F23604981D5C6A2700A33322 /* Identifiable.swift in Sources */,
+				F23604B51D5C6A2700A33322 /* StateType.swift in Sources */,
+				F23604A41D5C6A2700A33322 /* MiPalRingletFactory.swift in Sources */,
+				F23604A61D5C6A2700A33322 /* MutableSnapshotable.swift in Sources */,
+				F23604AC1D5C6A2700A33322 /* Snapshotable.swift in Sources */,
+				F23604AE1D5C6A2700A33322 /* SnapshotContainer.swift in Sources */,
+				F236047C1D5C6A2700A33322 /* aliases.swift in Sources */,
+				F23604861D5C6A2700A33322 /* EmptyVariables.swift in Sources */,
+				F23604941D5C6A2700A33322 /* globals.swift in Sources */,
+				F236048F1D5C6A2700A33322 /* FunctionalArray.swift in Sources */,
+				F236049C1D5C6A2700A33322 /* KripkeMiPalRingletFactory.swift in Sources */,
+				F23604841D5C6A2700A33322 /* EmptySnapshotable.swift in Sources */,
+				F236049F1D5C6A2700A33322 /* KripkeStatePropertyList.swift in Sources */,
+				F23604B91D5C6A2700A33322 /* TransitionType.swift in Sources */,
+				F23604A31D5C6A2700A33322 /* MiPalRinglet.swift in Sources */,
+				F236049E1D5C6A2700A33322 /* KripkeStateProperty.swift in Sources */,
+				F23604801D5C6A2700A33322 /* CallbackState.swift in Sources */,
+				F236049A1D5C6A2700A33322 /* KripkeFiniteStateMachine.swift in Sources */,
+				F23604921D5C6A2700A33322 /* FunctionalSequence.swift in Sources */,
+				F23604991D5C6A2700A33322 /* KripkeCollection.swift in Sources */,
+				F23604AA1D5C6A2700A33322 /* Resumeable.swift in Sources */,
+				F23604B71D5C6A2700A33322 /* Transition.swift in Sources */,
+				F23604891D5C6A2700A33322 /* Factories.swift in Sources */,
+				F236049B1D5C6A2700A33322 /* KripkeMiPalRinglet.swift in Sources */,
 				F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */,
-				F2B159C01CF42B0700D43564 /* WhiteboardBehaviour.swift in Sources */,
-				F2B159B91CF42B0700D43564 /* StateMethods.swift in Sources */,
-				F2B1599F1CF42B0700D43564 /* FiniteStateMachine.swift in Sources */,
-				F2B159B51CF42B0700D43564 /* SnapshotController.swift in Sources */,
-				F2B159B01CF42B0700D43564 /* Restartable.swift in Sources */,
-				F2B159B41CF42B0700D43564 /* SnapshotCollectionController.swift in Sources */,
-				F2B159A21CF42B0700D43564 /* FunctionalOperators.swift in Sources */,
-				F2B159A31CF42B0700D43564 /* FunctionalOptional.swift in Sources */,
-				F2B159BB1CF42B0700D43564 /* Transition.swift in Sources */,
-				F2B159A51CF42B0700D43564 /* GenericWhiteboard.swift in Sources */,
-				F2B159BC1CF42B0700D43564 /* Transitionable.swift in Sources */,
-				F2B159B71CF42B0700D43564 /* State.swift in Sources */,
-				F2B1599A1CF42B0700D43564 /* EmptySnapshotable.swift in Sources */,
-				F2B159BD1CF42B0700D43564 /* Variables.swift in Sources */,
-				F2B159951CF42B0700D43564 /* aliases.swift in Sources */,
-				F2B159B81CF42B0700D43564 /* StateExecuter.swift in Sources */,
-				F2B159AF1CF42B0700D43564 /* OptimizedStateExecuter.swift in Sources */,
-				F2B159B61CF42B0700D43564 /* Stack.swift in Sources */,
-				F2B159961CF42B0700D43564 /* Behaviour.swift in Sources */,
-				F2B159AB1CF42B0700D43564 /* KripkeMiPalRinglet.swift in Sources */,
-				F2B159BF1CF42B0700D43564 /* Whiteboard.swift in Sources */,
-				F2B159B11CF42B0700D43564 /* Resumeable.swift in Sources */,
-				F2B159AC1CF42B0700D43564 /* KripkeRinglet.swift in Sources */,
+				F23604A81D5C6A2700A33322 /* PropertiesExtractor.swift in Sources */,
+				F23604A71D5C6A2700A33322 /* OptimizedStateExecuter.swift in Sources */,
+				F236048B1D5C6A2700A33322 /* FiniteStateMachine.swift in Sources */,
+				F23604AB1D5C6A2700A33322 /* Ringlet.swift in Sources */,
+				F23604B31D5C6A2700A33322 /* StateExecuter.swift in Sources */,
+				F23604BC1D5C6A2700A33322 /* Whiteboard.swift in Sources */,
+				F23604BD1D5C6A2700A33322 /* WhiteboardBehaviour.swift in Sources */,
+				F23604BE1D5C6A2700A33322 /* WhiteboardCollection.swift in Sources */,
+				F236047F1D5C6A2700A33322 /* Behaviour.swift in Sources */,
+				F236048A1D5C6A2700A33322 /* Finishable.swift in Sources */,
+				F23604931D5C6A2700A33322 /* GenericWhiteboard.swift in Sources */,
+				F23604821D5C6A2700A33322 /* ConvertibleCArray.swift in Sources */,
 				F2B159E01CF5509700D43564 /* gusimplewhiteboard.c in Sources */,
-				F2B159C11CF42B0700D43564 /* WhiteboardCollection.swift in Sources */,
-				F2B159A71CF42B0700D43564 /* GlobalVariables.swift in Sources */,
-				F2B1599D1CF42B0700D43564 /* Exitable.swift in Sources */,
-				F2B159A81CF42B0700D43564 /* GlobalVariablesCollection.swift in Sources */,
-				F2B1599E1CF42B0700D43564 /* Factories.swift in Sources */,
-				F2B159A11CF42B0700D43564 /* FunctionalArray.swift in Sources */,
-				F2B159A61CF42B0700D43564 /* globals.swift in Sources */,
-				F2B159AD1CF42B0700D43564 /* MiPalRinglet.swift in Sources */,
-				F2B159B21CF42B0700D43564 /* Ringlet.swift in Sources */,
-				F2B159AE1CF42B0700D43564 /* MutableSnapshotable.swift in Sources */,
-				F2B1599C1CF42B0700D43564 /* EmptyVariables.swift in Sources */,
-				F2B159AA1CF42B0700D43564 /* KripkeCollection.swift in Sources */,
-				F2B159B31CF42B0700D43564 /* Snapshotable.swift in Sources */,
-				F2B159BE1CF42B0700D43564 /* VariablesContainer.swift in Sources */,
+				F23604A91D5C6A2700A33322 /* Restartable.swift in Sources */,
+				F23604A11D5C6A2700A33322 /* Makefile in Sources */,
+				F236047E1D5C6A2700A33322 /* AnyState.swift in Sources */,
+				F236049D1D5C6A2700A33322 /* KripkeRinglet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +712,7 @@
 				F2A59C9E1CF830D600E218C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F2B1595C1CF42A9700D43564 /* Build configuration list for PBXProject "FSM" */ = {
 			isa = XCConfigurationList;
