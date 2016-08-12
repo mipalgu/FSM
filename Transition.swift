@@ -56,7 +56,7 @@
  *
  */
 
-public struct Transition<S: State>: TransitionType {
+public struct Transition<S: StateType>: TransitionType {
 
     public typealias Target = S
 
@@ -68,15 +68,15 @@ public struct Transition<S: State>: TransitionType {
         self.target = target
     }
 
-    public func map<S2: State>(_ f: @noescape (S) -> S2) -> Transition<S2> {
+    public func map<S2: StateType>(_ f: @noescape (S) -> S2) -> Transition<S2> {
         return Transition<S2>(f(self.target), self.canTransition)
     }
 
-    public func apply<S2: State>(_ t: Transition<S2>) -> Transition<S> {
+    public func apply<S2: StateType>(_ t: Transition<S2>) -> Transition<S> {
         return Transition(self.target, t.canTransition)
     }
 
-    public func flatMap<S2: State>(
+    public func flatMap<S2: StateType>(
         _ f: @noescape (S) -> Transition<S2>
     ) -> Transition<S2> {
         return f(self.target)
@@ -85,19 +85,19 @@ public struct Transition<S: State>: TransitionType {
 }
 
 public func <^> <
-    T: State, U: State
+    T: StateType, U: StateType
 >(_ f: @noescape (T) -> U, a: Transition<T>) -> Transition<U> {
     return a.map(f)
 }
 
 public func <*> <
-    T: State, U: State
+    T: StateType, U: StateType
 >(_ f: Transition<U>, a: Transition<T>) -> Transition<T> {
     return a.apply(f)
 }
 
 public func >>- <
-    T: State, U: State
+    T: StateType, U: StateType
 >(a: Transition<T>, _ f: @noescape (T) -> Transition<U>) -> Transition<U> {
     return a.flatMap(f)
 }
