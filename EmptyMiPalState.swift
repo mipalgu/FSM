@@ -1,8 +1,8 @@
 /*
- * CallbackState.swift
+ * EmptyMiPalState.swift
  * swiftfsm
  *
- * Created by Callum McColl on 23/08/2015.
+ * Created by Callum McColl on 11/08/2015.
  * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,70 +57,26 @@
  */
 
 /**
- *  Provides a way for developers to pass in the onEntry, main and onExit
- *  methods when initializing a state so that they can more easily create simple
- *  states.
+ *  A state that does nothing.
  *
- *  This class cannot be subclasses.
+ *  Useful if you need an accepting state that does nothing but symbolize the
+ *  end of the FSM.
  */
-public final class CallbackState: State {
+public final class EmptyMiPalState: MiPalState {
     
     /**
-     *  The actual onEntry implementation.
+     *  Does nothing.
      */
-    public let _onEntry: () -> Void
+    public override final func onEntry() {}
     
     /**
-     *  The actual main implementation.
+     *  Does nothing.
      */
-    public let _main: () -> Void
-    
+    public override final func main() {}
+
     /**
-     *  The actual onExit implementation.
+     *  Does nothing.
      */
-    public let _onExit: () -> Void
-    
-    public init(
-        _ name: String,
-        transitions: [Transition<State>] = [],
-        onEntry: () -> Void = {},
-        main: () -> Void = {},
-        onExit: () -> Void = {}
-    ) {
-        self._onEntry = onEntry
-        self._main = main
-        self._onExit = onExit
-        super.init(name, transitions: transitions)
-    }
-    
-    /**
-     *  This method simply calls `_onEntry`.
-     *
-     *  This method cannot be overrided as all `CallbackState`s must use the 
-     *  `_onEntry` property instead.
-     */
-    public override final func onEntry() {
-        self._onEntry()
-    }
-    
-    /**
-     *  This method simply calls `_main`.
-     *
-     *  This method cannot be overrided as all `CallbackState`s must use the
-     *  `_main` property instead.
-     */
-    public override final func main() {
-        self._main()
-    }
-    
-    /**
-     *  This method simply calls `_onExit`.
-     *
-     *  This method cannot be overrided as all `CallbackState`s must use the
-     *  `_onExit` property instead.
-     */
-    public override final func onExit() {
-        self._onExit()
-    }
+    public override final func onExit() {}
     
 }

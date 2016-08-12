@@ -66,7 +66,7 @@
  */
 public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
-    public typealias _StateType = State
+    public typealias _StateType = MiPalState
 
     public var globals: S
 
@@ -79,7 +79,10 @@ public class MiPalRinglet<S: Snapshotable>: Ringlet {
      *
      *  Returns a state representing the next state to execute.
      */
-    public func execute(state: State, previousState: State) -> State {
+    public func execute(
+        state: MiPalState,
+        previousState: MiPalState
+    ) -> MiPalState {
         // Take a snapshot
         self.takeSnapshot()
         // Call onEntry if we have just transitioned to this state. 

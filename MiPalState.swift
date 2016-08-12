@@ -1,5 +1,5 @@
 /*
- * State.swift
+ * MiPalState.swift
  * swiftfsm
  *
  * Created by Callum McColl on 11/08/2015.
@@ -56,7 +56,7 @@
  *
  */
 
-public class State:
+public class MiPalState:
     StateType,
     CustomStringConvertible,
     CustomDebugStringConvertible,
@@ -75,9 +75,9 @@ public class State:
      *  An array of transitions that this state may use to move to another
      *  state.
      */
-    public var transitions: [Transition<State>]
+    public var transitions: [Transition<MiPalState>]
     
-    public init(_ name: String, transitions: [Transition<State>] = []) {
+    public init(_ name: String, transitions: [Transition<MiPalState>] = []) {
         self.name = name
         self.transitions = transitions
     }

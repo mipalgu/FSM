@@ -90,7 +90,10 @@ public class KripkeMiPalRinglet<
      *
      *  Returns a state representing the next state to execute.
      */
-    public override func execute(state: State, previousState: State) -> State {
+    public override func execute(
+        state: MiPalState,
+        previousState: MiPalState
+    ) -> MiPalState {
         self.snapshots = []
         // Take a snapshot
         self.takeSnapshot()
@@ -115,7 +118,7 @@ public class KripkeMiPalRinglet<
         return state
     }
 
-    private func record(state: State) {
+    private func record(state: MiPalState) {
         self.snapshots.append(
             self.extractor.extract(
                 globals: self.globals.val,
@@ -125,7 +128,9 @@ public class KripkeMiPalRinglet<
         )
     }
 
-    private func isValid(forState state: State) -> (Transition<State>) -> Bool {
+    private func isValid(
+        forState state: MiPalState
+    ) -> (Transition<MiPalState>) -> Bool {
         return {
             let valid: Bool = $0.canTransition()
             self.record(state: state)
