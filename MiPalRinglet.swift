@@ -66,8 +66,6 @@
  */
 public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
-    public typealias _StateType = MiPalState
-
     internal var globals: S
 
     internal var previousState: MiPalState
