@@ -64,14 +64,12 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class KripkeMiPalRinglet<
+public final class KripkeMiPalRinglet<
     G: GlobalVariablesContainer,
     V: Variables,
     E: PropertiesExtractor where G: Snapshotable
 > : MiPalRinglet<G>, KripkeRinglet
 {
-
-    public typealias SnapshotType = G
 
     private let extractor: E
 
@@ -79,10 +77,15 @@ public class KripkeMiPalRinglet<
     
     public private(set) var snapshots: [KripkeStatePropertyList] = []
 
-    public init(globals: SnapshotType, fsmVars: V, extractor: E) {
+    public init(
+        globals: G,
+        fsmVars: V,
+        extractor: E,
+        previousState: MiPalState = EmptyMiPalState("_previous")
+    ) {
         self.fsmVars = fsmVars
         self.extractor = extractor
-        super.init(globals: globals)
+        super.init(globals: globals, previousState: previousState)
     }
 
     /**
@@ -91,8 +94,7 @@ public class KripkeMiPalRinglet<
      *  Returns a state representing the next state to execute.
      */
     public override func execute(
-        state: MiPalState,
-        previousState: MiPalState
+        state: MiPalState
     ) -> MiPalState {
         self.snapshots = []
         // Take a snapshot
@@ -103,6 +105,7 @@ public class KripkeMiPalRinglet<
             state.onEntry()
             self.record(state: state)
         }
+        self.previousState = state
         // Can we transition to another state?
         if let t = state.transitions.lazy.filter(self.isValid(forState: state)).first {
             // Yes - Exit state and return the new state.

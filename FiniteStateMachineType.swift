@@ -211,12 +211,8 @@ public extension FiniteStateMachineType where
      *  that is returned from `ringlet.execute` is the next state to execute.
      */
     public mutating func next() {
-        let previous: _StateType = self.previousState
         self.previousState = self.currentState
-        self.currentState = self.ringlet.execute(
-            state: self.currentState,
-            previousState: previous
-        )
+        self.currentState = self.ringlet.execute(state: self.currentState)
     }
     
 }

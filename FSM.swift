@@ -68,7 +68,9 @@ public func FSM(
         return FSM(
             name,
             initialState: initialState,
-            ringlet: KripkeMiPalRingletFactory.make(),
+            ringlet: KripkeMiPalRingletFactory.make(
+                previousState: initialPreviousState
+            ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
@@ -78,7 +80,9 @@ public func FSM(
     return FSM(
         name,
         initialState: initialState,
-        ringlet: MiPalRingletFactory.make(),
+        ringlet: MiPalRingletFactory.make(
+            previousState: initialPreviousState
+        ),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,
@@ -102,7 +106,8 @@ public func FSM<G: GlobalVariablesContainer where G: Snapshotable>(
             ringlet: KripkeMiPalRinglet(
                 globals: globals,
                 fsmVars: EmptyVariables(),
-                extractor: MirrorPropertyExtractor()
+                extractor: MirrorPropertyExtractor(),
+                previousState: initialPreviousState
             ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -113,7 +118,10 @@ public func FSM<G: GlobalVariablesContainer where G: Snapshotable>(
     return FSM(
         name,
         initialState: initialState,
-        ringlet: MiPalRinglet(globals: globals),
+        ringlet: MiPalRinglet(
+            globals: globals,
+            previousState: initialPreviousState
+        ),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,
@@ -137,7 +145,8 @@ public func FSM<V: Variables>(
             ringlet: KripkeMiPalRinglet(
                 globals: EmptyGlobalVariablesContainer(),
                 fsmVars: fsmVars,
-                extractor: MirrorPropertyExtractor()
+                extractor: MirrorPropertyExtractor(),
+                previousState: initialPreviousState
             ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -148,7 +157,9 @@ public func FSM<V: Variables>(
     return FSM(
         name,
         initialState: initialState,
-        ringlet: MiPalRingletFactory.make(),
+        ringlet: MiPalRingletFactory.make(
+            previousState: initialPreviousState
+        ),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,
@@ -176,7 +187,8 @@ public func FSM<
             ringlet: KripkeMiPalRinglet(
                 globals: globals,
                 fsmVars: fsmVars,
-                extractor: MirrorPropertyExtractor()
+                extractor: MirrorPropertyExtractor(),
+                previousState: initialPreviousState
             ),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -187,7 +199,10 @@ public func FSM<
     return FSM(
         name,
         initialState: initialState,
-        ringlet: MiPalRinglet(globals: globals),
+        ringlet: MiPalRinglet(
+            globals: globals,
+            previousState: initialPreviousState
+        ),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,

@@ -68,10 +68,16 @@ public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
     public typealias _StateType = MiPalState
 
-    public var globals: S
+    internal var globals: S
 
-    public init(globals: S) {
+    internal var previousState: MiPalState
+
+    public init(
+        globals: S,
+        previousState: MiPalState = EmptyMiPalState("_previous")
+    ) {
         self.globals = globals
+        self.previousState = previousState
     }
     
     /**
@@ -79,16 +85,14 @@ public class MiPalRinglet<S: Snapshotable>: Ringlet {
      *
      *  Returns a state representing the next state to execute.
      */
-    public func execute(
-        state: MiPalState,
-        previousState: MiPalState
-    ) -> MiPalState {
+    public func execute(state: MiPalState) -> MiPalState {
         // Take a snapshot
         self.takeSnapshot()
         // Call onEntry if we have just transitioned to this state. 
-        if (state != previousState) {
+        if (state != self.previousState) {
             state.onEntry()
         }
+        self.previousState = state
         // Can we transition to another state?
         if let t = state.transitions.lazy.filter({ $0.canTransition() }).first {
             // Yes - Exit state and return the new state.

@@ -58,8 +58,13 @@
 
 public class MiPalRingletFactory {
 
-    public static func make() -> MiPalRinglet<EmptySnapshotable> {
-        return MiPalRinglet(globals: EmptySnapshotable())
+    public static func make(
+        previousState: MiPalState = EmptyMiPalState("_previous")
+    ) -> MiPalRinglet<EmptySnapshotable> {
+        return MiPalRinglet(
+            globals: EmptySnapshotable(),
+            previousState: previousState
+        )
     }
 
 }

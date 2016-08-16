@@ -56,8 +56,4 @@
  *
  */
 
-public protocol KripkeRinglet: Ringlet, SnapshotContainer {
-
-    associatedtype SnapshotType: Snapshotable, GlobalVariablesContainer
-
-}
+public protocol KripkeRinglet: Ringlet, SnapshotContainer {}

@@ -58,7 +58,9 @@
 
 public class KripkeMiPalRingletFactory {
 
-    public static func make()-> KripkeMiPalRinglet<
+    public static func make(
+        previousState: MiPalState = EmptyMiPalState("_previous")
+    )-> KripkeMiPalRinglet<
         EmptyGlobalVariablesContainer,
         EmptyVariables,
         MirrorPropertyExtractor
@@ -66,7 +68,8 @@ public class KripkeMiPalRingletFactory {
         return KripkeMiPalRinglet(
             globals: EmptyGlobalVariablesContainer(),
             fsmVars: EmptyVariables(),
-            extractor: MirrorPropertyExtractor()
+            extractor: MirrorPropertyExtractor(),
+            previousState: previousState
         )
     }
 
