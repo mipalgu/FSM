@@ -96,7 +96,7 @@ public struct CArray<T> {
      */
     public init(first: inout Element, length: Int = 0) {
         self.init(
-            p: withUnsafeMutablePointer(&first, { $0 }),
+            p: withUnsafeMutablePointer(to: &first, { $0 }),
             length: length
         )
     }
