@@ -82,16 +82,16 @@ class WhiteboardBehaviourTests: XCTestCase {
     }
 
     func test_trigger() {
-        let t: (b: Behaviour<wb_count?>, f: (wb_count) -> Void) =
+        let t: (b: Behaviour<wb_count?>, push: (wb_count) -> Void, now: () -> Time) =
             trigger(type: kCount_v)
-        t.f(pure(count: 1))
-        t.f(pure(count: 2))
-        t.f(pure(count: 3))
-        t.f(pure(count: 4))
-        XCTAssertEqual(t.b.at(0), wb_count(count: 1))
-        XCTAssertEqual(t.b.at(1), wb_count(count: 2))
-        XCTAssertEqual(t.b.at(2), wb_count(count: 3))
-        XCTAssertEqual(t.b.at(3), wb_count(count: 4))
+        t.push(wb_count(count: 1))
+        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 1))
+        t.push(wb_count(count: 2))
+        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 2))
+        t.push(wb_count(count: 3))
+        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 3))
+        t.push(wb_count(count: 4))
+        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 4))
     }
 
 }

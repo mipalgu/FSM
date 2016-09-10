@@ -111,13 +111,15 @@ public class GenericWhiteboardTests: XCTestCase {
     public func test_postIncrementsIndex() {
         let i: UInt8 = gwb.currentIndex
         gwb.post(val: wb_count(count: 7))
-        XCTAssertEqual(gwb.currentIndex, i + 1)
+        let j = i + 1
+        XCTAssertEqual(gwb.currentIndex, j)
     }
 
     public func test_postIncrementsEventCount() {
         let e: UInt16 = gwb.eventCount
         gwb.post(val: wb_count(count: 8))
-        XCTAssertEqual(gwb.eventCount, e + 1)
+        let j = e + 1
+        XCTAssertEqual(gwb.eventCount, j)
     }
 
     public func test_messagesStoresTheMessage() {

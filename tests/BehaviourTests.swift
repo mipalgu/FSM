@@ -94,7 +94,7 @@ class BehaviourTests: XCTestCase {
     }
 
     func test_multipleMap() {
-        let f: ([Int]) -> Int = { $0.reduce(0, combine: +) }
+        let f: ([Int]) -> Int = { $0.reduce(0, +) }
         let m: Behaviour<Int> = f <^> [always(1), always(2), always(3), always(4)]
         XCTAssertEqual(10, m.at(1))
     }
