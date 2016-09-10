@@ -167,7 +167,7 @@ public struct Behaviour<T> {
     /// - Returns: The value.
     public let at: (Time) -> T
 
-    private init(at: (Time) -> T) {
+    internal init(at: @escaping (Time) -> T) {
         self.at = at
     }
 
@@ -177,7 +177,7 @@ public struct Behaviour<T> {
     /// - Parameter f: The function to apply to the value.
     ///
     /// - Returns: The new Behaviour.
-    public func map<U>(_ f: (T) -> U) -> Behaviour<U> {
+    public func map<U>(_ f: @escaping (T) -> U) -> Behaviour<U> {
         return pure { (t: Time) -> U in f(self.at(t)) }
     }
 
@@ -198,7 +198,7 @@ public struct Behaviour<T> {
     /// - Parameter f: The function that creates the new Behaviour from a value.
     ///
     /// - Returns: The new Behaviour.
-    public func flatMap<U>(_ f: (T) -> Behaviour<U>) -> Behaviour<U> {
+    public func flatMap<U>(_ f: @escaping (T) -> Behaviour<U>) -> Behaviour<U> {
         return pure { (t: Time) -> U in f(self.at(t)).at(t) }
     }
 
@@ -223,7 +223,7 @@ public func always<T>(_ value: T) -> Behaviour<T> {
 ///
 /// - SeeAlso: `Behaviour`
 /// - SeeAlso: `Time`
-public func pure<T>(_ f: (Time) -> T) -> Behaviour<T> {
+public func pure<T>(_ f: @escaping (Time) -> T) -> Behaviour<T> {
     return Behaviour(at: f)
 }
 
@@ -281,13 +281,13 @@ public func trigger<T>(remember: Int) -> (Behaviour<T?>, (T) -> Void) {
     )
 }
 
-public func <^>
-    <T, U, S: Sequence where S.Iterator.Element == Behaviour<T>>
-(f: ([T]) -> U, s: S) -> Behaviour<U> {
+public func <^> <T, U, S: Sequence>(f: @escaping ([T]) -> U, s: S) -> Behaviour<U> where
+    S.Iterator.Element == Behaviour<T>
+{
     return pure { (t: Time) -> U in f(s.map({ $0.at(t) })) }
 }
 
-public func <^> <T, U>(f: (T) -> U, b: Behaviour<T>) -> Behaviour<U> {
+public func <^> <T, U>(f: @escaping (T) -> U, b: Behaviour<T>) -> Behaviour<U> {
     return b.map(f)
 }
 
@@ -295,19 +295,19 @@ public func <*> <T, U>(f: Behaviour<(T) -> U>, b: Behaviour<T>) -> Behaviour<U> 
     return b.apply(f)
 }
 
-public func >>- <T, U>(b: Behaviour<T>, f: (T) -> Behaviour<U>) -> Behaviour<U> {
+public func >>- <T, U>(b: Behaviour<T>, f: @escaping (T) -> Behaviour<U>) -> Behaviour<U> {
     return b.flatMap(f) 
 }
 
-public func -<< <T, U>(f: (T) -> Behaviour<U>, b: Behaviour<T>) -> Behaviour<U> {
+public func -<< <T, U>(f: @escaping (T) -> Behaviour<U>, b: Behaviour<T>) -> Behaviour<U> {
     return b.flatMap(f)
 }
 
-public func >-> <A, B, C>(f: (A) -> Behaviour<B>, g: (B) -> Behaviour<C>) -> (A) -> Behaviour<C> {
+public func >-> <A, B, C>(f: @escaping (A) -> Behaviour<B>, g: @escaping (B) -> Behaviour<C>) -> (A) -> Behaviour<C> {
     return { (x: A) -> Behaviour<C> in f(x) >>- g }
 }
 
-public func <-< <A, B, C>(f: (B) -> Behaviour<C>, g: (A) -> Behaviour<B>) -> (A) -> Behaviour<C> {
+public func <-< <A, B, C>(f: @escaping (B) -> Behaviour<C>, g: @escaping (A) -> Behaviour<B>) -> (A) -> Behaviour<C> {
     return { (x: A) -> Behaviour<C> in g(x) >>- f }
 }
 
