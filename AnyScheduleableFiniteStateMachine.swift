@@ -132,13 +132,12 @@ public struct AnyScheduleableFiniteStateMachine:
         return self._suspendState()
     }
 
-    public init<
-        FSM: FiniteStateMachineType where
+    public init<FSM: FiniteStateMachineType>(_ base: FSM) where
         FSM: StateExecuter,
         FSM: Finishable,
         FSM: Resumeable,
         FSM: SnapshotContainer
-    >(_ base: FSM) {
+    {
         var base = base
         self._currentState = { AnyState(base.currentState) }
         self._hasFinished = { base.hasFinished }
