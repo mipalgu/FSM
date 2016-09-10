@@ -83,9 +83,9 @@ public final class CallbackMiPalState: MiPalState {
     public init(
         _ name: String,
         transitions: [Transition<MiPalState>] = [],
-        onEntry: () -> Void = {},
-        main: () -> Void = {},
-        onExit: () -> Void = {}
+        onEntry: @escaping () -> Void = {},
+        main: @escaping () -> Void = {},
+        onExit: @escaping () -> Void = {}
     ) {
         self._onEntry = onEntry
         self._main = main
