@@ -39,10 +39,9 @@
  *
  * - returns: A value of type `[U]`
  */
-public func <^> <
-    T, U, S: Sequence
-    where S.Iterator.Element == T
->(f: @noescape (T) -> U, a: S) -> [U] {
+public func <^> <T, U, S: Sequence>(f: (T) -> U, a: S) -> [U] where
+    S.Iterator.Element == T
+{
     return a.map(f)
 }
 
@@ -58,10 +57,9 @@ public func <^> <
  *
  * - returns: A value of type `[U]`
  */
-public func <*> <
-    T, U, S: Sequence
-    where S.Iterator.Element == T
->(fs: [(T) -> U], a: S) -> [U] {
+public func <*> <T, U, S: Sequence>(fs: [(T) -> U], a: S) -> [U] where
+    S.Iterator.Element == T
+{
     return a.apply(fs)
 }
 
@@ -75,10 +73,9 @@ public func <*> <
  *
  * - returns: A value of type `[U]`
  */
-public func >>- <
-    T, U, S: Sequence
-    where S.Iterator.Element == T
->(a: S, f: (T) -> [U]) -> [U] {
+public func >>- <T, U, S: Sequence>(a: S, f: (T) -> [U]) -> [U] where
+    S.Iterator.Element == T
+{
     return a.flatMap(f)
 }
 
@@ -92,10 +89,10 @@ public func >>- <
  *
  * - returns: A value of type `[U]`
  */
-public func -<< <
-    T, U, S: Sequence
-    where S.Iterator.Element == T
->(f: (T) -> [U], a: [T]) -> [U] {
+public func -<< <T, U, S: Sequence>(f: (T) -> [U], a: [T]) -> [U] where
+    S.Iterator.Element == T
+{
+    
   return a.flatMap(f)
 }
 
@@ -110,7 +107,10 @@ public func -<< <
  *
  * - returns: A value of type `[C]`
  */
-public func >-> <A, B, C>(f: (A) -> [B], g: (B) -> [C]) -> (A) -> [C] {
+public func >-> <A, B, C>(
+    f: @escaping (A) -> [B],
+    g: @escaping (B) -> [C]
+) -> (A) -> [C] {
     return { x in f(x) >>- g }
 }
 
@@ -125,7 +125,10 @@ public func >-> <A, B, C>(f: (A) -> [B], g: (B) -> [C]) -> (A) -> [C] {
  *
  * - returns: A value of type `[C]`
  */
-public func <-< <A, B, C>(f: (B) -> [C], g: (A) -> [B]) -> (A) -> [C] {
+public func <-< <A, B, C>(
+    f: @escaping (B) -> [C],
+    g: @escaping (A) -> [B]
+) -> (A) -> [C] {
     return { x in g(x) >>- f }
 }
 
@@ -144,10 +147,9 @@ public extension Sequence {
      *
      * - returns: A value of type `[U]`
      */
-    func apply<
-        U, S: Sequence
-        where S.Iterator.Element == (Self.Iterator.Element) -> U
-    >(_ transform: S) -> [U] {
+    func apply<U, S: Sequence>(_ transform: S) -> [U] where
+        S.Iterator.Element == (Self.Iterator.Element) -> U
+    {
             return transform.flatMap { self.map($0) }
     }
 }
