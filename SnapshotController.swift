@@ -68,7 +68,11 @@ public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariabl
 
     public var val: Class
 
-    public init(b: Behaviour<Class?>, post: (Class) -> Void, now: () -> Time)  {
+    public init(
+        b: Behaviour<Class?>,
+        post: @escaping (Class) -> Void,
+        now: @escaping () -> Time
+    )  {
         self.behaviour = b
         self.now = now
         self.post = post
