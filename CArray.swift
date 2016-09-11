@@ -94,7 +94,7 @@ public struct CArray<T> {
      *      - first: The first element in the array.
      *      - length: The total length of the array.
      */
-    public init(first: inout Element, length: Int = 0) {
+    public init(first: inout Element, length: Int = 1) {
         self.init(
             p: withUnsafeMutablePointer(to: &first, { $0 }),
             length: length
@@ -188,6 +188,9 @@ extension CArray: Collection {
         get {
             return p![i]
         } set {
+            if (i >= self.length) {
+                fatalError("Array index out of bounds")
+            }
             p![i] = newValue
         }
     }
