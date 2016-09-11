@@ -91,13 +91,14 @@
  *  
  */
 public struct KripkeFiniteStateMachine<
-    R: KripkeRinglet where R._StateType: Transitionable
+    R: KripkeRinglet
 >: FiniteStateMachineType,
     ExitableStateExecuter,
     Restartable,
     Resumeable,
     SnapshotContainer,
-    StateExecuterDelegator
+    StateExecuterDelegator where
+    R._StateType: Transitionable
 {
 
     public typealias _StateType = R._StateType
