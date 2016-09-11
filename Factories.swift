@@ -127,7 +127,7 @@ public struct Factories {
      *
      *  - Parameter newElement: The new element to add to the stack.
      */
-    public mutating func push(_ newElement: FSMArrayFactory) {
+    public mutating func push(_ newElement: @escaping FSMArrayFactory) {
         self.factories.push(newElement)
     }
 
