@@ -86,7 +86,7 @@ public struct ConvertibleCArray<From, To> {
     /**
      *  The array that actually stores the `From` data.
      */
-    private var arr: CArray<From>
+    internal var arr: CArray<From>
 
     /**
      *  Create the Convertible CArray from a CArray.
@@ -130,9 +130,9 @@ extension ConvertibleCArray: Sequence {
             if (pos >= self.arr.length || nil == self.arr.p) {
                 return nil
             }
-            let v: Element = UnsafeMutablePointer<Element>(
+            let v: Element = UnsafeRawPointer(
                 self.arr.p!.advanced(by: pos)
-            ).pointee
+            ).bindMemory(to: Element.self, capacity: 1).pointee
             pos = pos + 1
             return v
         }
@@ -179,11 +179,17 @@ extension ConvertibleCArray: Collection {
      */
     public subscript(i: Int) -> Element {
         get {
-            return UnsafeMutablePointer<Element>(self.arr.p!.advanced(by: i)).pointee
+            return UnsafeRawPointer(self.arr.p!.advanced(by: i)).bindMemory(
+                to: Element.self,
+                capacity: 1
+            ).pointee
         } set {
             var newValue: Element = newValue
-            self.arr[i] = withUnsafeMutablePointer(&newValue) {
-                return UnsafeMutablePointer<From>($0).pointee
+            withUnsafeMutablePointer(to: &newValue) {
+                self.arr[i] = UnsafeRawPointer($0).bindMemory(
+                    to: From.self,
+                    capacity: 1
+                ).pointee
             }
         }
     }
