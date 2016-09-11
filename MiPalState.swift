@@ -56,7 +56,7 @@
  *
  */
 
-public class MiPalState:
+open class MiPalState:
     StateType,
     CustomStringConvertible,
     CustomDebugStringConvertible,
@@ -69,7 +69,7 @@ public class MiPalState:
      *
      *  - Requires: Must be unique for each state.
      */
-    public var name: String
+    public let name: String
 
     /**
      *  An array of transitions that this state may use to move to another
@@ -82,9 +82,9 @@ public class MiPalState:
         self.transitions = transitions
     }
 
-    public func onEntry() {}
+    open func onEntry() {}
 
-    public func main() {}
+    open func main() {}
 
-    public func onExit() {}
+    open func onExit() {}
 }
