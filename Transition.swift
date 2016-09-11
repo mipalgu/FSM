@@ -63,12 +63,15 @@ public struct Transition<S: StateType>: TransitionType {
     public let canTransition: () -> Bool
     public let target: Target
 
-    public init(_ target: Target, _ canTransition: () -> Bool = { true }) {
+    public init(
+        _ target: Target,
+        _ canTransition: @escaping () -> Bool = { true }
+    ) {
         self.canTransition = canTransition
         self.target = target
     }
 
-    public func map<S2: StateType>(_ f: @noescape (S) -> S2) -> Transition<S2> {
+    public func map<S2: StateType>(_ f: (S) -> S2) -> Transition<S2> {
         return Transition<S2>(f(self.target), self.canTransition)
     }
 
@@ -77,7 +80,7 @@ public struct Transition<S: StateType>: TransitionType {
     }
 
     public func flatMap<S2: StateType>(
-        _ f: @noescape (S) -> Transition<S2>
+        _ f: (S) -> Transition<S2>
     ) -> Transition<S2> {
         return f(self.target)
     }
@@ -86,7 +89,7 @@ public struct Transition<S: StateType>: TransitionType {
 
 public func <^> <
     T: StateType, U: StateType
->(_ f: @noescape (T) -> U, a: Transition<T>) -> Transition<U> {
+>(_ f: (T) -> U, a: Transition<T>) -> Transition<U> {
     return a.map(f)
 }
 
@@ -98,7 +101,7 @@ public func <*> <
 
 public func >>- <
     T: StateType, U: StateType
->(a: Transition<T>, _ f: @noescape (T) -> Transition<U>) -> Transition<U> {
+>(a: Transition<T>, _ f: (T) -> Transition<U>) -> Transition<U> {
     return a.flatMap(f)
 }
 
