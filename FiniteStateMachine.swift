@@ -89,14 +89,13 @@
  *  `vars`.
  *  
  */
-public struct FiniteStateMachine<
-    R: Ringlet where R._StateType: Transitionable
->: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     ExitableStateExecuter,
     Restartable,
     Resumeable,
     SnapshotContainer,
-    StateExecuterDelegator
+    StateExecuterDelegator where
+    R._StateType: Transitionable
 {
 
     public typealias _StateType = R._StateType
