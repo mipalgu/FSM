@@ -99,15 +99,22 @@ public struct Whiteboard: WhiteboardType {
     public func get<T>(msg: wb_types) -> T {
         let msg: UnsafeMutablePointer<gu_simple_message> =
             gsw_current_message(wb, Int32(msg.rawValue))
-        let msgp = UnsafePointer<T>(msg)
+        let msgp = UnsafeRawPointer(msg).bindMemory(to: T.self, capacity: 1)
         return msgp.pointee
     }
     
     /// post message template function
     public func post<T>(val: T, msg: wb_types) {
         let msgno = Int32(msg.rawValue)
-        let msgp = UnsafeMutablePointer<T>(gsw_next_message(wb, msgno))
-        msgp?.pointee = val
+        let msgp = UnsafeMutablePointer<T>(
+            mutating: UnsafeRawPointer(
+                gsw_next_message(wb, msgno)
+            ).bindMemory(
+                to: T.self,
+                capacity: 1
+            )
+        )
+        msgp.initialize(to: val)
         gsw_increment(wb, msgno)
     }
 }
