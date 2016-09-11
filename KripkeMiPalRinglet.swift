@@ -67,8 +67,8 @@
 public final class KripkeMiPalRinglet<
     G: GlobalVariablesContainer,
     V: Variables,
-    E: PropertiesExtractor where G: Snapshotable
-> : MiPalRinglet<G>, KripkeRinglet
+    E: PropertiesExtractor
+> : MiPalRinglet<G>, KripkeRinglet where G: Snapshotable
 {
 
     private let extractor: E
