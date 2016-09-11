@@ -28,8 +28,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-precedencegroup FunctionalPrecedence {
+precedencegroup LeftFunctionalPrecedence {
     associativity: left
+}
+
+precedencegroup RightFunctionalPrecedence {
+    associativity: right
 }
 
 /**
@@ -37,28 +41,28 @@ precedencegroup FunctionalPrecedence {
  *
  *  Expected function type: `(a -> b) -> f a -> f b`.
  */
-infix operator <^> : FunctionalPrecedence
+infix operator <^> : LeftFunctionalPrecedence
 
 /**
  *  Apply a function with context to a value with context.
  *
  *  Expected function type: `f (a -> b) -> f a -> f b`.
  */
-infix operator <*> : FunctionalPrecedence
+infix operator <*> : LeftFunctionalPrecedence
 
 /**
  *  Map a function over a value with context and flatten the result.
  *
  *  Expected function type: `m a -> (a -> m b) -> m b`.
  */
-infix operator >>- : FunctionalPrecedence
+infix operator >>- : LeftFunctionalPrecedence
 
 /**
  *  Map a function over a value with context and flatten the result.
  *
  *  Expected function type: `(a -> m b) -> m a -> m b`.
  */
-infix operator -<< : FunctionalPrecedence
+infix operator -<< : RightFunctionalPrecedence
 
 /**
  *  Compose two functions that produce results in a context, from left to right,
@@ -66,7 +70,7 @@ infix operator -<< : FunctionalPrecedence
  *
  *  Expected function type: `(a -> m b) -> (b -> m c) -> a -> m c`.
  */
-infix operator >-> : FunctionalPrecedence
+infix operator >-> : LeftFunctionalPrecedence
 
 /**
  *  Compose two functions that produce results in a context, from right to left,
@@ -76,4 +80,4 @@ infix operator >-> : FunctionalPrecedence
  *
  *  Expected function type: `(b -> m c) -> (a -> m b) -> a -> m c`.
  */
-infix operator <-< : FunctionalPrecedence
+infix operator <-< : RightFunctionalPrecedence
