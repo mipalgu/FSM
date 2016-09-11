@@ -80,7 +80,7 @@ public struct KripkeStateProperty: Equatable {
     }
     
     private func equalValues(other: KripkeStateProperty) -> Bool {
-        if (self.value.dynamicType != other.value.dynamicType) {
+        if (type(of: self.value) != type(of: other.value)) {
             return false
         }
         // Cast the values to the correct type and perform the equality check.
