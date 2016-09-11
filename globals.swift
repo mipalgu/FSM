@@ -62,13 +62,14 @@ public var KRIPKE: Bool = false
 
 public var STOP: Bool = false
 
-public func addFactory<
-    FSM: FiniteStateMachineType where
+public func addFactory<FSM: FiniteStateMachineType>(
+    _ f: @escaping () -> [FSM]
+) where
     FSM: StateExecuter,
     FSM: Finishable,
     FSM: Resumeable,
     FSM: SnapshotContainer
->(_ f: () -> [FSM]) {
+{
     var factories: Factories = Factories()
     factories.push({ { AnyScheduleableFiniteStateMachine($0) } <^> f() })
 }
@@ -86,7 +87,7 @@ public func dprint(
     }
 }
 
-public func dprint<Target: OutputStream>(
+public func dprint<Target: TextOutputStream>(
     _ items: Any ...,
     separator: String = " ",
     terminator: String = "\n",
