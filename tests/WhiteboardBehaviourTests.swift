@@ -85,13 +85,13 @@ class WhiteboardBehaviourTests: XCTestCase {
         let t: (b: Behaviour<wb_count?>, push: (wb_count) -> Void, now: () -> Time) =
             trigger(type: kCount_v)
         t.push(wb_count(count: 1))
-        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 1))
+        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 1))
         t.push(wb_count(count: 2))
-        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 2))
+        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 2))
         t.push(wb_count(count: 3))
-        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 3))
+        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 3))
         t.push(wb_count(count: 4))
-        XCTAssertEqual(t.b.at(t.now() - 1), wb_count(count: 4))
+        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 4))
     }
 
 }
