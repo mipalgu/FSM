@@ -129,8 +129,8 @@ public class GenericWhiteboard<T: GlobalVariables> {
     }
 
     public var messages: ConvertibleCArray<gu_simple_message, Message> {
-        return withUnsafeMutablePointer(&self.gsw.pointee.messages.0) {
-            withUnsafeMutablePointer(&$0[self.msgTypeOffset].0) {
+        return withUnsafeMutablePointer(to: &self.gsw.pointee.messages.0) {
+            withUnsafeMutablePointer(to: &$0[self.msgTypeOffset].0) {
                 ConvertibleCArray<gu_simple_message, Message>(
                     arr: CArray<gu_simple_message>(
                         p: $0,
