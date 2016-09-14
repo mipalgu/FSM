@@ -28,6 +28,15 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+public func -<< <T, U>(f: (T) -> U?, a: [T]) -> [U] {
+    return a.flatMap(f)
+
+}
+
+public func >>- <T, U>(a: [T], f: (T) -> U?) -> [U] {
+    return a.flatMap(f)
+}
+
 /**
  *  Wrap a value in a minimal context of `[]`
  *
