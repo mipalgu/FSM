@@ -66,7 +66,7 @@ public class MachineKripkeStructureGenerator<
         self.generators = generators
     }
     
-    public func generate() -> KripkeStructureType {
+    public func generate() -> KripkeStructure {
         var states: [KripkeState] = []
         var jobs: [G] = generators
         while (false == jobs.isEmpty && false == STOP){
