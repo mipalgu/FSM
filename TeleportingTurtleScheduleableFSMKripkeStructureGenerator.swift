@@ -213,3 +213,23 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
     }
 
 }
+        case .Float:
+            return (
+                Float(bitPattern: UInt32.min),
+                {
+                    let num = $0 as! Float
+                    if (num == Float.infinity) {
+                        return Float.infinity.negated()
+                    }
+                    if (num == Float.infinity.negated()) {
+                        return Float.nan
+                    }
+                    if (num == Float.nan) {
+                        return nil
+                    }
+                    if (num.bitPattern == UInt32.max) {
+                        return Float.infinity
+                    }
+                    return Float(bitPattern: num.bitPattern.advanced(by: 1))
+                }
+            )
