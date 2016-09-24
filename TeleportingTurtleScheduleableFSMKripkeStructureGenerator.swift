@@ -171,23 +171,6 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
     private func makeSpinner(
         from ksp: KripkeStateProperty
     ) -> (Any, (Any) -> Any?) {
-        // These spinners are used more than once
-        let uint64Spinner: (Any) -> Any? = {
-                let num = $0 as! UInt64
-                return num == UInt64.max ? nil : num.advanced(by: 1)
-            }
-        let uint32Spinner: (Any) -> Any? = {
-                let num = $0 as! UInt32
-                return num == UInt32.max ? nil : num.advanced(by: 1)
-            }
-        let uintSpinner: (Any) -> Any? = {
-                let num = $0 as! UInt
-                return num == UInt.max ? nil : num.advanced(by: 1)
-            }
-        let floatingPointSignSpinner = {
-                let sign = $0 as! FloatingPointSign
-                return .plus == sign ? nil : .plus
-            }
         switch ksp.type {
         case .Int:
             return (
@@ -230,7 +213,13 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                 }
             )
         case .UInt:
-            return (UInt.min, uintSpinner)
+            return (
+                UInt.min,
+                {
+                    let num = $0 as! UInt
+                    return num == UInt.max ? nil : num.advanced(by: 1)
+                }
+            )
         case .UInt8:
             return (
                 UInt8.min,
@@ -248,26 +237,66 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                 }
             )
         case .UInt32:
-            return (UInt32.min, uint32Spinner)
+            return (
+                UInt32.min,
+                {
+                    let num = $0 as! UInt32
+                    return num == UInt32.max ? nil : num.advanced(by: 1)
+                }
+            )
         case .UInt64:
-            return (UInt64.min, uint64Spinner)
+            return (
+                UInt64.min,
+                {
+                    let num = $0 as! UInt64
+                    return num == UInt64.max ? nil : num.advanced(by: 1)
+                }
+            )
         case .Float:
             return (
-                Float(bitPattern: UInt32.min),
+                Float.infinity.negated(),
                 {
                     let num = $0 as! Float
                     if (num == Float.infinity) {
-                        return Float.infinity.negated()
-                    }
-                    if (num == Float.infinity.negated()) {
                         return Float.nan
                     }
                     if (num == Float.nan) {
                         return nil
                     }
-                    if (num.bitPattern == UInt32.max) {
-                        return Float.infinity
-                    }
-                    return Float(bitPattern: num.bitPattern.advanced(by: 1))
+                    return num.nextUp
                 }
             )
+        case .Float80:
+            return (
+                Float80.infinity.negated(),
+                {
+                    let num = $0 as! Float80
+                    if (Float80.infinity == num) {
+                        return Float80.nan
+                    }
+                    if (Float80.nan == num) {
+                        return nil
+                    }
+                    return num.nextUp
+                }
+            )
+        case .Double:
+            return (
+                Double.infinity.negated(),
+                {
+                    let num = $0 as! Double
+                    if (Double.infinity == num) {
+                        return Double.nan
+                    }
+                    if (Double.nan == num) {
+                        return nil
+                    }
+                    return num.nextUp
+                }
+            )
+        default:
+            return (ksp.value, { _ -> Any? in nil })
+        }
+    }
+
+}
