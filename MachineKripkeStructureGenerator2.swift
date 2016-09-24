@@ -58,6 +58,8 @@
 
 public protocol MachineKripkeStructureGenerator2 {
 
-    func generate(machine: Machine) -> [KripkeStructure]
+    func generate<
+        GC: GlobalVariablesContainer
+    >(machine: Machine, globals: GC) -> [KripkeStructure]
 
 }

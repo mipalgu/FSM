@@ -74,6 +74,10 @@ extension wb_count {
     public init () { 
         self.count = 0 
     } 
+
+    public init(fromDictionary dictionary: [String: Any]) {
+        self.count = dictionary["count"]! as! Int64
+    }
 } 
 
 extension wb_count: CustomStringConvertible { 

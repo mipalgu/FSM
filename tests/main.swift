@@ -64,5 +64,6 @@ XCTMain([
     testCase(FactoriesTests.allTests),
     testCase(FunctionalOptionalTests.allTests),
     testCase(GenericWhiteboardTests.allTests),
+    testCase(SpinnerTests.allTests),
     testCase(WhiteboardBehaviourTests.allTests)
 ])

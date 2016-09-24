@@ -69,6 +69,8 @@ public final class EmptyVariables: Variables, GlobalVariables {
      */
     public init() {}
 
+    public init(fromDictionary dictionary: [String: Any]) {}
+
 }
 
 public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {

@@ -56,7 +56,15 @@
  *
  */
 
-public class MirrorPropertyExtractor: PropertiesExtractor {
+public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtractor {
+
+    public init() {}
+
+    public func extract<GV: GlobalVariables>(
+        globals: GV
+    ) -> [String: KripkeStateProperty] {
+        return self.getPropertiesFromMirror(mirror: Mirror(reflecting: globals))
+    }
 
     public func extract<G: GlobalVariables, F: Variables, S: StateType>(
         globals: G,

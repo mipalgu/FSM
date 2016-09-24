@@ -1,6 +1,6 @@
 /*
- * ScheduleableFSMKripkeStructureGenerator.swift 
- * FSM 
+ * SpinnerTests.swift 
+ * tests 
  *
  * Created by Callum McColl on 24/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
@@ -56,13 +56,85 @@
  *
  */
 
-public protocol ScheduleableFSMKripkeStructureGenerator {
+import XCTest
+@testable import FSM
 
-    func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable
+internal struct SimpleGlobals: GlobalVariables {
+
+    let one: Bool
+
+    let two: UInt8
+
+    let three: Bool
+
+    init() {
+        self.one = false
+        self.two = 0
+        self.three = false
+    }
+
+    init(fromDictionary dictionary: [String: Any]) {
+        self.one = dictionary["one"]! as! Bool
+        self.two = dictionary["two"]! as! UInt8
+        self.three = dictionary["three"]! as! Bool
+    }
+
+}
+
+func ==(lhs: SimpleGlobals, rhs: SimpleGlobals) -> Bool {
+    return lhs.one == rhs.one &&
+        lhs.two == rhs.two &&
+        lhs.three == rhs.three
+}
+
+internal class SimpleContainer<GV: GlobalVariables>: GlobalVariablesContainer, Snapshotable {
+    
+    typealias Class = GV
+
+    public var val: GV
+
+    public init(val: GV) {
+        self.val = val
+    }
+
+    func saveSnapshot() {}
+
+    func takeSnapshot() {}
+
+}
+
+class SpinnerTests: XCTestCase {
+
+    static var allTests: [(String, (SpinnerTests) -> () throws -> Void)] {
+        return [
+            ("test_print", test_print)
+        ]
+    }
+    
+    private var container: SimpleContainer<SimpleGlobals>!
+    private var generator: TeleportingTurtleScheduleableFSMKripkeStructureGenerator<MirrorPropertyExtractor>!
+    private var fsm: FiniteStateMachine<MiPalRinglet<SimpleContainer<SimpleGlobals>>>!
+
+    override func setUp() {
+        self.container = SimpleContainer(val: SimpleGlobals())
+        self.generator = TeleportingTurtleScheduleableFSMKripkeStructureGenerator(
+            extractor: MirrorPropertyExtractor()
+        )
+        let state = CallbackMiPalState("test", onEntry: { print("onEntry") })
+        let ringlet = MiPalRinglet(globals: self.container)
+        self.fsm = FiniteStateMachine(
+            "test_fsm",
+            initialState: state,
+            ringlet: ringlet,
+            initialPreviousState: EmptyMiPalState("_previous"),
+            suspendedState: EmptyMiPalState("_suspendedState"),
+            suspendState: EmptyMiPalState("_suspend"),
+            exitState: EmptyMiPalState("_exit")
+        )
+    }
+
+    func test_print() {
+        let _ = self.generator.generate(fsm: self.fsm, globals: self.container)
+    }
 
 }

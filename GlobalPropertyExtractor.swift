@@ -58,8 +58,8 @@
 
 public protocol GlobalPropertyExtractor {
 
-    func extract<R: Ringlet>(
-        ringlet: R
-    ) -> ([String: KripkeStateProperty], [String: KripkeStateProperty])
+    func extract<GV: GlobalVariables>(
+        globals: GV
+    ) -> [String: KripkeStateProperty]
 
 }

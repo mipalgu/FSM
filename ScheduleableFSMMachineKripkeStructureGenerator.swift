@@ -66,8 +66,12 @@ public class ScheduleableFSMMachineKripkeStructureGenerator<
         self.generator = generator
     }
 
-    public func generate(machine: Machine) -> [KripkeStructure] {
-        return self.generator.generate <^> machine.fsms
+    public func generate<
+        GC: GlobalVariablesContainer
+    >(machine: Machine, globals: GC) -> [KripkeStructure] {
+        return machine.fsms.map {
+            self.generator.generate(fsm: $0, globals: globals)
+        }
     }
 
 }

@@ -57,7 +57,9 @@
  */
 
 public protocol GlobalVariables: Equatable {
-
+    
     init()
+
+    init(fromDictionary: [String: Any])
 
 }
