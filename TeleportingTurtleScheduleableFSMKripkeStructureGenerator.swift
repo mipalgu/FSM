@@ -174,21 +174,54 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
     private func makeSpinner(
         from ksp: KripkeStateProperty
     ) -> (Any, (Any) -> Any?) {
+        // These spinners are used more than once
+        let uint64Spinner: (Any) -> Any? = {
+                let num = $0 as! UInt64
+                return num == UInt64.max ? nil : num.advanced(by: 1)
+            }
+        let uint32Spinner: (Any) -> Any? = {
+                let num = $0 as! UInt32
+                return num == UInt32.max ? nil : num.advanced(by: 1)
+            }
+        let uintSpinner: (Any) -> Any? = {
+                let num = $0 as! UInt
+                return num == UInt.max ? nil : num.advanced(by: 1)
+            }
+        let floatingPointSignSpinner = {
+                let sign = $0 as! FloatingPointSign
+                return .plus == sign ? nil : .plus
+            }
         switch ksp.type {
-        case .UInt:
+        case .Int:
             return (
-                UInt.min,
+                Int.min,
                 {
-                    let num = $0 as! UInt
-                    return num == UInt.max ? nil : num.advanced(by: 1)
+                    let num = $0 as! Int
+                    return num == Int.max ? nil : num.advanced(by: 1)
                 }
             )
-        case .UInt8:
+        case .Int8:
             return (
-                UInt8.min,
+                Int8.min,
                 {
-                    let num = $0 as! UInt8
-                    return num == UInt8.max ? nil : num.advanced(by: 1)
+                    let num = $0 as! Int8
+                    return num == Int8.max ? nil : num.advanced(by: 1)
+                }
+            )
+        case .Int16:
+            return (
+                Int16.min,
+                {
+                    let num = $0 as! Int16
+                    return num == Int16.max ? nil : num.advanced(by: 1)
+                }
+            )
+        case .Int32:
+            return (
+                Int32.min,
+                {
+                    let num = $0 as! Int32
+                    return num == Int32.max ? nil : num.advanced(by: 1)
                 }
             )
         case .Int64:
@@ -199,20 +232,28 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                     return num == Int64.max ? nil : num.advanced(by: 1)
                 }
             )
-        case .Bool:
+        case .UInt:
+            return (UInt.min, uintSpinner)
+        case .UInt8:
             return (
-                false,
+                UInt8.min,
                 {
-                    let b = $0 as! Bool
-                    return true == b ? nil : true
+                    let num = $0 as! UInt8
+                    return num == UInt8.max ? nil : num.advanced(by: 1)
                 }
             )
-        default:
-            return (ksp.value, { _ -> Any? in nil })
-        }
-    }
-
-}
+        case .UInt16:
+            return (
+                UInt16.min,
+                {
+                    let num = $0 as! UInt16
+                    return num == UInt16.max ? nil : num.advanced(by: 1)
+                }
+            )
+        case .UInt32:
+            return (UInt32.min, uint32Spinner)
+        case .UInt64:
+            return (UInt64.min, uint64Spinner)
         case .Float:
             return (
                 Float(bitPattern: UInt32.min),
