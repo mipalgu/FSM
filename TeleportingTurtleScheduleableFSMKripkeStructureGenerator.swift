@@ -128,8 +128,9 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
             guard let temp = latest else {
                 return nil
             }
-            guard let ps = self.spin(
-                      vars: Array(temp),
+            guard let vs = self.spin(
+                      index: temp.startIndex,
+                      vars: temp,
                       defaultValues: defaultValues,
                       spinners: spinners
                   )
@@ -137,37 +138,33 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                 latest = nil
                 return GV(fromDictionary: temp)
             }
-            latest = ps.reduce([:]) { (d: [String: Any], kv: (String, Any)) -> [String: Any] in
-                var d = d
-                d[kv.0] = kv.1
-                return d
-            }
+            latest = vs
             return GV(fromDictionary: temp)
         }
     }
 
     private func spin(
-        index: Int = 0,
-        vars: [(String, Any)],
+        index: DictionaryIndex<String, Any>,
+        vars: [String: Any],
         defaultValues: [String: Any],
         spinners: [String: (Any) -> Any?]
-    ) -> [(String, Any)]? {
-        if index >= vars.count {
+    ) -> [String: Any]? {
+        if (index == vars.endIndex) {
             return nil
         }
         var vars = vars
-        let name: String = vars[index].0
-        let currentValue = vars[index].1
+        let name: String = vars[index].key
+        let currentValue = vars[index].value
         guard let newValue = spinners[name]?(currentValue) else {
-            vars[index].1 = defaultValues[name]!
+            vars[vars[index].key] = defaultValues[name]!
             return self.spin(
-                index: index + 1,
+                index: vars.index(after: index),
                 vars: vars,
                 defaultValues: defaultValues,
                 spinners: spinners
             )
         }
-        vars[index].1 = newValue
+        vars[vars[index].key] = newValue
         return vars
     }
 
