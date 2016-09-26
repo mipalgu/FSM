@@ -62,8 +62,11 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
 
     private let extractor: GE
 
-    public init(extractor: GE) {
+    private let spinners: Spinners
+
+    public init(extractor: GE, spinners: Spinners = Spinners()) {
         self.extractor = extractor
+        self.spinners = spinners
     }
 
     public func generate<
@@ -174,129 +177,33 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
     ) -> (Any, (Any) -> Any?) {
         switch ksp.type {
         case .Int:
-            return (
-                Int.min,
-                {
-                    let num = $0 as! Int
-                    return num == Int.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (Int.min, { self.spinners.int($0 as! Int) })
         case .Int8:
-            return (
-                Int8.min,
-                {
-                    let num = $0 as! Int8
-                    return num == Int8.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (Int8.min, { self.spinners.int8($0 as! Int8) })
         case .Int16:
-            return (
-                Int16.min,
-                {
-                    let num = $0 as! Int16
-                    return num == Int16.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (Int16.min, { self.spinners.int16($0 as! Int16) })
         case .Int32:
-            return (
-                Int32.min,
-                {
-                    let num = $0 as! Int32
-                    return num == Int32.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (Int32.min, { self.spinners.int32($0 as! Int32) })
         case .Int64:
-            return (
-                Int64.min,
-                {
-                    let num = $0 as! Int64
-                    return num == Int64.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (Int64.min, { self.spinners.int64($0 as! Int64) })
         case .UInt:
-            return (
-                UInt.min,
-                {
-                    let num = $0 as! UInt
-                    return num == UInt.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (UInt.min, { self.spinners.uint($0 as! UInt) })
         case .UInt8:
-            return (
-                UInt8.min,
-                {
-                    let num = $0 as! UInt8
-                    return num == UInt8.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (UInt8.min, { self.spinners.uint8($0 as! UInt8) })
         case .UInt16:
-            return (
-                UInt16.min,
-                {
-                    let num = $0 as! UInt16
-                    return num == UInt16.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (UInt16.min, { self.spinners.uint16($0 as! UInt16) })
         case .UInt32:
-            return (
-                UInt32.min,
-                {
-                    let num = $0 as! UInt32
-                    return num == UInt32.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (UInt32.min, { self.spinners.uint32($0 as! UInt32) })
         case .UInt64:
-            return (
-                UInt64.min,
-                {
-                    let num = $0 as! UInt64
-                    return num == UInt64.max ? nil : num.advanced(by: 1)
-                }
-            )
+            return (UInt64.min, { self.spinners.uint64($0 as! UInt64) })
         case .Float:
-            return (
-                Float.infinity.negated(),
-                {
-                    let num = $0 as! Float
-                    if (num == Float.infinity) {
-                        return Float.nan
-                    }
-                    if (num == Float.nan) {
-                        return nil
-                    }
-                    return num.nextUp
-                }
-            )
+            return (Float.infinity.negated(), { self.spinners.float($0 as! Float) })
         case .Float80:
-            return (
-                Float80.infinity.negated(),
-                {
-                    let num = $0 as! Float80
-                    if (Float80.infinity == num) {
-                        return Float80.nan
-                    }
-                    if (Float80.nan == num) {
-                        return nil
-                    }
-                    return num.nextUp
-                }
-            )
+            return (Float80.infinity.negated(), { self.spinners.float80($0 as! Float80) })
         case .Double:
-            return (
-                Double.infinity.negated(),
-                {
-                    let num = $0 as! Double
-                    if (Double.infinity == num) {
-                        return Double.nan
-                    }
-                    if (Double.nan == num) {
-                        return nil
-                    }
-                    return num.nextUp
-                }
-            )
+            return (Double.infinity.negated(), { self.spinners.double($0 as! Double) })
         default:
-            return (ksp.value, { _ -> Any? in nil })
+            return (ksp.value, self.spinners.nilSpinner) 
         }
     }
 
