@@ -58,6 +58,7 @@
 
 open class MiPalState:
     StateType,
+    Cloneable,
     CustomStringConvertible,
     CustomDebugStringConvertible,
     MiPalActions,
@@ -87,4 +88,8 @@ open class MiPalState:
     open func main() {}
 
     open func onExit() {}
+
+    open func clone() -> Self {
+        fatalError("Please implement your own clone")
+    }
 }

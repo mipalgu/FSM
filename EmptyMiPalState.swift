@@ -78,5 +78,9 @@ public final class EmptyMiPalState: MiPalState {
      *  Does nothing.
      */
     public override final func onExit() {}
+
+    public override final func clone() -> EmptyMiPalState {
+        return EmptyMiPalState(self.name, transitions: self.transitions)
+    }
     
 }
