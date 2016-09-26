@@ -1,8 +1,8 @@
 /*
- * Variables.swift 
+ * SimpleVariablesContainer.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,4 +56,13 @@
  *
  */
 
-public protocol Variables: class, Cloneable {}
+public class SimpleVariablesContainer<V: Variables>: VariablesContainer {
+
+    public typealias Vars = V
+
+    public var vars: V
+
+    public init(vars: V) {
+        self.vars = vars
+    }
+}

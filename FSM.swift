@@ -105,7 +105,7 @@ public func FSM<G: GlobalVariablesContainer>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: globals,
-                fsmVars: EmptyVariables(),
+                fsmVars: SimpleVariablesContainer(vars: EmptyVariables()),
                 extractor: MirrorPropertyExtractor(),
                 previousState: initialPreviousState
             ),
@@ -144,7 +144,7 @@ public func FSM<V: Variables>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: EmptyGlobalVariablesContainer(),
-                fsmVars: fsmVars,
+                fsmVars: SimpleVariablesContainer(vars: fsmVars),
                 extractor: MirrorPropertyExtractor(),
                 previousState: initialPreviousState
             ),
@@ -183,7 +183,7 @@ public func FSM<G: GlobalVariablesContainer,V: Variables>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: globals,
-                fsmVars: fsmVars,
+                fsmVars: SimpleVariablesContainer(vars: fsmVars),
                 extractor: MirrorPropertyExtractor(),
                 previousState: initialPreviousState
             ),

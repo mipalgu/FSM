@@ -56,7 +56,7 @@
  *
  */
 
-public protocol VariablesContainer {
+public protocol VariablesContainer: class {
 
     associatedtype Vars: Variables
 

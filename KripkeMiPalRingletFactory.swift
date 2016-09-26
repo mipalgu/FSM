@@ -62,12 +62,12 @@ public class KripkeMiPalRingletFactory {
         previousState: MiPalState = EmptyMiPalState("_previous")
     )-> KripkeMiPalRinglet<
         EmptyGlobalVariablesContainer,
-        EmptyVariables,
+        SimpleVariablesContainer<EmptyVariables>,
         MirrorPropertyExtractor
     > {
         return KripkeMiPalRinglet(
             globals: EmptyGlobalVariablesContainer(),
-            fsmVars: EmptyVariables(),
+            fsmVars: SimpleVariablesContainer(vars: EmptyVariables()),
             extractor: MirrorPropertyExtractor(),
             previousState: previousState
         )

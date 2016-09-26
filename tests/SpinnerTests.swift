@@ -103,6 +103,74 @@ internal class SimpleContainer<GV: GlobalVariables>: GlobalVariablesContainer, S
 
 }
 
+public final class Counter: Variables {
+
+    public var counter: Int64
+
+    public init(counter: Int64 = 0) {
+        self.counter = counter
+    }
+
+    public final func clone() -> Counter {
+        return Counter(counter: self.counter)
+    }
+
+}
+
+internal class CountingState: MiPalState {
+
+    public var globals: SimpleContainer<wb_count>
+
+    public var fsmVars: SimpleVariablesContainer<Counter>
+    
+    public var count: Int64 {
+        get {
+            return self.globals.val.count
+        } set {
+            self.globals.val.count = newValue
+        }
+    }
+
+    public var counter: Int64 {
+        get {
+            return self.fsmVars.vars.counter
+        } set {
+            self.fsmVars.vars.counter = newValue
+        }
+    }
+
+    public init(
+        _ name: String,
+        transitions: [Transition<MiPalState>] = [],
+        globals: SimpleContainer<wb_count>,
+        fsmVars: SimpleVariablesContainer<Counter>
+    ) {
+        self.globals = globals
+        self.fsmVars = fsmVars
+        super.init(name, transitions: transitions)
+    }
+
+    public final override func clone() -> CountingState {
+        return CountingState(
+            self.name,
+            transitions: self.transitions,
+            globals: self.globals,
+            fsmVars: self.fsmVars
+        )
+    }
+
+    public override func main() {
+        print("count: \(self.count), counter: \(self.counter)")
+        self.count = self.count &+ 1
+        self.counter = self.counter &+ 1
+    }
+
+    public override func onExit() {
+        print("count: \(self.count), counter: \(self.counter)")
+    }
+
+}
+
 class SpinnerTests: XCTestCase {
 
     static var allTests: [(String, (SpinnerTests) -> () throws -> Void)] {
@@ -111,12 +179,14 @@ class SpinnerTests: XCTestCase {
         ]
     }
     
-    private var container: SimpleContainer<SimpleGlobals>!
-    private var generator: TeleportingTurtleScheduleableFSMKripkeStructureGenerator<GlobalsSpinnerConstructorFactory<GlobalsSpinnerConstructor<SpinnerRunner>, GlobalsSpinnerDataExtractor<MirrorPropertyExtractor, KripkeStatePropertySpinnerConverter>>>!
-    private var fsm: KripkeFiniteStateMachine<KripkeMiPalRinglet<SimpleContainer<SimpleGlobals>, EmptyVariables, MirrorPropertyExtractor>>!
+    private var container: SimpleContainer<wb_count>!
+    private var fsmVars: SimpleVariablesContainer<Counter>!
+    private var generator: ScheduleableFSMKripkeStructureGenerator!
+    private var fsm: KripkeFiniteStateMachine<KripkeMiPalRinglet<SimpleContainer<wb_count>, SimpleVariablesContainer<Counter>, MirrorPropertyExtractor>>!
 
     override func setUp() {
-        self.container = SimpleContainer(val: SimpleGlobals())
+        self.container = SimpleContainer(val: wb_count())
+        self.fsmVars = SimpleVariablesContainer(vars: Counter())
         self.generator = TeleportingTurtleScheduleableFSMKripkeStructureGenerator(
             factory: GlobalsSpinnerConstructorFactory(
                 constructor: GlobalsSpinnerConstructor(
@@ -128,26 +198,36 @@ class SpinnerTests: XCTestCase {
                 )
             )
         )
-        let state = CallbackMiPalState("test", onEntry: { print("onEntry") })
+        let state = CountingState(
+            "countingState",
+            globals: self.container,
+            fsmVars: self.fsmVars
+        )
         let ringlet = KripkeMiPalRinglet(
             globals: self.container,
-            fsmVars: EmptyVariables(),
-            extractor: MirrorPropertyExtractor(),
-            previousState: EmptyMiPalState("_previous")
+            fsmVars: self.fsmVars,
+            extractor: MirrorPropertyExtractor()
         )
+        let previous: MiPalState = EmptyMiPalState("previous")
+        let suspendState: MiPalState = EmptyMiPalState("suspend")
+        let exitState: MiPalState = EmptyMiPalState("exit")
         self.fsm = KripkeFiniteStateMachine(
             "test_fsm",
             initialState: state,
             ringlet: ringlet,
-            initialPreviousState: EmptyMiPalState("_previous"),
-            suspendedState: EmptyMiPalState("_suspendedState"),
-            suspendState: EmptyMiPalState("_suspend"),
-            exitState: EmptyMiPalState("_exit")
+            initialPreviousState: previous,
+            suspendedState: nil,
+            suspendState: suspendState,
+            exitState: exitState
         )
     }
 
     func test_print() {
-        let _ = self.generator.generate(fsm: self.fsm, globals: self.container)
+        let _ = self.generator.generate(
+            fsm: self.fsm!,
+            fsmVars: self.fsmVars!,
+            globals: self.container!
+        )
     }
 
 }

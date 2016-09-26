@@ -60,11 +60,13 @@ public protocol ScheduleableFSMKripkeStructureGenerator {
 
     func generate<
         FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
+        GC: GlobalVariablesContainer,
+        VC: VariablesContainer
+    >(fsm: FSM, fsmVars: VC, globals: GC) -> KripkeStructure where
         FSM: StateExecuterDelegator,
         FSM: Finishable,
         FSM.RingletType: KripkeRinglet,
-        FSM._StateType == FSM.RingletType._StateType
+        FSM._StateType == FSM.RingletType._StateType,
+        VC.Vars: Cloneable
 
 }

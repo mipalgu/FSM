@@ -71,6 +71,10 @@ public final class EmptyVariables: Variables, GlobalVariables {
 
     public init(fromDictionary dictionary: [String: Any]) {}
 
+    public final func clone() -> EmptyVariables {
+        return EmptyVariables()
+    }
+
 }
 
 public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {

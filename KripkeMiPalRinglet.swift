@@ -66,7 +66,7 @@
  */
 public final class KripkeMiPalRinglet<
     G: GlobalVariablesContainer,
-    V: Variables,
+    V: VariablesContainer,
     E: PropertiesExtractor
 > : MiPalRinglet<G>, KripkeRinglet where G: Snapshotable
 {
@@ -133,7 +133,7 @@ public final class KripkeMiPalRinglet<
         self.snapshots.append(
             self.extractor.extract(
                 globals: self.globals.val,
-                fsmVars: self.fsmVars,
+                fsmVars: self.fsmVars.vars,
                 state: state
             )
         )
