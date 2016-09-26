@@ -88,6 +88,15 @@ public final class KripkeMiPalRinglet<
         super.init(globals: globals, previousState: previousState)
     }
 
+    public final func clone() -> KripkeMiPalRinglet {
+        return KripkeMiPalRinglet(
+            globals: self.globals,
+            fsmVars: self.fsmVars,
+            extractor: self.extractor,
+            previousState: self.previousState
+        )
+    }
+
     /**
      *  Execute the ringlet while taking snapshots of all the variables.
      *

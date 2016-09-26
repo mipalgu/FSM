@@ -56,4 +56,4 @@
  *
  */
 
-public protocol KripkeRinglet: Ringlet, SnapshotContainer {}
+public protocol KripkeRinglet: Ringlet, Cloneable, SnapshotContainer {}

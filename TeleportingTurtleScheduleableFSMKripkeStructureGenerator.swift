@@ -70,17 +70,24 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         FSM: FiniteStateMachineType,
         GC: GlobalVariablesContainer
     >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
+        FSM: StateExecuterDelegator,
         FSM: Finishable,
-        FSM._StateType: Cloneable
+        FSM._StateType: Cloneable,
+        FSM.RingletType: KripkeRinglet,
+        FSM._StateType == FSM.RingletType._StateType
     {
         var finished: Bool = false
         let constructor = self.factory.make(globals: globals.val)
         while (false == finished) {
-            //let state = fsm.currentState
+            let state = fsm.currentState.clone()
+            let ringlet = fsm.ringlet.clone()
             let spinner: () -> GC.Class? = constructor()
             // Spin the globals.
             while let gs = spinner() {
+                let stateClone = state.clone()
+                let ringletClone = ringlet.clone()
+                let nextState = ringletClone.execute(state: stateClone)
+                print(nextState)
                 globals.val = gs
                 print(gs)
             }
