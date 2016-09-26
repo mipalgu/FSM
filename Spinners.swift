@@ -58,93 +58,58 @@
 
 public struct Spinners {
 
-    public typealias Spinner = (Any) -> Any?
+    public typealias Spinner<T> = (T) -> T?
 
-    let int: Spinner = {
-        let num = $0 as! Int
-        return Int.max == num ? nil : num.advanced(by: 1)
-    }
+    let int: Spinner<Int> = { Int.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let int8: Spinner = {
-        let num = $0 as! Int8
-        return num == Int8.max ? nil : num.advanced(by: 1)
-    }
+    let int8: Spinner<Int8> = { Int8.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let int16: Spinner = {
-        let num = $0 as! Int16
-        return num == Int16.max ? nil : num.advanced(by: 1)
-    }
+    let int16: Spinner<Int16> = { Int16.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let int32: Spinner = {
-        let num = $0 as! Int32
-        return num == Int32.max ? nil : num.advanced(by: 1)
-    }
+    let int32: Spinner<Int32> = { Int32.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let int64: Spinner = {
-        let num = $0 as! Int64
-        return num == Int64.max ? nil : num.advanced(by: 1)
-    }
+    let int64: Spinner<Int64> = { Int64.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let uint: Spinner = {
-        let num = $0 as! UInt
-        return UInt.max == num ? nil : num.advanced(by: 1)
-    }
+    let uint: Spinner<UInt> = { UInt.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let uint8: Spinner = {
-        let num = $0 as! UInt8
-        return UInt8.max == num ? nil : num.advanced(by: 1)
-    }
+    let uint8: Spinner<UInt8> = { UInt8.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let uint16: Spinner = {
-        let num = $0 as! UInt16
-        return UInt16.max == num ? nil : num.advanced(by: 1)
-    }
+    let uint16: Spinner<UInt16> = { UInt16.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let uint32: Spinner = {
-        let num = $0 as! UInt32
-        return UInt32.max == num ? nil : num.advanced(by: 1)
-    }
+    let uint32: Spinner<UInt32> = { UInt32.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let uint64: Spinner = {
-        let num = $0 as! UInt64
-        return UInt64.max == num ? nil : num.advanced(by: 1)
-    }
+    let uint64: Spinner<UInt64> = { UInt64.max == $0 ? nil : $0.advanced(by: 1) }
 
-    let float: Spinner = {
-        let num = $0 as! Float
-        if (num == Float.infinity) {
+    let float: Spinner<Float> = {
+        if ($0 == Float.infinity) {
             return Float.nan
         }
-        if (num == Float.nan) {
+        if ($0 == Float.nan) {
             return nil
         }
-        return num.nextUp
+        return $0.nextUp
     }
     
-    let float80: Spinner = {
-        let num = $0 as! Float80
-        if (Float80.infinity == num) {
+    let float80: Spinner<Float80> = {
+        if (Float80.infinity == $0) {
             return Float80.nan
         }
-        if (Float80.nan == num) {
+        if (Float80.nan == $0) {
             return nil
         }
-        return num.nextUp
+        return $0.nextUp
     }
 
-    let double: Spinner = {
-        let num = $0 as! Double
-        if (Double.infinity == num) {
+    let double: Spinner<Double> = {
+        if (Double.infinity == $0) {
             return Double.nan
         }
-        if (Double.nan == num) {
+        if (Double.nan == $0) {
             return nil
         }
-        return num.nextUp
+        return $0.nextUp
     }
 
-    let nilSpinner: Spinner = { _ -> Any? in
-        return nil
-    }
+    let nilSpinner: Spinner<Any> = { _ -> Any? in nil }
 
 }
