@@ -71,7 +71,8 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         GC: GlobalVariablesContainer
     >(fsm: FSM, globals: GC) -> KripkeStructure where
         FSM: StateExecuter,
-        FSM: Finishable
+        FSM: Finishable,
+        FSM._StateType: Cloneable
     {
         var finished: Bool = false
         let spinnerData = self.makeSpinnerData(globals: globals)
