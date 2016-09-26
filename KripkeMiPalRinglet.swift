@@ -109,7 +109,6 @@ public final class KripkeMiPalRinglet<
     ) -> MiPalState {
         self.snapshots = []
         // Take a snapshot
-        self.takeSnapshot()
         self.record(state: state)
         // Call onEntry if we have just transitioned to this state. 
         if (state != previousState) {
@@ -122,13 +121,11 @@ public final class KripkeMiPalRinglet<
             // Yes - Exit state and return the new state.
             state.onExit()
             self.record(state: state)
-            self.saveSnapshot()
             return t.target
         }
         // No - Execute main method and return state.
         state.main()
         self.record(state: state)
-        self.saveSnapshot()
         return state
     }
 
