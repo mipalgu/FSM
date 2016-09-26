@@ -84,7 +84,7 @@ public protocol _KripkeStateType: Equatable {
     /**
      *  The state which we will transition to.
      */
-    var target: KripkeState? { get set }
+    var previous: KripkeState? { get set }
     
 }
 
@@ -94,7 +94,7 @@ extension _KripkeStateType where Self: CustomStringConvertible {
         var str: String = "state = \(self.state.name)\n"
         str += "machine = \(self.machine.name)\n"
         str += "fsm = \(self.fsm.name)\n"
-        str += "target = \(self.target?.state.name)\n"
+        str += "previous = \(self.previous?.state.name)\n"
         str += "beforeProperties: {\n"
         str += self.beforeProperties.description
         str += "\n}\n"
@@ -113,7 +113,7 @@ extension _KripkeStateType where Self: CustomDebugStringConvertible {
         var str: String = "state = \(self.state.name)\n"
         str += "machine = \(self.machine.name)\n"
         str += "fsm = \(self.fsm.name)\n"
-        str += "target = \(self.target?.state.name)\n"
+        str += "previous = \(self.previous?.state.name)\n"
         str += "beforeProperties: {\n"
         str += self.beforeProperties.description
         str += "\n}\n"
@@ -129,7 +129,7 @@ extension _KripkeStateType where Self: CustomDebugStringConvertible {
 /**
  *  Compare KripkeStates for equality.
  *
- *  This does not compare the target property as a state is considered equal no
+ *  This does not compare the previous property as a state is considered equal no
  *  matter if it transitions to a different state.
  */
 public func ==<T: _KripkeStateType, U: _KripkeStateType>(

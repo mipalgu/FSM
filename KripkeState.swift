@@ -68,7 +68,7 @@ public class KripkeState: KripkeStateType {
     
     public let state: AnyState
     
-    public var target: KripkeState?
+    public var previous: KripkeState?
     
     public init(
         state: AnyState,
