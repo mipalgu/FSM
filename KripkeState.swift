@@ -76,12 +76,12 @@ public class KripkeState: KripkeStateType {
         machine: Machine,
         beforeProperties: KripkeStatePropertyList,
         afterProperties: KripkeStatePropertyList,
-        target: KripkeState? = nil
+        previous: KripkeState? = nil
     ) {
         self.state = state
         self.fsm = fsm
         self.machine = machine
-        self.target = target
+        self.previous = previous
         self.beforeProperties = beforeProperties
         self.afterProperties = afterProperties
     }
