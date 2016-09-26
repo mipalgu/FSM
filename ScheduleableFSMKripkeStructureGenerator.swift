@@ -62,9 +62,16 @@ public protocol ScheduleableFSMKripkeStructureGenerator {
         FSM: FiniteStateMachineType,
         GC: GlobalVariablesContainer,
         VC: VariablesContainer
-    >(fsm: FSM, fsmVars: VC, globals: GC) -> KripkeStructure where
+    >(
+        machine: Machine,
+        fsm: FSM,
+        fsmVars: VC,
+        globals: GC
+    ) -> KripkeStructure where
         FSM: StateExecuterDelegator,
         FSM: Finishable,
+        FSM: SnapshotContainer,
+        FSM: Resumeable,
         FSM.RingletType: KripkeRinglet,
         FSM._StateType == FSM.RingletType._StateType,
         VC.Vars: Cloneable

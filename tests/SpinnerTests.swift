@@ -213,7 +213,13 @@ class SpinnerTests: XCTestCase {
     }
 
     func test_print() {
+        let machine = Machine(
+            debug: false,
+            name: "test",
+            fsms: []
+        )
         let _ = self.generator.generate(
+            machine: machine,
             fsm: self.fsm!,
             fsmVars: self.fsmVars!,
             globals: self.container!
