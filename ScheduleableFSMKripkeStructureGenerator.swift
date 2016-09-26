@@ -64,7 +64,6 @@ public protocol ScheduleableFSMKripkeStructureGenerator {
     >(fsm: FSM, globals: GC) -> KripkeStructure where
         FSM: StateExecuterDelegator,
         FSM: Finishable,
-        FSM._StateType: Cloneable,
         FSM.RingletType: KripkeRinglet,
         FSM._StateType == FSM.RingletType._StateType
 

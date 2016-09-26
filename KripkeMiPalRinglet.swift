@@ -71,6 +71,8 @@ public final class KripkeMiPalRinglet<
 > : MiPalRinglet<G>, KripkeRinglet where G: Snapshotable
 {
 
+    public typealias _StateType = MiPalState
+
     private let extractor: E
 
     private var fsmVars: V

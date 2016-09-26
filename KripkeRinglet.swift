@@ -56,4 +56,8 @@
  *
  */
 
-public protocol KripkeRinglet: Ringlet, Cloneable, SnapshotContainer {}
+public protocol KripkeRinglet: Ringlet, Cloneable, SnapshotContainer {
+
+    associatedtype _StateType: StateType, Cloneable
+
+}
