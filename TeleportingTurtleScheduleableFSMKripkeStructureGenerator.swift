@@ -57,12 +57,12 @@
  */
 
 public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
+    SpinnersFactory: GlobalsSpinnerConstructorFactoryType
 >: ScheduleableFSMKripkeStructureGenerator {
 
-    private let factory: Factory
+    private let factory: SpinnersFactory
 
-    public init(factory: Factory) {
+    public init(factory: SpinnersFactory) {
         self.factory = factory
     }
 
