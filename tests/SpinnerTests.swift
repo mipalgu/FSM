@@ -112,13 +112,21 @@ class SpinnerTests: XCTestCase {
     }
     
     private var container: SimpleContainer<SimpleGlobals>!
-    private var generator: TeleportingTurtleScheduleableFSMKripkeStructureGenerator<MirrorPropertyExtractor>!
+    private var generator: TeleportingTurtleScheduleableFSMKripkeStructureGenerator<GlobalsSpinnerConstructorFactory<GlobalsSpinnerConstructor<SpinnerRunner>, GlobalsSpinnerDataExtractor<MirrorPropertyExtractor, KripkeStatePropertySpinnerConverter>>>!
     private var fsm: FiniteStateMachine<MiPalRinglet<SimpleContainer<SimpleGlobals>>>!
 
     override func setUp() {
         self.container = SimpleContainer(val: SimpleGlobals())
         self.generator = TeleportingTurtleScheduleableFSMKripkeStructureGenerator(
-            extractor: MirrorPropertyExtractor()
+            factory: GlobalsSpinnerConstructorFactory(
+                constructor: GlobalsSpinnerConstructor(
+                    runner: SpinnerRunner()
+                ),
+                extractor: GlobalsSpinnerDataExtractor(
+                    converter: KripkeStatePropertySpinnerConverter(),
+                    extractor: MirrorPropertyExtractor()
+                )
+            )
         )
         let state = CallbackMiPalState("test", onEntry: { print("onEntry") })
         let ringlet = MiPalRinglet(globals: self.container)

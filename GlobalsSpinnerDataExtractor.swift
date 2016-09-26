@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * GlobalsSpinnerDataExtractor.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,39 +56,35 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+public class GlobalsSpinnerDataExtractor<
+    GE: GlobalPropertyExtractor,
+    KSPC: KripkeStatePropertySpinnerConverterType
+>: GlobalsSpinnerDataExtractorType {
 
-    private let factory: Factory
+    private let converter: KSPC
 
-    public init(factory: Factory) {
-        self.factory = factory
+    private let extractor: GE
+
+    public init(converter: KSPC, extractor: GE) {
+        self.converter = converter
+        self.extractor = extractor
     }
 
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM._StateType: Cloneable
-    {
-        var finished: Bool = false
-        let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            //let state = fsm.currentState
-            let spinner: () -> GC.Class? = constructor()
-            // Spin the globals.
-            while let gs = spinner() {
-                globals.val = gs
-                print(gs)
+    public func extract<
+        GV: GlobalVariables
+    >(globals: GV) -> ([String: Any], [String: (Any) -> Any?]) {
+        // Get Global Properties Info
+        let temp: [(String, (Any, (Any) -> Any?))] = self.extractor.extract(
+                globals: globals
+            ).map {
+                ($0.0, self.converter.convert(from: $0.1))
             }
-            finished = true
+        return temp.reduce(([:], [:])) {
+            var t = $0
+            t.0[$1.0] = $1.1.0
+            t.1[$1.0] = $1.1.1
+            return t
         }
-        // Generate a Kripke State.
-        // Detect Cycle.
-        return KripkeStructure(states: [])
     }
 
 }

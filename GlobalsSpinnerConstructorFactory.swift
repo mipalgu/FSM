@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * GlobalsSpinnerConstructorFactory.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,39 +56,30 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+public class GlobalsSpinnerConstructorFactory<
+    GSC: GlobalsSpinnerConstructorType,
+    GSE: GlobalsSpinnerDataExtractorType
+>: GlobalsSpinnerConstructorFactoryType {
 
-    private let factory: Factory
+    private let constructor: GSC
 
-    public init(factory: Factory) {
-        self.factory = factory
+    private let extractor: GSE
+
+    public init(constructor: GSC, extractor: GSE) {
+        self.constructor = constructor
+        self.extractor = extractor
     }
 
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM._StateType: Cloneable
-    {
-        var finished: Bool = false
-        let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            //let state = fsm.currentState
-            let spinner: () -> GC.Class? = constructor()
-            // Spin the globals.
-            while let gs = spinner() {
-                globals.val = gs
-                print(gs)
-            }
-            finished = true
+    public func make<
+        GV: GlobalVariables
+    >(globals: GV) -> () -> () -> GV? {
+        let spinnerData = self.extractor.extract(globals: globals)
+        return { () -> () -> GV? in
+            return self.constructor.makeSpinner(
+                defaultValues: spinnerData.0,
+                spinners: spinnerData.1
+            )
         }
-        // Generate a Kripke State.
-        // Detect Cycle.
-        return KripkeStructure(states: [])
     }
 
 }

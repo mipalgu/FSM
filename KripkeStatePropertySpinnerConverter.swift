@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * KripkeStatePropertySpinnerConverter.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,39 +56,46 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+public class KripkeStatePropertySpinnerConverter:
+    KripkeStatePropertySpinnerConverterType
+{
 
-    private let factory: Factory
+    private let spinners: Spinners
 
-    public init(factory: Factory) {
-        self.factory = factory
+    public init(spinners: Spinners = Spinners()) {
+        self.spinners = spinners
     }
 
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM._StateType: Cloneable
-    {
-        var finished: Bool = false
-        let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            //let state = fsm.currentState
-            let spinner: () -> GC.Class? = constructor()
-            // Spin the globals.
-            while let gs = spinner() {
-                globals.val = gs
-                print(gs)
-            }
-            finished = true
+    public func convert(from ksp: KripkeStateProperty) -> (Any, (Any) -> Any?) {
+        switch ksp.type {
+        case .Int:
+            return (Int.min, { self.spinners.int($0 as! Int) })
+        case .Int8:
+            return (Int8.min, { self.spinners.int8($0 as! Int8) })
+        case .Int16:
+            return (Int16.min, { self.spinners.int16($0 as! Int16) })
+        case .Int32:
+            return (Int32.min, { self.spinners.int32($0 as! Int32) })
+        case .Int64:
+            return (Int64.min, { self.spinners.int64($0 as! Int64) })
+        case .UInt:
+            return (UInt.min, { self.spinners.uint($0 as! UInt) })
+        case .UInt8:
+            return (UInt8.min, { self.spinners.uint8($0 as! UInt8) })
+        case .UInt16:
+            return (UInt16.min, { self.spinners.uint16($0 as! UInt16) })
+        case .UInt32:
+            return (UInt32.min, { self.spinners.uint32($0 as! UInt32) })
+        case .UInt64:
+            return (UInt64.min, { self.spinners.uint64($0 as! UInt64) })
+        case .Float:
+            return (Float.infinity.negated(), { self.spinners.float($0 as! Float) })
+        case .Float80:
+            return (Float80.infinity.negated(), { self.spinners.float80($0 as! Float80) })
+        case .Double:
+            return (Double.infinity.negated(), { self.spinners.double($0 as! Double) })
+        default:
+            return (ksp.value, self.spinners.nilSpinner) 
         }
-        // Generate a Kripke State.
-        // Detect Cycle.
-        return KripkeStructure(states: [])
     }
-
 }

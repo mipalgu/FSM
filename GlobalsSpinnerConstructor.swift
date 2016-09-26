@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * GlobalsSpinnerConstructor.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,39 +56,38 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+public class GlobalsSpinnerConstructor<
+    SR: SpinnerRunnerType
+>: GlobalsSpinnerConstructorType {
 
-    private let factory: Factory
+    private let runner: SR
 
-    public init(factory: Factory) {
-        self.factory = factory
+    public init(runner: SR) {
+        self.runner = runner
     }
 
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM._StateType: Cloneable
-    {
-        var finished: Bool = false
-        let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            //let state = fsm.currentState
-            let spinner: () -> GC.Class? = constructor()
-            // Spin the globals.
-            while let gs = spinner() {
-                globals.val = gs
-                print(gs)
+    public func makeSpinner<GV: GlobalVariables>(
+        defaultValues: [String: Any],
+        spinners: [String: (Any) -> Any?]
+    ) -> () -> GV? {
+        var latest: [String: Any]? = defaultValues
+        return { () -> GV? in
+            guard let temp = latest else {
+                return nil
             }
-            finished = true
+            guard let vs = self.runner.spin(
+                      index: temp.startIndex,
+                      vars: temp,
+                      defaultValues: defaultValues,
+                      spinners: spinners
+                  )
+            else {
+                latest = nil
+                return GV(fromDictionary: temp)
+            }
+            latest = vs
+            return GV(fromDictionary: temp)
         }
-        // Generate a Kripke State.
-        // Detect Cycle.
-        return KripkeStructure(states: [])
     }
 
 }

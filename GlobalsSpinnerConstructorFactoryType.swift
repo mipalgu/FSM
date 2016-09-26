@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * GlobalsSpinnerConstructorFactoryType.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,39 +56,10 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+public protocol GlobalsSpinnerConstructorFactoryType {
 
-    private let factory: Factory
-
-    public init(factory: Factory) {
-        self.factory = factory
-    }
-
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM._StateType: Cloneable
-    {
-        var finished: Bool = false
-        let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            //let state = fsm.currentState
-            let spinner: () -> GC.Class? = constructor()
-            // Spin the globals.
-            while let gs = spinner() {
-                globals.val = gs
-                print(gs)
-            }
-            finished = true
-        }
-        // Generate a Kripke State.
-        // Detect Cycle.
-        return KripkeStructure(states: [])
-    }
+    func make<
+        GV: GlobalVariables
+    >(globals: GV) -> () -> () -> GV?
 
 }

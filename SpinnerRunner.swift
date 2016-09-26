@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * SpinnerRunner.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,39 +56,31 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
-    Factory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+public class SpinnerRunner: SpinnerRunnerType {
 
-    private let factory: Factory
-
-    public init(factory: Factory) {
-        self.factory = factory
-    }
-
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer
-    >(fsm: FSM, globals: GC) -> KripkeStructure where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM._StateType: Cloneable
-    {
-        var finished: Bool = false
-        let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            //let state = fsm.currentState
-            let spinner: () -> GC.Class? = constructor()
-            // Spin the globals.
-            while let gs = spinner() {
-                globals.val = gs
-                print(gs)
-            }
-            finished = true
+    public func spin(
+        index: DictionaryIndex<String, Any>,
+        vars: [String: Any],
+        defaultValues: [String: Any],
+        spinners: [String: (Any) -> Any?]
+    ) -> [String: Any]? {
+        if (index == vars.endIndex) {
+            return nil
         }
-        // Generate a Kripke State.
-        // Detect Cycle.
-        return KripkeStructure(states: [])
+        var vars = vars
+        let name: String = vars[index].key
+        let currentValue = vars[index].value
+        guard let newValue = spinners[name]?(currentValue) else {
+            vars[vars[index].key] = defaultValues[name]!
+            return self.spin(
+                index: vars.index(after: index),
+                vars: vars,
+                defaultValues: defaultValues,
+                spinners: spinners
+            )
+        }
+        vars[vars[index].key] = newValue
+        return vars
     }
 
 }
