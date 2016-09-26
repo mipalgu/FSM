@@ -77,23 +77,32 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         FSM._StateType == FSM.RingletType._StateType,
         VC.Vars: Cloneable
     {
-        var finished: Bool = false
         let constructor = self.factory.make(globals: globals.val)
-        while (false == finished) {
-            let state = fsm.currentState.clone()
-            let ringlet = fsm.ringlet.clone()
-            let vars = fsmVars.vars.clone()
+        var jobs: [(FSM._StateType, FSM.RingletType, VC.Vars)] = 
+            [(
+                fsm.initialState.clone(),
+                fsm.ringlet.clone(),
+                fsmVars.vars.clone()
+            )]
+        while (false == jobs.isEmpty) { 
+            let job = jobs.removeFirst()
+            let state = job.0.clone()
+            let ringlet = job.1.clone()
+            let vars = job.2.clone()
             let spinner: () -> GC.Class? = constructor()
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
                 let stateClone = state.clone()
                 let ringletClone = ringlet.clone()
-                let varsClone = vars.clone()
                 globals.val = gs
-                fsmVars.vars = varsClone
-                let _ = ringletClone.execute(state: stateClone)
+                fsmVars.vars = vars.clone()
+                let nextState = ringletClone.execute(state: stateClone)
+                jobs.append((
+                    nextState,
+                    ringletClone,
+                    fsmVars.vars
+                ))
             }
-            finished = true
         }
         // Generate a Kripke State.
         // Detect Cycle.

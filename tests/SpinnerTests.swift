@@ -61,30 +61,20 @@ import XCTest
 
 internal struct SimpleGlobals: GlobalVariables {
 
-    let one: Bool
-
-    let two: UInt8
-
-    let three: Bool
+    var count: UInt8
 
     init() {
-        self.one = false
-        self.two = 0
-        self.three = false
+        self.count = 0
     }
 
     init(fromDictionary dictionary: [String: Any]) {
-        self.one = dictionary["one"]! as! Bool
-        self.two = dictionary["two"]! as! UInt8
-        self.three = dictionary["three"]! as! Bool
+        self.count = dictionary["count"]! as! UInt8
     }
 
 }
 
 func ==(lhs: SimpleGlobals, rhs: SimpleGlobals) -> Bool {
-    return lhs.one == rhs.one &&
-        lhs.two == rhs.two &&
-        lhs.three == rhs.three
+    return lhs.count == rhs.count
 }
 
 internal class SimpleContainer<GV: GlobalVariables>: GlobalVariablesContainer, Snapshotable {
@@ -119,11 +109,11 @@ public final class Counter: Variables {
 
 internal class CountingState: MiPalState {
 
-    public var globals: SimpleContainer<wb_count>
+    public var globals: SimpleContainer<SimpleGlobals>
 
     public var fsmVars: SimpleVariablesContainer<Counter>
     
-    public var count: Int64 {
+    public var count: UInt8{
         get {
             return self.globals.val.count
         } set {
@@ -142,7 +132,7 @@ internal class CountingState: MiPalState {
     public init(
         _ name: String,
         transitions: [Transition<MiPalState>] = [],
-        globals: SimpleContainer<wb_count>,
+        globals: SimpleContainer<SimpleGlobals>,
         fsmVars: SimpleVariablesContainer<Counter>
     ) {
         self.globals = globals
@@ -179,13 +169,13 @@ class SpinnerTests: XCTestCase {
         ]
     }
     
-    private var container: SimpleContainer<wb_count>!
+    private var container: SimpleContainer<SimpleGlobals>!
     private var fsmVars: SimpleVariablesContainer<Counter>!
     private var generator: ScheduleableFSMKripkeStructureGenerator!
-    private var fsm: KripkeFiniteStateMachine<KripkeMiPalRinglet<SimpleContainer<wb_count>, SimpleVariablesContainer<Counter>, MirrorPropertyExtractor>>!
+    private var fsm: KripkeFiniteStateMachine<KripkeMiPalRinglet<SimpleContainer<SimpleGlobals>, SimpleVariablesContainer<Counter>, MirrorPropertyExtractor>>!
 
     override func setUp() {
-        self.container = SimpleContainer(val: wb_count())
+        self.container = SimpleContainer(val: SimpleGlobals()) 
         self.fsmVars = SimpleVariablesContainer(vars: Counter())
         self.generator = TeleportingTurtleScheduleableFSMKripkeStructureGenerator(
             factory: GlobalsSpinnerConstructorFactory(
