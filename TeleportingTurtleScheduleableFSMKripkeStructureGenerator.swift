@@ -57,12 +57,16 @@
  */
 
 public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
+    E: PropertiesExtractor,
     SpinnersFactory: GlobalsSpinnerConstructorFactoryType
 >: ScheduleableFSMKripkeStructureGenerator {
 
+    private let extractor: E
+
     private let factory: SpinnersFactory
 
-    public init(factory: SpinnersFactory) {
+    public init(extractor: E, factory: SpinnersFactory) {
+        self.extractor = extractor
         self.factory = factory
     }
 
@@ -92,6 +96,8 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                 fsmVars.vars.clone(),
                 nil
             )]
+        var hashTable: [String: Bool] = [:]
+        var states: [KripkeState] = []
         while (false == jobs.isEmpty) { 
             let job = jobs.removeFirst()
             let state = job.0.clone()
@@ -100,19 +106,31 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
             let spinner: () -> GC.Class? = constructor()
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
+                let p: KripkeStatePropertyList = self.extractor.extract(
+                        globals: gs,
+                        fsmVars: vars,
+                        state: state
+                    )
+                // Have we seen this combination of variables before?
+                guard nil == hashTable[p.description] else {
+                    continue
+                }
+                hashTable[p.description] = true
                 let stateClone = state.clone()
                 let ringletClone = ringlet.clone()
                 globals.val = gs
                 fsmVars.vars = vars.clone()
                 let nextState = ringletClone.execute(state: stateClone)
                 // Generate Kripke States
-                let kripkeStates = self.makeKripkeStates(
+                let kripkeStates: [KripkeState] = self.makeKripkeStates(
                     machine: machine,
                     fsm: fsm,
                     state: stateClone,
                     snapshots: ringletClone.snapshots,
                     previousState: job.3
                 )
+                states.append(contentsOf: kripkeStates)
+                // Add the next state to the job queue
                 jobs.append((
                     nextState,
                     ringletClone,
@@ -121,7 +139,7 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                 ))
             }
         }
-        // Detect Cycle.
+        print(states.count)
         return KripkeStructure(states: [])
     }
 
@@ -141,6 +159,7 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         FSM: SnapshotContainer
     {
         if (snapshots.count < 2) {
+            print("no snapshots")
             return []
         }
         var snapshots = snapshots
