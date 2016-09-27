@@ -60,6 +60,8 @@ public struct Spinners {
 
     public typealias Spinner<T> = (T) -> T?
 
+    let bool: Spinner<Bool> = {true == $0 ? nil : true }
+
     let int: Spinner<Int> = { Int.max == $0 ? nil : $0.advanced(by: 1) }
 
     let int8: Spinner<Int8> = { Int8.max == $0 ? nil : $0.advanced(by: 1) }

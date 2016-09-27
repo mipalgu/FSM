@@ -68,6 +68,8 @@ public class KripkeStatePropertySpinnerConverter:
 
     public func convert(from ksp: KripkeStateProperty) -> (Any, (Any) -> Any?) {
         switch ksp.type {
+        case .Bool:
+            return (false, { self.spinners.bool($0 as! Bool) })
         case .Int:
             return (Int.min, { self.spinners.int($0 as! Int) })
         case .Int8:
