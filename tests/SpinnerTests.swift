@@ -95,14 +95,26 @@ internal class SimpleContainer<GV: GlobalVariables>: GlobalVariablesContainer, S
 
 public final class Counter: Variables {
 
-    public var counter: Int64
+    public var counter: UInt8 
 
-    public init(counter: Int64 = 0) {
+    public init(counter: UInt8 = 0) {
         self.counter = counter
     }
 
     public final func clone() -> Counter {
         return Counter(counter: self.counter)
+    }
+
+}
+
+internal final class ExitState: MiPalState {
+
+    public override func main() {
+        print("exit")
+    }
+
+    public final override func clone() -> ExitState {
+        return ExitState(self.name, transitions: self.transitions)
     }
 
 }
@@ -113,7 +125,7 @@ internal class CountingState: MiPalState {
 
     public var fsmVars: SimpleVariablesContainer<Counter>
     
-    public var count: UInt8{
+    public var count: UInt8 {
         get {
             return self.globals.val.count
         } set {
@@ -121,7 +133,7 @@ internal class CountingState: MiPalState {
         }
     }
 
-    public var counter: Int64 {
+    public var counter: UInt8 {
         get {
             return self.fsmVars.vars.counter
         } set {
@@ -157,6 +169,8 @@ internal class CountingState: MiPalState {
 
     public override func onExit() {
         print("count: \(self.count), counter: \(self.counter)")
+        self.count = self.count &+ 1
+        self.counter = self.counter &+ 1
     }
 
 }
@@ -178,6 +192,7 @@ class SpinnerTests: XCTestCase {
         self.container = SimpleContainer(val: SimpleGlobals()) 
         self.fsmVars = SimpleVariablesContainer(vars: Counter())
         self.generator = TeleportingTurtleScheduleableFSMKripkeStructureGenerator(
+            extractor: MirrorPropertyExtractor(),
             factory: GlobalsSpinnerConstructorFactory(
                 constructor: GlobalsSpinnerConstructor(
                     runner: SpinnerRunner()
@@ -188,7 +203,7 @@ class SpinnerTests: XCTestCase {
                 )
             )
         )
-        let state = CountingState(
+        var state = CountingState(
             "countingState",
             globals: self.container,
             fsmVars: self.fsmVars
@@ -200,7 +215,8 @@ class SpinnerTests: XCTestCase {
         )
         let previous: MiPalState = EmptyMiPalState("previous")
         let suspendState: MiPalState = EmptyMiPalState("suspend")
-        let exitState: MiPalState = EmptyMiPalState("exit")
+        let exitState: MiPalState = ExitState("exit")
+        state.addTransition(Transition<MiPalState>(exitState) { state.count >= 2 })
         self.fsm = KripkeFiniteStateMachine(
             "test_fsm",
             initialState: state,
