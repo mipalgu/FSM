@@ -75,7 +75,6 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         GC: GlobalVariablesContainer,
         VC: VariablesContainer
     >(
-        machine: Machine,
         fsm: FSM,
         fsmVars: VC,
         globals: GC
@@ -123,9 +122,6 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
                 let nextState = ringletClone.execute(state: stateClone)
                 // Generate Kripke States
                 let kripkeStates: [KripkeState] = self.makeKripkeStates(
-                    machine: machine,
-                    fsm: fsm,
-                    state: stateClone,
                     snapshots: ringletClone.snapshots,
                     previousState: job.3
                 )
@@ -143,21 +139,10 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         return KripkeStructure(states: [])
     }
 
-    private func makeKripkeStates<
-        FSM: FiniteStateMachineType,
-        State: StateType
-    >(
-        machine: Machine,
-        fsm: FSM,
-        state: State,
+    private func makeKripkeStates(
         snapshots: [KripkeStatePropertyList],
         previousState: KripkeState?
-    ) -> [KripkeState] where
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM: Resumeable,
-        FSM: SnapshotContainer
-    {
+    ) -> [KripkeState] {
         if (snapshots.count < 2) {
             print("no snapshots")
             return []
@@ -168,9 +153,6 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         // Create the Kripke States
         return snapshots.map {
             let state: KripkeState = KripkeState(
-                state: AnyState(state),
-                fsm: AnyScheduleableFiniteStateMachine(fsm),
-                machine: machine,
                 beforeProperties: lastProperties,
                 afterProperties: $0,
                 previous: lastState

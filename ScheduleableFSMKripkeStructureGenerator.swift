@@ -63,7 +63,6 @@ public protocol ScheduleableFSMKripkeStructureGenerator {
         GC: GlobalVariablesContainer,
         VC: VariablesContainer
     >(
-        machine: Machine,
         fsm: FSM,
         fsmVars: VC,
         globals: GC
