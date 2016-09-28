@@ -1,8 +1,8 @@
 /*
- * FSMKripkeStructureGenerator.swift 
+ * GlobalVariablesContainerHolder.swift 
  * FSM 
  *
- * Created by Callum McColl on 24/09/2016.
+ * Created by Callum McColl on 29/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,20 +56,10 @@
  *
  */
 
-public protocol FSMKripkeStructureGenerator {
+public protocol GlobalVariablesContainerHolder {
 
-    func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer,
-        VC: VariablesContainer
-    >(
-        fsm: FSM,
-        fsmVars: VC,
-        globals: GC
-    ) -> KripkeStructure where
-        FSM: StateExecuterDelegator,
-        FSM.RingletType: KripkeRinglet,
-        FSM._StateType == FSM.RingletType._StateType,
-        VC.Vars: Cloneable
+    associatedtype Container: GlobalVariablesContainer
+
+    var globals: Container { get }
 
 }

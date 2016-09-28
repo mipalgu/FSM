@@ -1,8 +1,8 @@
 /*
- * KripkeRinglet.swift 
+ * KripkeRingletKripkeStructureGenerator.swift 
  * FSM 
  *
- * Created by Callum McColl on 22/01/2016.
+ * Created by Callum McColl on 24/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,14 +56,11 @@
  *
  */
 
-public protocol KripkeRinglet: 
-    Cloneable,
-    FSMVariablesContainerHolder,
-    GlobalVariablesContainerHolder,
-    Ringlet,
-    SnapshotContainer
-{
+public protocol KripkeRingletKripkeStructureGenerator {
 
-    associatedtype _StateType: StateType, Cloneable
+    func generate<R: KripkeRinglet>(
+        initialState: R._StateType,
+        ringlet: R
+    ) -> KripkeStructure
 
 }

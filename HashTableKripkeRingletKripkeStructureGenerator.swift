@@ -1,5 +1,5 @@
 /*
- * HashTableFSMKripkeStructureGenerator.swift 
+ * HashTableKripkeRingletKripkeStructureGenerator.swift 
  * FSM 
  *
  * Created by Callum McColl on 24/09/2016.
@@ -56,10 +56,10 @@
  *
  */
 
-public class HashTableFSMKripkeStructureGenerator<
+public class HashTableKripkeRingletKripkeStructureGenerator<
     E: PropertiesExtractor,
     SpinnersFactory: GlobalsSpinnerConstructorFactoryType
->: FSMKripkeStructureGenerator {
+>: KripkeRingletKripkeStructureGenerator {
 
     private let extractor: E
 
@@ -70,25 +70,17 @@ public class HashTableFSMKripkeStructureGenerator<
         self.factory = factory
     }
 
-    public func generate<
-        FSM: FiniteStateMachineType,
-        GC: GlobalVariablesContainer,
-        VC: VariablesContainer
-    >(
-        fsm: FSM,
-        fsmVars: VC,
-        globals: GC
-    ) -> KripkeStructure where
-        FSM: StateExecuterDelegator,
-        FSM.RingletType: KripkeRinglet,
-        FSM._StateType == FSM.RingletType._StateType,
-        VC.Vars: Cloneable
-    {
+    public func generate<R: KripkeRinglet>(
+        initialState: R._StateType,
+        ringlet: R
+    ) -> KripkeStructure {
+        let fsmVars = ringlet.fsmVars
+        let globals = ringlet.globals
         let constructor = self.factory.make(globals: globals.val)
-        var jobs: [(FSM._StateType, FSM.RingletType, VC.Vars, KripkeState?)] = 
+        var jobs: [(R._StateType, R, R.FSMVariables.Vars, KripkeState?)] = 
             [(
-                fsm.initialState.clone(),
-                fsm.ringlet.clone(),
+                initialState.clone(),
+                ringlet.clone(),
                 fsmVars.vars.clone(),
                 nil
             )]
@@ -99,7 +91,7 @@ public class HashTableFSMKripkeStructureGenerator<
             let state = job.0.clone()
             let ringlet = job.1.clone()
             let vars = job.2.clone()
-            let spinner: () -> GC.Class? = constructor()
+            let spinner: () -> R.Container.Class? = constructor()
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
                 let p: KripkeStatePropertyList = self.extractor.extract(

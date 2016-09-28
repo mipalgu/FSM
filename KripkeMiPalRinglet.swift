@@ -75,7 +75,7 @@ public final class KripkeMiPalRinglet<
 
     private let extractor: E
 
-    private var fsmVars: V
+    public private(set) var fsmVars: V
     
     public private(set) var snapshots: [KripkeStatePropertyList] = []
 

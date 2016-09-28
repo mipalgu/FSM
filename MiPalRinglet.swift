@@ -66,7 +66,7 @@
  */
 public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
-    internal var globals: S
+    public private(set) var globals: S
 
     internal var previousState: MiPalState
 

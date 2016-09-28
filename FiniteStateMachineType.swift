@@ -228,3 +228,20 @@ public extension FiniteStateMachineType where
     }
 
 }
+
+public extension FiniteStateMachineType where
+    Self: StateExecuterDelegator,
+    Self: KripkeStructureGenerator,
+    Self: KripkeRingletKripkeStructureGeneratorDelegator,
+    Self.RingletType: KripkeRinglet,
+    Self.RingletType._StateType == Self._StateType
+{
+    
+    public func generate() -> KripkeStructure {
+        return self.generator.generate(
+            initialState: self.initialState,
+            ringlet: self.ringlet
+        )
+    }
+
+}
