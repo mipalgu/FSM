@@ -1,5 +1,5 @@
 /*
- * TeleportingTurtleScheduleableFSMKripkeStructureGenerator.swift 
+ * HashTableFSMKripkeStructureGenerator.swift 
  * FSM 
  *
  * Created by Callum McColl on 24/09/2016.
@@ -56,10 +56,10 @@
  *
  */
 
-public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
+public class HashTableFSMKripkeStructureGenerator<
     E: PropertiesExtractor,
     SpinnersFactory: GlobalsSpinnerConstructorFactoryType
->: ScheduleableFSMKripkeStructureGenerator {
+>: FSMKripkeStructureGenerator {
 
     private let extractor: E
 

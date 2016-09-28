@@ -1,5 +1,5 @@
 /*
- * ScheduleableFSMKripkeStructureGenerator.swift 
+ * FSMKripkeStructureGenerator.swift 
  * FSM 
  *
  * Created by Callum McColl on 24/09/2016.
@@ -56,7 +56,7 @@
  *
  */
 
-public protocol ScheduleableFSMKripkeStructureGenerator {
+public protocol FSMKripkeStructureGenerator {
 
     func generate<
         FSM: FiniteStateMachineType,
