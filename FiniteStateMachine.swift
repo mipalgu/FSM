@@ -91,6 +91,7 @@
  */
 public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     ExitableStateExecuter,
+    KripkeStructureGenerator,
     Restartable,
     Resumeable,
     SnapshotContainer,
@@ -153,6 +154,10 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
         self.ringlet = ringlet
         self.suspendedState = suspendedState
         self.suspendState = suspendState
+    }
+
+    public func generate() -> KripkeStructure {
+        return KripkeStructure(states: [])
     }
 
 }
