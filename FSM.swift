@@ -239,10 +239,11 @@ public func FSM<R: KripkeRinglet>(
     exitState: MiPalState = EmptyMiPalState("_exit")
 ) -> AnyScheduleableFiniteStateMachine where R._StateType == MiPalState {
     return AnyScheduleableFiniteStateMachine(
-        KripkeFiniteStateMachine<R>(
+        KripkeFiniteStateMachine(
             name,
             initialState: initialState,
             ringlet: ringlet,
+            generator: HashTableKripkeRingletKripkeStructureGeneratorFactory().make(),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,

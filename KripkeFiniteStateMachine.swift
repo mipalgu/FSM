@@ -91,7 +91,8 @@
  *  
  */
 public struct KripkeFiniteStateMachine<
-    R: KripkeRinglet
+    R: KripkeRinglet,
+    G: KripkeRingletKripkeStructureGenerator
 >: FiniteStateMachineType,
     ExitableStateExecuter,
     Restartable,
@@ -109,6 +110,8 @@ public struct KripkeFiniteStateMachine<
      *  The state that is used to exit the FSM.
      */
     public let exitState: R._StateType
+
+    public let generator: G
 
     /**
      *  The initial state of the previous state.
@@ -136,6 +139,7 @@ public struct KripkeFiniteStateMachine<
         _ name: String,
         initialState: R._StateType,
         ringlet: R,
+        generator: G,
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
         suspendState: R._StateType,
@@ -148,6 +152,7 @@ public struct KripkeFiniteStateMachine<
         self.name = name
         self.previousState = initialPreviousState
         self.ringlet = ringlet
+        self.generator = generator
         self.suspendedState = suspendedState
         self.suspendState = suspendState
     }
