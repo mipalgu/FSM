@@ -185,24 +185,11 @@ class SpinnerTests: XCTestCase {
     
     private var container: SimpleContainer<SimpleGlobals>!
     private var fsmVars: SimpleVariablesContainer<Counter>!
-    private var generator: ScheduleableFSMKripkeStructureGenerator!
-    private var fsm: KripkeFiniteStateMachine<KripkeMiPalRinglet<SimpleContainer<SimpleGlobals>, SimpleVariablesContainer<Counter>, MirrorPropertyExtractor>>!
+    private var fsm: AnyScheduleableFiniteStateMachine!
 
     override func setUp() {
         self.container = SimpleContainer(val: SimpleGlobals()) 
         self.fsmVars = SimpleVariablesContainer(vars: Counter())
-        self.generator = TeleportingTurtleScheduleableFSMKripkeStructureGenerator(
-            extractor: MirrorPropertyExtractor(),
-            factory: GlobalsSpinnerConstructorFactory(
-                constructor: GlobalsSpinnerConstructor(
-                    runner: SpinnerRunner()
-                ),
-                extractor: GlobalsSpinnerDataExtractor(
-                    converter: KripkeStatePropertySpinnerConverter(),
-                    extractor: MirrorPropertyExtractor()
-                )
-            )
-        )
         var state = CountingState(
             "countingState",
             globals: self.container,
@@ -213,33 +200,18 @@ class SpinnerTests: XCTestCase {
             fsmVars: self.fsmVars,
             extractor: MirrorPropertyExtractor()
         )
-        let previous: MiPalState = EmptyMiPalState("previous")
-        let suspendState: MiPalState = EmptyMiPalState("suspend")
         let exitState: MiPalState = ExitState("exit")
         state.addTransition(Transition<MiPalState>(exitState) { state.count >= 2 })
-        self.fsm = KripkeFiniteStateMachine(
+        self.fsm = FSM(
             "test_fsm",
             initialState: state,
             ringlet: ringlet,
-            initialPreviousState: previous,
-            suspendedState: nil,
-            suspendState: suspendState,
             exitState: exitState
         )
     }
 
     func test_print() {
-        let machine = Machine(
-            debug: false,
-            name: "test",
-            fsms: []
-        )
-        let _ = self.generator.generate(
-            machine: machine,
-            fsm: self.fsm!,
-            fsmVars: self.fsmVars!,
-            globals: self.container!
-        )
+        let _ = self.fsm.generate()
     }
 
 }
