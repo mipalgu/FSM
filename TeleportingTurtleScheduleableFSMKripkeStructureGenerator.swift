@@ -80,9 +80,6 @@ public class TeleportingTurtleScheduleableFSMKripkeStructureGenerator<
         globals: GC
     ) -> KripkeStructure where
         FSM: StateExecuterDelegator,
-        FSM: Finishable,
-        FSM: SnapshotContainer,
-        FSM: Resumeable,
         FSM.RingletType: KripkeRinglet,
         FSM._StateType == FSM.RingletType._StateType,
         VC.Vars: Cloneable
