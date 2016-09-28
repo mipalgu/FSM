@@ -67,6 +67,7 @@ public func addFactory<FSM: FiniteStateMachineType>(
 ) where
     FSM: StateExecuter,
     FSM: Finishable,
+    FSM: KripkeStructureGenerator,
     FSM: Resumeable,
     FSM: SnapshotContainer
 {

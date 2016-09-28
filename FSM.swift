@@ -258,6 +258,7 @@ public func FSM<FSM: FiniteStateMachineType>(
 ) -> AnyScheduleableFiniteStateMachine where
     FSM: StateExecuter,
     FSM: Finishable,
+    FSM: KripkeStructureGenerator,
     FSM: Resumeable,
     FSM: SnapshotContainer
 {
@@ -269,6 +270,7 @@ public func FSMS<FSM: FiniteStateMachineType>(
 ) -> [AnyScheduleableFiniteStateMachine] where
     FSM: StateExecuter,
     FSM: Finishable,
+    FSM: KripkeStructureGenerator,
     FSM: Resumeable,
     FSM: SnapshotContainer
 {
