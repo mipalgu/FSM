@@ -95,6 +95,8 @@ public struct KripkeFiniteStateMachine<
     G: KripkeRingletKripkeStructureGenerator
 >: FiniteStateMachineType,
     ExitableStateExecuter,
+    KripkeStructureGenerator,
+    KripkeRingletKripkeStructureGeneratorDelegator,
     Restartable,
     Resumeable,
     SnapshotContainer,
