@@ -59,6 +59,8 @@
 public protocol KripkeRingletKripkeStructureGenerator {
 
     func generate<R: KripkeRinglet>(
+        machine: String,
+        fsm: String,
         initialState: R._StateType,
         ringlet: R
     ) -> KripkeStructure

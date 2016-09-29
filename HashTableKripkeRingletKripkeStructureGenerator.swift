@@ -71,6 +71,8 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
     }
 
     public func generate<R: KripkeRinglet>(
+        machine: String,
+        fsm: String,
         initialState: R._StateType,
         ringlet: R
     ) -> KripkeStructure {
@@ -111,6 +113,9 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                 let nextState = ringletClone.execute(state: stateClone)
                 // Generate Kripke States
                 let kripkeStates: [KripkeState] = self.makeKripkeStates(
+                    machine: machine,
+                    fsm: fsm,
+                    state: stateClone.name,
                     snapshots: ringletClone.snapshots,
                     previousState: job.3
                 )
@@ -129,6 +134,9 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
     }
 
     private func makeKripkeStates(
+        machine: String,
+        fsm: String,
+        state: String,
         snapshots: [KripkeStatePropertyList],
         previousState: KripkeState?
     ) -> [KripkeState] {
@@ -142,6 +150,9 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         // Create the Kripke States
         return snapshots.map {
             let state: KripkeState = KripkeState(
+                state: state,
+                fsm: fsm,
+                machine: machine,
                 beforeProperties: lastProperties,
                 afterProperties: $0,
                 previous: lastState

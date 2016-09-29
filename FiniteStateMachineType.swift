@@ -237,8 +237,10 @@ public extension FiniteStateMachineType where
     Self.RingletType._StateType == Self._StateType
 {
     
-    public func generate() -> KripkeStructure {
+    public func generate(machine: String) -> KripkeStructure {
         return self.generator.generate(
+            machine: machine,
+            fsm: self.name,
             initialState: self.initialState,
             ringlet: self.ringlet
         )

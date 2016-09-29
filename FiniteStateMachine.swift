@@ -156,7 +156,7 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
         self.suspendState = suspendState
     }
 
-    public func generate() -> KripkeStructure {
+    public func generate(machine _: String) -> KripkeStructure {
         return KripkeStructure(states: [])
     }
 
