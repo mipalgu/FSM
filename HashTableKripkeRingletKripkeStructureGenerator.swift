@@ -81,13 +81,13 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         let fsmVars = ringlet.fsmVars
         let globals = ringlet.globals
         let constructor = self.factory.make(globals: globals.val)
-        var jobs: [(R._StateType, R, R.FSMVariables.Vars, [String: R._StateType], KripkeState?)] = 
+        var jobs: [(R._StateType, R, R.FSMVariables.Vars, [String: R._StateType], [KripkeState])] = 
             [(
                 initialState.clone(transitions: initialState.transitions),
                 ringlet.clone(),
                 fsmVars.vars.clone(),
                 [:],
-                nil
+                []
             )]
         var hashTable: [String: Bool] = [:]
         var states: [KripkeState] = []
@@ -97,6 +97,7 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
             let ringlet = job.1.clone()
             let vars = job.2.clone()
             var clones = job.3
+            var history = job.4
             let spinner: () -> R.Container.Class? = constructor()
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
@@ -123,9 +124,10 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                     fsm: fsm,
                     state: stateClone.name,
                     snapshots: ringletClone.snapshots,
-                    previousState: job.4
+                    previousState: history.last
                 )
                 states.append(contentsOf: kripkeStates)
+                history.append(contentsOf: kripkeStates)
                 let nextStateClone = nextState.clone(
                         transitions: nextState.transitions.map { 
                             guard let clone = clones[$0.target.name] else {
@@ -141,7 +143,7 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                     ringletClone,
                     fsmVars.vars,
                     clones,
-                    kripkeStates.last
+                    history
                 ))
             }
         }
