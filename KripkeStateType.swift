@@ -67,6 +67,21 @@ public protocol _KripkeStateType: Equatable {
     var beforeProperties: KripkeStatePropertyList { get }
 
     /**
+     *  The fsm that this state belongs to.
+     */
+    var fsm: AnyScheduleableFiniteStateMachine { get }
+
+    /**
+     *  The machine that this state belongs to.
+     */
+    var machine: Machine { get }
+
+    /**
+     *  The actual state within the finite state machine.
+     */
+    var state: AnyState { get }
+    
+    /**
      *  The state which we will transition to.
      */
     var previous: KripkeState? { get set }
@@ -76,7 +91,11 @@ public protocol _KripkeStateType: Equatable {
 extension _KripkeStateType where Self: CustomStringConvertible {
     
     public var description: String {
-        var str: String = "beforeProperties: {\n"
+        var str: String = "state = \(self.state.name)\n"
+        str += "machine = \(self.machine.name)\n"
+        str += "fsm = \(self.fsm.name)\n"
+        str += "previous = \(self.previous?.state.name)\n"
+        str += "beforeProperties: {\n"
         str += self.beforeProperties.description
         str += "\n}\n"
         str += "afterProperties: {\n"
@@ -91,7 +110,11 @@ extension _KripkeStateType where Self: CustomStringConvertible {
 extension _KripkeStateType where Self: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        var str: String = "beforeProperties: {\n"
+        var str: String = "state = \(self.state.name)\n"
+        str += "machine = \(self.machine.name)\n"
+        str += "fsm = \(self.fsm.name)\n"
+        str += "previous = \(self.previous?.state.name)\n"
+        str += "beforeProperties: {\n"
         str += self.beforeProperties.description
         str += "\n}\n"
         str += "afterProperties: {\n"
@@ -113,8 +136,10 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
    lhs: T,
    rhs: U
 ) -> Bool {
-    return lhs.afterProperties == rhs.afterProperties &&
-        lhs.beforeProperties == rhs.beforeProperties
+    return lhs.machine == rhs.machine &&
+        lhs.fsm == rhs.fsm &&
+        lhs.state == rhs.state &&
+        lhs.afterProperties == rhs.afterProperties
 }
 
 public protocol KripkeStateType:
