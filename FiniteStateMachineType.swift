@@ -234,7 +234,8 @@ public extension FiniteStateMachineType where
     Self: KripkeStructureGenerator,
     Self: KripkeRingletKripkeStructureGeneratorDelegator,
     Self.RingletType: KripkeRinglet,
-    Self.RingletType._StateType == Self._StateType
+    Self.RingletType._StateType == Self._StateType,
+    Self._StateType._TransitionType == Transition<Self._StateType>
 {
     
     public func generate(machine: String) -> KripkeStructure {

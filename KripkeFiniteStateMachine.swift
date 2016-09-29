@@ -101,7 +101,8 @@ public struct KripkeFiniteStateMachine<
     Resumeable,
     SnapshotContainer,
     StateExecuterDelegator where
-    R._StateType: Transitionable
+    R._StateType: Transitionable,
+    R._StateType._TransitionType == Transition<R._StateType>
 {
 
     public typealias _StateType = R._StateType

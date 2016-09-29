@@ -123,10 +123,12 @@ public final class CallbackMiPalState: MiPalState {
         self._onExit()
     }
     
-    public override final func clone() -> CallbackMiPalState {
+    public override final func clone(
+        transitions: [Transition<MiPalState>]
+    ) -> CallbackMiPalState {
         return CallbackMiPalState(
             self.name,
-            transitions: self.transitions,
+            transitions: transitions,
             onEntry: self._onEntry,
             main: self._main,
             onExit: self._onExit

@@ -75,24 +75,28 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         fsm: String,
         initialState: R._StateType,
         ringlet: R
-    ) -> KripkeStructure {
+    ) -> KripkeStructure where
+        R._StateType._TransitionType == Transition<R._StateType>
+    {
         let fsmVars = ringlet.fsmVars
         let globals = ringlet.globals
         let constructor = self.factory.make(globals: globals.val)
-        var jobs: [(R._StateType, R, R.FSMVariables.Vars, KripkeState?)] = 
+        var jobs: [(R._StateType, R, R.FSMVariables.Vars, [String: R._StateType], KripkeState?)] = 
             [(
-                initialState.clone(),
+                initialState.clone(transitions: initialState.transitions),
                 ringlet.clone(),
                 fsmVars.vars.clone(),
+                [:],
                 nil
             )]
         var hashTable: [String: Bool] = [:]
         var states: [KripkeState] = []
         while (false == jobs.isEmpty) { 
             let job = jobs.removeFirst()
-            let state = job.0.clone()
+            let state = job.0.clone(transitions: job.0.transitions)
             let ringlet = job.1.clone()
             let vars = job.2.clone()
+            var clones = job.3
             let spinner: () -> R.Container.Class? = constructor()
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
@@ -101,12 +105,14 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                         fsmVars: vars,
                         state: state
                     )
+                print(p)
                 // Have we seen this combination of variables before?
                 guard nil == hashTable[p.description] else {
                     continue
                 }
                 hashTable[p.description] = true
-                let stateClone = state.clone()
+                let stateClone = state.clone(transitions: state.transitions)
+                clones[stateClone.name] = stateClone
                 let ringletClone = ringlet.clone()
                 globals.val = gs
                 fsmVars.vars = vars.clone()
@@ -117,20 +123,30 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                     fsm: fsm,
                     state: stateClone.name,
                     snapshots: ringletClone.snapshots,
-                    previousState: job.3
+                    previousState: job.4
                 )
                 states.append(contentsOf: kripkeStates)
+                let nextStateClone = nextState.clone(
+                        transitions: nextState.transitions.map { 
+                            guard let clone = clones[$0.target.name] else {
+                                return $0
+                            }
+                            return $0.map { _ in clone }
+                        }
+                    )
+                print("nextState: \(nextStateClone)")
                 // Add the next state to the job queue
                 jobs.append((
-                    nextState,
+                    nextStateClone,
                     ringletClone,
                     fsmVars.vars,
+                    clones,
                     kripkeStates.last
                 ))
             }
         }
         print(states.count)
-        return KripkeStructure(states: [])
+        return KripkeStructure(states: states) 
     }
 
     private func makeKripkeStates(
