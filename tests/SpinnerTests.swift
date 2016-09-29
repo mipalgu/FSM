@@ -211,7 +211,7 @@ class SpinnerTests: XCTestCase {
     }
 
     func test_print() {
-        let _ = self.fsm.generate()
+        let _ = self.fsm.generate(machine: "test")
     }
 
 }
