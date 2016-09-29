@@ -62,18 +62,18 @@ public class KripkeState: KripkeStateType {
 
     public let beforeProperties: KripkeStatePropertyList
 
-    public let fsm: AnyScheduleableFiniteStateMachine
+    public let fsm: String
 
-    public let machine: Machine
+    public let machine: String 
     
-    public let state: AnyState
-    
+    public let state: String
+
     public var previous: KripkeState?
     
     public init(
-        state: AnyState,
-        fsm: AnyScheduleableFiniteStateMachine,
-        machine: Machine,
+        state: String,
+        fsm: String,
+        machine: String,
         beforeProperties: KripkeStatePropertyList,
         afterProperties: KripkeStatePropertyList,
         previous: KripkeState? = nil

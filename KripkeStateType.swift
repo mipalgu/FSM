@@ -69,17 +69,17 @@ public protocol _KripkeStateType: Equatable {
     /**
      *  The fsm that this state belongs to.
      */
-    var fsm: AnyScheduleableFiniteStateMachine { get }
+    var fsm: String { get }
 
     /**
      *  The machine that this state belongs to.
      */
-    var machine: Machine { get }
+    var machine: String { get }
 
     /**
      *  The actual state within the finite state machine.
      */
-    var state: AnyState { get }
+    var state: String { get }
     
     /**
      *  The state which we will transition to.
@@ -91,10 +91,10 @@ public protocol _KripkeStateType: Equatable {
 extension _KripkeStateType where Self: CustomStringConvertible {
     
     public var description: String {
-        var str: String = "state = \(self.state.name)\n"
-        str += "machine = \(self.machine.name)\n"
-        str += "fsm = \(self.fsm.name)\n"
-        str += "previous = \(self.previous?.state.name)\n"
+        var str: String = "state = \(self.state)\n"
+        str += "fsm = \(self.fsm)\n"
+        str += "machine = \(self.machine)\n"
+        str += "previous = \(self.previous?.state)\n"
         str += "beforeProperties: {\n"
         str += self.beforeProperties.description
         str += "\n}\n"
@@ -110,10 +110,10 @@ extension _KripkeStateType where Self: CustomStringConvertible {
 extension _KripkeStateType where Self: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        var str: String = "state = \(self.state.name)\n"
-        str += "machine = \(self.machine.name)\n"
-        str += "fsm = \(self.fsm.name)\n"
-        str += "previous = \(self.previous?.state.name)\n"
+        var str: String = "state = \(self.state)\n"
+        str += "fsm = \(self.fsm)\n"
+        str += "machine = \(self.machine)\n"
+        str += "previous = \(self.previous?.state)\n"
         str += "beforeProperties: {\n"
         str += self.beforeProperties.description
         str += "\n}\n"
