@@ -68,17 +68,17 @@ public final class CallbackMiPalState: MiPalState {
     /**
      *  The actual onEntry implementation.
      */
-    public let _onEntry: () -> Void
+    public private(set) var _onEntry: () -> Void
     
     /**
      *  The actual main implementation.
      */
-    public let _main: () -> Void
+    public private(set) var _main: () -> Void
     
     /**
      *  The actual onExit implementation.
      */
-    public let _onExit: () -> Void
+    public private(set) var _onExit: () -> Void
     
     public init(
         _ name: String,
@@ -123,16 +123,20 @@ public final class CallbackMiPalState: MiPalState {
         self._onExit()
     }
     
-    public override final func clone(
-        transitions: [Transition<MiPalState>]
-    ) -> CallbackMiPalState {
+    public override final func clone() -> CallbackMiPalState {
         return CallbackMiPalState(
             self.name,
-            transitions: transitions,
+            transitions: self.transitions,
             onEntry: self._onEntry,
             main: self._main,
             onExit: self._onExit
         )
+    }
+
+    public override final func update(fromDictionary dictionary: [String: Any]) {
+        self._onEntry = dictionary["_onEntry"]! as! () -> Void
+        self._main = dictionary["_main"]! as! () -> Void
+        self._onExit = dictionary["_onExit"]! as! () -> Void
     }
 
 }

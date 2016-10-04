@@ -56,8 +56,8 @@
  *
  */
 
-public protocol CloneableState: StateType, Transitionable {
+public protocol CloneableState: Cloneable, StateType, Transitionable {
 
-    func clone(transitions: [_TransitionType]) -> Self
+    func update(fromDictionary dictionary: [String: Any])
 
 }

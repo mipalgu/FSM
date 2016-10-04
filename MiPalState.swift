@@ -89,7 +89,9 @@ open class MiPalState:
 
     open func onExit() {}
 
-    open func clone(transitions _: [Transition<MiPalState>]) -> Self {
+    open func clone() -> Self {
         fatalError("Please implement your own clone")
     }
+
+    open func update(fromDictionary dictionary: [String: Any]) {}
 }
