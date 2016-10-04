@@ -69,7 +69,6 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
             state: R._StateType,
             ringlet: R,
             fsmVars: R.FSMVariables.Vars,
-            originals: [String: R._StateType],
             history: [KripkeState],
             cycleLength: Int,
             cyclePos: Int,
@@ -95,11 +94,11 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         let fsmVars = ringlet.fsmVars
         let globals = ringlet.globals
         let constructor = self.factory.make(globals: globals.val)
+        var originals: [String: R._StateType] = [initialState.name: initialState]
         var jobs: [Data<R>] = [(
                 initialState.clone(),
                 ringlet.clone(),
                 fsmVars.vars.clone(),
-                [initialState.name: initialState],
                 [],
                 0,
                 0,
@@ -111,17 +110,15 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         var states: [KripkeState] = []
         while (false == jobs.isEmpty) { 
             let job = jobs.removeFirst()
+            if (true == job.inCycle && job.cyclePos >= job.cycleLength) {
+                print("found cycle")
+                print("cycleLength: \(job.cycleLength), cyclePos: \(job.cyclePos), pos: \(job.pos), state: \(job.state)")
+                continue
+            }
             let state = job.state.clone()
             let ringlet = job.ringlet.clone()
             let vars = job.fsmVars.clone()
-            var originals = job.originals
-            if (nil == originals[state.name]) {
-                originals[state.name] = job.state
-            }
             let spinner: () -> R.Container.Class? = constructor()
-            if (true == job.inCycle && job.cyclePos >= job.cycleLength) {
-                continue
-            }
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
                 var history = job.history
@@ -134,18 +131,21 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                 let ringletClone = ringlet.clone()
                 globals.val = gs
                 fsmVars.vars = vars.clone()
-                originals[stateClone.name]!.update(fromDictionary: 
-                        self.extractor.extract(
-                            globals: gs,
-                            fsmVars: fsmVars.vars,
-                            state: stateClone
-                        ).stateProperties.reduce([:]) {
-                            var d = $0
-                            d[$1.0] = $1.1.value
-                            return d
-                        }
+                originals[stateClone.name]!.update(
+                        fromDictionary: self.extractor.extract(
+                                globals: gs,
+                                fsmVars: fsmVars.vars,
+                                state: stateClone
+                            ).stateProperties.reduce([:]) {
+                                var d = $0
+                                d[$1.0] = $1.1.value
+                                return d
+                            }
                     )
-                let nextState = ringletClone.execute(state: stateClone)
+                let nextState = ringletClone.execute(state: originals[stateClone.name]!)
+                if (nil == originals[nextState.name]) {
+                    originals[nextState.name] = nextState
+                }
                 // Generate Kripke States
                 let kripkeStates: [KripkeState] = self.makeKripkeStates(
                     machine: machine,
@@ -172,13 +172,15 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                 hashTable[kripkeStates.first!.description] = (kripkeStates.first!, pos)
                 states.append(contentsOf: kripkeStates)
                 history.append(kripkeStates.first!)
-                let nextStateClone = nextState.clone()
+                var nextStateClone = nextState.clone()
+                nextStateClone.transitions = nextStateClone.transitions.map {
+                    $0.map { $0.clone() }
+                }
                 // Add the next state to the job queue
                 jobs.append((
                     nextStateClone,
                     ringletClone,
                     fsmVars.vars,
-                    originals,
                     history,
                     cycleLength,
                     cyclePos,

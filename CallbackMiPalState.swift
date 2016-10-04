@@ -68,17 +68,17 @@ public final class CallbackMiPalState: MiPalState {
     /**
      *  The actual onEntry implementation.
      */
-    public private(set) var _onEntry: () -> Void
+    public let _onEntry: () -> Void
     
     /**
      *  The actual main implementation.
      */
-    public private(set) var _main: () -> Void
+    public let _main: () -> Void
     
     /**
      *  The actual onExit implementation.
      */
-    public private(set) var _onExit: () -> Void
+    public let _onExit: () -> Void
     
     public init(
         _ name: String,
@@ -131,12 +131,6 @@ public final class CallbackMiPalState: MiPalState {
             main: self._main,
             onExit: self._onExit
         )
-    }
-
-    public override final func update(fromDictionary dictionary: [String: Any]) {
-        self._onEntry = dictionary["_onEntry"]! as! () -> Void
-        self._main = dictionary["_main"]! as! () -> Void
-        self._onExit = dictionary["_onExit"]! as! () -> Void
     }
 
 }
