@@ -121,16 +121,9 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
     *  Convert the value to a KripkeStateProperty.
     */
     private func convertValue(value: Any) -> KripkeStateProperty {
-        var v: Any = value
-        let type: KripkeStatePropertyTypes = self.getKripkeStatePropertyType(v)
-        if (type == .Some) {
-            v = self.encode(v)
-        }
-        //let p: UnsafeMutablePointer<Any> = UnsafeMutablePointer<Any>.alloc(1)
-        //p.initialize(value)
         return KripkeStateProperty(
-            type: type,
-            value: v
+            type: self.getKripkeStatePropertyType(value),
+            value: value
         )
     }
     
@@ -178,18 +171,6 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
         default:
             return .Some
         }
-    }
-    
-    /*
-     *  Encode a value as a string.
-     */
-    private func encode(_ value: Any) -> String {
-        if (value is String) {
-            return "" + (value as! String)
-        }
-        var str: String = ""
-        print(value, terminator: "", to: &str)
-        return str
     }
     
 }
