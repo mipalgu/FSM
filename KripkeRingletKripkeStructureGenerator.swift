@@ -64,6 +64,7 @@ public protocol KripkeRingletKripkeStructureGenerator {
         initialState: R._StateType,
         ringlet: R
     ) -> KripkeStructure where
+        R._StateType: KripkeVariablesModifier,
         R._StateType._TransitionType == Transition<R._StateType>
 
 }

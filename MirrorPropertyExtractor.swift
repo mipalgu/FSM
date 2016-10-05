@@ -70,13 +70,14 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
         globals: G,
         fsmVars: F,
         state: S
-    ) -> KripkeStatePropertyList {
+    ) -> KripkeStatePropertyList where S: KripkeVariablesModifier {
         var stateProperties: [String: KripkeStateProperty] =
             self.getPropertiesFromMirror(
-                mirror: Mirror(reflecting: state)
+                mirror: Mirror(reflecting: state),
+                validValues: state.validVars
             )
-        // Ignore the states name property.
-        stateProperties["name"] = nil
+        // Ignore the validVars
+        stateProperties["validVars"] = nil
         let fsmProperties: [String: KripkeStateProperty] =
             self.getPropertiesFromMirror(
                 mirror: Mirror(reflecting: fsmVars)
@@ -91,7 +92,7 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
             globalProperties: globalProperties
         )
     }
-    
+
     /*
      *  Extract the properties from a mirror.
      *
@@ -101,18 +102,27 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
      */
     private func getPropertiesFromMirror(
         mirror: Mirror,
-        properties: [String: KripkeStateProperty] = [:]
+        validValues: [String: [Any]] = [:]
     ) -> [String: KripkeStateProperty] {
-        var p: [String: KripkeStateProperty] = properties
+        var p: [String: KripkeStateProperty] = [:]
         let parent: Mirror? = mirror.superclassMirror
         if (nil != parent) {
-            p = self.getPropertiesFromMirror(mirror: parent!)
+            p = self.getPropertiesFromMirror(
+                mirror: parent!,
+                validValues: validValues
+            )
         }
         for child: Mirror.Child in mirror.children {
-            if (nil == child.label) {
+            guard let label = child.label else {
                 continue
             }
-            p[child.label!] = self.convertValue(value: child.value)
+            if (nil != validValues[label] && true == validValues[label]!.isEmpty) {
+                continue
+            }
+            p[label] = self.convertValue(
+                value: child.value,
+                validValues: validValues[label]
+            )
         }
         return p
     }
@@ -120,10 +130,14 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
     /*
     *  Convert the value to a KripkeStateProperty.
     */
-    private func convertValue(value: Any) -> KripkeStateProperty {
+    private func convertValue(value: Any, validValues: [Any]?) -> KripkeStateProperty {
+        let t = self.getKripkeStatePropertyType(
+            value,
+            validValues: validValues ?? [value]
+        )
         return KripkeStateProperty(
-            type: self.getKripkeStatePropertyType(value),
-            value: value
+            type: t.0,
+            value: t.1
         )
     }
     
@@ -131,45 +145,95 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
     *  Derive the KripkeStatePropertyType associated with a value.
     */
     private func getKripkeStatePropertyType(
-        _ value: Any
-    ) -> KripkeStatePropertyTypes {
-        switch (value) {
+        _ val: Any,
+        validValues values: [Any]
+    ) -> (KripkeStatePropertyTypes, Any) {
+        switch (val) {
         case is Bool:
-            return .Bool
+            let val: Bool = val as! Bool
+            if (1 == values.count) {
+                return (.Bool, values[0])
+            }
+            return (.Bool, values[val == false ? 0 : 1])
         case is Int:
-            return .Int
+            let values: [Int] = values as! [Int]
+            let val: Int = val as! Int
+            return (.Int, values[Int((val &+ values[0]) % values.count)])
         case is Int8:
-            return .Int8
+            let values: [Int8] = values as! [Int8]
+            let val: Int8 = val as! Int8
+            let temp = values[Int((val &+ values[0]) % Int8(values.count))]
+            return (.Int8, temp)
         case is Int16:
-            return .Int16
+            let values: [Int16] = values as! [Int16]
+            let val: Int16 = val as! Int16
+            return (.Int16, values[Int((val &+ values[0]) % Int16(values.count))])
         case is Int32:
-            return .Int32
+            let values: [Int32] = values as! [Int32]
+            let val: Int32 = val as! Int32
+            return (.Int32, values[Int((val &+ values[0]) % Int32(values.count))])
         case is Int64:
-            return .Int64
+            let values: [Int64] = values as! [Int64]
+            let val: Int64 = val as! Int64
+            return  (.Int64, values[Int((val &+ values[0]) % Int64(values.count))])
         case is UInt:
-            return .UInt
+            let values: [UInt] = values as! [UInt]
+            let val: UInt = val as! UInt
+            return  (.UInt, values[Int((val &+ values[0]) % UInt(values.count))])
         case is UInt8:
-            return .UInt8
+            let values: [UInt8] = values as! [UInt8]
+            let val: UInt8 = val as! UInt8
+            return  (.UInt8, values[Int((val &+ values[0]) % UInt8(values.count))])
         case is UInt16:
-            return .UInt16
+            let values: [UInt16] = values as! [UInt16]
+            let val: UInt16 = val as! UInt16
+            return  (.UInt16, values[Int((val &+ values[0]) % UInt16(values.count))])
         case is UInt32:
-            return .UInt32
+            let values: [UInt32] = values as! [UInt32]
+            let val: UInt32 = val as! UInt32
+            return  (.UInt32, values[Int((val &+ values[0]) % UInt32(values.count))])
         case is UInt64:
-            return .UInt64
+            let values: [UInt64] = values as! [UInt64]
+            let val: UInt64 = val as! UInt64
+            return  (.UInt64, values[Int((val &+ values[0]) % UInt64(values.count))])
         case is Float:
-            return .Float
-        case is Float80:
-            return .Float80
-        case is Double:
-            return .Double
-        case is String:
-            return .String
-        case is KripkeCollection:
-            return .Collection(
-                (value as! KripkeCollection).toArray().map(self.convertValue)
+            let values: [Float] = values as! [Float]
+            var val: Float = ((val as! Float) + values[0])
+            val = val.truncatingRemainder(dividingBy: Float(values.count))
+            return (
+                .Float,
+                values.lazy.map { abs(val - $0) }.lazy.sorted { $0 < $1 }.first!
             )
+        case is Float80:
+            let values: [Float80] = values as! [Float80]
+            var val: Float80 = ((val as! Float80) + values[0])
+            val = val.truncatingRemainder(dividingBy: Float80(values.count))
+            return (
+                .Float80,
+                values.lazy.map { abs(val - $0) }.lazy.sorted { $0 < $1 }.first!
+            )
+        case is Double:
+            let values: [Double] = values as! [Double]
+            var val: Double = ((val as! Double) + values[0])
+            val = val.truncatingRemainder(dividingBy: Double(values.count))
+            return (
+                .Float80,
+                values.lazy.map { abs(val - $0) }.lazy.sorted { $0 < $1 }.first!
+            )
+        case is String:
+            if (values.count == 1) {
+                return (.String, values[0])
+            }
+            return (.String, val)
+        case is KripkeCollection:
+            let collection = (val as! KripkeCollection).toArray()
+            var arr: [Any] = []
+            collection.forEach {
+                arr.append(self.getKripkeStatePropertyType($0, validValues: values).1)
+            }
+            return (.Collection(collection.map({ self.convertValue(value: $0, validValues: values) })), arr)
         default:
-            return .Some
+            return (.Some, val)
         }
     }
     

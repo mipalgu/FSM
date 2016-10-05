@@ -62,6 +62,6 @@ public protocol PropertiesExtractor {
         globals: G,
         fsmVars: F,
         state: S
-    ) -> KripkeStatePropertyList
+    ) -> KripkeStatePropertyList where S: KripkeVariablesModifier
 
 }

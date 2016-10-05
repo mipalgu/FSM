@@ -102,7 +102,8 @@ public struct KripkeFiniteStateMachine<
     SnapshotContainer,
     StateExecuterDelegator where
     R._StateType: Transitionable,
-    R._StateType._TransitionType == Transition<R._StateType>
+    R._StateType._TransitionType == Transition<R._StateType>,
+    R._StateType: KripkeVariablesModifier
 {
 
     public typealias _StateType = R._StateType

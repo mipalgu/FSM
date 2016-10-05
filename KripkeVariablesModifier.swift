@@ -1,9 +1,9 @@
 /*
- * MiPalState.swift
- * swiftfsm
+ * KripkeVariablesModifier.swift 
+ * FSM 
  *
- * Created by Callum McColl on 11/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 05/10/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,47 +56,8 @@
  *
  */
 
-open class MiPalState:
-    StateType,
-    CloneableState,
-    CustomStringConvertible,
-    CustomDebugStringConvertible,
-    MiPalActions,
-    Transitionable,
-    KripkeVariablesModifier
-{
+public protocol KripkeVariablesModifier {
 
-    /**
-     *  The name of the state.
-     *
-     *  - Requires: Must be unique for each state.
-     */
-    public let name: String
+    var validVars: [String: [Any]] { get }
 
-    /**
-     *  An array of transitions that this state may use to move to another
-     *  state.
-     */
-    public var transitions: [Transition<MiPalState>]
-
-    open var validVars: [String: [Any]] {
-        return [:]
-    }
-    
-    public init(_ name: String, transitions: [Transition<MiPalState>] = []) {
-        self.name = name
-        self.transitions = transitions
-    }
-
-    open func onEntry() {}
-
-    open func main() {}
-
-    open func onExit() {}
-
-    open func clone() -> Self {
-        fatalError("Please implement your own clone")
-    }
-
-    open func update(fromDictionary dictionary: [String: Any]) {}
 }

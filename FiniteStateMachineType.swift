@@ -235,6 +235,7 @@ public extension FiniteStateMachineType where
     Self: KripkeRingletKripkeStructureGeneratorDelegator,
     Self.RingletType: KripkeRinglet,
     Self.RingletType._StateType == Self._StateType,
+    Self._StateType: KripkeVariablesModifier,
     Self._StateType._TransitionType == Transition<Self._StateType>
 {
     
