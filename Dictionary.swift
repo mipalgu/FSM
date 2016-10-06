@@ -75,3 +75,21 @@ public extension Dictionary {
     }
 
 }
+
+public func <| <Key: Hashable, Value>(
+    lhs: Dictionary<Key, Value>,
+    rhs: Dictionary<Key, Value>
+) -> Dictionary<Key, Value> {
+    return lhs.merged(rhs)
+}
+
+public func |> <Key: Hashable, Value>(
+    lhs: Dictionary<Key, Value>,
+    rhs: Dictionary<Key, Value>
+) -> Dictionary<Key, Value> {
+    return rhs.merged(lhs)
+}
+
+infix operator <| : LeftFunctionalPrecedence
+
+infix operator |> : LeftFunctionalPrecedence
