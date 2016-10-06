@@ -69,13 +69,9 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
             state: R._StateType,
             ringlet: R,
             fsmVars: R.FSMVariables.Vars,
-            history: [KripkeState],
-            cycleLength: Int,
-            cyclePos: Int,
-            cycleStartingPos: Int,
-            inCycle: Bool,
-            pos: Int,
-            hashTable: [String: (KripkeState, Int)]
+            last: KripkeState?,
+            allStateProperties: [String: [String: KripkeStateProperty]],
+            hashTable: [String: World]
         )
 
     public init(extractor: E, factory: SpinnersFactory) {
@@ -96,56 +92,53 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         let globals = ringlet.globals
         let constructor = self.factory.make(globals: globals.val)
         var originals: [String: R._StateType] = [initialState.name: initialState]
+        var defaults: [String: [String: KripkeStateProperty]] = [
+            initialState.name: self.extractor.extract(
+                globals: globals.val,
+                fsmVars: fsmVars.vars,
+                state: initialState
+            ).stateProperties
+        ]
         var jobs: [Data<R>] = [(
                 initialState.clone(),
                 ringlet.clone(),
                 fsmVars.vars.clone(),
-                [],
-                0,
-                0,
-                0,
-                false,
-                0,
+                nil,
+                [:],
                 [:]
             )]
         var states: [KripkeState] = []
         while (false == jobs.isEmpty) { 
             let job = jobs.removeFirst()
-            if (true == job.inCycle && job.cyclePos >= job.cycleLength) {
-                print("found cycle")
-                print("cycleLength: \(job.cycleLength), cyclePos: \(job.cyclePos), pos: \(job.pos), state: \(job.state)")
-                continue
-            }
             let state = job.state.clone()
             let ringlet = job.ringlet.clone()
             let vars = job.fsmVars.clone()
+            var allStateProperties = job.allStateProperties
+            let properties = self.extractor.extract(
+                    globals: globals.val,
+                    fsmVars: vars,
+                    state: state
+                ).stateProperties
+            originals[state.name]!.update(
+                    fromDictionary: self.reduce(properties)
+                )
+            allStateProperties[state.name] = properties
             let spinner: () -> R.Container.Class? = constructor()
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
-                var history = job.history
-                var cyclePos = job.cyclePos
-                var cycleLength = job.cycleLength
-                var cycleStartingPos = job.cycleStartingPos
-                var inCycle = job.inCycle
-                var hashTable: [String: (KripkeState, Int)] = job.hashTable
+                var hashTable: [String: World] = job.hashTable
                 let stateClone = state.clone()
                 let ringletClone = ringlet.clone()
                 globals.val = gs
                 fsmVars.vars = vars.clone()
-                originals[stateClone.name]!.update(
-                        fromDictionary: self.extractor.extract(
-                                globals: gs,
-                                fsmVars: fsmVars.vars,
-                                state: stateClone
-                            ).stateProperties.reduce([:]) {
-                                var d = $0
-                                d[$1.0] = $1.1.value
-                                return d
-                            }
-                    )
                 let nextState = ringletClone.execute(state: originals[stateClone.name]!)
                 if (nil == originals[nextState.name]) {
                     originals[nextState.name] = nextState
+                    defaults[nextState.name] = self.extractor.extract(
+                            globals: gs,
+                            fsmVars: fsmVars.vars,
+                            state: nextState
+                        ).stateProperties
                 }
                 // Generate Kripke States
                 let kripkeStates: [KripkeState] = self.makeKripkeStates(
@@ -153,26 +146,25 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                     fsm: fsm,
                     state: stateClone.name,
                     snapshots: ringletClone.snapshots,
-                    previousState: history.last
+                    previousState: job.last
                 )
-                let pos = job.pos + 1
-                if (true == inCycle) {
-                    inCycle = kripkeStates.first == history[cycleStartingPos + cyclePos]
-                    cyclePos += 1
-                    if (false == inCycle) {
-                        cycleLength = 0
-                    }
+                guard let first = kripkeStates.first else {
+                    continue
                 }
+                let world = World(
+                    executingState: stateClone.name,
+                    globals: first.beforeProperties.globalProperties,
+                    fsmVars: first.beforeProperties.fsmProperties,
+                    stateProperties: defaults
+                        <| allStateProperties
+                        <| [stateClone.name: first.beforeProperties.stateProperties]
+                )
                 // Have we seen this combination of variables before?
-                if (false == inCycle && hashTable[kripkeStates.first!.description] != nil) {
-                    inCycle = true
-                    cyclePos = 0
-                    cycleLength = pos - hashTable[kripkeStates.first!.description]!.1
-                    cycleStartingPos = pos - cycleLength
+                if (hashTable[world.description] != nil) {
+                    continue
                 }
-                hashTable[kripkeStates.first!.description] = (kripkeStates.first!, pos)
+                hashTable[world.description] = world
                 states.append(contentsOf: kripkeStates)
-                history.append(kripkeStates.first!)
                 var nextStateClone = nextState.clone()
                 nextStateClone.transitions = nextStateClone.transitions.map {
                     $0.map { $0.clone() }
@@ -182,18 +174,22 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
                     nextStateClone,
                     ringletClone,
                     fsmVars.vars,
-                    history,
-                    cycleLength,
-                    cyclePos,
-                    cycleStartingPos,
-                    inCycle,
-                    pos,
+                    kripkeStates.last,
+                    allStateProperties,
                     hashTable
                 ))
             }
         }
         print(states.count)
         return KripkeStructure(states: states) 
+    }
+
+    private func reduce(_ p: [String: KripkeStateProperty]) -> [String: Any] {
+        return p.reduce([:]) {
+            var d = $0
+            d[$1.0] = $1.1.value
+            return d
+        }
     }
 
     private func makeKripkeStates(
@@ -225,5 +221,21 @@ public class HashTableKripkeRingletKripkeStructureGenerator<
         }
 
     }
+    
+}
+
+fileprivate struct World: CustomStringConvertible {
+
+    public var description: String {
+        return "\(executingState), \(self.globals), \(self.fsmVars), \(self.stateProperties)"
+    }
+
+    let executingState: String
+
+    let globals: [String: KripkeStateProperty]
+
+    let fsmVars: [String: KripkeStateProperty]
+
+    let stateProperties: [String: [String: KripkeStateProperty]]
 
 }
