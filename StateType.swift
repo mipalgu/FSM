@@ -96,3 +96,11 @@ extension StateType where
     }
     
 }
+
+public extension StateType where Self: KripkeVariablesModifier {
+
+    public var validVars: [String: [Any]] {
+        return [:]
+    }
+
+}
