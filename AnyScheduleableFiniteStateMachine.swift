@@ -56,6 +56,17 @@
  *
  */
 
+/**
+ *  A type-erased Finite State Machine that is loadable by the swiftfsm
+ *  scheduler.
+ *
+ *  An instance of `AnyScheduleableFiniteStateMachine` forwards its operations
+ *  to an underlying base `FiniteStateMachineType`, wrapping all states within
+ *  an `AnyState`, hiding the specifics of the underlying fsm.
+ *
+ *  - SeeAlso: `AnyState`
+ *  - SeeAlso: `FiniteStateMachineType`
+ */
 public struct AnyScheduleableFiniteStateMachine:
     FiniteStateMachineType,
     StateExecuter,
@@ -93,48 +104,95 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _suspendState: () -> AnyState
 
+    /**
+     *  The next state to execute.
+     *
+     *  - Attention: This state is read-only, attempting to set this to a new
+     *  value will not do anything.
+     */
     public var currentState: AnyState {
         get {
             return self._currentState()
         } set {}
     }
 
+    /**
+     *  Has the Finite State Machine finished?
+     */
     public var hasFinished: Bool {
         return self._hasFinished()
     }
 
+    /**
+     *  The first state that the Finite State Machine would execute.
+     */
     public var initialState: AnyState {
         return self._initialState()
     }
 
+    /**
+     *  Is the Finite State Machine suspended?
+     */
     public var isSuspended: Bool {
         return self._isSuspended()
     }
 
+    /**
+     *  The name of the Finite State Machine.
+     *
+     *  - Warning: This must be unique between Finite State Machines.
+     */
     public var name: String {
         return self._name()
     }
 
+    /**
+     *  The last state that was executed.
+     *
+     *  - Attention: This state is read-only, attempting to set this to a new
+     *  value will not do anything.
+     */
     public var previousState: AnyState {
         get {
             return self._previousState()
         } set {}
     }
 
+    /**
+     *  An array of `KripkeStatePropertyList` instances, representing the values
+     *  of the global variables, fsm variables and state variables at certain
+     *  points in time.
+     */
     public var snapshots: [KripkeStatePropertyList] {
         return self._snapshots()
     }
 
+    /**
+     *  The state that was set as `currentState` before the Finite State
+     *  Machine was suspended.
+     *
+     *  - Attention: This state is read-only, attempting to set this to a new
+     *  value will not do anything.
+     */
     public var suspendedState: AnyState? {
         get {
             return self._suspendedState()
         } set {}
     }
 
+    /**
+     *  The state that is set to `currentState` when the Finite State Machine
+     *  is suspended, assuming that the underlying base fsm follows the default
+     *  procedure for Finite State Machine suspension.
+     */
     public var suspendState: AnyState {
         return self._suspendState()
     }
 
+    /**
+     *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
+     *  forwards operations to `base`.
+     */
     public init<FSM: FiniteStateMachineType>(_ base: FSM) where
         FSM: StateExecuter,
         FSM: Finishable,
@@ -158,18 +216,34 @@ public struct AnyScheduleableFiniteStateMachine:
         self._suspendState = { AnyState(base.suspendState) }
     }
 
+    /**
+     *  Generate a Kripke Structure for `base`.
+     *
+     *  - Parameter machine: The name of the machine that `base` belongs to.
+     *
+     *  - Returns: The generated `KripkeStructure`.
+     */
     public func generate(machine: String) -> KripkeStructure {
         return self._generate(machine)
     }
 
+    /**
+     *  Execute the next state.
+     */
     public func next() {
         self._next()
     }
 
+    /**
+     *  Resume the Finite State Machine so that it is no longer suspended.
+     */
     public func resume() {
         self._resume()
     }
 
+    /**
+     *  Suspend the Finite State Machine.
+     */
     public func suspend() {
         self._suspend()
     }
