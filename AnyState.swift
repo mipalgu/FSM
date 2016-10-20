@@ -56,14 +56,28 @@
  *
  */
 
+/**
+ *  A type-erased state.
+ *
+ *  An instance of `AnyState` forwards its operations to an underlying base
+ *  `StateType`, hiding the specifics of the underlying type.
+ */
 public class AnyState: StateType {
 
-    public let _name: () -> String
+    private let _name: () -> String
 
+    /**
+     *  The name of the state.
+     *
+     *  - Warning: This must be unique between states. 
+     */
     public var name: String {
         return self._name()
     }
 
+    /**
+     *  Creates a new `AnyState` that wraps and forwards operations to `base`.
+     */
     public init<S: StateType>(_ base: S) {
         self._name = { base.name }
     }
