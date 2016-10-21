@@ -58,10 +58,16 @@
 
 /**
  *  Provides a way for developers to pass in the onEntry, main and onExit
- *  methods when initializing a state so that they can more easily create simple
- *  states.
+ *  methods when initializing a `MiPalState` so that they can more easily create
+ *  simple states.
  *
- *  This class cannot be subclasses.
+ *  - Warning: It is important that when creating the `_onEntry`, `_main` and
+ *  `_onExit` functions, you do not refer to variables that are outside the
+ *  scope of the functions.  If you do so, you will possibly introduce
+ *  side-effects that cannot be detected by the Kripke Structure generation and
+ *  will therefore throw off the formal verification.
+ *
+ *  - SeeAlso: `MiPalState`
  */
 public final class CallbackMiPalState: MiPalState {
     
@@ -80,6 +86,9 @@ public final class CallbackMiPalState: MiPalState {
      */
     public let _onExit: () -> Void
     
+    /**
+     *  Create a new `CallbackMiPalState`.
+     */
     public init(
         _ name: String,
         transitions: [Transition<MiPalState>] = [],
@@ -94,35 +103,29 @@ public final class CallbackMiPalState: MiPalState {
     }
     
     /**
-     *  This method simply calls `_onEntry`.
-     *
-     *  This method cannot be overrided as all `CallbackState`s must use the 
-     *  `_onEntry` property instead.
+     *  This method delegates to `_onEntry`.
      */
     public override final func onEntry() {
         self._onEntry()
     }
     
     /**
-     *  This method simply calls `_main`.
-     *
-     *  This method cannot be overrided as all `CallbackState`s must use the
-     *  `_main` property instead.
+     *  This method delegates to `_main`.
      */
     public override final func main() {
         self._main()
     }
     
     /**
-     *  This method simply calls `_onExit`.
-     *
-     *  This method cannot be overrided as all `CallbackState`s must use the
-     *  `_onExit` property instead.
+     *  This method delegates to `_onExit`.
      */
     public override final func onExit() {
         self._onExit()
     }
     
+    /**
+     *  Create a new `CallbackMiPalState` that is an exact copy of `self`.
+     */
     public override final func clone() -> CallbackMiPalState {
         return CallbackMiPalState(
             self.name,
