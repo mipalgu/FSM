@@ -56,8 +56,15 @@
  *
  */
 
+/**
+ *  Provides a common interface for types that are able to create copies of
+ *  themselves.
+ */
 public protocol Cloneable {
 
+    /**
+     *  Create a copy of `self`.
+     */
     func clone() -> Self
 
 }
