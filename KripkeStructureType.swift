@@ -61,7 +61,7 @@
  */
 public protocol _KripkeStructureType {
     
-    var states: [KripkeState] { get }
+    var states: [[KripkeState]] { get }
     
 }
 
@@ -81,8 +81,10 @@ extension _KripkeStructureType where Self: CustomStringConvertible {
         // Create the states.
         var str: String = start + "\n"
         self.states.forEach {
-            str += arrow + border + "\n"
-            str += $0.description + "\n" + border + "\n"
+            $0.forEach {
+                str += arrow + border + "\n"
+                str += $0.description + "\n" + border + "\n"
+            }
         }
         return str
     }
