@@ -56,7 +56,7 @@
  *
  */
 
-public class HashTableCycleDetector<E>: CycleDetector where E: Hashable {
+public class HashTableCycleDetector<E: Hashable>: CycleDetector {
 
     public typealias Data = [Element: Bool]
     public typealias Element = E
