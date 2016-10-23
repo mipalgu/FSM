@@ -62,9 +62,7 @@
  */
 public protocol _KripkeStateType: Equatable {
     
-    var afterProperties: KripkeStatePropertyList { get }
-
-    var beforeProperties: KripkeStatePropertyList { get }
+    var properties: KripkeStatePropertyList { get }
 
     /**
      *  The fsm that this state belongs to.
@@ -95,11 +93,8 @@ extension _KripkeStateType where Self: CustomStringConvertible {
         str += "fsm = \(self.fsm)\n"
         str += "machine = \(self.machine)\n"
         str += "previous = \(self.previous?.state)\n"
-        str += "beforeProperties: {\n"
-        str += self.beforeProperties.description
-        str += "\n}\n"
-        str += "afterProperties: {\n"
-        str += self.afterProperties.description
+        str += "properties: {\n"
+        str += self.properties.description
         str += "\n}\n"
         str += "}"
         return str
@@ -114,11 +109,8 @@ extension _KripkeStateType where Self: CustomDebugStringConvertible {
         str += "fsm = \(self.fsm)\n"
         str += "machine = \(self.machine)\n"
         str += "previous = \(self.previous?.state)\n"
-        str += "beforeProperties: {\n"
-        str += self.beforeProperties.description
-        str += "\n}\n"
-        str += "afterProperties: {\n"
-        str += self.afterProperties.description
+        str += "properties: {\n"
+        str += self.properties.description
         str += "\n}\n"
         str += "}"
         return str
@@ -139,7 +131,7 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
     return lhs.machine == rhs.machine &&
         lhs.fsm == rhs.fsm &&
         lhs.state == rhs.state &&
-        lhs.afterProperties == rhs.afterProperties
+        lhs.properties == rhs.properties
 }
 
 public protocol KripkeStateType:
