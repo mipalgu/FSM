@@ -1,8 +1,8 @@
 /*
- * TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift 
+ * TeleportingTurtleCycleDetector.swift 
  * FSM 
  *
- * Created by Callum McColl on 12/10/2016.
+ * Created by Callum McColl on 23/10/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,36 +56,19 @@
  *
  */
 
-public final class TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory {
+public class TeleportingTurtleCycleDetector<E: Equatable>: CycleDetector {
 
-    public typealias Generator = KripkeRingletKripkeStructureGenerator<
-        TeleportingTurtleCycleDetector<World>,
-        MirrorPropertyExtractor,
-        GlobalsSpinnerConstructorFactory<
-            GlobalsSpinnerConstructor<SpinnerRunner>,
-            GlobalsSpinnerDataExtractor<
-                MirrorPropertyExtractor,
-                KripkeStatePropertySpinnerConverter
-            >
-        >
-    >
-        
+    public typealias Data = (turtle: Element?, power: Int, length: Int)
+    public typealias Element = E
 
-    public func make() -> Generator {
-        return KripkeRingletKripkeStructureGenerator(
-            cycleDetector: TeleportingTurtleCycleDetector<World>(),
-            extractor: MirrorPropertyExtractor(),
-            factory: GlobalsSpinnerConstructorFactory(
-                constructor: GlobalsSpinnerConstructor(
-                    runner: SpinnerRunner()
-                ),
-                extractor: GlobalsSpinnerDataExtractor(
-                    converter: KripkeStatePropertySpinnerConverter(),
-                    extractor: MirrorPropertyExtractor()
-                )
-            )
-        )
+    public let initialData: Data = (nil, 1, 1)
+
+    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
+        let inCycle = nil == data.turtle ? false : data.turtle! == element
+        if (data.length >= data.power) {
+            return (inCycle, (element, data.power * 2, 1))
+        }
+        return (inCycle, (data.turtle, data.power, data.length + 1))
     }
-
 
 }
