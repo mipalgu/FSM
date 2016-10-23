@@ -111,7 +111,7 @@ public class KripkeRingletKripkeStructureGenerator<
                 [:],
                 self.cycleDetector.initialData
             )]
-        var states: [KripkeState] = []
+        var states: [[KripkeState]] = []
         while (false == jobs.isEmpty) { 
             let job = jobs.removeFirst()
             let state = job.state.clone()
@@ -157,11 +157,11 @@ public class KripkeRingletKripkeStructureGenerator<
                 }
                 let world = World(
                     executingState: stateClone.name,
-                    globals: first.beforeProperties.globalProperties,
-                    fsmVars: first.beforeProperties.fsmProperties,
+                    globals: first.properties.globalProperties,
+                    fsmVars: first.properties.fsmProperties,
                     stateProperties: defaults
                         <| allStateProperties
-                        <| [stateClone.name: first.beforeProperties.stateProperties]
+                        <| [stateClone.name: first.properties.stateProperties]
                 )
                 let (inCycle, newData) = self.cycleDetector.inCycle(
                     data: data,
@@ -171,7 +171,7 @@ public class KripkeRingletKripkeStructureGenerator<
                 if (true == inCycle) {
                     continue
                 }
-                states.append(contentsOf: kripkeStates)
+                states.append(kripkeStates)
                 var nextStateClone = nextState.clone()
                 nextStateClone.transitions = nextStateClone.transitions.map {
                     $0.map { $0.clone() }
@@ -206,11 +206,6 @@ public class KripkeRingletKripkeStructureGenerator<
         snapshots: [KripkeStatePropertyList],
         previousState: KripkeState?
     ) -> [KripkeState] {
-        if (snapshots.count < 2) {
-            fatalError("Ringlet did not generate enough snapshots")
-        }
-        var snapshots = snapshots
-        var lastProperties: KripkeStatePropertyList = snapshots.removeFirst()
         var lastState: KripkeState? = previousState
         // Create the Kripke States
         return snapshots.map {
@@ -218,11 +213,9 @@ public class KripkeRingletKripkeStructureGenerator<
                 state: state,
                 fsm: fsm,
                 machine: machine,
-                beforeProperties: lastProperties,
-                afterProperties: $0,
+                properties: $0,
                 previous: lastState
             )
-            lastProperties = $0
             lastState = state
             return state
         }
