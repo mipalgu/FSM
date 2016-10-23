@@ -92,7 +92,7 @@
  */
 public struct KripkeFiniteStateMachine<
     R: KripkeRinglet,
-    G: KripkeRingletKripkeStructureGenerator
+    G: KripkeRingletKripkeStructureGeneratorType
 >: FiniteStateMachineType,
     ExitableStateExecuter,
     KripkeStructureGenerator,

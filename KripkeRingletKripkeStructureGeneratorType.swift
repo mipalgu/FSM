@@ -1,8 +1,8 @@
 /*
- * HashTableKripkeRingletKripkeStructureGeneratorFactory.swift 
+ * KripkeRingletKripkeStructureGeneratorType.swift 
  * FSM 
  *
- * Created by Callum McColl on 29/09/2016.
+ * Created by Callum McColl on 24/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,34 +56,15 @@
  *
  */
 
-public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
+public protocol KripkeRingletKripkeStructureGeneratorType {
 
-    public typealias Generator = KripkeRingletKripkeStructureGenerator<
-        HashTableCycleDetector<World>,
-        MirrorPropertyExtractor,
-        GlobalsSpinnerConstructorFactory<
-            GlobalsSpinnerConstructor<SpinnerRunner>,
-            GlobalsSpinnerDataExtractor<
-                MirrorPropertyExtractor,
-                KripkeStatePropertySpinnerConverter
-            >
-        >
-    >
-
-    public func make() -> Generator {
-        return KripkeRingletKripkeStructureGenerator(
-            cycleDetector: HashTableCycleDetector<World>(),
-            extractor: MirrorPropertyExtractor(),
-            factory: GlobalsSpinnerConstructorFactory(
-                constructor: GlobalsSpinnerConstructor(
-                    runner: SpinnerRunner()
-                ),
-                extractor: GlobalsSpinnerDataExtractor(
-                    converter: KripkeStatePropertySpinnerConverter(),
-                    extractor: MirrorPropertyExtractor()
-                )
-            )
-        )
-    }
+    func generate<R: KripkeRinglet>(
+        machine: String,
+        fsm: String,
+        initialState: R._StateType,
+        ringlet: R
+    ) -> KripkeStructure where
+        R._StateType: KripkeVariablesModifier,
+        R._StateType._TransitionType == Transition<R._StateType>
 
 }

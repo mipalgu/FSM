@@ -59,7 +59,7 @@
 public class TeleportingTurtleKripkeRingletKripkeStructureGenerator<
     E: PropertiesExtractor,
     SpinnersFactory: GlobalsSpinnerConstructorFactoryType
->: KripkeRingletKripkeStructureGenerator {
+>: KripkeRingletKripkeStructureGeneratorType {
 
     private let extractor: E
 
@@ -238,24 +238,4 @@ public class TeleportingTurtleKripkeRingletKripkeStructureGenerator<
 
     }
     
-}
-
-fileprivate struct World: CustomStringConvertible {
-
-    public var description: String {
-        return "\(executingState), \(self.globals), \(self.fsmVars), \(self.stateProperties)"
-    }
-
-    let executingState: String
-
-    let globals: [String: KripkeStateProperty]
-
-    let fsmVars: [String: KripkeStateProperty]
-
-    let stateProperties: [String: [String: KripkeStateProperty]]
-
-}
-
-fileprivate func ==(lhs: World, rhs: World) -> Bool {
-    return lhs.description == rhs.description
 }
