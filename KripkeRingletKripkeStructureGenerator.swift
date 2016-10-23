@@ -171,7 +171,7 @@ public class KripkeRingletKripkeStructureGenerator<
                 if (true == inCycle) {
                     continue
                 }
-                states.append(kripkeStates)
+                states.insert(kripkeStates, at: 0)
                 var nextStateClone = nextState.clone()
                 nextStateClone.transitions = nextStateClone.transitions.map {
                     $0.map { $0.clone() }
@@ -206,20 +206,34 @@ public class KripkeRingletKripkeStructureGenerator<
         snapshots: [KripkeStatePropertyList],
         previousState: KripkeState?
     ) -> [KripkeState] {
-        var lastState: KripkeState? = previousState
+        if (true == snapshots.isEmpty) {
+            fatalError("Ringlet did not take any snapshots!")
+        }
+        var snapshots = snapshots
         // Create the Kripke States
-        return snapshots.map {
-            let state: KripkeState = KripkeState(
+        let firstState: KripkeState = KripkeState(
+            state: state,
+            fsm: fsm,
+            machine: machine,
+            properties: snapshots.removeFirst(),
+            previous: previousState
+        )
+        return snapshots.reduce([firstState]) { (states: [KripkeState], snapshot: KripkeStatePropertyList) in
+            let temp = KripkeState(
                 state: state,
                 fsm: fsm,
                 machine: machine,
-                properties: $0,
-                previous: lastState
+                properties: snapshots.removeFirst(),
+                previous: states.last!
             )
-            lastState = state
-            return state
+            // Ignore repeating states.
+            if (temp == states.last!) {
+                return states
+            }
+            var states: [KripkeState] = states
+            states.append(temp)
+            return states
         }
-
     }
     
 }
