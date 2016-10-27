@@ -88,18 +88,24 @@ public protocol _KripkeStateType: Equatable {
     
 }
 
-extension _KripkeStateType where Self: CustomStringConvertible {
+extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
     
     public var description: String {
         var str: String = "state = \(self.state)\n"
         str += "fsm = \(self.fsm)\n"
         str += "machine = \(self.machine)\n"
-        str += "previous = \(self.previous?.state)\n"
+        //str += "previous = \(self.previous?.state)\n"
         str += "properties: {\n"
         str += self.properties.description
         str += "\n}\n"
         str += "}"
         return str
+    }
+
+    public var hashValue: Int {
+        return self.targets.reduce(self.description) {
+            $0 + $1.description
+        }.hashValue
     }
     
 }
@@ -139,5 +145,6 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
 public protocol KripkeStateType:
     _KripkeStateType,
     CustomStringConvertible,
-    CustomDebugStringConvertible
+    CustomDebugStringConvertible,
+    Hashable
 {}
