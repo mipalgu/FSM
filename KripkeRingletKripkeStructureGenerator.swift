@@ -128,9 +128,31 @@ public class KripkeRingletKripkeStructureGenerator<
                 )
             allStateProperties[state.name] = properties
             let spinner: () -> R.Container.Class? = constructor()
+            print(jobs.count)
             // Spin the globals and generate states for each one.
             while let gs = spinner() {
                 let data = job.data
+                let ps = self.extractor.extract(
+                    globals: gs,
+                    fsmVars: vars,
+                    state: state
+                )
+                let world = World(
+                    executingState: state.name,
+                    globals: ps.globalProperties,
+                    fsmVars: ps.fsmProperties,
+                    stateProperties: defaults
+                        <| allStateProperties
+                        <| [state.name: ps.stateProperties]
+                )
+                let (inCycle, newData) = self.cycleDetector.inCycle(
+                    data: data,
+                    element: world
+                )
+                // Have we seen this combination of variables before?
+                if (true == inCycle) {
+                    continue
+                }
                 let stateClone = state.clone()
                 let ringletClone = ringlet.clone()
                 globals.val = gs
@@ -152,39 +174,23 @@ public class KripkeRingletKripkeStructureGenerator<
                     snapshots: ringletClone.snapshots,
                     previousState: job.last
                 )
-                guard let first = kripkeStates.first else {
+                guard let _ = kripkeStates.first else {
                     continue
                 }
-                let world = World(
-                    executingState: stateClone.name,
-                    globals: first.properties.globalProperties,
-                    fsmVars: first.properties.fsmProperties,
-                    stateProperties: defaults
-                        <| allStateProperties
-                        <| [stateClone.name: first.properties.stateProperties]
-                )
-                let (inCycle, newData) = self.cycleDetector.inCycle(
-                    data: data,
-                    element: world
-                )
-                // Have we seen this combination of variables before?
-                if (true == inCycle) {
-                    continue
-                }
-                states.insert(kripkeStates, at: 0)
+                states.append(kripkeStates)
                 var nextStateClone = nextState.clone()
                 nextStateClone.transitions = nextStateClone.transitions.map {
                     $0.map { $0.clone() }
                 }
                 // Add the next state to the job queue
-                jobs.append((
+                jobs.insert((
                     nextStateClone,
                     ringletClone,
                     fsmVars.vars,
                     kripkeStates.last,
                     allStateProperties,
                     newData
-                ))
+                ), at: 0)
             }
         }
         print(states.count)
