@@ -224,6 +224,7 @@ public class KripkeRingletKripkeStructureGenerator<
             properties: snapshots.removeFirst(),
             previous: previousState
         )
+        previousState?.targets.append(firstState)
         return snapshots.reduce([firstState]) { (states: [KripkeState], snapshot: KripkeStatePropertyList) in
             let temp = KripkeState(
                 state: state,
@@ -236,6 +237,7 @@ public class KripkeRingletKripkeStructureGenerator<
             if (temp == states.last!) {
                 return states
             }
+            states.last!.targets.append(temp)
             var states: [KripkeState] = states
             states.append(temp)
             return states
