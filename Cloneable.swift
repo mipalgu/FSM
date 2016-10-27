@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Types conforming to this protocol can create copies of themselves.
+ */
 public protocol Cloneable {
 
+    /**
+     *  Create a copy of `self`.
+     */
     func clone() -> Self
 
 }
