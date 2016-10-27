@@ -82,7 +82,9 @@ public protocol _KripkeStateType: Equatable {
     /**
      *  The state which we will transition to.
      */
-    var previous: KripkeState? { get set }
+    weak var previous: KripkeState? { get set }
+
+    var targets: [KripkeState] { get set }
     
 }
 
