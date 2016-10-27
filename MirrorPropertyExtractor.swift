@@ -78,6 +78,8 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
             )
         // Ignore the validVars
         stateProperties["validVars"] = nil
+        // Ignore the states name
+        stateProperties["name"] = nil
         let fsmProperties: [String: KripkeStateProperty] =
             self.getPropertiesFromMirror(
                 mirror: Mirror(reflecting: fsmVars)
