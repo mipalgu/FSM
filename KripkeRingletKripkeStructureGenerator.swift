@@ -126,6 +126,7 @@ public class KripkeRingletKripkeStructureGenerator<
             originals[state.name]!.update(
                     fromDictionary: self.reduce(properties)
                 )
+            state.update(fromDictionary: self.reduce(properties))
             allStateProperties[state.name] = properties
             let spinner: () -> R.Container.Class? = constructor()
             print(jobs.count)
