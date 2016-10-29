@@ -62,7 +62,7 @@
 public protocol Exitable: Finishable {
 
     /**
-     *  Tells conforming that they are to exit. 
+     *  Tells conforming types that they are to exit. 
      *
      *  This implies that `hasFinished` is set to true when this is executed.
      */
