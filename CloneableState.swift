@@ -56,8 +56,17 @@
  *
  */
 
+/**
+ *  States that are `Cloneable` must also be able to be updated from a clone.
+ *
+ *  - SeeAlso: `Cloneable`
+ *  - SeeAlso: `StateType`
+ */
 public protocol CloneableState: Cloneable, StateType, Transitionable {
 
+    /**
+     *  Update self from a dictionary.
+     */
     func update(fromDictionary dictionary: [String: Any])
 
 }
