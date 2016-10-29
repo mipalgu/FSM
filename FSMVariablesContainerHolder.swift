@@ -56,10 +56,19 @@
  *
  */
 
+/**
+ *  Conforming types are able to hold references to `VariablesContainer`s.
+ */
 public protocol FSMVariablesContainerHolder {
 
+    /**
+     *  The actual type of the `VariablesContainer`.
+     */
     associatedtype FSMVariables: VariablesContainer
 
+    /**
+     *  The container.
+     */
     var fsmVars: FSMVariables { get }
 
 }
