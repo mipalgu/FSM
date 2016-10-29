@@ -235,6 +235,8 @@ public func FSM<G: GlobalVariablesContainer>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
+ *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *
  *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
@@ -314,6 +316,8 @@ public func FSM<V: VariablesContainer>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
+ *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *
  *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
@@ -390,6 +394,8 @@ public func FSM<G: GlobalVariablesContainer, V: VariablesContainer>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
+ *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *
  *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
@@ -444,6 +450,8 @@ public func FSM<R: Ringlet>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
+ *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *
  *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `KripkeFiniteStateMachine`
@@ -483,6 +491,8 @@ public func FSM<R: KripkeRinglet>(
  *
  *  - Parameter fsm: The `FiniteStateMachineType` to convert.
  *
+ *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *
  *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  */
@@ -507,6 +517,8 @@ public func FSM<FSM: FiniteStateMachineType>(
  *  `FiniteStateMachineType` to achieve the same effect.
  *
  *  - Parameters fsms: The array of `FiniteStateMachineType`s to convert.
+ *
+ *  - Returns: An array of `AnyScheduleableFiniteStateMachine`s.
  *
  *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
