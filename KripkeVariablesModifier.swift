@@ -58,6 +58,8 @@
 
 public protocol KripkeVariablesModifier {
 
+    var manipulators: [String: (Any) -> Any] { get }
+
     var validVars: [String: [Any]] { get }
 
 }
