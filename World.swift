@@ -1,9 +1,9 @@
 /*
- * KripkeStructureType.swift
- * swiftfsm
+ * World.swift 
+ * FSM 
  *
- * Created by Callum McColl on 11/11/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 23/10/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,42 +56,34 @@
  *
  */
 
-/**
- *  A graph that contains all possible state permeutations.
- */
-public protocol _KripkeStructureType {
-    
-    var states: [[KripkeState]] { get }
-    
+public struct World {
+
+    let executingState: String
+
+    let globals: [String: KripkeStateProperty]
+
+    let fsmVars: [String: KripkeStateProperty]
+
+    let stateProperties: [String: [String: KripkeStateProperty]]
+
 }
 
-extension _KripkeStructureType where Self: CustomStringConvertible {
-    
+extension World: CustomStringConvertible {
+
     public var description: String {
-        // Total width of the printable area
-        let width: Int = 40
-        // The whitespace to the left of the arrows.
-        let gap: String = String(repeating: " ", count: width / 2 - 1)
-        // The symbol for the entry point of the structure
-        let start: String = gap + "-"
-        // The arrows.
-        let arrow: String = "\(gap)|\n\(gap)|\n\(gap)V\n"
-        // The border of the states.
-        let border: String = String(repeating: "=", count: width)
-        // Create the states.
-        var str: String = start + "\n"
-        self.states.forEach {
-            $0.forEach {
-                str += arrow + border + "\n"
-                str += $0.description + "\n" + border + "\n"
-            }
-        }
-        return str
+        return "\(executingState), \(self.globals), \(self.fsmVars), \(self.stateProperties)"
     }
-    
+
 }
 
-public protocol KripkeStructureType:
-    _KripkeStructureType,
-    CustomStringConvertible
-{}
+extension World: Hashable {
+
+    public var hashValue: Int {
+        return self.description.hashValue
+    }
+
+}
+
+public func ==(lhs: World, rhs: World) -> Bool {
+    return lhs.description == rhs.description
+}

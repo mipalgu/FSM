@@ -221,9 +221,7 @@ public func FSM<G: GlobalVariablesContainer>(
  *  - Parameter initialPreviousState: The initial previous state.  This
  *  satisfies requirements from `OptimizedStateExecuter`.
  *
- *  - Parameter fsmVars: The FSM local variables.  These will be wrapped into a
- *  `SimpleVariablesContainer` so that they can work with the
- *  `KripkeMiPalRinglet`.
+ *  - Parameter fsmVars: The FSM local variables.
  *
  *  - Parameter suspendedState: When this is not nil, the
  *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
@@ -246,7 +244,7 @@ public func FSM<G: GlobalVariablesContainer>(
  *  - SeeAlso: `MiPalRinglet`
  *  - SeeAlso: `Ringlet`
  */
-public func FSM<V: Variables>(
+public func FSM<V: VariablesContainer>(
     _ name: String,
     initialState: MiPalState,
     fsmVars: V,
@@ -261,7 +259,7 @@ public func FSM<V: Variables>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: EmptyGlobalVariablesContainer(),
-                fsmVars: SimpleVariablesContainer(vars: fsmVars),
+                fsmVars: fsmVars,
                 extractor: MirrorPropertyExtractor(),
                 previousState: initialPreviousState
             ),
@@ -302,9 +300,7 @@ public func FSM<V: Variables>(
  *
  *  - Parameter globals: The global variables.
  *
- *  - Parameter fsmVars: The FSM local variables.  These will be wrapped into a
- *  `SimpleVariablesContainer` so that they can work with the
- *  `KripkeMiPalRinglet`.
+ *  - Parameter fsmVars: The FSM local variables.
  *
  *  - Parameter suspendedState: When this is not nil, the
  *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
@@ -327,7 +323,7 @@ public func FSM<V: Variables>(
  *  - SeeAlso: `MiPalRinglet`
  *  - SeeAlso: `Ringlet`
  */
-public func FSM<G: GlobalVariablesContainer,V: Variables>(
+public func FSM<G: GlobalVariablesContainer, V: VariablesContainer>(
     _ name: String,
     initialState: MiPalState,
     globals: G,
@@ -343,7 +339,7 @@ public func FSM<G: GlobalVariablesContainer,V: Variables>(
             initialState: initialState,
             ringlet: KripkeMiPalRinglet(
                 globals: globals,
-                fsmVars: SimpleVariablesContainer(vars: fsmVars),
+                fsmVars: fsmVars,
                 extractor: MirrorPropertyExtractor(),
                 previousState: initialPreviousState
             ),

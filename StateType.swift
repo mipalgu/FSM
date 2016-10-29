@@ -99,6 +99,10 @@ extension StateType where
 
 public extension StateType where Self: KripkeVariablesModifier {
 
+    public var manipulators: [String: (Any) -> Any] {
+        return [:]
+    }
+
     public var validVars: [String: [Any]] {
         return [:]
     }

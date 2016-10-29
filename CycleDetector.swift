@@ -1,9 +1,9 @@
 /*
- * KripkeStructureType.swift
- * swiftfsm
+ * CycleDetector.swift 
+ * FSM 
  *
- * Created by Callum McColl on 11/11/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 23/10/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,42 +56,13 @@
  *
  */
 
-/**
- *  A graph that contains all possible state permeutations.
- */
-public protocol _KripkeStructureType {
-    
-    var states: [[KripkeState]] { get }
-    
-}
+public protocol CycleDetector {
 
-extension _KripkeStructureType where Self: CustomStringConvertible {
-    
-    public var description: String {
-        // Total width of the printable area
-        let width: Int = 40
-        // The whitespace to the left of the arrows.
-        let gap: String = String(repeating: " ", count: width / 2 - 1)
-        // The symbol for the entry point of the structure
-        let start: String = gap + "-"
-        // The arrows.
-        let arrow: String = "\(gap)|\n\(gap)|\n\(gap)V\n"
-        // The border of the states.
-        let border: String = String(repeating: "=", count: width)
-        // Create the states.
-        var str: String = start + "\n"
-        self.states.forEach {
-            $0.forEach {
-                str += arrow + border + "\n"
-                str += $0.description + "\n" + border + "\n"
-            }
-        }
-        return str
-    }
-    
-}
+    associatedtype Data
+    associatedtype Element
 
-public protocol KripkeStructureType:
-    _KripkeStructureType,
-    CustomStringConvertible
-{}
+    var initialData: Data { get }
+
+    func inCycle(data: Data, element: Element) -> (Bool, Data)
+
+}

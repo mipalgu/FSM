@@ -58,32 +58,32 @@
 
 public class KripkeState: KripkeStateType {
 
-    public let afterProperties: KripkeStatePropertyList
-
-    public let beforeProperties: KripkeStatePropertyList
-
     public let fsm: String
 
     public let machine: String 
     
+    public weak var previous: KripkeState?
+
+    public let properties: KripkeStatePropertyList
+
     public let state: String
 
-    public var previous: KripkeState?
+    public var targets: [KripkeState]
     
     public init(
         state: String,
         fsm: String,
         machine: String,
-        beforeProperties: KripkeStatePropertyList,
-        afterProperties: KripkeStatePropertyList,
-        previous: KripkeState? = nil
+        properties: KripkeStatePropertyList,
+        previous: KripkeState? = nil,
+        targets: [KripkeState] = []
     ) {
-        self.state = state
         self.fsm = fsm
         self.machine = machine
         self.previous = previous
-        self.beforeProperties = beforeProperties
-        self.afterProperties = afterProperties
+        self.properties = properties
+        self.state = state
+        self.targets = targets
     }
     
 }

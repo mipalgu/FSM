@@ -58,7 +58,7 @@
 
 public protocol KripkeRingletKripkeStructureGeneratorDelegator {
 
-    associatedtype Generator: KripkeRingletKripkeStructureGenerator
+    associatedtype Generator: KripkeRingletKripkeStructureGeneratorType
 
     var generator: Generator { get }
 

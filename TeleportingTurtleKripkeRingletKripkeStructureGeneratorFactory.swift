@@ -58,7 +58,8 @@
 
 public final class TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory {
 
-    public typealias Generator = TeleportingTurtleKripkeRingletKripkeStructureGenerator<
+    public typealias Generator = KripkeRingletKripkeStructureGenerator<
+        TeleportingTurtleCycleDetector<World>,
         MirrorPropertyExtractor,
         GlobalsSpinnerConstructorFactory<
             GlobalsSpinnerConstructor<SpinnerRunner>,
@@ -71,7 +72,8 @@ public final class TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory
         
 
     public func make() -> Generator {
-        return TeleportingTurtleKripkeRingletKripkeStructureGenerator(
+        return KripkeRingletKripkeStructureGenerator(
+            cycleDetector: TeleportingTurtleCycleDetector<World>(),
             extractor: MirrorPropertyExtractor(),
             factory: GlobalsSpinnerConstructorFactory(
                 constructor: GlobalsSpinnerConstructor(

@@ -62,9 +62,7 @@
  */
 public protocol _KripkeStateType: Equatable {
     
-    var afterProperties: KripkeStatePropertyList { get }
-
-    var beforeProperties: KripkeStatePropertyList { get }
+    var properties: KripkeStatePropertyList { get }
 
     /**
      *  The fsm that this state belongs to.
@@ -84,25 +82,30 @@ public protocol _KripkeStateType: Equatable {
     /**
      *  The state which we will transition to.
      */
-    var previous: KripkeState? { get set }
+    weak var previous: KripkeState? { get set }
+
+    var targets: [KripkeState] { get set }
     
 }
 
-extension _KripkeStateType where Self: CustomStringConvertible {
+extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
     
     public var description: String {
         var str: String = "state = \(self.state)\n"
         str += "fsm = \(self.fsm)\n"
         str += "machine = \(self.machine)\n"
-        str += "previous = \(self.previous?.state)\n"
-        str += "beforeProperties: {\n"
-        str += self.beforeProperties.description
-        str += "\n}\n"
-        str += "afterProperties: {\n"
-        str += self.afterProperties.description
+        //str += "previous = \(self.previous?.state)\n"
+        str += "properties: {\n"
+        str += self.properties.description
         str += "\n}\n"
         str += "}"
         return str
+    }
+
+    public var hashValue: Int {
+        return self.targets.reduce(self.description) {
+            $0 + $1.description
+        }.hashValue
     }
     
 }
@@ -114,11 +117,8 @@ extension _KripkeStateType where Self: CustomDebugStringConvertible {
         str += "fsm = \(self.fsm)\n"
         str += "machine = \(self.machine)\n"
         str += "previous = \(self.previous?.state)\n"
-        str += "beforeProperties: {\n"
-        str += self.beforeProperties.description
-        str += "\n}\n"
-        str += "afterProperties: {\n"
-        str += self.afterProperties.description
+        str += "properties: {\n"
+        str += self.properties.description
         str += "\n}\n"
         str += "}"
         return str
@@ -139,11 +139,12 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
     return lhs.machine == rhs.machine &&
         lhs.fsm == rhs.fsm &&
         lhs.state == rhs.state &&
-        lhs.afterProperties == rhs.afterProperties
+        lhs.properties == rhs.properties
 }
 
 public protocol KripkeStateType:
     _KripkeStateType,
     CustomStringConvertible,
-    CustomDebugStringConvertible
+    CustomDebugStringConvertible,
+    Hashable
 {}
