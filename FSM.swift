@@ -56,6 +56,43 @@
  *
  */
 
+/**
+ *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *
+ *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
+ *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *
+ *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
+ *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *
+ *  - Parameter name: The name of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialPreviousState: The initial previous state.  This
+ *  satisfies requirements from `OptimizedStateExecuter`.
+ *
+ *  - Parameter suspendedState: When this is not nil, the
+ *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
+ *  set to this state.  This partially satisfies requirements from
+ *  `Suspendable`.
+ *
+ *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
+ *  `currentState` is set to this state.  This partially satisfies requirements
+ *  from `Suspendable`.
+ *
+ *  - Parameter exitState: When `exit()` is called, `currentState` is set to
+ *  this state.  This satisfies requirements from `ExitableState`.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `FiniteStateMachine`
+ *  - SeeAlso: `KRIPKE`
+ *  - SeeAlso: `KripkeFiniteStateMachine`
+ *  - SeeAlso: `KripkeMiPalRinglet`
+ *  - SeeAlso: `MiPalRinglet`
+ *  - SeeAlso: `Ringlet`
+ */
 public func FSM(
     _ name: String,
     initialState: MiPalState,
@@ -90,6 +127,45 @@ public func FSM(
     )
 }
 
+/**
+ *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *
+ *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
+ *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *
+ *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
+ *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *
+ *  - Parameter name: The name of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialPreviousState: The initial previous state.  This
+ *  satisfies requirements from `OptimizedStateExecuter`.
+ *
+ *  - Parameter globals: The global variables.
+ *
+ *  - Parameter suspendedState: When this is not nil, the
+ *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
+ *  set to this state.  This partially satisfies requirements from
+ *  `Suspendable`.
+ *
+ *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
+ *  `currentState` is set to this state.  This partially satisfies requirements
+ *  from `Suspendable`.
+ *
+ *  - Parameter exitState: When `exit()` is called, `currentState` is set to
+ *  this state.  This satisfies requirements from `ExitableState`.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `FiniteStateMachine`
+ *  - SeeAlso: `KRIPKE`
+ *  - SeeAlso: `KripkeFiniteStateMachine`
+ *  - SeeAlso: `KripkeMiPalRinglet`
+ *  - SeeAlso: `MiPalRinglet`
+ *  - SeeAlso: `Ringlet`
+ */
 public func FSM<G: GlobalVariablesContainer>(
     _ name: String,
     initialState: MiPalState,
@@ -129,6 +205,47 @@ public func FSM<G: GlobalVariablesContainer>(
     )
 }
 
+/**
+ *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *
+ *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
+ *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *
+ *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
+ *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *
+ *  - Parameter name: The name of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialPreviousState: The initial previous state.  This
+ *  satisfies requirements from `OptimizedStateExecuter`.
+ *
+ *  - Parameter fsmVars: The FSM local variables.  These will be wrapped into a
+ *  `SimpleVariablesContainer` so that they can work with the
+ *  `KripkeMiPalRinglet`.
+ *
+ *  - Parameter suspendedState: When this is not nil, the
+ *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
+ *  set to this state.  This partially satisfies requirements from
+ *  `Suspendable`.
+ *
+ *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
+ *  `currentState` is set to this state.  This partially satisfies requirements
+ *  from `Suspendable`.
+ *
+ *  - Parameter exitState: When `exit()` is called, `currentState` is set to
+ *  this state.  This satisfies requirements from `ExitableState`.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `FiniteStateMachine`
+ *  - SeeAlso: `KRIPKE`
+ *  - SeeAlso: `KripkeFiniteStateMachine`
+ *  - SeeAlso: `KripkeMiPalRinglet`
+ *  - SeeAlso: `MiPalRinglet`
+ *  - SeeAlso: `Ringlet`
+ */
 public func FSM<V: Variables>(
     _ name: String,
     initialState: MiPalState,
@@ -167,6 +284,49 @@ public func FSM<V: Variables>(
     )
 }
 
+/**
+ *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *
+ *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
+ *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *
+ *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
+ *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *
+ *  - Parameter name: The name of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialPreviousState: The initial previous state.  This
+ *  satisfies requirements from `OptimizedStateExecuter`.
+ *
+ *  - Parameter globals: The global variables.
+ *
+ *  - Parameter fsmVars: The FSM local variables.  These will be wrapped into a
+ *  `SimpleVariablesContainer` so that they can work with the
+ *  `KripkeMiPalRinglet`.
+ *
+ *  - Parameter suspendedState: When this is not nil, the
+ *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
+ *  set to this state.  This partially satisfies requirements from
+ *  `Suspendable`.
+ *
+ *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
+ *  `currentState` is set to this state.  This partially satisfies requirements
+ *  from `Suspendable`.
+ *
+ *  - Parameter exitState: When `exit()` is called, `currentState` is set to
+ *  this state.  This satisfies requirements from `ExitableState`.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `FiniteStateMachine`
+ *  - SeeAlso: `KRIPKE`
+ *  - SeeAlso: `KripkeFiniteStateMachine`
+ *  - SeeAlso: `KripkeMiPalRinglet`
+ *  - SeeAlso: `MiPalRinglet`
+ *  - SeeAlso: `Ringlet`
+ */
 public func FSM<G: GlobalVariablesContainer,V: Variables>(
     _ name: String,
     initialState: MiPalState,
@@ -207,6 +367,38 @@ public func FSM<G: GlobalVariablesContainer,V: Variables>(
     )
 }
 
+/**
+ *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *
+ *  The underlying `FiniteStateMachineType` is `FiniteStateMachine`.
+ *
+ *  - Parameter name: The name of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialPreviousState: The initial previous state.  This
+ *  satisfies requirements from `OptimizedStateExecuter`.
+ *
+ *  - Parameter ringlet: The `Ringlet` to use to execute the `MiPalState`s.
+ *  `Ringlet._StateType` must equal `MiPalState`.
+ *
+ *  - Parameter suspendedState: When this is not nil, the
+ *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
+ *  set to this state.  This partially satisfies requirements from
+ *  `Suspendable`.
+ *
+ *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
+ *  `currentState` is set to this state.  This partially satisfies requirements
+ *  from `Suspendable`.
+ *
+ *  - Parameter exitState: When `exit()` is called, `currentState` is set to
+ *  this state.  This satisfies requirements from `ExitableState`.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `FiniteStateMachine`
+ *  - SeeAlso: `Ringlet`
+ */
 public func FSM<R: Ringlet>(
     _ name: String,
     initialState: MiPalState,
@@ -229,6 +421,38 @@ public func FSM<R: Ringlet>(
     )
 }
 
+/**
+ *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *
+ *  The underlying `FiniteStateMachineType` is `KripkeFiniteStateMachine`.
+ *
+ *  - Parameter name: The name of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
+ *
+ *  - Parameter initialPreviousState: The initial previous state.  This
+ *  satisfies requirements from `OptimizedStateExecuter`.
+ *
+ *  - Parameter ringlet: The `KripkeRinglet` to use to execute the
+ *  `MiPalState`s.  `Ringlet._StateType` must equal `MiPalState`.
+ *
+ *  - Parameter suspendedState: When this is not nil, the
+ *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
+ *  set to this state.  This partially satisfies requirements from
+ *  `Suspendable`.
+ *
+ *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
+ *  `currentState` is set to this state.  This partially satisfies requirements
+ *  from `Suspendable`.
+ *
+ *  - Parameter exitState: When `exit()` is called, `currentState` is set to
+ *  this state.  This satisfies requirements from `ExitableState`.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `KripkeFiniteStateMachine`
+ *  - SeeAlso: `KripkeRinglet`
+ */
 public func FSM<R: KripkeRinglet>(
     _ name: String,
     initialState: MiPalState,
@@ -253,6 +477,19 @@ public func FSM<R: KripkeRinglet>(
 }
 
 
+/**
+ *  Converts a `FiniteStateMachineType` that is capable of being scheduled, to
+ *  an `AnyScheduleableFiniteStateMachine`.
+ *
+ *  - Attention: This function just supplies some syntactic sugar, you can of
+ *  course use the `AnyScheduleableFiniteStateMachine` constructor to achieve
+ *  the same effect.
+ *
+ *  - Parameter fsm: The `FiniteStateMachineType` to convert.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ */
 public func FSM<FSM: FiniteStateMachineType>(
     _ fsm: FSM
 ) -> AnyScheduleableFiniteStateMachine where
@@ -265,6 +502,19 @@ public func FSM<FSM: FiniteStateMachineType>(
     return AnyScheduleableFiniteStateMachine(fsm)
 }
 
+/**
+ *  Converts an array of `FiniteStateMachineType`s that are capable of being
+ *  scheduled, to an array of `AnyScheduleableFiniteStateMachine`s.
+ *
+ *  - Attention: This function just supplies some syntactic sugar, you can of
+ *  course use the `AnyScheduleableFiniteStateMachine` constructor on each
+ *  `FiniteStateMachineType` to achieve the same effect.
+ *
+ *  - Parameters fsms: The array of `FiniteStateMachineType`s to convert.
+ *
+ *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `FiniteStateMachineType`
+ */
 public func FSMS<FSM: FiniteStateMachineType>(
     _ fsms: FSM ...
 ) -> [AnyScheduleableFiniteStateMachine] where
