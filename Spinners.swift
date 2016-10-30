@@ -56,32 +56,105 @@
  *
  */
 
+/**
+ *  Contains all spinners for `KripkeStatePropertyTypes`.
+ *
+ *  A spinner is a function that takes a value and returns the next value in the
+ *  series.  For example the Int spinner would take a number (3) and return the
+ *  next in the series (4).  Once the end of the series is reached nil is
+ *  returned.
+ */
 public struct Spinners {
 
+    /**
+     *  A spinner is a function that takes a value and returns the next value in
+     *  the series.  For example the Int spinner would take a number (3) and
+     *  return the next in the series (4).  Once the end of the series is
+     *  reached nil is returned.
+     */
     public typealias Spinner<T> = (T) -> T?
 
+    /**
+     *  If false then true else nil.
+     */
     let bool: Spinner<Bool> = {true == $0 ? nil : true }
 
+    /**
+     *  Starts with Int.min.
+     *
+     *  If given Int.max, nil is returned.
+     */
     let int: Spinner<Int> = { Int.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with Int8.min.
+     *
+     *  If given Int8.max, nil is returned.
+     */
     let int8: Spinner<Int8> = { Int8.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with Int16.min.
+     *
+     *  If given Int16.max, nil is returned.
+     */
     let int16: Spinner<Int16> = { Int16.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with Int32.min.
+     *
+     *  If given Int32.max, nil is returned.
+     */
     let int32: Spinner<Int32> = { Int32.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with Int64.min.
+     *
+     *  If given Int64.max, nil is returned.
+     */
     let int64: Spinner<Int64> = { Int64.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with UInt.min.
+     *
+     *  If given UInt.max, nil is returned.
+     */
     let uint: Spinner<UInt> = { UInt.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with UInt8.min.
+     *
+     *  If given UInt8.max, nil is returned.
+     */
     let uint8: Spinner<UInt8> = { UInt8.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with UInt16.min.
+     *
+     *  If given UInt16.max, nil is returned.
+     */
     let uint16: Spinner<UInt16> = { UInt16.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with UInt32.min.
+     *
+     *  If given UInt32.max, nil is returned.
+     */
     let uint32: Spinner<UInt32> = { UInt32.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with UInt64.min.
+     *
+     *  If given UInt64.max, nil is returned.
+     */
     let uint64: Spinner<UInt64> = { UInt64.max == $0 ? nil : $0.advanced(by: 1) }
 
+    /**
+     *  Starts with negative infinity.
+     *
+     *  Once infinity has been reached returns Float.nan.  Once Float.nan has
+     *  been reached, returns nil.
+     */
     let float: Spinner<Float> = {
         if ($0 == Float.infinity) {
             return Float.nan
@@ -92,6 +165,12 @@ public struct Spinners {
         return $0.nextUp
     }
     
+    /**
+     *  Starts with negative infinity.
+     *
+     *  Once infinity has been reached returns Float80.nan.  Once Float80.nan
+     *  has been reached, returns nil.
+     */
     let float80: Spinner<Float80> = {
         if (Float80.infinity == $0) {
             return Float80.nan
@@ -102,6 +181,12 @@ public struct Spinners {
         return $0.nextUp
     }
 
+    /**
+     *  Starts with negative infinity.
+     *
+     *  Once infinity has been reached returns Double.nan.  Once Double.nan has
+     *  been reached, returns nil.
+     */
     let double: Spinner<Double> = {
         if (Double.infinity == $0) {
             return Double.nan
@@ -112,6 +197,9 @@ public struct Spinners {
         return $0.nextUp
     }
 
+    /**
+     *  Returns nil no matter what.
+     */
     let nilSpinner: Spinner<Any> = { _ -> Any? in nil }
 
 }
