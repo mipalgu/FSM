@@ -56,6 +56,10 @@
  *
  */
 
+/**
+ *  Provides a way to extract the variables from a `GlobalVariables` and create
+ *  `Spinners.Spinner`s for each variables.
+ */
 public class GlobalsSpinnerDataExtractor<
     GE: GlobalPropertyExtractor,
     KSPC: KripkeStatePropertySpinnerConverterType
@@ -65,11 +69,32 @@ public class GlobalsSpinnerDataExtractor<
 
     private let extractor: GE
 
+    /**
+     *  Create a new `GlobalsSpinnerDataExtractor`.
+     *
+     *  - Parameter converter: Used to convert a `KripkeStateProperty` to a
+     *  `Spinners.Spinner`.
+     *
+     *  - Parameter extractor: Used to extract the values for the
+     *  `GlobalVariables`.
+     */
     public init(converter: KSPC, extractor: GE) {
         self.converter = converter
         self.extractor = extractor
     }
 
+    /**
+     *  Create `Spinners.Spinner`s for the `GlobalVariables`.
+     *
+     *  - Parameter globals: The `GlobalVariables`.
+     *
+     *  - Returns: A tuple where the first element is a dictionary where the
+     *  keys represents the label of each variables within the `GlobalVariables`
+     *  and the label represents the starting value for each variables
+     *  `Spinners.Spinner`.  The second element is a dictionary where the keys
+     *  represent the label of each variable within the `GlobalVariables` and
+     *  the values are the `Spinners.Spinner` for each variable.
+     */
     public func extract<
         GV: GlobalVariables
     >(globals: GV) -> ([String: Any], [String: (Any) -> Any?]) {
