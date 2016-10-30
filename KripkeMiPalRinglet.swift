@@ -71,14 +71,39 @@ public final class KripkeMiPalRinglet<
 > : MiPalRinglet<G>, KripkeRinglet where G: Snapshotable
 {
 
+    /**
+     *  This `Ringlet` only works with `MiPalState`s.
+     */
     public typealias _StateType = MiPalState
 
     private let extractor: E
 
+    /**
+     *  The `Variables` that the Finite State Machine has access to.
+     */
     public private(set) var fsmVars: V
     
+    /**
+     *  Then snapshots of all the variables from the last state execution.
+     */
     public private(set) var snapshots: [KripkeStatePropertyList] = []
 
+    /**
+     *  Create a new `KripkeMiPalRinglet`.
+     *
+     *  - Parameter globals: The `GlobalVariables` within a
+     *  `GlobalVariablesContainer`.
+     *
+     *  - Parameter fsmVars: The `Variables` that the Finite State Machine has
+     *  access to.
+     *
+     *  - Parameter extractor: Used to extract the values of the
+     *  `GlobalVariables`, Finite State Machine `Variables` and the state
+     *  variables.
+     *
+     *  - Parameter previousState: The last `MiPalState` that was executed.
+     *  This is used to check whether to run the `MiPalState.onEntry()`.
+     */
     public init(
         globals: G,
         fsmVars: V,
@@ -90,6 +115,10 @@ public final class KripkeMiPalRinglet<
         super.init(globals: globals, previousState: previousState)
     }
 
+    /**
+     *  Create a new instance of `KripkeMiPalRinglet` that is an exact copy of
+     *  `self`.
+     */
     public final func clone() -> KripkeMiPalRinglet {
         return KripkeMiPalRinglet(
             globals: self.globals,
