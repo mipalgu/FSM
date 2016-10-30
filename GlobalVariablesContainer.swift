@@ -56,10 +56,22 @@
  *
  */
 
+/**
+ *  Types conforming to this protocol are a container that wrap around
+ *  `GlobalVariables`.  This way, types that use `GlobalVariables` can use the
+ *  wrapper and any changes made will be reflected throughout the application
+ *  since the the container must be a class and will pass by reference.
+ */
 public protocol GlobalVariablesContainer: class {
     
+    /**
+     *  The type of the `GlobalVariables`.
+     */
     associatedtype Class: GlobalVariables
 
+    /**
+     *  An instance of `Class`.
+     */
     var val: Class { get set }
 
 }
