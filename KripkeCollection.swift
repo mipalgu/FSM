@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Provides a way for `Sequence`s to be represented in a `KripkeStructure`.
+ */
 public protocol KripkeCollection {
 
+    /**
+     *  Convert `Self` to an `Array`.
+     */
     func toArray() -> [Any]
 
 }
