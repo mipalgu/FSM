@@ -57,7 +57,9 @@
  */
 
 /**
- *  A graph that contains all possible state permeutations.
+ *  Contains implementation details for `KripkeStructure`s.
+ *
+ *  - Warning: Do not use this type directly.  Instead use `KripkeStructure`.
  */
 public protocol _KripkeStructureType {
     
