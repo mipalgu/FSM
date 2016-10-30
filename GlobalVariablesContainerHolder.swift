@@ -56,10 +56,22 @@
  *
  */
 
+/**
+ *  Conforming types hold a reference to a `GlobalVariablesContainer`.
+ *
+ *  This provides a standard way for objects to modify `GlobalVariables`
+ *  indirectly through a `GlobalVariablesContainer`.
+ */
 public protocol GlobalVariablesContainerHolder {
 
+    /**
+     *  The type of the `GlobalVariablesContainer`.
+     */
     associatedtype Container: GlobalVariablesContainer
 
+    /**
+     *  The `Container`.
+     */
     var globals: Container { get }
 
 }
