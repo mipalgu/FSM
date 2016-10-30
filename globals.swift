@@ -56,12 +56,26 @@
  *
  */
 
+/**
+ *  Set to true when debugging is turned on.
+ */
 public var DEBUG: Bool = false
 
+/**
+ *  Set to true when generate `KripkeStructure`s.
+ */
 public var KRIPKE: Bool = false
 
+/**
+ *  Set to true when all Finite State Machines should be stopped.
+ */
 public var STOP: Bool = false
 
+/**
+ *  Add an `FSMArrayFactory` onto the `Factories` `Stack`.
+ *
+ *  - Parameter _: The `FSMArrayFactory`.
+ */
 public func addFactory<FSM: FiniteStateMachineType>(
     _ f: @escaping () -> [FSM]
 ) where
@@ -75,6 +89,9 @@ public func addFactory<FSM: FiniteStateMachineType>(
     factories.push({ { AnyScheduleableFiniteStateMachine($0) } <^> f() })
 }
 
+/**
+ *  A convenience function which only prints when `DEBUG` is true.
+ */
 public func dprint(
     _ items: Any ...,
     separator: String = " ",
@@ -88,6 +105,9 @@ public func dprint(
     }
 }
 
+/**
+ *  A convenience function which only prints when `DEBUG` is true.
+ */
 public func dprint<Target: TextOutputStream>(
     _ items: Any ...,
     separator: String = " ",
@@ -107,10 +127,26 @@ public func dprint<Target: TextOutputStream>(
     }
 }
 
+/**
+ *  Retrieve the number of `FSMArrayFactory`s that are on the `Factories`
+ *  `Stack`.
+ *  
+ *  - Returns: The number of `FSMArrayFactory`s that are on the `Factories`
+ *  `Stack`.
+ */
 public func getFactoryCount() -> Int {
     return Factories().count
 }
 
+/**
+ *  Retrieve the top most `FSMArrayFactory` from the `Factories` `Stack`.
+ *
+ *  - Postcondition: The top most `FSMArrayFactory` is removed from the
+ *  `Factories` `Stack`.
+ *
+ *  - Returns: The retrieved `FSMArrayFactory` or nil if the `Factories` `Stack`
+ *  was empty.
+ */
 public func getLastFactory() -> FSMArrayFactory? {
     var f: Factories = Factories()
     if (true == f.isEmpty) {
@@ -119,6 +155,9 @@ public func getLastFactory() -> FSMArrayFactory? {
     return f.pop()
 }
 
+/**
+ *  Sets `STOP` to true.
+ */
 public func stopAll() {
     STOP = true
 }
