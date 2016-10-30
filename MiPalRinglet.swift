@@ -66,10 +66,22 @@
  */
 public class MiPalRinglet<S: Snapshotable>: Ringlet {
 
+    /**
+     *  Used to take and save snapshots of the `GlobalVariables`.
+     */
     public private(set) var globals: S
 
     internal var previousState: MiPalState
 
+    /**
+     *  Create a new `MiPalRinglet`.
+     *
+     *  - Parameter globals: Used to take and save snapshots of the
+     *  `GlobalVaraibles`.
+     *
+     *  - Parameter previousState:  The last `MiPalState` that was executed.
+     *  This is used to check whether the `MiPalState.onEntry()` should run.
+     */
     public init(
         globals: S,
         previousState: MiPalState = EmptyMiPalState("_previous")
@@ -81,7 +93,9 @@ public class MiPalRinglet<S: Snapshotable>: Ringlet {
     /**
      *  Execute the ringlet.
      *
-     *  Returns a state representing the next state to execute.
+     *  - Parameter state: The `MiPalState` that is being executed.
+     *
+     *  - Returns: A state representing the next state to execute.
      */
     public func execute(state: MiPalState) -> MiPalState {
         // Take a snapshot
