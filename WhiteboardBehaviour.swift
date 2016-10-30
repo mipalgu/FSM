@@ -56,6 +56,24 @@
  *
  */
 
+/**
+ *  Used to create `Behaviours` that work with the `Whiteboard`.
+ *
+ *  - Parameter type: The message type.
+ *
+ *  - Parameter wbd: The `Whiteboard` instance that will be used to fetch and
+ *  post messages.
+ *
+ *  - Parameter atomic: Should we procure and vacate semaphores when modifying
+ *  the `Whiteboard`?
+ *
+ *  - Parameter shouldNotifySubscriber: Should we notify the subscribers when
+ *  we modify the `Whiteboard`?
+ *
+ *  - Returns: A tuple where the first element is the `Behaviour`, the second
+ *  element is a function used to post to the `Behaviour`, and the third element
+ *  is a function which retrieves the current `Time` for the `Behaviour`.
+ */
 public func trigger<T: GlobalVariables>(
     type: wb_types,
     wbd: Whiteboard = Whiteboard(),
