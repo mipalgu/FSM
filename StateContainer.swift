@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Conforming types are capable of holding states.
+ */
 public protocol StateContainer {
 
+    /**
+     *  The type of the `StateType` that the conforming type is working with.
+     */
     associatedtype _StateType: StateType
 
 }
