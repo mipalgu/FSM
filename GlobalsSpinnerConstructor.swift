@@ -56,16 +56,34 @@
  *
  */
 
+/**
+ *  Provides a way to create a `GlobalVariables` `Spinners.Spinner`.
+ */
 public class GlobalsSpinnerConstructor<
     SR: SpinnerRunnerType
 >: GlobalsSpinnerConstructorType {
 
     private let runner: SR
 
+    /**
+     *  Create a new `GlobalsSpinnerConstructor`.
+     *
+     *  - Parameter runner: Will be used when executing the `Spinners.Spinner`. 
+     */
     public init(runner: SR) {
         self.runner = runner
     }
 
+    /**
+     *  Create a `Spinners.Spinner` for an instance of `GlobalVariables`.
+     *
+     *  - Parameter defaultValues: The starting values of each spinner.
+     *
+     *  - Parameter spinners: A dictionary where the key represents a variables
+     *  label and the value is a `Spinners.Spinner` for that variable.
+     *
+     *  - Returns a `Spinners.Spinner` that return the `GlobalVariables`.
+     */
     public func makeSpinner<GV: GlobalVariables>(
         defaultValues: [String: Any],
         spinners: [String: (Any) -> Any?]
