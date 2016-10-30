@@ -57,14 +57,8 @@
  */
 
 /**
- *  A simple state.
- *
  *  Implement this protocol for any states that you wish to create within your
  *  machines.
- *
- *  The state executes in what is known as a Ringlet.  The three methods that
- *  are presented below are each executed independently within the ringlet.  See
- *  StandardRinglet for the standard order that these methods are executed in.
  */
 public protocol StateType: Identifiable {}
 
@@ -73,6 +67,11 @@ public protocol StateType: Identifiable {}
  */
 extension StateType where Self: Transitionable {
     
+    /**
+     *  Adds the transitions to the `transitions` array.
+     *
+     *  - Parameter _: One or more `_TransitionType`s.
+     */
     public mutating func addTransition(_ transitions: _TransitionType ...) {
         self.transitions.append(contentsOf: transitions)
     }
