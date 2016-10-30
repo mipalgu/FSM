@@ -91,6 +91,22 @@ public class KripkeState: KripkeStateType {
      */
     public var targets: [KripkeState]
     
+    /**
+     *  Create a new `KripkeState`.
+     *
+     *  - Parameter state: The name of the state.
+     *
+     *  - Parameter fsm: The name of the Finite State Machine.
+     *
+     *  - Parameter machine: The name of the machine.
+     *
+     *  - Parameter properties: A snapshot of all the properties.
+     *
+     *  - Parameter previous: The previous `KripkeState` that links to `self`.
+     *
+     *  - Parameter targets: All `KripkeStates` that this `KripkeState` can
+     *  transition to.
+     */
     public init(
         state: String,
         fsm: String,
