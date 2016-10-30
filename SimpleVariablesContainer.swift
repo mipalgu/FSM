@@ -56,12 +56,26 @@
  *
  */
 
+/**
+ *  Provides a bare-bones way of storing a reference to some `Variables`.
+ */
 public class SimpleVariablesContainer<V: Variables>: VariablesContainer {
 
+    /**
+     *  The type of the `Variables`.
+     */
     public typealias Vars = V
 
+    /**
+     *  The `Variables`.
+     */
     public var vars: V
 
+    /**
+     *  Create a new `SimpleVariablesContainer`.
+     *
+     *  - Parameter vars: The `Variables` to store.
+     */
     public init(vars: V) {
         self.vars = vars
     }
