@@ -56,6 +56,9 @@
  *
  */
 
+/**
+ *  Provides a common interface for types that use a `name` for equality.
+ */
 public protocol Identifiable: Equatable {
 
     /**
@@ -65,6 +68,9 @@ public protocol Identifiable: Equatable {
 
 }
 
+/**
+ *  Two types with the same name are equal.
+ */
 public func ==<T: Identifiable, U: Identifiable>(lhs: T, rhs: U) -> Bool {
     return lhs.name == rhs.name
 }
