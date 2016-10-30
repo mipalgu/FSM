@@ -56,8 +56,15 @@
  *
  */
 
+/**
+ *  Provides a wrapper around `Whiteboard` that only works with a certain
+ *  message.
+ */
 public class GenericWhiteboard<T: GlobalVariables> {
     
+    /**
+     *  The type of the message.
+     */
     public typealias Message = T
 
     private let atomic: Bool
@@ -66,6 +73,9 @@ public class GenericWhiteboard<T: GlobalVariables> {
     private var procuredCount: UInt8 = 0
     private let wb: Whiteboard
 
+    /**
+     *  The current index position of message.
+     */
     public var currentIndex: UInt8 {
         get {
             let _ = self.procure()
@@ -82,6 +92,9 @@ public class GenericWhiteboard<T: GlobalVariables> {
         }
     }
 
+    /**
+     *  The latest message.
+     */
     public var currentMessage: Message {
         get {
             return self.get()
@@ -90,6 +103,9 @@ public class GenericWhiteboard<T: GlobalVariables> {
         }
     }
 
+    /**
+     *  The current event count for the message.
+     */
     public var eventCount: UInt16 {
         get {
             let _ = self.procure()
@@ -106,6 +122,9 @@ public class GenericWhiteboard<T: GlobalVariables> {
         }
     }
 
+    /**
+     *  Event counters for all messages types.
+     */
     public var eventCounters: CArray<UInt16> {
         return CArray(
             first: &self.gsw.pointee.event_counters.0,
@@ -113,14 +132,26 @@ public class GenericWhiteboard<T: GlobalVariables> {
         )
     }
 
+    /**
+     *  The current `GU_SIMPLE_WHITEBOARD_GENERATIONS`.
+     *
+     *  This value represents the maximum number of messages that can be stored
+     *  for a given message type at any given time.
+     */
     public var generations: Int {
         return Int(GU_SIMPLE_WHITEBOARD_GENERATIONS)
     }
 
+    /**
+     *  An UnsafeMutablePointer to the `gu_simple_whiteboard`.
+     */
     public var gsw: UnsafeMutablePointer<gu_simple_whiteboard> {
         return self.wb.wbd.pointee.wb
     }
 
+    /**
+     *  Indexes for all message types.
+     */
     public var indexes: CArray<UInt8> {
         return CArray(
             first: &self.gsw.pointee.indexes.0,
@@ -128,6 +159,11 @@ public class GenericWhiteboard<T: GlobalVariables> {
         )
     }
 
+    /**
+     *  All messages currently stored in the whiteboard.
+     *
+     *  - SeeAlso: `ConvertibleCArray`
+     */
     public var messages: ConvertibleCArray<gu_simple_message, Message> {
         return withUnsafeMutablePointer(to: &self.gsw.pointee.messages.0) {
             withUnsafeMutablePointer(to: &$0[self.msgTypeOffset].0) {
@@ -139,21 +175,12 @@ public class GenericWhiteboard<T: GlobalVariables> {
                 )
             }
         }
-        /*let messages = CArray(
-            first: &self.gsw.pointee.messages.0,
-            length: self.totalMessageTypes
-        )
-        //print(messages.map { $0 })
-        let first: UnsafeMutablePointer<Message> = 
-            withUnsafeMutablePointer(&messages[self.msgTypeOffset].0) {
-                UnsafeMutablePointer<Message>($0)
-            }
-        let temp = CArray(first: first, length: self.generations)
-        //print(temp.p)
-        //print("gmessages: \(temp.map { $0 })")
-        return temp*/
     }
 
+    /**
+     *  All messages for the current message type, but they are ordered so that
+     *  the latest is first.
+     */
     public var orderedMessages: [Message] {
         let _ = self.procure()
         let m: ConvertibleCArray<gu_simple_message, Message> = self.messages
@@ -168,14 +195,23 @@ public class GenericWhiteboard<T: GlobalVariables> {
         return arr
     }
 
+    /**
+     *  The message type offset.
+     */
     public var msgTypeOffset: Int {
         return Int(self.msgType.rawValue)
     }
 
+    /**
+     *  The index that the next message will be inserted into.
+     */
     public var nextIndex: UInt8 {
         return (self.currentIndex + 1) % UInt8(self.generations)
     }
 
+    /**
+     *  The message at `nextIndex`.
+     */
     public var nextMessage: Message {
         get {
             let _ = self.procure()
@@ -192,6 +228,9 @@ public class GenericWhiteboard<T: GlobalVariables> {
         }
     }
 
+    /**
+     *  The number of types currently supported.
+     */
     public var numTypes: UInt16 {
         return self.gsw.pointee.num_types
     }
@@ -200,10 +239,16 @@ public class GenericWhiteboard<T: GlobalVariables> {
         return self.gsw.pointee.subscribed
     }
 
+    /**
+     *  The total number of message types.
+     */
     public var totalMessageTypes: Int {
         return Int(GSW_TOTAL_MESSAGE_TYPES)
     }
 
+    /**
+     *  The version of the whiteboard.
+     */
     public var version: UInt16 {
         return self.gsw.pointee.version
     }
@@ -220,6 +265,11 @@ public class GenericWhiteboard<T: GlobalVariables> {
         self.wb = wb
     }
 
+    /**
+     *  Retrieve the latest `Message`.
+     *
+     *  - Returns: The latest `Message` in the whiteboard.
+     */
     public func get() -> Message {
         let _ = self.procure()
         let m: Message = self.wb.get(msg: self.msgType)
@@ -227,6 +277,11 @@ public class GenericWhiteboard<T: GlobalVariables> {
         return m
     }
 
+    /**
+     *  Signal all the subscribers that a change has happened.
+     *
+     *  - Precondition: `shouldNotifySubscribers` is true.
+     */
     public func notifySubscribers() {
         if (false == self.shouldNotifySubscribers) {
             return
@@ -234,6 +289,11 @@ public class GenericWhiteboard<T: GlobalVariables> {
         gsw_signal_subscribers(self.wb.wb)
     }
 
+    /**
+     *  Post a new message to the whiteboard.
+     *
+     *  - Parameter val: The new `Message`.
+     */
     public func post(val: Message) {
         if (false == self.procure()) {
             return
@@ -244,6 +304,13 @@ public class GenericWhiteboard<T: GlobalVariables> {
         self.notifySubscribers()
     }
 
+    /**
+     *  Procure the `GSW_SEM_PUTMSG` semaphore.
+     *
+     *  - Precondition: `atomic` is true.
+     *
+     *  - Returns: A Bool indicating whether the procurement was successful.
+     */
     public func procure() -> Bool {
         if (false == self.atomic || self.procuredCount > 0) {
             self.procuredCount = self.procuredCount + 1
@@ -257,6 +324,13 @@ public class GenericWhiteboard<T: GlobalVariables> {
         return procured
     }
 
+    /**
+     *  Vacate the semaphore.
+     *
+     *  - Precondition: A call to `procure()` was invoked before this.
+     *
+     *  - Returns: A Bool indicating whether the vacation was successful.
+     */
     public func vacate() -> Bool {
         if (false == self.atomic || self.procuredCount > 1) {
             self.procuredCount = self.procuredCount - 1
@@ -272,11 +346,17 @@ public class GenericWhiteboard<T: GlobalVariables> {
 
 }
 
+/**
+ *  Make the GenericWhiteboard a `GlobalVariablesCollection`.
+ */
 extension GenericWhiteboard: GlobalVariablesCollection {
 
     public typealias Element = Message
     public typealias Iterator = AnyIterator<Element> 
 
+    /**
+     *  Returns the messages in the order of `orderedMessages`.
+     */
     public func makeIterator() -> AnyIterator<Element> {
         let messages: [Element] = self.orderedMessages
         var i: Int = 0
