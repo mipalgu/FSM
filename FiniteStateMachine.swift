@@ -112,7 +112,6 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     KripkeStructureGenerator,
     Restartable,
     Resumeable,
-    SnapshotContainer,
     StateExecuterDelegator where
     R._StateType: Transitionable
 {
@@ -160,12 +159,6 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
      *  An instance of `Ringlet` that is used to execute the states.
      */
     public let ringlet: R
-
-    /**
-     *  We need to be a SnapshotContainer to be scheduleable so we will just
-     *  use an empty array as we are never taking snapshots.
-     */
-    public let snapshots: [KripkeStatePropertyList] = []
 
     /**
      *  The state that was the `currentState` before the FSM was suspended.

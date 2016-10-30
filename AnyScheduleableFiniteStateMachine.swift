@@ -72,8 +72,7 @@ public struct AnyScheduleableFiniteStateMachine:
     StateExecuter,
     Finishable,
     KripkeStructureGenerator,
-    Resumeable,
-    SnapshotContainer
+    Resumeable
 {
 
     public typealias _StateType = AnyState
@@ -95,8 +94,6 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _previousState: () -> AnyState
 
     private let _resume: () -> Void
-
-    private let _snapshots: () -> [KripkeStatePropertyList]
 
     private let _suspend: () -> Void
 
@@ -159,15 +156,6 @@ public struct AnyScheduleableFiniteStateMachine:
     }
 
     /**
-     *  An array of `KripkeStatePropertyList` instances, representing the values
-     *  of the global variables, fsm variables and state variables at certain
-     *  points in time.
-     */
-    public var snapshots: [KripkeStatePropertyList] {
-        return self._snapshots()
-    }
-
-    /**
      *  The state that was set as `currentState` before the Finite State
      *  Machine was suspended.
      *
@@ -197,8 +185,7 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: StateExecuter,
         FSM: Finishable,
         FSM: KripkeStructureGenerator,
-        FSM: Resumeable,
-        FSM: SnapshotContainer
+        FSM: Resumeable
     {
         var base = base
         self._currentState = { AnyState(base.currentState) }
@@ -210,7 +197,6 @@ public struct AnyScheduleableFiniteStateMachine:
         self._generate = { base.generate(machine: $0) }
         self._previousState = { AnyState(base.previousState) }
         self._resume = { base.resume() }
-        self._snapshots = { base.snapshots }
         self._suspend = { base.suspend() }
         self._suspendedState = { { AnyState($0) } <^> base.suspendedState }
         self._suspendState = { AnyState(base.suspendState) }
