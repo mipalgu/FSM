@@ -56,14 +56,29 @@
  *
  */
 
+/**
+ *  Conforming types are capable of being suspended.
+ */
 public protocol Suspendable: StateExecuter {
     
+    /**
+     *  Are we currently suspended?
+     */
     var isSuspended: Bool { get }
 
+    /**
+     *  The `StateType` that was the `currentState` before the suspension.
+     */
     var suspendedState: _StateType? { get set }
 
+    /**
+     *  The `StateType` that is set to `currentState` when we get suspended.
+     */
     var suspendState: _StateType { get }
     
+    /**
+     *  Suspend `self`.
+     */
     mutating func suspend() -> Void
     
 }
