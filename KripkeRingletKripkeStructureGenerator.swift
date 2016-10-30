@@ -56,9 +56,34 @@
  *
  */
 
-public protocol KripkeRingletKripkeStructureGenerator {
+public class KripkeRingletKripkeStructureGenerator<
+    CD: CycleDetector,
+    E: PropertiesExtractor,
+    SpinnersFactory: GlobalsSpinnerConstructorFactoryType
+>: KripkeRingletKripkeStructureGeneratorType where CD.Element == World {
 
-    func generate<R: KripkeRinglet>(
+    private let cycleDetector: CD
+
+    private let extractor: E
+
+    private let factory: SpinnersFactory
+
+    private typealias Data<R: KripkeRinglet> = (
+            state: R._StateType,
+            ringlet: R,
+            fsmVars: R.FSMVariables.Vars,
+            last: KripkeState?,
+            allStateProperties: [String: [String: KripkeStateProperty]],
+            data: CD.Data
+        )
+
+    public init(cycleDetector: CD, extractor: E, factory: SpinnersFactory) {
+        self.cycleDetector = cycleDetector
+        self.extractor = extractor
+        self.factory = factory
+    }
+
+    public func generate<R: KripkeRinglet>(
         machine: String,
         fsm: String,
         initialState: R._StateType,
@@ -66,5 +91,158 @@ public protocol KripkeRingletKripkeStructureGenerator {
     ) -> KripkeStructure where
         R._StateType: KripkeVariablesModifier,
         R._StateType._TransitionType == Transition<R._StateType>
+    {
+        let fsmVars = ringlet.fsmVars
+        let globals = ringlet.globals
+        let constructor = self.factory.make(globals: globals.val)
+        var originals: [String: R._StateType] = [initialState.name: initialState]
+        var defaults: [String: [String: KripkeStateProperty]] = [
+            initialState.name: self.extractor.extract(
+                globals: globals.val,
+                fsmVars: fsmVars.vars,
+                state: initialState
+            ).stateProperties
+        ]
+        var jobs: [Data<R>] = [(
+                initialState.clone(),
+                ringlet.clone(),
+                fsmVars.vars.clone(),
+                nil,
+                [:],
+                self.cycleDetector.initialData
+            )]
+        var states: [[KripkeState]] = []
+        while (false == jobs.isEmpty) { 
+            let job = jobs.removeFirst()
+            let state = job.state.clone()
+            let ringlet = job.ringlet.clone()
+            let vars = job.fsmVars.clone()
+            var allStateProperties = job.allStateProperties
+            let properties = self.extractor.extract(
+                    globals: globals.val,
+                    fsmVars: vars,
+                    state: state
+                ).stateProperties
+            originals[state.name]!.update(
+                    fromDictionary: self.reduce(properties)
+                )
+            state.update(fromDictionary: self.reduce(properties))
+            allStateProperties[state.name] = properties
+            let spinner: () -> R.Container.Class? = constructor()
+            print(jobs.count)
+            // Spin the globals and generate states for each one.
+            while let gs = spinner() {
+                let data = job.data
+                let ps = self.extractor.extract(
+                    globals: gs,
+                    fsmVars: vars,
+                    state: state
+                )
+                let world = World(
+                    executingState: state.name,
+                    globals: ps.globalProperties,
+                    fsmVars: ps.fsmProperties,
+                    stateProperties: defaults
+                        <| allStateProperties
+                        <| [state.name: ps.stateProperties]
+                )
+                let (inCycle, newData) = self.cycleDetector.inCycle(
+                    data: data,
+                    element: world
+                )
+                // Have we seen this combination of variables before?
+                if (true == inCycle) {
+                    continue
+                }
+                let stateClone = state.clone()
+                let ringletClone = ringlet.clone()
+                globals.val = gs
+                fsmVars.vars = vars.clone()
+                let nextState = ringletClone.execute(state: originals[stateClone.name]!)
+                if (nil == originals[nextState.name]) {
+                    originals[nextState.name] = nextState
+                    defaults[nextState.name] = self.extractor.extract(
+                            globals: gs,
+                            fsmVars: fsmVars.vars,
+                            state: nextState
+                        ).stateProperties
+                }
+                // Generate Kripke States
+                let kripkeStates: [KripkeState] = self.makeKripkeStates(
+                    machine: machine,
+                    fsm: fsm,
+                    state: stateClone.name,
+                    snapshots: ringletClone.snapshots,
+                    previousState: job.last
+                )
+                guard let _ = kripkeStates.first else {
+                    continue
+                }
+                states.append(kripkeStates)
+                var nextStateClone = nextState.clone()
+                nextStateClone.transitions = nextStateClone.transitions.map {
+                    $0.map { $0.clone() }
+                }
+                // Add the next state to the job queue
+                jobs.insert((
+                    nextStateClone,
+                    ringletClone,
+                    fsmVars.vars,
+                    kripkeStates.last,
+                    allStateProperties,
+                    newData
+                ), at: 0)
+            }
+        }
+        print(states.count)
+        return KripkeStructure(states: states) 
+    }
 
+    private func reduce(_ p: [String: KripkeStateProperty]) -> [String: Any] {
+        return p.reduce([:]) {
+            var d = $0
+            d[$1.0] = $1.1.value
+            return d
+        }
+    }
+
+    private func makeKripkeStates(
+        machine: String,
+        fsm: String,
+        state: String,
+        snapshots: [KripkeStatePropertyList],
+        previousState: KripkeState?
+    ) -> [KripkeState] {
+        if (true == snapshots.isEmpty) {
+            fatalError("Ringlet did not take any snapshots!")
+        }
+        var snapshots = snapshots
+        // Create the Kripke States
+        let firstState: KripkeState = KripkeState(
+            state: state,
+            fsm: fsm,
+            machine: machine,
+            properties: snapshots.removeFirst(),
+            previous: previousState
+        )
+        previousState?.targets.append(firstState)
+        return snapshots.reduce([firstState]) { (states: [KripkeState], snapshot: KripkeStatePropertyList) in
+            let temp = KripkeState(
+                state: state,
+                fsm: fsm,
+                machine: machine,
+                properties: snapshots.removeFirst(),
+                previous: states.last!
+            )
+            // Ignore repeating states.
+            if (temp == states.last!) {
+                return states
+            }
+            states.last!.targets.append(temp)
+            var states: [KripkeState] = states
+            states.append(temp)
+            return states
+        }
+    }
+    
 }

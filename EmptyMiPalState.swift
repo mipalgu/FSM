@@ -57,10 +57,12 @@
  */
 
 /**
- *  A state that does nothing.
+ *  A `MiPalState` that does nothing.
  *
  *  Useful if you need an accepting state that does nothing but symbolize the
  *  end of the FSM.
+ *
+ *  - SeeAlso: `MiPalState`
  */
 public final class EmptyMiPalState: MiPalState {
     

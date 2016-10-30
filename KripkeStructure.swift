@@ -58,9 +58,9 @@
 
 public struct KripkeStructure: KripkeStructureType {
     
-    public let states: [KripkeState]
+    public let states: [[KripkeState]]
 
-    public init(states: [KripkeState] = []) {
+    public init(states: [[KripkeState]] = []) {
         self.states = states
     }
     

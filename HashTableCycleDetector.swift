@@ -1,9 +1,9 @@
 /*
- * FSMKripkeStateGenerator.swift
- * swiftfsm
+ * HashTableCycleDetector.swift 
+ * FSM 
  *
- * Created by Callum McColl on 28/11/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 23/10/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,8 +56,20 @@
  *
  */
 
-public protocol FSMKripkeStateGenerator {
-    
-    func generate(from: AnyScheduleableFiniteStateMachine) -> KripkeState
-    
+public class HashTableCycleDetector<E: Hashable>: CycleDetector {
+
+    public typealias Data = [Element: Bool]
+    public typealias Element = E
+
+    public let initialData: Data = [:]
+
+    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
+        guard data[element] == nil else {
+            return (true, data)
+        }
+        var data = data
+        data[element] = true
+        return (false, data)
+    }
+
 }

@@ -56,16 +56,35 @@
  *
  */
 
+/**
+ *  Provides a `GlobalVariablesContainer` that contains no variables.
+ *
+ *  - SeeAlso: `GlobalVariablesContainer`
+ */
 public class EmptyGlobalVariablesContainer: GlobalVariablesContainer {
     
+    /**
+     *  No variables, therefore use an instance of `EmptyVariables`
+     *
+     *  - SeeAlso: `EmptyVariables`
+     */
     public var val: EmptyVariables = EmptyVariables()
 
 }
 
+/**
+ *  Adds `Snapshotable` functionality to `EmptyGlobalVariablesContainer`.
+ */
 extension EmptyGlobalVariablesContainer: Snapshotable {
 
+    /**
+     *  Does nothing.
+     */
     public func saveSnapshot() {}
 
+    /**
+     *  Does nothing.
+     */
     public func takeSnapshot() {}
 
 }

@@ -74,10 +74,13 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
         var stateProperties: [String: KripkeStateProperty] =
             self.getPropertiesFromMirror(
                 mirror: Mirror(reflecting: state),
+                manipulators: state.manipulators,
                 validValues: state.validVars
             )
         // Ignore the validVars
         stateProperties["validVars"] = nil
+        // Ignore the states name
+        stateProperties["name"] = nil
         let fsmProperties: [String: KripkeStateProperty] =
             self.getPropertiesFromMirror(
                 mirror: Mirror(reflecting: fsmVars)
@@ -102,6 +105,7 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
      */
     private func getPropertiesFromMirror(
         mirror: Mirror,
+        manipulators: [String: (Any) -> Any] = [:],
         validValues: [String: [Any]] = [:]
     ) -> [String: KripkeStateProperty] {
         var p: [String: KripkeStateProperty] = [:]
@@ -114,6 +118,13 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
         }
         for child: Mirror.Child in mirror.children {
             guard let label = child.label else {
+                continue
+            }
+            if let manipulator = manipulators[label] {
+                p[label] = self.convertValue(
+                    value: child.value,
+                    validValues: [manipulator(child.value)]
+                )
                 continue
             }
             if (nil != validValues[label] && true == validValues[label]!.isEmpty) {

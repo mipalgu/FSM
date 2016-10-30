@@ -56,8 +56,21 @@
  *
  */
 
+/**
+ *  `StateExecuter`s that are `Exitable` need to provide an `exitState`, which 
+ *  should be set to `currentState` when the `StateExecuter` has exited.
+ *
+ *  - SeeAlso: `Exitable`
+ *  - SeeAlso: `StateExecuter`
+ */
 public protocol ExitableStateExecuter: StateExecuter, Exitable {
 
+    /**
+     *  The `StateExecuter`s `currentState` should be set to this state when
+     *  exiting.
+     *
+     *  - SeeAlso: `StateExecuter`
+     */
     var exitState: _StateType { get }
 
 }

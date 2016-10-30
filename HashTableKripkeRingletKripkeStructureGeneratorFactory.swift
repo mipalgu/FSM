@@ -58,7 +58,8 @@
 
 public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
 
-    public typealias Generator = HashTableKripkeRingletKripkeStructureGenerator<
+    public typealias Generator = KripkeRingletKripkeStructureGenerator<
+        HashTableCycleDetector<World>,
         MirrorPropertyExtractor,
         GlobalsSpinnerConstructorFactory<
             GlobalsSpinnerConstructor<SpinnerRunner>,
@@ -68,10 +69,10 @@ public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
             >
         >
     >
-        
 
     public func make() -> Generator {
-        return HashTableKripkeRingletKripkeStructureGenerator(
+        return KripkeRingletKripkeStructureGenerator(
+            cycleDetector: HashTableCycleDetector<World>(),
             extractor: MirrorPropertyExtractor(),
             factory: GlobalsSpinnerConstructorFactory(
                 constructor: GlobalsSpinnerConstructor(
@@ -84,6 +85,5 @@ public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
             )
         )
     }
-
 
 }

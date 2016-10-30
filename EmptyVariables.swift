@@ -60,7 +60,10 @@
  *  An empty set of variables.
  *
  *  This class is useful for when there are no variables and classes such as
- *  `FiniteStateMachine` are asking for some.
+ *  are asking for some.
+ *
+ *  - SeeAlso: `Variables`
+ *  - SeeAlso: `GlobalVariables`
  */
 public final class EmptyVariables: Variables, GlobalVariables {
 
@@ -69,14 +72,26 @@ public final class EmptyVariables: Variables, GlobalVariables {
      */
     public init() {}
 
+    /**
+     *  Initialize the class from a dictionary.
+     *
+     *  Since this class contains no properties, nothing is every taken from the
+     *  dictionary.
+     */
     public init(fromDictionary dictionary: [String: Any]) {}
 
+    /**
+     *  Create a new isntance of `EmptyVariables`.
+     */
     public final func clone() -> EmptyVariables {
         return EmptyVariables()
     }
 
 }
 
+/**
+ *  All instances of `EmptyVariables` are equal.
+ */
 public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
     return true
 }
