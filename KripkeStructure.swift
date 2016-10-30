@@ -56,10 +56,26 @@
  *
  */
 
+/**
+ *  A Kripke Structure.
+ *
+ *  Kripke Structures are a graph that represent every possible execution path
+ *  that software may take.  In this case this Kripke Structure is made up of
+ *  `KripkeState`s where a `KripkeState` represents an individual node in the
+ *  graph and encapsulates the state of all variables at a given point in time.
+ */
 public struct KripkeStructure: KripkeStructureType {
     
+    /**
+     *  All `KripkeState`s in the structure.
+     */
     public let states: [[KripkeState]]
 
+    /**
+     *  Create a new `KripkeStructure`.
+     *
+     *  - Parameter states: All `KripkeState`s in the structure.
+     */
     public init(states: [[KripkeState]] = []) {
         self.states = states
     }
