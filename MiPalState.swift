@@ -56,6 +56,9 @@
  *
  */
 
+/**
+ *  The base class for all states that conform to `MiPalAction`s.
+ */
 open class MiPalState:
     StateType,
     CloneableState,
@@ -83,20 +86,56 @@ open class MiPalState:
         return [:]
     }
     
+    /**
+     *  Create a new `MiPalState`.
+     *
+     *  - Parameter name: The name of the state.
+     *
+     *  - transitions: All transitions to other states that this state can use.
+     */
     public init(_ name: String, transitions: [Transition<MiPalState>] = []) {
         self.name = name
         self.transitions = transitions
     }
 
+    /**
+     *  Does nothing.
+     */
     open func onEntry() {}
 
+    /**
+     *  Does nothing.
+     */
     open func main() {}
 
+    /**
+     *  Does nothing.
+     */
     open func onExit() {}
 
+    /**
+     *  Create a copy of `self`.
+     *
+     *  - Warning: Child classes should override this method.  If they do not
+     *  then the application will crash when trying to generate
+     *  `KripkeStructures`.
+     */
     open func clone() -> Self {
         fatalError("Please implement your own clone")
     }
 
+    /**
+     *  Update `self` from a dictionary.
+     *
+     *  Since `MiPalState` contains no mutable properties, it does not bother
+     *  to update itself based on anything in the dictionary. 
+     *
+     *  - Parameter fromDictionary: The dictionary of properties where the keys
+     *  represents the properties labels and the values are the values of the
+     *  properties.
+     *
+     *  - Attention: Child classes should override this method when they add
+     *  mutable properties.
+     */
     open func update(fromDictionary dictionary: [String: Any]) {}
 }
