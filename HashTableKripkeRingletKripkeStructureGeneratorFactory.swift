@@ -56,8 +56,15 @@
  *
  */
 
+/**
+ *  Creates a `KripkeRingletKripkeStructureGeneratorType` that uses a
+ *  `HashTableCycleDetector`.
+ */
 public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
 
+    /**
+     *  The `KripkeringletKripkeStructureGeneratorType`.
+     */
     public typealias Generator = KripkeRingletKripkeStructureGenerator<
         HashTableCycleDetector<World>,
         MirrorPropertyExtractor,
@@ -70,6 +77,9 @@ public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
         >
     >
 
+    /**
+     *  Create the `Generator`.
+     */
     public func make() -> Generator {
         return KripkeRingletKripkeStructureGenerator(
             cycleDetector: HashTableCycleDetector<World>(),
