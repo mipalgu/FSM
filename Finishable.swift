@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Conforming types are able to 'finish'.
+ */
 public protocol Finishable {
 
+    /**
+     *  Have we finished?
+     */
     var hasFinished: Bool { get }
 
 }
