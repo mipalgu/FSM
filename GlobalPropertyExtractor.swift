@@ -56,8 +56,22 @@
  *
  */
 
+/**
+ *  Conforming types are able to extract the values of the variables for 
+ *  `GlobalVariables`.
+ */
 public protocol GlobalPropertyExtractor {
 
+    /**
+     *  Extract the values from the `GlobalVariables`.
+     *
+     *  - Parameter globals: The `GlobalVariables`.
+     *
+     *  - Returns: A Dictionary where represents the key represents the 
+     *  variables label, and the value is a `KripkeStateProperty`.
+     *
+     *  - SeeAlso: `KripkeStateProperty`
+     */
     func extract<GV: GlobalVariables>(
         globals: GV
     ) -> [String: KripkeStateProperty]
