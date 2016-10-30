@@ -61,15 +61,31 @@
  */
 public struct KripkeStateProperty: Equatable {
     
+    /**
+     *  The type of the property.
+     */
     public let type: KripkeStatePropertyTypes
     
+    /**
+     *  The value of the property.
+     */
     public let value: Any
     
+    /**
+     *  Create a new `KripkeStateProperty`.
+     *
+     *  - Parameter type: The type of the property.
+     *
+     *  - Parameter value: The value of the property.
+     */
     public init(type: KripkeStatePropertyTypes, value: Any) {
         self.type = type
         self.value = value
     }
     
+    /**
+     *  Is `other` equal to `self`?
+     */
     public func equals(other: KripkeStateProperty) -> Bool {
         // Check if rhs property type matches
         if (self.type != other.type) {
