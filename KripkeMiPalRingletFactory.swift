@@ -56,8 +56,19 @@
  *
  */
 
+/**
+ *  Provides an easy way to create a `KripkeMiPalRinglet` that doesn't use any
+ *  `GlobalVariables` or Finite State Machine `Variables`.
+ */
 public class KripkeMiPalRingletFactory {
 
+    /**
+     *  Create the `KripkeMiPalRinglet`.
+     *
+     *  - Parameter previousState: Represents the last state that was executed.
+     *
+     *  - Returns: The newly create `KripkeMiPalRinglet`.
+     */
     public static func make(
         previousState: MiPalState = EmptyMiPalState("_previous")
     )-> KripkeMiPalRinglet<
