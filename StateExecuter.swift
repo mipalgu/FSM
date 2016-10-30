@@ -56,10 +56,19 @@
  *
  */
 
+/**
+ *  Provides a common interface for types that execute states.
+ */
 public protocol StateExecuter: StateContainer {
 
+    /**
+     *  The `StateType` that is going to be executed.
+     */
     var currentState: _StateType { get set }
 
+    /**
+     *  The `StateType` that was last executed.
+     */
     var previousState: _StateType { get set }
 
     /**
