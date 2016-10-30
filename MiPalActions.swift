@@ -56,10 +56,24 @@
  *
  */
 
+/**
+ *  All actions that are used in the MiPal model of state execution.
+ */
 public protocol MiPalActions {
     
+    /**
+     *  An entry action.
+     */
     func onEntry() -> Void
+
+    /**
+     *  Normally refered to as internal.
+     */
     func main() -> Void
+
+    /**
+     *  An exit action.
+     */
     func onExit() -> Void
     
 }
