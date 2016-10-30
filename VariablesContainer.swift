@@ -56,10 +56,20 @@
  *
  */
 
+/**
+ *  Provides a common interface for types that want to hold a reference to a set
+ *  of variables.
+ */
 public protocol VariablesContainer: class {
 
+    /**
+     *  The type of the `Variables`.
+     */
     associatedtype Vars: Variables
 
+    /**
+     *  The `Variables`.
+     */
     var vars: Vars { get set }
 
 }
