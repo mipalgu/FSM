@@ -92,7 +92,7 @@ public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtract
      *  - Returns: A `KripkeStatePropertyList` that contains all the values for
      *  all the variables.
      */
-    public func extract<GV: GlobalVariables>public func extract<G: GlobalVariables, F: Variables, S: StateType>(
+    public func extract<G: GlobalVariables, F: Variables, S: StateType>(
         globals: G,
         fsmVars: F,
         state: S
