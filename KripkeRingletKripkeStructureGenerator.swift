@@ -56,6 +56,9 @@
  *
  */
 
+/**
+ *  Provides a way to generate a `KripkeStructure` from a `KripkeRinglet`.
+ */
 public class KripkeRingletKripkeStructureGenerator<
     CD: CycleDetector,
     E: PropertiesExtractor,
@@ -77,12 +80,38 @@ public class KripkeRingletKripkeStructureGenerator<
             data: CD.Data
         )
 
+    /**
+     *  Create a new `KripkeRingletKripkeStructureGenerator`.
+     *
+     *  - Parameter cycleDetector: Used to detect cycles in the structure.
+     *
+     *  - Parameter extractor: Used to extract the value of all the different
+     *  variables.
+     *
+     *  - Parameter factory: Used to create the `Spinners.Spinner`s that are
+     *  used to evaluate all possible variations of the `GlobalVariables`.
+     */
     public init(cycleDetector: CD, extractor: E, factory: SpinnersFactory) {
         self.cycleDetector = cycleDetector
         self.extractor = extractor
         self.factory = factory
     }
 
+    /**
+     *  Generate a new `KripkeStructure`.
+     *
+     *  - Parameter machine: The name of the machine.
+     *
+     *  - Parameter fsm: The name of the Finite State Machine.
+     *
+     *  - Parameter intialState: The starting state of the Finite State Machine.
+     *
+     *  - Parameter ringlet: The `KripkeRinglet` which is used to execute and
+     *  take snapshots of the states.
+     *
+     *  - Returns: A `KripkeStructure` which represents all the possible ways
+     *  in which the Finite State Machine can be executed.
+     */
     public func generate<R: KripkeRinglet>(
         machine: String,
         fsm: String,
