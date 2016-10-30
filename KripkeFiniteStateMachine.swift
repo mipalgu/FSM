@@ -183,11 +183,6 @@ public struct KripkeFiniteStateMachine<
     public let suspendState: R._StateType
     
     /**
-     *  The state that is set to `currentState` when the FSM is suspended.
-     */
-    public let suspendState: R._StateType
-    
-    /**
      *  Create a new `KripkeFiniteStateMachine`.
      *
      *  - Parameter name: The name of the FSM.
