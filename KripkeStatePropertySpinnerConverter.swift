@@ -56,16 +56,32 @@
  *
  */
 
+/**
+ *  Provides a way to convert a `KripkeStateProperty` to a `Spinners.Spinner`.
+ */
 public class KripkeStatePropertySpinnerConverter:
     KripkeStatePropertySpinnerConverterType
 {
 
     private let spinners: Spinners
 
+    /**
+     *  Create a new `KripkeStatePropertySpinnerConverter`.
+     *
+     *  - Parameter spinners: Contains all the different `Spinners.Spinner`s.
+     */
     public init(spinners: Spinners = Spinners()) {
         self.spinners = spinners
     }
 
+    /**
+     *  Convert a `KripkeStateProperty` to a `Spinners.Spinner`.
+     *
+     *  - Parameter from: The `KripkeStateProperty` that is being converted.
+     *
+     *  - Returns: A tuple where the first element is the starting value of the
+     *  `Spinners.Spinner` and the second element is the `Spinners.Spinner`.
+     */
     public func convert(from ksp: KripkeStateProperty) -> (Any, (Any) -> Any?) {
         switch ksp.type {
         case .Bool:
