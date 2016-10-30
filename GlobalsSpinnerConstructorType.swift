@@ -56,8 +56,26 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for creating `Spinners.Spinner`s for
+ *  `GlobalVariables`.
+ */
 public protocol GlobalsSpinnerConstructorType {
 
+    /**
+     *  Convert `Spinners.Spinner`s for an instance of `GlobalVariables` to a
+     *  `GlobalVariables` `Spinners.Spinner`.
+     *
+     *  - Parameter defaultValues: A dictionary where the key represents the
+     *  label of the variables within the `GlobalVariables` and the value
+     *  represents the starting value for that variable.
+     *
+     *  - Parameter spinners: A dictionary where the key represents the label
+     *  of the variables within the `GlobalVariables` and the value represents
+     *  the `Spinners.Spinner` for the variable.
+     *
+     *  - Returns: A `Spinners.Spinner` for the `GlobalVariables`.
+     */
     func makeSpinner<GV: GlobalVariables>(
         defaultValues: [String: Any],
         spinners: [String: (Any) -> Any?]
