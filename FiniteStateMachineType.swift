@@ -57,11 +57,13 @@
  */
 
 /**
- *  Contains implementation details for Finite State Machines.
+ *  The top level type for Finite State Machines.
  *
- *  - Warning: Do not use this protocol directly.  If you wish to create your
- *  own implementation of a Finite State Machine then instead make a subclass
- *  of `FiniteStateMachine`.
+ *  This protocol does not provide a lot of functionality.  Added functionality
+ *  is provided by several diffent protocols.  Therefore to add functionality
+ *  you should conform to these protocols.  If you would like to, for instance
+ *  make a Finite State Machine that is suspendable, then you should conform to
+ *  the `Suspendable` protocol.
  */
 public protocol FiniteStateMachineType: Identifiable, StateContainer {
     
@@ -70,7 +72,8 @@ public protocol FiniteStateMachineType: Identifiable, StateContainer {
 }
 
 /**
- *  Provide default implementations for when a Finite State Machine is Exitable.
+ *  Provide default implementations for when a Finite State Machine is
+ *  `Exitable`.
  */
 public extension FiniteStateMachineType where
     Self: ExitableStateExecuter,
@@ -78,10 +81,10 @@ public extension FiniteStateMachineType where
 {
 
     /**
-     *  The Finite State Machine is resumed and `currentState` is set to an
-     *  accepting state, `previousState` is set to `currentState`.
+     *  The Finite State Machine is resumed and `currentState` is set to 
+     *  `exitState`, `previousState` is set to `currentState`.
      *
-     *  This therefore make `hasFinished` true.
+     *  - Postcondition: `hasFinished` is true.
      */
     public mutating func exit() {
         self.resume()
@@ -91,6 +94,10 @@ public extension FiniteStateMachineType where
     
 }
 
+/**
+ *  Provide default implementations for when the Finite State Machine is
+ *  `Finishable`.
+ */
 public extension FiniteStateMachineType where
     Self._StateType: Transitionable,
     Self: Finishable,
@@ -98,7 +105,7 @@ public extension FiniteStateMachineType where
 {
 
     /**
-     *  Finite State Machine are finished if they are not suspended,
+     *  Finite State Machines are finished if they are not suspended,
      *  `currentState` is an accepting state and `currentState` has already been
      *  executed.
      */
@@ -111,7 +118,8 @@ public extension FiniteStateMachineType where
 }
 
 /**
- *  Provide default implemtations for when a Finite State Machine is Resumeable.
+ *  Provide default implemtations for when a Finite State Machine is
+ *  `Resumeable`.
  */
 public extension FiniteStateMachineType where Self: Resumeable {
 
@@ -138,7 +146,7 @@ public extension FiniteStateMachineType where Self: Resumeable {
 
 /**
  *  Provide default implementations for when a Finite State Machine is
- *  Suspendable.
+ *  `Suspendable`.
  */
 public extension FiniteStateMachineType where Self._StateType: Equatable, Self: Suspendable {
     
@@ -171,7 +179,7 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
 
 /**
  *  Provide default implementations for when a Finite State Machine is
- *  Restartable and Resumeable.
+ *  `Restartable` and `Resumeable`.
  */
 public extension FiniteStateMachineType where Self: Restartable, Self: Resumeable {
     
@@ -193,7 +201,7 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
 
 /**
  *  Provide default implementations for when a Finite State Machine is a
- *  StateExecuter.
+ *  `StateExecuter` and a `StateExecuterDelegator`.
  */
 public extension FiniteStateMachineType where
     Self: StateExecuterDelegator,
@@ -208,7 +216,8 @@ public extension FiniteStateMachineType where
      *  `currentState`.
      *
      *  This method uses `ringlet` to execute the `currentState` and the state
-     *  that is returned from `ringlet.execute` is the next state to execute.
+     *  that is returned from `Ringlet.execute(state:)` is the next state to
+     *  execute.
      */
     public mutating func next() {
         self.previousState = self.currentState
@@ -217,18 +226,31 @@ public extension FiniteStateMachineType where
     
 }
 
+/**
+ *  Provide default implementations for when a Finite State Machine is a
+ *  `SnapshotContainer`, but contains a `Ringlet` that is also a
+ *  `SnapshotContainer`.
+ */
 public extension FiniteStateMachineType where
     Self: SnapshotContainer,
     Self: StateExecuterDelegator,
     Self.RingletType: SnapshotContainer
 {
 
+    /**
+     *  Delegate the snapshot retrieval to the `ringlet`.
+     */
     public var snapshots: [KripkeStatePropertyList] {
         return self.ringlet.snapshots
     }
 
 }
 
+/**
+ *  Provide default implementations for when a Finite State Machine is a
+ *  `KripkeStructureGenerator`, but wishes to use a
+ *  `KripkeRingletKRipkeStructureGenerator` to peroform the generation.
+ */
 public extension FiniteStateMachineType where
     Self: StateExecuterDelegator,
     Self: KripkeStructureGenerator,
@@ -239,6 +261,15 @@ public extension FiniteStateMachineType where
     Self._StateType._TransitionType == Transition<Self._StateType>
 {
     
+    /**
+     *  Delegate the generation to the `KripkeRingletKripkeStructureGenerator`.
+     *
+     *  - Parameter machine: The name of the `Machine` that the FSM belongs to.
+     *
+     *  - Returns: The `KripkeStructure`.
+     *
+     *  - SeeAlso: `KripkeRingletKripkeStructureGenerator`
+     */
     public func generate(machine: String) -> KripkeStructure {
         return self.generator.generate(
             machine: machine,
