@@ -56,13 +56,41 @@
  *
  */
 
+/**
+ *  A `CycleDetector` that uses the Teleporting Turtle method of cycle
+ *  detection.
+ */
 public class TeleportingTurtleCycleDetector<E: Equatable>: CycleDetector {
 
+    /**
+     *  A tuple containing the turtle, the current power and the length of the
+     *  cycle.
+     */
     public typealias Data = (turtle: Element?, power: Int, length: Int)
+
+    /**
+     *  The elements of the cycle.
+     *
+     *  - Attention: Must be `Equatable`.
+     */
     public typealias Element = E
 
+    /**
+     *  Start without a turtle, with a power of 1 and a length of 1.
+     */
     public let initialData: Data = (nil, 1, 1)
 
+    /**
+     *  Is `element` equal to the turtle?
+     *
+     *  - Parameter data: The current turtle, power and cycle length.
+     *
+     *  - Parameter element: The current element in the series.
+     *
+     *  - Returns: A tuple where the first element is a Bool indicating whether
+     *  a cycle was found and the second element is a tuple containing the new
+     *  turtle, new power and new cycle length.
+     */
     public func inCycle(data: Data, element: Element) -> (Bool, Data) {
         let inCycle = nil == data.turtle ? false : data.turtle! == element
         if (data.length >= data.power) {
