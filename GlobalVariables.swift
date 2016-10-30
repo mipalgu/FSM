@@ -56,10 +56,28 @@
  *
  */
 
+/**
+ *  Conforming types represent all possible variables that are global.
+ *
+ *  This is generally used when developer create their machines as a way to
+ *  share external variables from the environment.  Types conforming to this
+ *  protocol are used extensively with `KripkeStructure` generation.
+ *
+ *  - SeeAlso: `KripkeRingletKripkeStructureGenerator`
+ */
 public protocol GlobalVariables: Equatable {
     
+    /**
+     *  Create a new instance with default values for all variables.
+     */
     init()
 
+    /**
+     *  Create a new instance from a dictionary where the key represents the
+     *  variables label and the value represents the value of the variable.
+     *
+     *  - Parameter fromDictionary: The variables in a dictionary.
+     */
     init(fromDictionary: [String: Any])
 
 }
