@@ -56,6 +56,9 @@
  *
  */
 
+/**
+ *  Creates instances of `GlobalsSpinnerConstructorType`.
+ */
 public class GlobalsSpinnerConstructorFactory<
     GSC: GlobalsSpinnerConstructorType,
     GSE: GlobalsSpinnerDataExtractorType
@@ -65,11 +68,33 @@ public class GlobalsSpinnerConstructorFactory<
 
     private let extractor: GSE
 
+    /**
+     *  Create a new `GlobalsSpinnerConstructorFactory`.
+     *
+     *  - Parameter constructor: This is used to convert a dictionary of
+     *  `Spinners.Spinner`s to a `GlobalVariables` `Spinners.Spinner`.
+     *
+     *  - Parameter extractor: This is used to extract the `Spinners.Spinner`s
+     *  from the `GlobalVariables`.
+     *
+     *  - SeeAlso: `GlobalsSpinnerConstructorType`
+     *  - SeeAlso: `GlobalsSpinnerDataExtractorType`
+     */
     public init(constructor: GSC, extractor: GSE) {
         self.constructor = constructor
         self.extractor = extractor
     }
 
+    /**
+     *  Create a function that, when called, creates a `Spinners.Spinner` for
+     *  a the `GlobalVariables`.
+     *
+     *  - Parameter globals: The `GlobalVariables` that will be used to create
+     *  the `Spinners.Spinner`.
+     *
+     *  - Returns: A function that creates the `GlobalVariables`
+     *  `Spinners.Spinner`.
+     */
     public func make<
         GV: GlobalVariables
     >(globals: GV) -> () -> () -> GV? {
