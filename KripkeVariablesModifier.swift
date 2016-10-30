@@ -56,10 +56,24 @@
  *
  */
 
+/**
+ *  Allows conforming types to manipulate the values of variables that are used
+ *  in `KripkeStructures`.
+ */
 public protocol KripkeVariablesModifier {
 
+    /**
+     *  A dictionary where the keys represent the label of each variables and
+     *  the values represent a function which takes a current value and
+     *  manipulates it and returns the new value, which the `KripkeStructure`
+     *  should use.
+     */
     var manipulators: [String: (Any) -> Any] { get }
 
+    /**
+     *  A dictionary where the keys represent the labels of each variable and
+     *  the values represent all possible valid values of the variables.
+     */
     var validVars: [String: [Any]] { get }
 
 }
