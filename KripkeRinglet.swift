@@ -56,6 +56,13 @@
  *
  */
 
+/**
+ *  Types conforming to this protocol are responsible for executing states, 
+ *  while taking snapshots of the variables that the state has access to. This
+ *  is used when generating a `KripkeStructure`.
+ *
+ *  - SeeAlso: `KripkeRingletKripkeStructureGenerator`
+ */
 public protocol KripkeRinglet: 
     Cloneable,
     FSMVariablesContainerHolder,
@@ -64,6 +71,9 @@ public protocol KripkeRinglet:
     SnapshotContainer
 {
 
+    /**
+     *  The `StateType` must also be `Cloneable`.
+     */
     associatedtype _StateType: StateType, CloneableState
 
 }
