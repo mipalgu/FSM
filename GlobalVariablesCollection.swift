@@ -56,12 +56,30 @@
  *
  */
 
+/**
+ *  A `Sequence` that contains `GlobalVariables`.
+ *
+ *  - SeeAlso: `GlobalVariables`
+ */
 public protocol GlobalVariablesCollection: Sequence {
 
+    /**
+     *  The `Element`s of the sequence must conform to `GlobalVariables`.
+     */
     associatedtype Element: GlobalVariables
 
+    /**
+     *  Retrieve the latest values.
+     *
+     *  - Returns: The latest `Element`.
+     */
     func get() -> Element
 
+    /**
+     *  Append a new value.
+     *
+     *  - Parameter val: The new `Element`.
+     */
     func post(val: Element) -> Void
 
 }
