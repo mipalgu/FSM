@@ -56,10 +56,20 @@
  *
  */
 
+/**
+ *  Provides a common interface for types that delegate the execution of a 
+ *  `StateType` to a `Ringlet`.
+ */
 public protocol StateExecuterDelegator: StateExecuter {
 
+    /**
+     *  The type of the `Ringlet`.
+     */
     associatedtype RingletType: Ringlet
 
+    /**
+     *  The `Ringlet` that executes the states.
+     */
     var ringlet: RingletType { get }
 
 }
