@@ -56,9 +56,32 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for providing a way to retrieve the next
+ *  values within a `Spinners.Spinner`.
+ */
 public protocol SpinnerRunnerType {
 
-    func spin(
+    /**
+     *  Retrieve the next within a `Spinners.Spinner`.
+     *
+     *  - Parameter index: The index of the `vars` which is currently spinning.
+     *
+     *  - Parameter vars: A dictionary where the keys represent the labels
+     *  of the variables and the values represent the current values of the
+     *  variables.
+     *
+     *  - Parameter defaultValues: A dictionary where the keys represent the
+     *  labels of the variables and the values represent the starting values
+     *  of the variables.
+     *
+     *  - Parameter spinners: A dictionary where the keys represent the labels
+     *  of the variables and the values represent the `Spinners.Spinner` for
+     *  the variables.
+     *
+     *  - Returns: The next set of values on the series.
+     */
+     func spin(
         index: DictionaryIndex<String, Any>,
         vars: [String: Any],
         defaultValues: [String: Any],

@@ -65,6 +65,9 @@
  */
 public protocol Ringlet {
 
+    /**
+     *  The type that the `Ringlet` is executing.
+     */
     associatedtype _StateType: StateType
     
     /**

@@ -56,8 +56,17 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for storing `KripkeStatePropertyList`s,
+ *  which represents snapshots at different points in time of the
+ *  `GlobalVaraibles`, Finite State Machine `Variables` and the `StateType`
+ *  variables.
+ */
 public protocol SnapshotContainer {
 
+    /**
+     *  The list of snapshots.
+     */
     var snapshots: [KripkeStatePropertyList] { get }
 
 }

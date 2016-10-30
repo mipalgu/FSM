@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Conforming types are capable of being resumed after a suspension.
+ */
 public protocol Resumeable: Suspendable {
     
+    /**
+     *  - Resume `self`.
+     */
     mutating func resume() -> Void
     
 }

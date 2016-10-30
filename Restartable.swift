@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Conforming types are able to be restarted.
+ */
 public protocol Restartable: OptimizedStateExecuter {
     
+    /**
+     *  Restart `self`.
+     */
     mutating func restart() -> Void
     
 }

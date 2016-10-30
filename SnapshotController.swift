@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  A way to manage the snapshots using a `Behaviour`.
+ */
 public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariablesContainer {
 
+    /**
+     *  The type of the `GlobalVariables`.
+     */
     public typealias Class = T 
     
     private let behaviour: Behaviour<Class?>
@@ -66,8 +72,20 @@ public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariabl
 
     private let post: (Class) -> Void
 
+    /**
+     *  The latest value of the `GlobalVariables`.
+     */
     public var val: Class
 
+    /**
+     *  Create a new `SnapshotController`.
+     *
+     *  - Parameter b: The `Behaviour` that contains the `GlobalVariables`.
+     *
+     *  - Parameter post: A function used to post to the `Behaviour`.
+     *
+     *  - Parameter now: A function used to retrieve the current `Time`.
+     */
     public init(
         b: Behaviour<Class?>,
         post: @escaping (Class) -> Void,
@@ -83,16 +101,29 @@ public class SnapshotController<T: GlobalVariables>: Snapshotable, GlobalVariabl
         }
     }
 
+    /**
+     *  Create a new `SnapshotController`.
+     *
+     *  - Parameter _: A tuple where the first element is the `Behaviour`,
+     *  the second element is a post function and the third element is a
+     *  function which returns the current `Time`.
+     */
     public convenience init(
         _ t: (Behaviour<Class?>, (Class) -> Void, () -> Time)
     ) {
         self.init(b: t.0, post: t.1, now: t.2)
     }
 
+    /**
+     *  Save `val` into the `Behaviour`.
+     */
     public func saveSnapshot() {
         self.post(self.val)
     }
 
+    /**
+     *  Set `val` to the current value within the `Behaviour`.
+     */
     public func takeSnapshot() {
         if let v = self.behaviour.at(self.now()) {
             self.val = v

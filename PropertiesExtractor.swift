@@ -56,8 +56,25 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for extracting the values of
+ *  `GlobalVariables`, Finite State Machine `Variables` and the variables within
+ *  `StateType`s.
+ */
 public protocol PropertiesExtractor {
 
+    /**
+     *  Creates a `KripkeStatePropertyList` by extract the values of all the
+     *  different variables.
+     *
+     *  - Parameter globals: The `GlobalVariables`.
+     *
+     *  - Parameter fsmVars: The Finite State Machine `Variables`.
+     *
+     *  - Parameter state: A `StateType`.
+     *
+     *  - Returns: The newly created `KripkeStatePropertyList`.
+     */
     func extract<G: GlobalVariables, F: Variables, S: StateType>(
         globals: G,
         fsmVars: F,
