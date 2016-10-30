@@ -56,14 +56,31 @@
  *
  */
 
+/**
+ *  Models all possible variables that affect the execution of states.
+ */
 public struct World {
 
+    /**
+     *  The name of the `StateType` that was executing at this specific time.
+     */
     let executingState: String
 
+    /**
+     *  The values of all the `GlobalVariables` that the state had access to.
+     */
     let globals: [String: KripkeStateProperty]
 
+    /**
+     *  The values of all the Finite State Machine `Varaibles` that the state
+     *  had access to.
+     */
     let fsmVars: [String: KripkeStateProperty]
 
+    /**
+     *  The values of all the state properties that affect the execution of the
+     *  state.
+     */
     let stateProperties: [String: [String: KripkeStateProperty]]
 
 }
