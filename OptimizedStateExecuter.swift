@@ -56,8 +56,14 @@
  *
  */
 
+/**
+ *  Allows `StateExecuter`s to specify a starting value for `previousState`.
+ */
 public protocol OptimizedStateExecuter: StateExecuter {
 
+    /**
+     *  An initial value for `previousState`.
+     */
     var initialPreviousState: _StateType { get }
 
 }
