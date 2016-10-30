@@ -56,34 +56,69 @@
  *
  */
 
+/**
+ *  A LIFO `Stack`.
+ */
 public struct Stack<T> {
     
+    /**
+     *  The type of the elements within the `Stack`.
+     */
     public typealias Element = T
 
     private var data: [Element] = []
 
+    /**
+     *  The number of `Element`s within the `Stack`.
+     */
     public var count: Int {
         return self.data.count
     }
 
+    /**
+     *  Is the `Stack` empty?
+     */
     public var isEmpty: Bool {
         return self.data.isEmpty
     }
 
+    /**
+     *  Create an empty `Stack`.
+     */
     public init() {}
 
+    /**
+     *  Remove all elements from the `Stack`.
+     */
     public mutating func clear() {
         self.data = []
     }
 
+    /**
+     *  Retrieve the top `Element` without removing it.
+     */
     public func peek() -> Element? {
         return data.first
     }
 
+    /**
+     *  Remove the top `Element` off the `Stack`.
+     *
+     *  - Precondition: The `Stack` is not empty.
+     *
+     *  - Postcondition: The top most `Element` is removed.
+     *
+     *  - Returns: The top most `Element`.
+     */
     public mutating func pop() -> Element {
         return data.removeFirst()
     }
 
+    /**
+     *  Place an `Element` on top of the `Stack`.
+     *
+     *  - Parameter _: The new `Element`
+     */
     public mutating func push(_ newElement: Element) {
         self.data.insert(newElement, at: 0)
     }
