@@ -28,11 +28,32 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ *  Perform a monadic bind.
+ *
+ *  - Parameter f: The function.
+ *
+ *  - Parameter a: The array.
+ *
+ *  - Returns: An array that is the result of applying `f` to `a` and flattening
+ *  the result.
+ */
 public func -<< <T, U>(f: (T) -> U?, a: [T]) -> [U] {
     return a.flatMap(f)
 
 }
 
+
+/**
+ *  Perform a monadic bind.
+ *
+ *  - Parameter a: The array.
+ *
+ *  - Parameter f: The function.
+ *
+ *  - Returns: An array that is the result of applying `f` to `a` and flattening
+ *  the result.
+ */
 public func >>- <T, U>(a: [T], f: (T) -> U?) -> [U] {
     return a.flatMap(f)
 }
