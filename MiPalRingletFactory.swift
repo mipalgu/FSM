@@ -56,8 +56,19 @@
  *
  */
 
+/**
+ *  Provides an easy way to create a `MiPalRinglet` that does not use any
+ *  `GlobalVariables`.
+ */
 public class MiPalRingletFactory {
 
+    /**
+     *  Create the `MiPalRinglet`.
+     *
+     *  - Parameter previousState: The last `MiPalState` that was executed.
+     *
+     *  - Returns: A new `MiPalRinglet`.
+     */
     public static func make(
         previousState: MiPalState = EmptyMiPalState("_previous")
     ) -> MiPalRinglet<EmptySnapshotable> {
