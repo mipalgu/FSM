@@ -57,8 +57,7 @@
  */
 
 /**
- *  A transition which allows the current state to change from one state to the
- *  next.
+ *  A transition models a way for an object to go from one state to another.
  *  
  *  Transitions may have to meet certain conditions which is why the
  *  canTransition property is a Bool indicating whether or not this specific
@@ -66,9 +65,19 @@
  */
 public protocol TransitionType {
     
+    /**
+     *  The type of the target of the transition.
+     */
     associatedtype Target
 
+    /**
+     *  Can we transition yet?
+     */
     var canTransition: () -> Bool { get }
+
+    /**
+     *  The target of the transition.
+     */
     var target: Target { get }
 
 }
