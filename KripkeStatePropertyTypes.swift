@@ -57,7 +57,7 @@
  */
 
 /**
- *  Supported types for Kripke Structures.
+ *  Supported types for `KripkeStructure`s.
  */
 public enum KripkeStatePropertyTypes: Equatable {
     case Bool
@@ -70,6 +70,9 @@ public enum KripkeStatePropertyTypes: Equatable {
     case Some
 }
 
+/**
+ *  Are two types equal?
+ */
 public func ==(
     lhs: KripkeStatePropertyTypes,
     rhs: KripkeStatePropertyTypes
