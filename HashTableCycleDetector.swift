@@ -56,13 +56,40 @@
  *
  */
 
+/**
+ *  Detects cycles using a hash table.
+ */
 public class HashTableCycleDetector<E: Hashable>: CycleDetector {
 
+    /**
+     *  A dictionary where `Element` is the key and a `Bool` is the value.
+     *
+     *  The `Bool` is used just to give the hash a value.
+     */
     public typealias Data = [Element: Bool]
+   
+    /**
+     *  The elements of the cycle.
+     *
+     *  - Attention: This must be `Hashable`.
+     */
     public typealias Element = E
 
+    /**
+     *  An empty hash table.
+     */
     public let initialData: Data = [:]
 
+    /**
+     *  Is this element in the hash table?
+     *
+     *  - Parameter data: The current hash table.
+     *
+     *  - Parameter element: The current element in the series.
+     *
+     *  - Returns: A tuple where the first element is a Bool indicating whether
+     *  a cycle was detected.  The second element is the new hash table.
+     */
     public func inCycle(data: Data, element: Element) -> (Bool, Data) {
         guard data[element] == nil else {
             return (true, data)
