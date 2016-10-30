@@ -56,8 +56,15 @@
  *
  */
 
+/**
+ *  Creates a `KripkeRingletKripkeStructureGeneratorType` that uses a
+ *  `TeleportingTurtleCycleDetector`.
+ */
 public final class TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory {
 
+    /**
+     *  The `KripkeringletKripkeStructureGeneratorType`.
+     */
     public typealias Generator = KripkeRingletKripkeStructureGenerator<
         TeleportingTurtleCycleDetector<World>,
         MirrorPropertyExtractor,
@@ -71,6 +78,9 @@ public final class TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory
     >
         
 
+    /**
+     *  Create the `Generator`.
+     */
     public func make() -> Generator {
         return KripkeRingletKripkeStructureGenerator(
             cycleDetector: TeleportingTurtleCycleDetector<World>(),
