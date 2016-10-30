@@ -56,9 +56,28 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for providing a way to generate a
+ *  `KripkeStructure` from a `KripkeRinglet`.
+ */
 public protocol KripkeRingletKripkeStructureGeneratorType {
 
-    func generate<R: KripkeRinglet>(
+    /**
+     *  Generate a new `KripkeStructure`.
+     *
+     *  - Parameter machine: The name of the machine.
+     *
+     *  - Parameter fsm: The name of the Finite State Machine.
+     *
+     *  - Parameter intialState: The starting state of the Finite State Machine.
+     *
+     *  - Parameter ringlet: The `KripkeRinglet` which is used to execute and
+     *  take snapshots of the states.
+     *
+     *  - Returns: A `KripkeStructure` which represents all the possible ways
+     *  in which the Finite State Machine can be executed.
+     */
+     func generate<R: KripkeRinglet>(
         machine: String,
         fsm: String,
         initialState: R._StateType,
