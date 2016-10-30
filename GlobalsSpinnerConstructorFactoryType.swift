@@ -56,8 +56,22 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for creating functions that return a
+ *  `Spinners.Spinner` for a specific instance of `GlobalVariables`.
+ */
 public protocol GlobalsSpinnerConstructorFactoryType {
 
+    /**
+     *  Create a function that, when called, creates a `Spinners.Spinner` for
+     *  a the `GlobalVariables`.
+     *
+     *  - Parameter globals: The `GlobalVariables` that will be used to create
+     *  the `Spinners.Spinner`.
+     *
+     *  - Returns: A function that creates the `GlobalVariables`
+     *  `Spinners.Spinner`.
+     */
     func make<
         GV: GlobalVariables
     >(globals: GV) -> () -> () -> GV?
