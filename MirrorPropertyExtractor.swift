@@ -58,15 +58,41 @@
 
 public class MirrorPropertyExtractor: PropertiesExtractor, GlobalPropertyExtractor {
 
+    /**
+     *  Create a new `MirrorPropertyExtractor`.
+     */
     public init() {}
 
+    /**
+     *  Extract all properties of a `GlobalVariables`.
+     *
+     *  - Parameter globals: The `GlobalVariables`.
+     *
+     *  - Returns: A dictionary where the key is the label of each variable in
+     *  the `GlobalVariables` and the value is a `KripkeStateProperty`,
+     *  representing the value of the variable.
+     */
     public func extract<GV: GlobalVariables>(
         globals: GV
     ) -> [String: KripkeStateProperty] {
         return self.getPropertiesFromMirror(mirror: Mirror(reflecting: globals))
     }
 
-    public func extract<G: GlobalVariables, F: Variables, S: StateType>(
+    /**
+     *  Extract all properties of `GlobalVariables`, Finite State Machine
+     *  `Variables` and state properties.
+     *
+     *  - Parameter globals: The `GlobalVariables`.
+     *
+     *  - Parameter fsmVars: The `Variables` accessible for a Finite State
+     *  Machine.
+     *
+     *  - Parameter state: The `StateType` that contains the state properties.
+     *
+     *  - Returns: A `KripkeStatePropertyList` that contains all the values for
+     *  all the variables.
+     */
+    public func extract<GV: GlobalVariables>public func extract<G: GlobalVariables, F: Variables, S: StateType>(
         globals: G,
         fsmVars: F,
         state: S
