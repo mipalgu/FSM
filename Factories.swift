@@ -72,7 +72,7 @@ public struct Factories {
         Stack<FSMArrayFactory>()
     
     /**
-     *  Provides access to the underlying `factories` stack.
+     *  Provides access to the underlying `factories` `Stack`.
      */
     public private(set) var factories: Stack<FSMArrayFactory> {
         get {
@@ -82,10 +82,16 @@ public struct Factories {
         }
     }
     
+    /**
+     *  The number of factories within the `Stack`.
+     */
     public var count: Int {
         return self.factories.count
     }
     
+    /**
+     *  Is the `Stack` empty?
+     */
     public var isEmpty: Bool {
         return self.factories.isEmpty
     }
@@ -93,14 +99,14 @@ public struct Factories {
     public init() {}
 
     /**
-     *  Clear the stack of all elements.
+     *  Clear the `Stack` of all elements.
      */
     public mutating func clear() {
         self.factories.clear()
     }
 
     /**
-     *  Retrieve the element that was added last to the stack.
+     *  Retrieve the element that was added last to the `Stack`.
      *
      *  If the stack is empty then nil is returned.
      *
@@ -112,11 +118,13 @@ public struct Factories {
     }
 
     /**
-     *  Retrieve the element that was added last to the stack
+     *  Retrieve the element that was added last to the `Stack`.
      *
-     *  - Precondition: The stack is not empty.
+     *  - Precondition: The `Stack` is not empty.
      *
-     *  - Returns: The latest element on the stack.
+     *  - Postcondition: The element is removed from the `Stack`.
+     *
+     *  - Returns: The latest element on the `Stack`.
      */
     public mutating func pop() -> FSMArrayFactory {
         return self.factories.pop()
