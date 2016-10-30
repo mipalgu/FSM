@@ -56,16 +56,26 @@
  *
  */
 
+/**
+ *  Provides a common interface for types that are capable of transitioning.
+ */
 public protocol Transitionable {
     
+    /**
+     *  The type of `TransitionType`s used.
+     */
     associatedtype _TransitionType: TransitionType
 
     /**
-     *  All possible transitions that the state can use to move to another
-     *  state.
+     *  All possible transitions that `self` can use to move.
      */
     var transitions: [_TransitionType] { get set }
 
+    /**
+     *  Add another `_TransitionType` to `self`.
+     *
+     * - Parameter _: One or more `_TransitionType`s.
+     */
     mutating func addTransition(_ : _TransitionType ...) -> Void
     
 }
