@@ -56,23 +56,44 @@
  *
  */
 
+/**
+ *  Provides a way to manage snapshots from a `GlobalVariablesCollection`.
+ */
 public class SnapshotCollectionController<Collection: GlobalVariablesCollection>: Snapshotable, GlobalVariablesContainer {
 
+    /**
+     *  `Class` is equal to `Collection.Element`.
+     */
     public typealias Class = Collection.Element
     
     private let collection: Collection 
 
+    /**
+     *  The latest element in the `GlobalVariablesCollection`.
+     */
     public var val: Collection.Element 
 
+    /**
+     *  Createa new `SnapshotCollectionController`.
+     *
+     *  - Parameter collection: The `GlobalVariablesCollection` that is used to
+     *  post/fetch values.
+     */
     public init(collection: Collection) {
         self.collection = collection
         self.val = self.collection.get()
     }
 
+    /**
+     *  Add a `val` into the `GlobalVariablesCollection`.
+     */
     public func saveSnapshot() {
         self.collection.post(val: self.val)
     }
 
+    /**
+     *  Retrieve a value from the collection and store it in `val`.
+     */
     public func takeSnapshot() {
         self.val = self.collection.get()
     }
