@@ -56,10 +56,20 @@
  *
  */
 
+/**
+ *  Conforming types delegate the generation of a `KripkeStructure` to a 
+ *  `KripkeRingletKripkeStructureGeneratorType`.
+ */
 public protocol KripkeRingletKripkeStructureGeneratorDelegator {
 
+    /**
+     *  The type of the `KripkeRingletKripkeStructureGeneratorType`.
+     */
     associatedtype Generator: KripkeRingletKripkeStructureGeneratorType
 
+    /**
+     *  The `Generator`.
+     */
     var generator: Generator { get }
 
 }
