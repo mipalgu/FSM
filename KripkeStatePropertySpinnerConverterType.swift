@@ -56,8 +56,20 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for providing a way to convert a
+ *  `KripkeStateProperty` to a `Spinners.Spinner`.
+ */
 public protocol KripkeStatePropertySpinnerConverterType {
 
-    func convert(from: KripkeStateProperty) -> (Any, (Any) -> Any?)
+    /**
+     *  Convert a `KripkeStateProperty` to a `Spinners.Spinner`.
+     *
+     *  - Parameter from: The `KripkeStateProperty` that is being converted.
+     *
+     *  - Returns: A tuple where the first element is the starting value of the
+     *  `Spinners.Spinner` and the second element is the `Spinners.Spinner`.
+     */
+     func convert(from: KripkeStateProperty) -> (Any, (Any) -> Any?)
 
 }
