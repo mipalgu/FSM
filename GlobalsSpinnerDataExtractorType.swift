@@ -56,8 +56,24 @@
  *
  */
 
+/**
+ *  Conforming types are responsible for creating `Spinners.Spinner`s for a
+ *  specific instance of `GlobalVariables`.
+ */
 public protocol GlobalsSpinnerDataExtractorType {
 
+    /**
+     *  Create `Spinners.Spinner`s for the `GlobalVariables`.
+     *
+     *  - Parameter globals: The `GlobalVariables`.
+     *
+     *  - Returns: A tuple where the first element is a dictionary where the
+     *  keys represents the label of each variables within the `GlobalVariables`
+     *  and the label represents the starting value for each variables
+     *  `Spinners.Spinner`.  The second element is a dictionary where the keys
+     *  represent the label of each variable within the `GlobalVariables` and
+     *  the values are the `Spinners.Spinner` for each variable.
+     */
     func extract<
         GV: GlobalVariables
     >(globals: GV) -> ([String: Any], [String: (Any) -> Any?])
