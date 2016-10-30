@@ -57,8 +57,9 @@
  */
 
 /**
- *  Provides information on the State and the state which will be transitioned
- *  to.
+ *  Provides implementation details for `KripkeState`s.
+ *
+ *  - Warning: Do not use this type directly.  Instead use `KripkeState`.
  */
 public protocol _KripkeStateType: Equatable {
     
