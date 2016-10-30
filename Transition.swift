@@ -56,13 +56,34 @@
  *
  */
 
+/**
+ *  Models a transition between `StateType`s.
+ */
 public struct Transition<S: StateType>: TransitionType {
 
+    /**
+     *  The type of the target state.
+     */
     public typealias Target = S
 
+    /**
+     *   Can we transition?
+     */
     public let canTransition: () -> Bool
+
+    /**
+     *  The `Target` state.
+     */
     public let target: Target
 
+    /**
+     *  Create a new `Transition`.
+     *
+     *  - Parameter _: The `Target` state.
+     *
+     *  - Parameter _: A function which returns whether we can transition or
+     *  not.
+     */
     public init(
         _ target: Target,
         _ canTransition: @escaping () -> Bool = { true }
@@ -71,14 +92,38 @@ public struct Transition<S: StateType>: TransitionType {
         self.target = target
     }
 
+    /**
+     *  Create a new `Transition` by applying `f` to `target`.
+     *
+     *  - Parameter _: The function that changes the target.
+     *
+     *  - Returns: The new `Transition`.
+     */
     public func map<S2: StateType>(_ f: (S) -> S2) -> Transition<S2> {
         return Transition<S2>(f(self.target), self.canTransition)
     }
 
+    /**
+     *  Create a new `Transition` to the same `Target` but use the new
+     *  `canTransition` function.
+     *
+     *  - Parameter _: The `Transition` that contains the new `canTransition`
+     *  function.
+     *
+     *  - Returns: The new `Transition`.
+     */
     public func apply<S2: StateType>(_ t: Transition<S2>) -> Transition<S> {
         return Transition(self.target, t.canTransition)
     }
 
+    /**
+     *  Create a new `Transition` by applying `f` to `target`.
+     *
+     *  - Parameter _: The function that takes `target` and returns the new
+     *  `Transition`.
+     *
+     *  - Returns: The new `Transition`.
+     */
     public func flatMap<S2: StateType>(
         _ f: (S) -> Transition<S2>
     ) -> Transition<S2> {
