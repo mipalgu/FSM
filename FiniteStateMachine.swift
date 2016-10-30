@@ -89,6 +89,24 @@
  *  `vars`.
  *  
  */
+
+/**
+ *  A `FiniteStateMachineType` that incorporates the default implementations, 
+ *  without Kripke Structure generation capabilities.
+ *
+ *  This type satisfies all requirements to be scheduleable as it can be used
+ *  as an `AnyScheduleableFiniteStateMachine`.
+ *
+ *  This type uses a `Ringlet` in order to perform state execution.  Therefore
+ *  `FiniteStateMachine_StateType` should be equal to the `Ringlet._StateType`.
+ *
+ *  - Warning: Using this type ensures that no `KripkeStructure` generation is
+ *  possible.  If you would like to be able to generate a `KripkeStructure` then
+ *  you should use `KripkeFiniteStateMachine`.
+ *
+ *  - SeeAlso: `FiniteStateMachineType`
+ *  - SeeAlso: `KripkeFiniteStateMachine`
+ */
 public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     ExitableStateExecuter,
     KripkeStructureGenerator,
@@ -99,8 +117,14 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     R._StateType: Transitionable
 {
 
+    /**
+     *  The type of the states.
+     */
     public typealias _StateType = R._StateType
 
+    /**
+     *  The state that is currently executing.
+     */
     public var currentState: R._StateType
 
     /**
@@ -115,10 +139,21 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
      */
     public let initialPreviousState: R._StateType
 
+    /**
+     *  The starting state of the FSM.
+     */
     public let initialState: R._StateType
 
+    /**
+     *  The name of the FSM.
+     *
+     *  - Warning: This must be unique between FSMs.
+     */
     public let name: String
 
+    /**
+     *  The last state that was executed.
+     */
     public var previousState: R._StateType
 
     /**
@@ -132,10 +167,37 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
      */
     public let snapshots: [KripkeStatePropertyList] = []
 
+    /**
+     *  The state that was the `currentState` before the FSM was suspended.
+     */
     public var suspendedState: R._StateType?
 
+    /**
+     *  The state that is set to `currentState` when the FSM is suspended.
+     */
     public let suspendState: R._StateType
     
+    /**
+     *  Create a new `FiniteStateMachine`.
+     *
+     *  - Parameter name: The name of the FSM.
+     *
+     *  - Parameter initialState: The starting state of the FSM.
+     *
+     *  - Parameter ringlet: The `Ringlet` that will execute the states.
+     *
+     *  - Parameter initialPrevious: The starting value of `previousState`.
+     *
+     *  - Parameter suspendedState: The state that will be set to `currentState`
+     *  once the FSM is resumed.  Setting this to a value that is not nil will
+     *  force the FSM to be suspended.
+     *
+     *  - Parameter suspendState: The state that is set to `currentState` once
+     *  the FSM is suspended.
+     *
+     *  - Parameter exitState: The state that is set to `currentState` once
+     *  `exit()` is called.  This should be an accepting state.
+     */
     public init(
         _ name: String,
         initialState: R._StateType,
@@ -156,6 +218,18 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
         self.suspendState = suspendState
     }
 
+    /**
+     *  The FSM needs to be able to generate a `KripkeStructure` in order to be
+     *  scheduleable.  Therefore this function creates an empty
+     *  `KripkeStructure`.
+     *
+     *  - Parameter machine: The name of the machine that the FSM belongs to.
+     *
+     *  - Returns: An empty `KripkeStructure`.
+     *
+     *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+     *  - SeeAlso: `KripkeStructure`
+     */
     public func generate(machine _: String) -> KripkeStructure {
         return KripkeStructure(states: [])
     }
