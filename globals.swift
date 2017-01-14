@@ -56,6 +56,8 @@
  *
  */
 
+import Functional 
+
 /**
  *  Set to true when debugging is turned on.
  */

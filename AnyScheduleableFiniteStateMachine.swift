@@ -56,6 +56,8 @@
  *
  */
 
+import Functional
+
 /**
  *  A type-erased Finite State Machine that is loadable by the swiftfsm
  *  scheduler.

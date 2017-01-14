@@ -56,6 +56,8 @@
  *
  */
 
+import Functional
+
 /// Behaviours represent values that change in time.
 ///
 /// Semantically behaviours are just functions of time:

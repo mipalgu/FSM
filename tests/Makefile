@@ -13,7 +13,7 @@ all:	all-real
 SWIFT_SRCS!=ls *.swift
 SWIFT_BRIDGING_HEADER=FSM_tests-Bridging-Header.h
 ALL_HDRS!=ls *.h
-LDFLAGS+=-lFSM
+LDFLAGS+=-L/usr/local/lib -lFSM -lFunctional
 
 .include "../../../../mk/whiteboard.mk"    # I need the C whiteboard
 .include "../../swiftfsm.mk"

@@ -56,6 +56,8 @@
  *
  */
 
+import Functional
+
 /**
  *  Provides merge functionality for dictionaries.
  */

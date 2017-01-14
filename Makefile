@@ -10,6 +10,8 @@ IN_FSM=yes
 SWIFT_SRCS!=ls *.swift
 SWIFT_BRIDGING_HEADER=FSM-Bridging-Header.h
 
+LDFLAGS+=-L/usr/local/lib -lFunctional
+
 .include "../../../mk/whiteboard.mk"    # I need the C whiteboard
 .include "../swiftfsm.mk"
 .include "../../../mk/mipal.mk"

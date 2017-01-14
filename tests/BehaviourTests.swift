@@ -56,6 +56,7 @@
  *
  */
 
+import Functional
 import XCTest
 @testable import FSM
 
