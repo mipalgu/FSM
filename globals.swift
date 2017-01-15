@@ -84,8 +84,7 @@ public func addFactory<FSM: FiniteStateMachineType>(
     FSM: StateExecuter,
     FSM: Finishable,
     FSM: KripkeStructureGenerator,
-    FSM: Resumeable,
-    FSM: SnapshotContainer
+    FSM: Resumeable
 {
     var factories: Factories = Factories()
     factories.push({ { AnyScheduleableFiniteStateMachine($0) } <^> f() })
