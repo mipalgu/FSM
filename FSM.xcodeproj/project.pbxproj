@@ -7,254 +7,307 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F2A59C991CF830D600E218C3 /* libFSM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F2B159611CF42A9700D43564 /* libFSM.dylib */; };
-		F2A59CAB1CF8311B00E218C3 /* BehaviourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */; };
-		F2A59CAC1CF8311B00E218C3 /* CArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */; };
-		F2A59CAD1CF8311B00E218C3 /* Count.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA11CF8311B00E218C3 /* Count.swift */; };
-		F2A59CAE1CF8311B00E218C3 /* FactoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA21CF8311B00E218C3 /* FactoriesTests.swift */; };
-		F2A59CAF1CF8311B00E218C3 /* FunctionalOptionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA41CF8311B00E218C3 /* FunctionalOptionalTests.swift */; };
-		F2A59CB01CF8311B00E218C3 /* GenericWhiteboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */; };
-		F2A59CB11CF8311B00E218C3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F2A59CA61CF8311B00E218C3 /* Info.plist */; };
-		F2A59CB41CF8311B00E218C3 /* WhiteboardBehaviourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */; };
-		F2A9EB141DC64ED000147681 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB21DC64ED000147681 /* aliases.swift */; };
-		F2A9EB151DC64ED000147681 /* AnyScheduleableFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB31DC64ED000147681 /* AnyScheduleableFiniteStateMachine.swift */; };
-		F2A9EB161DC64ED000147681 /* AnyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB41DC64ED000147681 /* AnyState.swift */; };
-		F2A9EB171DC64ED000147681 /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB51DC64ED000147681 /* Behaviour.swift */; };
-		F2A9EB181DC64ED000147681 /* CallbackMiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB61DC64ED000147681 /* CallbackMiPalState.swift */; };
-		F2A9EB191DC64ED000147681 /* CArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB71DC64ED000147681 /* CArray.swift */; };
-		F2A9EB1A1DC64ED000147681 /* Cloneable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB81DC64ED000147681 /* Cloneable.swift */; };
-		F2A9EB1B1DC64ED000147681 /* CloneableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAB91DC64ED000147681 /* CloneableState.swift */; };
-		F2A9EB1C1DC64ED000147681 /* ConvertibleCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EABA1DC64ED000147681 /* ConvertibleCArray.swift */; };
-		F2A9EB1D1DC64ED000147681 /* CycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EABB1DC64ED000147681 /* CycleDetector.swift */; };
-		F2A9EB1E1DC64ED000147681 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EABC1DC64ED000147681 /* Dictionary.swift */; };
-		F2A9EB1F1DC64ED000147681 /* EmptyGlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EABD1DC64ED000147681 /* EmptyGlobalVariablesContainer.swift */; };
-		F2A9EB201DC64ED000147681 /* EmptyMiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EABE1DC64ED000147681 /* EmptyMiPalState.swift */; };
-		F2A9EB211DC64ED000147681 /* EmptySnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EABF1DC64ED000147681 /* EmptySnapshotable.swift */; };
-		F2A9EB221DC64ED000147681 /* EmptyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC01DC64ED000147681 /* EmptyVariables.swift */; };
-		F2A9EB231DC64ED000147681 /* Exitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC11DC64ED000147681 /* Exitable.swift */; };
-		F2A9EB241DC64ED000147681 /* ExitableStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC21DC64ED000147681 /* ExitableStateExecuter.swift */; };
-		F2A9EB251DC64ED000147681 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC31DC64ED000147681 /* Factories.swift */; };
-		F2A9EB261DC64ED000147681 /* Finishable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC41DC64ED000147681 /* Finishable.swift */; };
-		F2A9EB271DC64ED000147681 /* FiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC51DC64ED000147681 /* FiniteStateMachine.swift */; };
-		F2A9EB281DC64ED000147681 /* FiniteStateMachineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC61DC64ED000147681 /* FiniteStateMachineType.swift */; };
-		F2A9EB291DC64ED000147681 /* FSM-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A9EAC71DC64ED000147681 /* FSM-Bridging-Header.h */; };
-		F2A9EB2A1DC64ED000147681 /* FSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC81DC64ED000147681 /* FSM.swift */; };
-		F2A9EB2B1DC64ED000147681 /* FSMVariablesContainerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAC91DC64ED000147681 /* FSMVariablesContainerHolder.swift */; };
-		F2A9EB2C1DC64ED000147681 /* FunctionalArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EACA1DC64ED000147681 /* FunctionalArray.swift */; };
-		F2A9EB2D1DC64ED000147681 /* FunctionalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EACB1DC64ED000147681 /* FunctionalOperators.swift */; };
-		F2A9EB2E1DC64ED000147681 /* FunctionalOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EACC1DC64ED000147681 /* FunctionalOptional.swift */; };
-		F2A9EB2F1DC64ED000147681 /* FunctionalSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EACD1DC64ED000147681 /* FunctionalSequence.swift */; };
-		F2A9EB301DC64ED000147681 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EACE1DC64ED000147681 /* GenericWhiteboard.swift */; };
-		F2A9EB311DC64ED000147681 /* GlobalPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EACF1DC64ED000147681 /* GlobalPropertyExtractor.swift */; };
-		F2A9EB321DC64ED000147681 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD01DC64ED000147681 /* globals.swift */; };
-		F2A9EB331DC64ED000147681 /* GlobalsSpinnerConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD11DC64ED000147681 /* GlobalsSpinnerConstructor.swift */; };
-		F2A9EB341DC64ED000147681 /* GlobalsSpinnerConstructorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD21DC64ED000147681 /* GlobalsSpinnerConstructorFactory.swift */; };
-		F2A9EB351DC64ED000147681 /* GlobalsSpinnerConstructorFactoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD31DC64ED000147681 /* GlobalsSpinnerConstructorFactoryType.swift */; };
-		F2A9EB361DC64ED000147681 /* GlobalsSpinnerConstructorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD41DC64ED000147681 /* GlobalsSpinnerConstructorType.swift */; };
-		F2A9EB371DC64ED000147681 /* GlobalsSpinnerDataExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD51DC64ED000147681 /* GlobalsSpinnerDataExtractor.swift */; };
-		F2A9EB381DC64ED000147681 /* GlobalsSpinnerDataExtractorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD61DC64ED000147681 /* GlobalsSpinnerDataExtractorType.swift */; };
-		F2A9EB391DC64ED000147681 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD71DC64ED000147681 /* GlobalVariables.swift */; };
-		F2A9EB3A1DC64ED000147681 /* GlobalVariablesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD81DC64ED000147681 /* GlobalVariablesCollection.swift */; };
-		F2A9EB3B1DC64ED000147681 /* GlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAD91DC64ED000147681 /* GlobalVariablesContainer.swift */; };
-		F2A9EB3C1DC64ED000147681 /* GlobalVariablesContainerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EADA1DC64ED000147681 /* GlobalVariablesContainerHolder.swift */; };
-		F2A9EB3D1DC64ED000147681 /* HashTableCycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EADB1DC64ED000147681 /* HashTableCycleDetector.swift */; };
-		F2A9EB3E1DC64ED000147681 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EADC1DC64ED000147681 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift */; };
-		F2A9EB3F1DC64ED000147681 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EADD1DC64ED000147681 /* Identifiable.swift */; };
-		F2A9EB401DC64ED000147681 /* KripkeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EADE1DC64ED000147681 /* KripkeCollection.swift */; };
-		F2A9EB411DC64ED000147681 /* KripkeFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EADF1DC64ED000147681 /* KripkeFiniteStateMachine.swift */; };
-		F2A9EB421DC64ED000147681 /* KripkeMiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE01DC64ED000147681 /* KripkeMiPalRinglet.swift */; };
-		F2A9EB431DC64ED000147681 /* KripkeMiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE11DC64ED000147681 /* KripkeMiPalRingletFactory.swift */; };
-		F2A9EB441DC64ED000147681 /* KripkeRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE21DC64ED000147681 /* KripkeRinglet.swift */; };
-		F2A9EB451DC64ED000147681 /* KripkeRingletKripkeStructureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE31DC64ED000147681 /* KripkeRingletKripkeStructureGenerator.swift */; };
-		F2A9EB461DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE41DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorDelegator.swift */; };
-		F2A9EB471DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE51DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorType.swift */; };
-		F2A9EB481DC64ED000147681 /* KripkeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE61DC64ED000147681 /* KripkeState.swift */; };
-		F2A9EB491DC64ED000147681 /* KripkeStateProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE71DC64ED000147681 /* KripkeStateProperty.swift */; };
-		F2A9EB4A1DC64ED000147681 /* KripkeStatePropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE81DC64ED000147681 /* KripkeStatePropertyList.swift */; };
-		F2A9EB4B1DC64ED000147681 /* KripkeStatePropertySpinnerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAE91DC64ED000147681 /* KripkeStatePropertySpinnerConverter.swift */; };
-		F2A9EB4C1DC64ED000147681 /* KripkeStatePropertySpinnerConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAEA1DC64ED000147681 /* KripkeStatePropertySpinnerConverterType.swift */; };
-		F2A9EB4D1DC64ED000147681 /* KripkeStatePropertyTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAEB1DC64ED000147681 /* KripkeStatePropertyTypes.swift */; };
-		F2A9EB4E1DC64ED000147681 /* KripkeStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAEC1DC64ED000147681 /* KripkeStateType.swift */; };
-		F2A9EB4F1DC64ED000147681 /* KripkeStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAED1DC64ED000147681 /* KripkeStructure.swift */; };
-		F2A9EB501DC64ED000147681 /* KripkeStructureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAEE1DC64ED000147681 /* KripkeStructureGenerator.swift */; };
-		F2A9EB511DC64ED000147681 /* KripkeStructureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAEF1DC64ED000147681 /* KripkeStructureType.swift */; };
-		F2A9EB521DC64ED000147681 /* KripkeVariablesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF01DC64ED000147681 /* KripkeVariablesModifier.swift */; };
-		F2A9EB531DC64ED000147681 /* MiPalActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF11DC64ED000147681 /* MiPalActions.swift */; };
-		F2A9EB541DC64ED000147681 /* MiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF21DC64ED000147681 /* MiPalRinglet.swift */; };
-		F2A9EB551DC64ED000147681 /* MiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF31DC64ED000147681 /* MiPalRingletFactory.swift */; };
-		F2A9EB561DC64ED000147681 /* MiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF41DC64ED000147681 /* MiPalState.swift */; };
-		F2A9EB571DC64ED000147681 /* MirrorPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF51DC64ED000147681 /* MirrorPropertyExtractor.swift */; };
-		F2A9EB581DC64ED000147681 /* MutableSnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF61DC64ED000147681 /* MutableSnapshotable.swift */; };
-		F2A9EB591DC64ED000147681 /* OptimizedStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF71DC64ED000147681 /* OptimizedStateExecuter.swift */; };
-		F2A9EB5A1DC64ED000147681 /* PropertiesExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF81DC64ED000147681 /* PropertiesExtractor.swift */; };
-		F2A9EB5B1DC64ED000147681 /* Restartable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAF91DC64ED000147681 /* Restartable.swift */; };
-		F2A9EB5C1DC64ED000147681 /* Resumeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAFA1DC64ED000147681 /* Resumeable.swift */; };
-		F2A9EB5D1DC64ED000147681 /* Ringlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAFB1DC64ED000147681 /* Ringlet.swift */; };
-		F2A9EB5E1DC64ED000147681 /* SimpleVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAFC1DC64ED000147681 /* SimpleVariablesContainer.swift */; };
-		F2A9EB5F1DC64ED000147681 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAFD1DC64ED000147681 /* Snapshotable.swift */; };
-		F2A9EB601DC64ED000147681 /* SnapshotCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAFE1DC64ED000147681 /* SnapshotCollectionController.swift */; };
-		F2A9EB611DC64ED100147681 /* SnapshotContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EAFF1DC64ED000147681 /* SnapshotContainer.swift */; };
-		F2A9EB621DC64ED100147681 /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB001DC64ED000147681 /* SnapshotController.swift */; };
-		F2A9EB631DC64ED100147681 /* SpinnerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB011DC64ED000147681 /* SpinnerRunner.swift */; };
-		F2A9EB641DC64ED100147681 /* SpinnerRunnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB021DC64ED000147681 /* SpinnerRunnerType.swift */; };
-		F2A9EB651DC64ED100147681 /* Spinners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB031DC64ED000147681 /* Spinners.swift */; };
-		F2A9EB661DC64ED100147681 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB041DC64ED000147681 /* Stack.swift */; };
-		F2A9EB671DC64ED100147681 /* StateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB051DC64ED000147681 /* StateContainer.swift */; };
-		F2A9EB681DC64ED100147681 /* StateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB061DC64ED000147681 /* StateExecuter.swift */; };
-		F2A9EB691DC64ED100147681 /* StateExecuterDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB071DC64ED000147681 /* StateExecuterDelegator.swift */; };
-		F2A9EB6A1DC64ED100147681 /* StateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB081DC64ED000147681 /* StateType.swift */; };
-		F2A9EB6B1DC64ED100147681 /* Suspendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB091DC64ED000147681 /* Suspendable.swift */; };
-		F2A9EB6C1DC64ED100147681 /* TeleportingTurtleCycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB0A1DC64ED000147681 /* TeleportingTurtleCycleDetector.swift */; };
-		F2A9EB6D1DC64ED100147681 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB0B1DC64ED000147681 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift */; };
-		F2A9EB6E1DC64ED100147681 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB0C1DC64ED000147681 /* Transition.swift */; };
-		F2A9EB6F1DC64ED100147681 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB0D1DC64ED000147681 /* Transitionable.swift */; };
-		F2A9EB701DC64ED100147681 /* TransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB0E1DC64ED000147681 /* TransitionType.swift */; };
-		F2A9EB711DC64ED100147681 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB0F1DC64ED000147681 /* Variables.swift */; };
-		F2A9EB721DC64ED100147681 /* VariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB101DC64ED000147681 /* VariablesContainer.swift */; };
-		F2A9EB731DC64ED100147681 /* Whiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB111DC64ED000147681 /* Whiteboard.swift */; };
-		F2A9EB741DC64ED100147681 /* WhiteboardBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB121DC64ED000147681 /* WhiteboardBehaviour.swift */; };
-		F2A9EB751DC64ED100147681 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9EB131DC64ED000147681 /* World.swift */; };
-		F2B159E01CF5509700D43564 /* gusimplewhiteboard.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */; };
-		F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */ = {isa = PBXBuildFile; fileRef = F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */; };
+		F245D7821E33B674007C32F5 /* FSM.h in Headers */ = {isa = PBXBuildFile; fileRef = F245D7801E33B674007C32F5 /* FSM.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F245D7861E33B692007C32F5 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6BC1E33B65B007C32F5 /* aliases.swift */; };
+		F245D7871E33B692007C32F5 /* AnyScheduleableFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6BD1E33B65B007C32F5 /* AnyScheduleableFiniteStateMachine.swift */; };
+		F245D7881E33B692007C32F5 /* AnyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6BE1E33B65B007C32F5 /* AnyState.swift */; };
+		F245D7891E33B692007C32F5 /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6BF1E33B65B007C32F5 /* Behaviour.swift */; };
+		F245D78A1E33B692007C32F5 /* CallbackMiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C01E33B65B007C32F5 /* CallbackMiPalState.swift */; };
+		F245D78B1E33B692007C32F5 /* CArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C11E33B65B007C32F5 /* CArray.swift */; };
+		F245D78C1E33B692007C32F5 /* Cloneable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C21E33B65B007C32F5 /* Cloneable.swift */; };
+		F245D78D1E33B692007C32F5 /* CloneableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C31E33B65B007C32F5 /* CloneableState.swift */; };
+		F245D78E1E33B692007C32F5 /* ConvertibleCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C41E33B65B007C32F5 /* ConvertibleCArray.swift */; };
+		F245D78F1E33B692007C32F5 /* CycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C51E33B65B007C32F5 /* CycleDetector.swift */; };
+		F245D7901E33B692007C32F5 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C61E33B65B007C32F5 /* Dictionary.swift */; };
+		F245D7911E33B692007C32F5 /* EmptyGlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C71E33B65B007C32F5 /* EmptyGlobalVariablesContainer.swift */; };
+		F245D7921E33B692007C32F5 /* EmptyMiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C81E33B65B007C32F5 /* EmptyMiPalState.swift */; };
+		F245D7931E33B692007C32F5 /* EmptySnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6C91E33B65B007C32F5 /* EmptySnapshotable.swift */; };
+		F245D7941E33B692007C32F5 /* EmptyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6CA1E33B65B007C32F5 /* EmptyVariables.swift */; };
+		F245D7951E33B692007C32F5 /* Exitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6CB1E33B65B007C32F5 /* Exitable.swift */; };
+		F245D7961E33B692007C32F5 /* ExitableStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6CC1E33B65B007C32F5 /* ExitableStateExecuter.swift */; };
+		F245D7971E33B692007C32F5 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6CD1E33B65B007C32F5 /* Factories.swift */; };
+		F245D7981E33B692007C32F5 /* Finishable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6CE1E33B65B007C32F5 /* Finishable.swift */; };
+		F245D7991E33B692007C32F5 /* FiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6CF1E33B65B007C32F5 /* FiniteStateMachine.swift */; };
+		F245D79A1E33B692007C32F5 /* FiniteStateMachineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D01E33B65B007C32F5 /* FiniteStateMachineType.swift */; };
+		F245D79C1E33B692007C32F5 /* FSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D21E33B65B007C32F5 /* FSM.swift */; };
+		F245D79D1E33B692007C32F5 /* FSMVariablesContainerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D31E33B65B007C32F5 /* FSMVariablesContainerHolder.swift */; };
+		F245D79E1E33B692007C32F5 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D41E33B65B007C32F5 /* GenericWhiteboard.swift */; };
+		F245D79F1E33B692007C32F5 /* GlobalPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D51E33B65B007C32F5 /* GlobalPropertyExtractor.swift */; };
+		F245D7A01E33B692007C32F5 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D61E33B65B007C32F5 /* globals.swift */; };
+		F245D7A11E33B692007C32F5 /* GlobalsSpinnerConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D71E33B65B007C32F5 /* GlobalsSpinnerConstructor.swift */; };
+		F245D7A21E33B692007C32F5 /* GlobalsSpinnerConstructorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D81E33B65B007C32F5 /* GlobalsSpinnerConstructorFactory.swift */; };
+		F245D7A31E33B692007C32F5 /* GlobalsSpinnerConstructorFactoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6D91E33B65B007C32F5 /* GlobalsSpinnerConstructorFactoryType.swift */; };
+		F245D7A41E33B692007C32F5 /* GlobalsSpinnerConstructorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6DA1E33B65B007C32F5 /* GlobalsSpinnerConstructorType.swift */; };
+		F245D7A51E33B692007C32F5 /* GlobalsSpinnerDataExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6DB1E33B65B007C32F5 /* GlobalsSpinnerDataExtractor.swift */; };
+		F245D7A61E33B692007C32F5 /* GlobalsSpinnerDataExtractorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6DC1E33B65B007C32F5 /* GlobalsSpinnerDataExtractorType.swift */; };
+		F245D7A71E33B692007C32F5 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6DD1E33B65B007C32F5 /* GlobalVariables.swift */; };
+		F245D7A81E33B692007C32F5 /* GlobalVariablesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6DE1E33B65B007C32F5 /* GlobalVariablesCollection.swift */; };
+		F245D7A91E33B692007C32F5 /* GlobalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6DF1E33B65B007C32F5 /* GlobalVariablesContainer.swift */; };
+		F245D7AA1E33B692007C32F5 /* GlobalVariablesContainerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E01E33B65B007C32F5 /* GlobalVariablesContainerHolder.swift */; };
+		F245D7AB1E33B692007C32F5 /* HashTableCycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E11E33B65B007C32F5 /* HashTableCycleDetector.swift */; };
+		F245D7AC1E33B692007C32F5 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E21E33B65B007C32F5 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift */; };
+		F245D7AD1E33B692007C32F5 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E31E33B65B007C32F5 /* Identifiable.swift */; };
+		F245D7AE1E33B692007C32F5 /* jazzy.json in Resources */ = {isa = PBXBuildFile; fileRef = F245D6E41E33B65B007C32F5 /* jazzy.json */; };
+		F245D7AF1E33B692007C32F5 /* KripkeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E51E33B65B007C32F5 /* KripkeCollection.swift */; };
+		F245D7B01E33B692007C32F5 /* KripkeFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E61E33B65B007C32F5 /* KripkeFiniteStateMachine.swift */; };
+		F245D7B11E33B692007C32F5 /* KripkeMiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E71E33B65B007C32F5 /* KripkeMiPalRinglet.swift */; };
+		F245D7B21E33B692007C32F5 /* KripkeMiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E81E33B65B007C32F5 /* KripkeMiPalRingletFactory.swift */; };
+		F245D7B31E33B692007C32F5 /* KripkeRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6E91E33B65B007C32F5 /* KripkeRinglet.swift */; };
+		F245D7B41E33B692007C32F5 /* KripkeRingletKripkeStructureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6EA1E33B65B007C32F5 /* KripkeRingletKripkeStructureGenerator.swift */; };
+		F245D7B51E33B692007C32F5 /* KripkeRingletKripkeStructureGeneratorDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6EB1E33B65B007C32F5 /* KripkeRingletKripkeStructureGeneratorDelegator.swift */; };
+		F245D7B61E33B692007C32F5 /* KripkeRingletKripkeStructureGeneratorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6EC1E33B65B007C32F5 /* KripkeRingletKripkeStructureGeneratorType.swift */; };
+		F245D7B71E33B692007C32F5 /* KripkeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6ED1E33B65B007C32F5 /* KripkeState.swift */; };
+		F245D7B81E33B692007C32F5 /* KripkeStateProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6EE1E33B65B007C32F5 /* KripkeStateProperty.swift */; };
+		F245D7B91E33B692007C32F5 /* KripkeStatePropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6EF1E33B65B007C32F5 /* KripkeStatePropertyList.swift */; };
+		F245D7BA1E33B692007C32F5 /* KripkeStatePropertySpinnerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F01E33B65B007C32F5 /* KripkeStatePropertySpinnerConverter.swift */; };
+		F245D7BB1E33B692007C32F5 /* KripkeStatePropertySpinnerConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F11E33B65B007C32F5 /* KripkeStatePropertySpinnerConverterType.swift */; };
+		F245D7BC1E33B692007C32F5 /* KripkeStatePropertyTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F21E33B65B007C32F5 /* KripkeStatePropertyTypes.swift */; };
+		F245D7BD1E33B692007C32F5 /* KripkeStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F31E33B65B007C32F5 /* KripkeStateType.swift */; };
+		F245D7BE1E33B692007C32F5 /* KripkeStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F41E33B65B007C32F5 /* KripkeStructure.swift */; };
+		F245D7BF1E33B692007C32F5 /* KripkeStructureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F51E33B65B007C32F5 /* KripkeStructureGenerator.swift */; };
+		F245D7C01E33B692007C32F5 /* KripkeStructureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F61E33B65B007C32F5 /* KripkeStructureType.swift */; };
+		F245D7C11E33B692007C32F5 /* KripkeVariablesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F71E33B65B007C32F5 /* KripkeVariablesModifier.swift */; };
+		F245D7C21E33B692007C32F5 /* MiPalActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F81E33B65B007C32F5 /* MiPalActions.swift */; };
+		F245D7C31E33B692007C32F5 /* MiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6F91E33B65B007C32F5 /* MiPalRinglet.swift */; };
+		F245D7C41E33B692007C32F5 /* MiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6FA1E33B65B007C32F5 /* MiPalRingletFactory.swift */; };
+		F245D7C51E33B692007C32F5 /* MiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6FB1E33B65B007C32F5 /* MiPalState.swift */; };
+		F245D7C61E33B692007C32F5 /* MirrorPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6FC1E33B65B007C32F5 /* MirrorPropertyExtractor.swift */; };
+		F245D7C71E33B692007C32F5 /* MutableSnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6FD1E33B65B007C32F5 /* MutableSnapshotable.swift */; };
+		F245D7C81E33B692007C32F5 /* OptimizedStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6FE1E33B65B007C32F5 /* OptimizedStateExecuter.swift */; };
+		F245D7C91E33B692007C32F5 /* PropertiesExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D6FF1E33B65B007C32F5 /* PropertiesExtractor.swift */; };
+		F245D7CA1E33B692007C32F5 /* Restartable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7001E33B65B007C32F5 /* Restartable.swift */; };
+		F245D7CB1E33B692007C32F5 /* Resumeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7011E33B65C007C32F5 /* Resumeable.swift */; };
+		F245D7CC1E33B692007C32F5 /* Ringlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7021E33B65C007C32F5 /* Ringlet.swift */; };
+		F245D7CD1E33B692007C32F5 /* SimpleVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7031E33B65C007C32F5 /* SimpleVariablesContainer.swift */; };
+		F245D7CE1E33B692007C32F5 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7041E33B65C007C32F5 /* Snapshotable.swift */; };
+		F245D7CF1E33B692007C32F5 /* SnapshotCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7051E33B65C007C32F5 /* SnapshotCollectionController.swift */; };
+		F245D7D01E33B692007C32F5 /* SnapshotContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7061E33B65C007C32F5 /* SnapshotContainer.swift */; };
+		F245D7D11E33B692007C32F5 /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7071E33B65C007C32F5 /* SnapshotController.swift */; };
+		F245D7D21E33B692007C32F5 /* SpinnerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7081E33B65C007C32F5 /* SpinnerRunner.swift */; };
+		F245D7D31E33B692007C32F5 /* SpinnerRunnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7091E33B65C007C32F5 /* SpinnerRunnerType.swift */; };
+		F245D7D41E33B692007C32F5 /* Spinners.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D70A1E33B65C007C32F5 /* Spinners.swift */; };
+		F245D7D51E33B692007C32F5 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D70B1E33B65C007C32F5 /* Stack.swift */; };
+		F245D7D61E33B692007C32F5 /* StateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D70C1E33B65C007C32F5 /* StateContainer.swift */; };
+		F245D7D71E33B692007C32F5 /* StateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D70D1E33B65C007C32F5 /* StateExecuter.swift */; };
+		F245D7D81E33B692007C32F5 /* StateExecuterDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D70E1E33B65C007C32F5 /* StateExecuterDelegator.swift */; };
+		F245D7D91E33B692007C32F5 /* StateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D70F1E33B65C007C32F5 /* StateType.swift */; };
+		F245D7DA1E33B692007C32F5 /* Suspendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7101E33B65C007C32F5 /* Suspendable.swift */; };
+		F245D7DB1E33B692007C32F5 /* TeleportingTurtleCycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7111E33B65C007C32F5 /* TeleportingTurtleCycleDetector.swift */; };
+		F245D7DC1E33B692007C32F5 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7121E33B65C007C32F5 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift */; };
+		F245D7DD1E33B692007C32F5 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7131E33B65C007C32F5 /* Transition.swift */; };
+		F245D7DE1E33B692007C32F5 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7141E33B65C007C32F5 /* Transitionable.swift */; };
+		F245D7DF1E33B692007C32F5 /* TransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7151E33B65C007C32F5 /* TransitionType.swift */; };
+		F245D7E01E33B692007C32F5 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7161E33B65C007C32F5 /* Variables.swift */; };
+		F245D7E11E33B692007C32F5 /* VariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7171E33B65C007C32F5 /* VariablesContainer.swift */; };
+		F245D7E21E33B692007C32F5 /* Whiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7181E33B65C007C32F5 /* Whiteboard.swift */; };
+		F245D7E31E33B692007C32F5 /* WhiteboardBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D7191E33B65C007C32F5 /* WhiteboardBehaviour.swift */; };
+		F245D7E41E33B692007C32F5 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = F245D71A1E33B65C007C32F5 /* World.swift */; };
+		F245D8431E33BA06007C32F5 /* libgusimplewhiteboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F245D8301E33B9F8007C32F5 /* libgusimplewhiteboard.a */; };
+		F2A79C9E1E33C6CA00155D41 /* FSM-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A79C9D1E33C6CA00155D41 /* FSM-Bridging-Header.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F2A79CA01E33C80900155D41 /* gusimplewhiteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A79C9F1E33C80900155D41 /* gusimplewhiteboard.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F2A79CA21E33C82A00155D41 /* guwhiteboardtypelist_c_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A79CA11E33C82A00155D41 /* guwhiteboardtypelist_c_generated.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		F2A79CA51E33C89D00155D41 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A79CA41E33C89D00155D41 /* Functional.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F2A59C9A1CF830D600E218C3 /* PBXContainerItemProxy */ = {
+		F245D82F1E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F2B159591CF42A9700D43564 /* Project object */;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F14C46AF14A064D8006B6953;
+			remoteInfo = gusimplewhiteboard;
+		};
+		F245D8311E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1D925F014A13BAA00BDAEED;
+			remoteInfo = SimpleWhiteboardTest;
+		};
+		F245D8331E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1C94D641555CA8E00B717DF;
+			remoteInfo = guobjcwhiteboard;
+		};
+		F245D8351E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1C94D711555CA8E00B717DF;
+			remoteInfo = guobjcwhiteboardTests;
+		};
+		F245D8371E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1C94DA31555D3C300B717DF;
+			remoteInfo = gusimplewhiteboardios;
+		};
+		F245D8391E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F11BC0BC176123DB0069F6FB;
+			remoteInfo = guudpwhiteboard;
+		};
+		F245D83B1E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F19FA36B18DFE6280095B87D;
+			remoteInfo = simplewhiteboardtest_mk;
+		};
+		F245D83D1E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1ED584118E7C93F00864A87;
+			remoteInfo = wbperf;
+		};
+		F245D83F1E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F1ED58A418E7EF1400864A87;
+			remoteInfo = wbPerfTests;
+		};
+		F245D8411E33B9F8007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F19F051F1B3A7EBD00F34B4D;
+			remoteInfo = swift_wb;
+		};
+		F245D8441E33BA22007C32F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = F2B159601CF42A9700D43564;
-			remoteInfo = libFSM;
+			remoteGlobalIDString = F14C46AE14A064D8006B6953;
+			remoteInfo = gusimplewhiteboard;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F245D6BC1E33B65B007C32F5 /* aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = aliases.swift; path = ../aliases.swift; sourceTree = "<group>"; };
+		F245D6BD1E33B65B007C32F5 /* AnyScheduleableFiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyScheduleableFiniteStateMachine.swift; path = ../AnyScheduleableFiniteStateMachine.swift; sourceTree = "<group>"; };
+		F245D6BE1E33B65B007C32F5 /* AnyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyState.swift; path = ../AnyState.swift; sourceTree = "<group>"; };
+		F245D6BF1E33B65B007C32F5 /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Behaviour.swift; path = ../Behaviour.swift; sourceTree = "<group>"; };
+		F245D6C01E33B65B007C32F5 /* CallbackMiPalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallbackMiPalState.swift; path = ../CallbackMiPalState.swift; sourceTree = "<group>"; };
+		F245D6C11E33B65B007C32F5 /* CArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CArray.swift; path = ../CArray.swift; sourceTree = "<group>"; };
+		F245D6C21E33B65B007C32F5 /* Cloneable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cloneable.swift; path = ../Cloneable.swift; sourceTree = "<group>"; };
+		F245D6C31E33B65B007C32F5 /* CloneableState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CloneableState.swift; path = ../CloneableState.swift; sourceTree = "<group>"; };
+		F245D6C41E33B65B007C32F5 /* ConvertibleCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConvertibleCArray.swift; path = ../ConvertibleCArray.swift; sourceTree = "<group>"; };
+		F245D6C51E33B65B007C32F5 /* CycleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CycleDetector.swift; path = ../CycleDetector.swift; sourceTree = "<group>"; };
+		F245D6C61E33B65B007C32F5 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dictionary.swift; path = ../Dictionary.swift; sourceTree = "<group>"; };
+		F245D6C71E33B65B007C32F5 /* EmptyGlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyGlobalVariablesContainer.swift; path = ../EmptyGlobalVariablesContainer.swift; sourceTree = "<group>"; };
+		F245D6C81E33B65B007C32F5 /* EmptyMiPalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyMiPalState.swift; path = ../EmptyMiPalState.swift; sourceTree = "<group>"; };
+		F245D6C91E33B65B007C32F5 /* EmptySnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptySnapshotable.swift; path = ../EmptySnapshotable.swift; sourceTree = "<group>"; };
+		F245D6CA1E33B65B007C32F5 /* EmptyVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyVariables.swift; path = ../EmptyVariables.swift; sourceTree = "<group>"; };
+		F245D6CB1E33B65B007C32F5 /* Exitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Exitable.swift; path = ../Exitable.swift; sourceTree = "<group>"; };
+		F245D6CC1E33B65B007C32F5 /* ExitableStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExitableStateExecuter.swift; path = ../ExitableStateExecuter.swift; sourceTree = "<group>"; };
+		F245D6CD1E33B65B007C32F5 /* Factories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Factories.swift; path = ../Factories.swift; sourceTree = "<group>"; };
+		F245D6CE1E33B65B007C32F5 /* Finishable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Finishable.swift; path = ../Finishable.swift; sourceTree = "<group>"; };
+		F245D6CF1E33B65B007C32F5 /* FiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiniteStateMachine.swift; path = ../FiniteStateMachine.swift; sourceTree = "<group>"; };
+		F245D6D01E33B65B007C32F5 /* FiniteStateMachineType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiniteStateMachineType.swift; path = ../FiniteStateMachineType.swift; sourceTree = "<group>"; };
+		F245D6D21E33B65B007C32F5 /* FSM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSM.swift; sourceTree = SOURCE_ROOT; };
+		F245D6D31E33B65B007C32F5 /* FSMVariablesContainerHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSMVariablesContainerHolder.swift; sourceTree = SOURCE_ROOT; };
+		F245D6D41E33B65B007C32F5 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericWhiteboard.swift; path = ../GenericWhiteboard.swift; sourceTree = "<group>"; };
+		F245D6D51E33B65B007C32F5 /* GlobalPropertyExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalPropertyExtractor.swift; path = ../GlobalPropertyExtractor.swift; sourceTree = "<group>"; };
+		F245D6D61E33B65B007C32F5 /* globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = globals.swift; path = ../globals.swift; sourceTree = "<group>"; };
+		F245D6D71E33B65B007C32F5 /* GlobalsSpinnerConstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalsSpinnerConstructor.swift; path = ../GlobalsSpinnerConstructor.swift; sourceTree = "<group>"; };
+		F245D6D81E33B65B007C32F5 /* GlobalsSpinnerConstructorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalsSpinnerConstructorFactory.swift; path = ../GlobalsSpinnerConstructorFactory.swift; sourceTree = "<group>"; };
+		F245D6D91E33B65B007C32F5 /* GlobalsSpinnerConstructorFactoryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalsSpinnerConstructorFactoryType.swift; path = ../GlobalsSpinnerConstructorFactoryType.swift; sourceTree = "<group>"; };
+		F245D6DA1E33B65B007C32F5 /* GlobalsSpinnerConstructorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalsSpinnerConstructorType.swift; path = ../GlobalsSpinnerConstructorType.swift; sourceTree = "<group>"; };
+		F245D6DB1E33B65B007C32F5 /* GlobalsSpinnerDataExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalsSpinnerDataExtractor.swift; path = ../GlobalsSpinnerDataExtractor.swift; sourceTree = "<group>"; };
+		F245D6DC1E33B65B007C32F5 /* GlobalsSpinnerDataExtractorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalsSpinnerDataExtractorType.swift; path = ../GlobalsSpinnerDataExtractorType.swift; sourceTree = "<group>"; };
+		F245D6DD1E33B65B007C32F5 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalVariables.swift; path = ../GlobalVariables.swift; sourceTree = "<group>"; };
+		F245D6DE1E33B65B007C32F5 /* GlobalVariablesCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalVariablesCollection.swift; path = ../GlobalVariablesCollection.swift; sourceTree = "<group>"; };
+		F245D6DF1E33B65B007C32F5 /* GlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalVariablesContainer.swift; path = ../GlobalVariablesContainer.swift; sourceTree = "<group>"; };
+		F245D6E01E33B65B007C32F5 /* GlobalVariablesContainerHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlobalVariablesContainerHolder.swift; path = ../GlobalVariablesContainerHolder.swift; sourceTree = "<group>"; };
+		F245D6E11E33B65B007C32F5 /* HashTableCycleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HashTableCycleDetector.swift; path = ../HashTableCycleDetector.swift; sourceTree = "<group>"; };
+		F245D6E21E33B65B007C32F5 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HashTableKripkeRingletKripkeStructureGeneratorFactory.swift; path = ../HashTableKripkeRingletKripkeStructureGeneratorFactory.swift; sourceTree = "<group>"; };
+		F245D6E31E33B65B007C32F5 /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Identifiable.swift; path = ../Identifiable.swift; sourceTree = "<group>"; };
+		F245D6E41E33B65B007C32F5 /* jazzy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = jazzy.json; path = ../jazzy.json; sourceTree = "<group>"; };
+		F245D6E51E33B65B007C32F5 /* KripkeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeCollection.swift; path = ../KripkeCollection.swift; sourceTree = "<group>"; };
+		F245D6E61E33B65B007C32F5 /* KripkeFiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeFiniteStateMachine.swift; path = ../KripkeFiniteStateMachine.swift; sourceTree = "<group>"; };
+		F245D6E71E33B65B007C32F5 /* KripkeMiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeMiPalRinglet.swift; path = ../KripkeMiPalRinglet.swift; sourceTree = "<group>"; };
+		F245D6E81E33B65B007C32F5 /* KripkeMiPalRingletFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeMiPalRingletFactory.swift; path = ../KripkeMiPalRingletFactory.swift; sourceTree = "<group>"; };
+		F245D6E91E33B65B007C32F5 /* KripkeRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeRinglet.swift; path = ../KripkeRinglet.swift; sourceTree = "<group>"; };
+		F245D6EA1E33B65B007C32F5 /* KripkeRingletKripkeStructureGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeRingletKripkeStructureGenerator.swift; path = ../KripkeRingletKripkeStructureGenerator.swift; sourceTree = "<group>"; };
+		F245D6EB1E33B65B007C32F5 /* KripkeRingletKripkeStructureGeneratorDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeRingletKripkeStructureGeneratorDelegator.swift; path = ../KripkeRingletKripkeStructureGeneratorDelegator.swift; sourceTree = "<group>"; };
+		F245D6EC1E33B65B007C32F5 /* KripkeRingletKripkeStructureGeneratorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeRingletKripkeStructureGeneratorType.swift; path = ../KripkeRingletKripkeStructureGeneratorType.swift; sourceTree = "<group>"; };
+		F245D6ED1E33B65B007C32F5 /* KripkeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeState.swift; path = ../KripkeState.swift; sourceTree = "<group>"; };
+		F245D6EE1E33B65B007C32F5 /* KripkeStateProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStateProperty.swift; path = ../KripkeStateProperty.swift; sourceTree = "<group>"; };
+		F245D6EF1E33B65B007C32F5 /* KripkeStatePropertyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStatePropertyList.swift; path = ../KripkeStatePropertyList.swift; sourceTree = "<group>"; };
+		F245D6F01E33B65B007C32F5 /* KripkeStatePropertySpinnerConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStatePropertySpinnerConverter.swift; path = ../KripkeStatePropertySpinnerConverter.swift; sourceTree = "<group>"; };
+		F245D6F11E33B65B007C32F5 /* KripkeStatePropertySpinnerConverterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStatePropertySpinnerConverterType.swift; path = ../KripkeStatePropertySpinnerConverterType.swift; sourceTree = "<group>"; };
+		F245D6F21E33B65B007C32F5 /* KripkeStatePropertyTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStatePropertyTypes.swift; path = ../KripkeStatePropertyTypes.swift; sourceTree = "<group>"; };
+		F245D6F31E33B65B007C32F5 /* KripkeStateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStateType.swift; path = ../KripkeStateType.swift; sourceTree = "<group>"; };
+		F245D6F41E33B65B007C32F5 /* KripkeStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStructure.swift; path = ../KripkeStructure.swift; sourceTree = "<group>"; };
+		F245D6F51E33B65B007C32F5 /* KripkeStructureGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStructureGenerator.swift; path = ../KripkeStructureGenerator.swift; sourceTree = "<group>"; };
+		F245D6F61E33B65B007C32F5 /* KripkeStructureType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeStructureType.swift; path = ../KripkeStructureType.swift; sourceTree = "<group>"; };
+		F245D6F71E33B65B007C32F5 /* KripkeVariablesModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KripkeVariablesModifier.swift; path = ../KripkeVariablesModifier.swift; sourceTree = "<group>"; };
+		F245D6F81E33B65B007C32F5 /* MiPalActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiPalActions.swift; path = ../MiPalActions.swift; sourceTree = "<group>"; };
+		F245D6F91E33B65B007C32F5 /* MiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiPalRinglet.swift; path = ../MiPalRinglet.swift; sourceTree = "<group>"; };
+		F245D6FA1E33B65B007C32F5 /* MiPalRingletFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiPalRingletFactory.swift; path = ../MiPalRingletFactory.swift; sourceTree = "<group>"; };
+		F245D6FB1E33B65B007C32F5 /* MiPalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiPalState.swift; path = ../MiPalState.swift; sourceTree = "<group>"; };
+		F245D6FC1E33B65B007C32F5 /* MirrorPropertyExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MirrorPropertyExtractor.swift; path = ../MirrorPropertyExtractor.swift; sourceTree = "<group>"; };
+		F245D6FD1E33B65B007C32F5 /* MutableSnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MutableSnapshotable.swift; path = ../MutableSnapshotable.swift; sourceTree = "<group>"; };
+		F245D6FE1E33B65B007C32F5 /* OptimizedStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptimizedStateExecuter.swift; path = ../OptimizedStateExecuter.swift; sourceTree = "<group>"; };
+		F245D6FF1E33B65B007C32F5 /* PropertiesExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PropertiesExtractor.swift; path = ../PropertiesExtractor.swift; sourceTree = "<group>"; };
+		F245D7001E33B65B007C32F5 /* Restartable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Restartable.swift; path = ../Restartable.swift; sourceTree = "<group>"; };
+		F245D7011E33B65C007C32F5 /* Resumeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Resumeable.swift; path = ../Resumeable.swift; sourceTree = "<group>"; };
+		F245D7021E33B65C007C32F5 /* Ringlet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ringlet.swift; path = ../Ringlet.swift; sourceTree = "<group>"; };
+		F245D7031E33B65C007C32F5 /* SimpleVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleVariablesContainer.swift; path = ../SimpleVariablesContainer.swift; sourceTree = "<group>"; };
+		F245D7041E33B65C007C32F5 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Snapshotable.swift; path = ../Snapshotable.swift; sourceTree = "<group>"; };
+		F245D7051E33B65C007C32F5 /* SnapshotCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotCollectionController.swift; path = ../SnapshotCollectionController.swift; sourceTree = "<group>"; };
+		F245D7061E33B65C007C32F5 /* SnapshotContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotContainer.swift; path = ../SnapshotContainer.swift; sourceTree = "<group>"; };
+		F245D7071E33B65C007C32F5 /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotController.swift; path = ../SnapshotController.swift; sourceTree = "<group>"; };
+		F245D7081E33B65C007C32F5 /* SpinnerRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpinnerRunner.swift; path = ../SpinnerRunner.swift; sourceTree = "<group>"; };
+		F245D7091E33B65C007C32F5 /* SpinnerRunnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpinnerRunnerType.swift; path = ../SpinnerRunnerType.swift; sourceTree = "<group>"; };
+		F245D70A1E33B65C007C32F5 /* Spinners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Spinners.swift; path = ../Spinners.swift; sourceTree = "<group>"; };
+		F245D70B1E33B65C007C32F5 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stack.swift; path = ../Stack.swift; sourceTree = "<group>"; };
+		F245D70C1E33B65C007C32F5 /* StateContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateContainer.swift; path = ../StateContainer.swift; sourceTree = "<group>"; };
+		F245D70D1E33B65C007C32F5 /* StateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateExecuter.swift; path = ../StateExecuter.swift; sourceTree = "<group>"; };
+		F245D70E1E33B65C007C32F5 /* StateExecuterDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateExecuterDelegator.swift; path = ../StateExecuterDelegator.swift; sourceTree = "<group>"; };
+		F245D70F1E33B65C007C32F5 /* StateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateType.swift; path = ../StateType.swift; sourceTree = "<group>"; };
+		F245D7101E33B65C007C32F5 /* Suspendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Suspendable.swift; path = ../Suspendable.swift; sourceTree = "<group>"; };
+		F245D7111E33B65C007C32F5 /* TeleportingTurtleCycleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeleportingTurtleCycleDetector.swift; path = ../TeleportingTurtleCycleDetector.swift; sourceTree = "<group>"; };
+		F245D7121E33B65C007C32F5 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift; path = ../TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift; sourceTree = "<group>"; };
+		F245D7131E33B65C007C32F5 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transition.swift; path = ../Transition.swift; sourceTree = "<group>"; };
+		F245D7141E33B65C007C32F5 /* Transitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Transitionable.swift; path = ../Transitionable.swift; sourceTree = "<group>"; };
+		F245D7151E33B65C007C32F5 /* TransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TransitionType.swift; path = ../TransitionType.swift; sourceTree = "<group>"; };
+		F245D7161E33B65C007C32F5 /* Variables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variables.swift; path = ../Variables.swift; sourceTree = "<group>"; };
+		F245D7171E33B65C007C32F5 /* VariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VariablesContainer.swift; path = ../VariablesContainer.swift; sourceTree = "<group>"; };
+		F245D7181E33B65C007C32F5 /* Whiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Whiteboard.swift; path = ../Whiteboard.swift; sourceTree = "<group>"; };
+		F245D7191E33B65C007C32F5 /* WhiteboardBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WhiteboardBehaviour.swift; path = ../WhiteboardBehaviour.swift; sourceTree = "<group>"; };
+		F245D71A1E33B65C007C32F5 /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = World.swift; path = ../World.swift; sourceTree = "<group>"; };
+		F245D77E1E33B674007C32F5 /* FSM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FSM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F245D7801E33B674007C32F5 /* FSM.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSM.h; sourceTree = "<group>"; };
+		F245D7811E33B674007C32F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gusimplewhiteboard.xcodeproj; path = ../../gusimplewhiteboard/gusimplewhiteboard.xcodeproj; sourceTree = "<group>"; };
 		F2A59C941CF830D600E218C3 /* FSMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FSMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2A59C981CF830D600E218C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviourTests.swift; sourceTree = "<group>"; };
-		F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CArrayTests.swift; sourceTree = "<group>"; };
-		F2A59CA11CF8311B00E218C3 /* Count.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Count.swift; sourceTree = "<group>"; };
-		F2A59CA21CF8311B00E218C3 /* FactoriesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FactoriesTests.swift; sourceTree = "<group>"; };
-		F2A59CA31CF8311B00E218C3 /* FSM_tests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM_tests-Bridging-Header.h"; sourceTree = "<group>"; };
-		F2A59CA41CF8311B00E218C3 /* FunctionalOptionalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOptionalTests.swift; sourceTree = "<group>"; };
-		F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWhiteboardTests.swift; sourceTree = "<group>"; };
-		F2A59CA61CF8311B00E218C3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2A59CA71CF8311B00E218C3 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		F2A59CA91CF8311B00E218C3 /* wb_count.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wb_count.h; sourceTree = "<group>"; };
-		F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviourTests.swift; sourceTree = "<group>"; };
-		F2A9EAB21DC64ED000147681 /* aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = aliases.swift; sourceTree = "<group>"; };
-		F2A9EAB31DC64ED000147681 /* AnyScheduleableFiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyScheduleableFiniteStateMachine.swift; sourceTree = "<group>"; };
-		F2A9EAB41DC64ED000147681 /* AnyState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyState.swift; sourceTree = "<group>"; };
-		F2A9EAB51DC64ED000147681 /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
-		F2A9EAB61DC64ED000147681 /* CallbackMiPalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackMiPalState.swift; sourceTree = "<group>"; };
-		F2A9EAB71DC64ED000147681 /* CArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CArray.swift; sourceTree = "<group>"; };
-		F2A9EAB81DC64ED000147681 /* Cloneable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloneable.swift; sourceTree = "<group>"; };
-		F2A9EAB91DC64ED000147681 /* CloneableState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloneableState.swift; sourceTree = "<group>"; };
-		F2A9EABA1DC64ED000147681 /* ConvertibleCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvertibleCArray.swift; sourceTree = "<group>"; };
-		F2A9EABB1DC64ED000147681 /* CycleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CycleDetector.swift; sourceTree = "<group>"; };
-		F2A9EABC1DC64ED000147681 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
-		F2A9EABD1DC64ED000147681 /* EmptyGlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyGlobalVariablesContainer.swift; sourceTree = "<group>"; };
-		F2A9EABE1DC64ED000147681 /* EmptyMiPalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyMiPalState.swift; sourceTree = "<group>"; };
-		F2A9EABF1DC64ED000147681 /* EmptySnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySnapshotable.swift; sourceTree = "<group>"; };
-		F2A9EAC01DC64ED000147681 /* EmptyVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyVariables.swift; sourceTree = "<group>"; };
-		F2A9EAC11DC64ED000147681 /* Exitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exitable.swift; sourceTree = "<group>"; };
-		F2A9EAC21DC64ED000147681 /* ExitableStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitableStateExecuter.swift; sourceTree = "<group>"; };
-		F2A9EAC31DC64ED000147681 /* Factories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
-		F2A9EAC41DC64ED000147681 /* Finishable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Finishable.swift; sourceTree = "<group>"; };
-		F2A9EAC51DC64ED000147681 /* FiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiniteStateMachine.swift; sourceTree = "<group>"; };
-		F2A9EAC61DC64ED000147681 /* FiniteStateMachineType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiniteStateMachineType.swift; sourceTree = "<group>"; };
-		F2A9EAC71DC64ED000147681 /* FSM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM-Bridging-Header.h"; sourceTree = "<group>"; };
-		F2A9EAC81DC64ED000147681 /* FSM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSM.swift; sourceTree = "<group>"; };
-		F2A9EAC91DC64ED000147681 /* FSMVariablesContainerHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSMVariablesContainerHolder.swift; sourceTree = "<group>"; };
-		F2A9EACA1DC64ED000147681 /* FunctionalArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalArray.swift; sourceTree = "<group>"; };
-		F2A9EACB1DC64ED000147681 /* FunctionalOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOperators.swift; sourceTree = "<group>"; };
-		F2A9EACC1DC64ED000147681 /* FunctionalOptional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalOptional.swift; sourceTree = "<group>"; };
-		F2A9EACD1DC64ED000147681 /* FunctionalSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalSequence.swift; sourceTree = "<group>"; };
-		F2A9EACE1DC64ED000147681 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWhiteboard.swift; sourceTree = "<group>"; };
-		F2A9EACF1DC64ED000147681 /* GlobalPropertyExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalPropertyExtractor.swift; sourceTree = "<group>"; };
-		F2A9EAD01DC64ED000147681 /* globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
-		F2A9EAD11DC64ED000147681 /* GlobalsSpinnerConstructor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpinnerConstructor.swift; sourceTree = "<group>"; };
-		F2A9EAD21DC64ED000147681 /* GlobalsSpinnerConstructorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpinnerConstructorFactory.swift; sourceTree = "<group>"; };
-		F2A9EAD31DC64ED000147681 /* GlobalsSpinnerConstructorFactoryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpinnerConstructorFactoryType.swift; sourceTree = "<group>"; };
-		F2A9EAD41DC64ED000147681 /* GlobalsSpinnerConstructorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpinnerConstructorType.swift; sourceTree = "<group>"; };
-		F2A9EAD51DC64ED000147681 /* GlobalsSpinnerDataExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpinnerDataExtractor.swift; sourceTree = "<group>"; };
-		F2A9EAD61DC64ED000147681 /* GlobalsSpinnerDataExtractorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalsSpinnerDataExtractorType.swift; sourceTree = "<group>"; };
-		F2A9EAD71DC64ED000147681 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
-		F2A9EAD81DC64ED000147681 /* GlobalVariablesCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesCollection.swift; sourceTree = "<group>"; };
-		F2A9EAD91DC64ED000147681 /* GlobalVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesContainer.swift; sourceTree = "<group>"; };
-		F2A9EADA1DC64ED000147681 /* GlobalVariablesContainerHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariablesContainerHolder.swift; sourceTree = "<group>"; };
-		F2A9EADB1DC64ED000147681 /* HashTableCycleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashTableCycleDetector.swift; sourceTree = "<group>"; };
-		F2A9EADC1DC64ED000147681 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashTableKripkeRingletKripkeStructureGeneratorFactory.swift; sourceTree = "<group>"; };
-		F2A9EADD1DC64ED000147681 /* Identifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
-		F2A9EADE1DC64ED000147681 /* KripkeCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeCollection.swift; sourceTree = "<group>"; };
-		F2A9EADF1DC64ED000147681 /* KripkeFiniteStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeFiniteStateMachine.swift; sourceTree = "<group>"; };
-		F2A9EAE01DC64ED000147681 /* KripkeMiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeMiPalRinglet.swift; sourceTree = "<group>"; };
-		F2A9EAE11DC64ED000147681 /* KripkeMiPalRingletFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeMiPalRingletFactory.swift; sourceTree = "<group>"; };
-		F2A9EAE21DC64ED000147681 /* KripkeRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRinglet.swift; sourceTree = "<group>"; };
-		F2A9EAE31DC64ED000147681 /* KripkeRingletKripkeStructureGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRingletKripkeStructureGenerator.swift; sourceTree = "<group>"; };
-		F2A9EAE41DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRingletKripkeStructureGeneratorDelegator.swift; sourceTree = "<group>"; };
-		F2A9EAE51DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeRingletKripkeStructureGeneratorType.swift; sourceTree = "<group>"; };
-		F2A9EAE61DC64ED000147681 /* KripkeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeState.swift; sourceTree = "<group>"; };
-		F2A9EAE71DC64ED000147681 /* KripkeStateProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStateProperty.swift; sourceTree = "<group>"; };
-		F2A9EAE81DC64ED000147681 /* KripkeStatePropertyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertyList.swift; sourceTree = "<group>"; };
-		F2A9EAE91DC64ED000147681 /* KripkeStatePropertySpinnerConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertySpinnerConverter.swift; sourceTree = "<group>"; };
-		F2A9EAEA1DC64ED000147681 /* KripkeStatePropertySpinnerConverterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertySpinnerConverterType.swift; sourceTree = "<group>"; };
-		F2A9EAEB1DC64ED000147681 /* KripkeStatePropertyTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertyTypes.swift; sourceTree = "<group>"; };
-		F2A9EAEC1DC64ED000147681 /* KripkeStateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStateType.swift; sourceTree = "<group>"; };
-		F2A9EAED1DC64ED000147681 /* KripkeStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStructure.swift; sourceTree = "<group>"; };
-		F2A9EAEE1DC64ED000147681 /* KripkeStructureGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStructureGenerator.swift; sourceTree = "<group>"; };
-		F2A9EAEF1DC64ED000147681 /* KripkeStructureType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeStructureType.swift; sourceTree = "<group>"; };
-		F2A9EAF01DC64ED000147681 /* KripkeVariablesModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KripkeVariablesModifier.swift; sourceTree = "<group>"; };
-		F2A9EAF11DC64ED000147681 /* MiPalActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalActions.swift; sourceTree = "<group>"; };
-		F2A9EAF21DC64ED000147681 /* MiPalRinglet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalRinglet.swift; sourceTree = "<group>"; };
-		F2A9EAF31DC64ED000147681 /* MiPalRingletFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalRingletFactory.swift; sourceTree = "<group>"; };
-		F2A9EAF41DC64ED000147681 /* MiPalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiPalState.swift; sourceTree = "<group>"; };
-		F2A9EAF51DC64ED000147681 /* MirrorPropertyExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MirrorPropertyExtractor.swift; sourceTree = "<group>"; };
-		F2A9EAF61DC64ED000147681 /* MutableSnapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableSnapshotable.swift; sourceTree = "<group>"; };
-		F2A9EAF71DC64ED000147681 /* OptimizedStateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizedStateExecuter.swift; sourceTree = "<group>"; };
-		F2A9EAF81DC64ED000147681 /* PropertiesExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertiesExtractor.swift; sourceTree = "<group>"; };
-		F2A9EAF91DC64ED000147681 /* Restartable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restartable.swift; sourceTree = "<group>"; };
-		F2A9EAFA1DC64ED000147681 /* Resumeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resumeable.swift; sourceTree = "<group>"; };
-		F2A9EAFB1DC64ED000147681 /* Ringlet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ringlet.swift; sourceTree = "<group>"; };
-		F2A9EAFC1DC64ED000147681 /* SimpleVariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleVariablesContainer.swift; sourceTree = "<group>"; };
-		F2A9EAFD1DC64ED000147681 /* Snapshotable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
-		F2A9EAFE1DC64ED000147681 /* SnapshotCollectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotCollectionController.swift; sourceTree = "<group>"; };
-		F2A9EAFF1DC64ED000147681 /* SnapshotContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotContainer.swift; sourceTree = "<group>"; };
-		F2A9EB001DC64ED000147681 /* SnapshotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
-		F2A9EB011DC64ED000147681 /* SpinnerRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerRunner.swift; sourceTree = "<group>"; };
-		F2A9EB021DC64ED000147681 /* SpinnerRunnerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerRunnerType.swift; sourceTree = "<group>"; };
-		F2A9EB031DC64ED000147681 /* Spinners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spinners.swift; sourceTree = "<group>"; };
-		F2A9EB041DC64ED000147681 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		F2A9EB051DC64ED000147681 /* StateContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateContainer.swift; sourceTree = "<group>"; };
-		F2A9EB061DC64ED000147681 /* StateExecuter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateExecuter.swift; sourceTree = "<group>"; };
-		F2A9EB071DC64ED000147681 /* StateExecuterDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateExecuterDelegator.swift; sourceTree = "<group>"; };
-		F2A9EB081DC64ED000147681 /* StateType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateType.swift; sourceTree = "<group>"; };
-		F2A9EB091DC64ED000147681 /* Suspendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Suspendable.swift; sourceTree = "<group>"; };
-		F2A9EB0A1DC64ED000147681 /* TeleportingTurtleCycleDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeleportingTurtleCycleDetector.swift; sourceTree = "<group>"; };
-		F2A9EB0B1DC64ED000147681 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift; sourceTree = "<group>"; };
-		F2A9EB0C1DC64ED000147681 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
-		F2A9EB0D1DC64ED000147681 /* Transitionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transitionable.swift; sourceTree = "<group>"; };
-		F2A9EB0E1DC64ED000147681 /* TransitionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionType.swift; sourceTree = "<group>"; };
-		F2A9EB0F1DC64ED000147681 /* Variables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
-		F2A9EB101DC64ED000147681 /* VariablesContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariablesContainer.swift; sourceTree = "<group>"; };
-		F2A9EB111DC64ED000147681 /* Whiteboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Whiteboard.swift; sourceTree = "<group>"; };
-		F2A9EB121DC64ED000147681 /* WhiteboardBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteboardBehaviour.swift; sourceTree = "<group>"; };
-		F2A9EB131DC64ED000147681 /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
-		F2B159611CF42A9700D43564 /* libFSM.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libFSM.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gusimplewhiteboard.c; path = ../../gusimplewhiteboard/gusimplewhiteboard.c; sourceTree = "<group>"; };
-		F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = guwhiteboardtypelist_c_typestrings_generated.c; path = ../../gusimplewhiteboard/guwhiteboardtypelist_c_typestrings_generated.c; sourceTree = "<group>"; };
+		F2A59C981CF830D600E218C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = tests/Info.plist; sourceTree = "<group>"; };
+		F2A79C9C1E33C6AC00155D41 /* module.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = SOURCE_ROOT; };
+		F2A79C9D1E33C6CA00155D41 /* FSM-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FSM-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		F2A79C9F1E33C80900155D41 /* gusimplewhiteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gusimplewhiteboard.h; path = ../../../gusimplewhiteboard/gusimplewhiteboard.h; sourceTree = "<group>"; };
+		F2A79CA11E33C82A00155D41 /* guwhiteboardtypelist_c_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = guwhiteboardtypelist_c_generated.h; path = ../../../gusimplewhiteboard/guwhiteboardtypelist_c_generated.h; sourceTree = "<group>"; };
+		F2A79CA41E33C89D00155D41 /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Functional.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/Parsers-cgvpmwticqphqhfwekfbmkmrtrnd/Build/Products/Debug/Functional.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F2A59C911CF830D600E218C3 /* Frameworks */ = {
+		F245D77A1E33B674007C32F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A59C991CF830D600E218C3 /* libFSM.dylib in Frameworks */,
+				F2A79CA51E33C89D00155D41 /* Functional.framework in Frameworks */,
+				F245D8431E33BA06007C32F5 /* libgusimplewhiteboard.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F2B1595E1CF42A9700D43564 /* Frameworks */ = {
+		F2A59C911CF830D600E218C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -264,138 +317,162 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F2A59C951CF830D600E218C3 /* tests */ = {
+		F245D77F1E33B674007C32F5 /* FSM */ = {
 			isa = PBXGroup;
 			children = (
-				F2A59C9F1CF8311B00E218C3 /* BehaviourTests.swift */,
-				F2A59CA01CF8311B00E218C3 /* CArrayTests.swift */,
-				F2A59CA11CF8311B00E218C3 /* Count.swift */,
-				F2A59CA21CF8311B00E218C3 /* FactoriesTests.swift */,
-				F2A59CA31CF8311B00E218C3 /* FSM_tests-Bridging-Header.h */,
-				F2A59CA41CF8311B00E218C3 /* FunctionalOptionalTests.swift */,
-				F2A59CA51CF8311B00E218C3 /* GenericWhiteboardTests.swift */,
-				F2A59CA61CF8311B00E218C3 /* Info.plist */,
-				F2A59CA71CF8311B00E218C3 /* main.swift */,
-				F2A59CA91CF8311B00E218C3 /* wb_count.h */,
-				F2A59CAA1CF8311B00E218C3 /* WhiteboardBehaviourTests.swift */,
+				F2A79C9F1E33C80900155D41 /* gusimplewhiteboard.h */,
+				F2A79CA11E33C82A00155D41 /* guwhiteboardtypelist_c_generated.h */,
+				F245D6BC1E33B65B007C32F5 /* aliases.swift */,
+				F245D6BD1E33B65B007C32F5 /* AnyScheduleableFiniteStateMachine.swift */,
+				F245D6BE1E33B65B007C32F5 /* AnyState.swift */,
+				F245D6BF1E33B65B007C32F5 /* Behaviour.swift */,
+				F245D6C01E33B65B007C32F5 /* CallbackMiPalState.swift */,
+				F245D6C11E33B65B007C32F5 /* CArray.swift */,
+				F245D6C21E33B65B007C32F5 /* Cloneable.swift */,
+				F245D6C31E33B65B007C32F5 /* CloneableState.swift */,
+				F245D6C41E33B65B007C32F5 /* ConvertibleCArray.swift */,
+				F245D6C51E33B65B007C32F5 /* CycleDetector.swift */,
+				F245D6C61E33B65B007C32F5 /* Dictionary.swift */,
+				F245D6C71E33B65B007C32F5 /* EmptyGlobalVariablesContainer.swift */,
+				F245D6C81E33B65B007C32F5 /* EmptyMiPalState.swift */,
+				F245D6C91E33B65B007C32F5 /* EmptySnapshotable.swift */,
+				F245D6CA1E33B65B007C32F5 /* EmptyVariables.swift */,
+				F245D6CB1E33B65B007C32F5 /* Exitable.swift */,
+				F245D6CC1E33B65B007C32F5 /* ExitableStateExecuter.swift */,
+				F245D6CD1E33B65B007C32F5 /* Factories.swift */,
+				F245D6CE1E33B65B007C32F5 /* Finishable.swift */,
+				F245D6CF1E33B65B007C32F5 /* FiniteStateMachine.swift */,
+				F245D6D01E33B65B007C32F5 /* FiniteStateMachineType.swift */,
+				F2A79C9D1E33C6CA00155D41 /* FSM-Bridging-Header.h */,
+				F245D6D21E33B65B007C32F5 /* FSM.swift */,
+				F245D6D31E33B65B007C32F5 /* FSMVariablesContainerHolder.swift */,
+				F245D6D41E33B65B007C32F5 /* GenericWhiteboard.swift */,
+				F245D6D51E33B65B007C32F5 /* GlobalPropertyExtractor.swift */,
+				F245D6D61E33B65B007C32F5 /* globals.swift */,
+				F245D6D71E33B65B007C32F5 /* GlobalsSpinnerConstructor.swift */,
+				F245D6D81E33B65B007C32F5 /* GlobalsSpinnerConstructorFactory.swift */,
+				F245D6D91E33B65B007C32F5 /* GlobalsSpinnerConstructorFactoryType.swift */,
+				F245D6DA1E33B65B007C32F5 /* GlobalsSpinnerConstructorType.swift */,
+				F245D6DB1E33B65B007C32F5 /* GlobalsSpinnerDataExtractor.swift */,
+				F245D6DC1E33B65B007C32F5 /* GlobalsSpinnerDataExtractorType.swift */,
+				F245D6DD1E33B65B007C32F5 /* GlobalVariables.swift */,
+				F245D6DE1E33B65B007C32F5 /* GlobalVariablesCollection.swift */,
+				F245D6DF1E33B65B007C32F5 /* GlobalVariablesContainer.swift */,
+				F245D6E01E33B65B007C32F5 /* GlobalVariablesContainerHolder.swift */,
+				F245D6E11E33B65B007C32F5 /* HashTableCycleDetector.swift */,
+				F245D6E21E33B65B007C32F5 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift */,
+				F245D6E31E33B65B007C32F5 /* Identifiable.swift */,
+				F245D6E41E33B65B007C32F5 /* jazzy.json */,
+				F245D6E51E33B65B007C32F5 /* KripkeCollection.swift */,
+				F245D6E61E33B65B007C32F5 /* KripkeFiniteStateMachine.swift */,
+				F245D6E71E33B65B007C32F5 /* KripkeMiPalRinglet.swift */,
+				F245D6E81E33B65B007C32F5 /* KripkeMiPalRingletFactory.swift */,
+				F245D6E91E33B65B007C32F5 /* KripkeRinglet.swift */,
+				F245D6EA1E33B65B007C32F5 /* KripkeRingletKripkeStructureGenerator.swift */,
+				F245D6EB1E33B65B007C32F5 /* KripkeRingletKripkeStructureGeneratorDelegator.swift */,
+				F245D6EC1E33B65B007C32F5 /* KripkeRingletKripkeStructureGeneratorType.swift */,
+				F245D6ED1E33B65B007C32F5 /* KripkeState.swift */,
+				F245D6EE1E33B65B007C32F5 /* KripkeStateProperty.swift */,
+				F245D6EF1E33B65B007C32F5 /* KripkeStatePropertyList.swift */,
+				F245D6F01E33B65B007C32F5 /* KripkeStatePropertySpinnerConverter.swift */,
+				F245D6F11E33B65B007C32F5 /* KripkeStatePropertySpinnerConverterType.swift */,
+				F245D6F21E33B65B007C32F5 /* KripkeStatePropertyTypes.swift */,
+				F245D6F31E33B65B007C32F5 /* KripkeStateType.swift */,
+				F245D6F41E33B65B007C32F5 /* KripkeStructure.swift */,
+				F245D6F51E33B65B007C32F5 /* KripkeStructureGenerator.swift */,
+				F245D6F61E33B65B007C32F5 /* KripkeStructureType.swift */,
+				F245D6F71E33B65B007C32F5 /* KripkeVariablesModifier.swift */,
+				F245D6F81E33B65B007C32F5 /* MiPalActions.swift */,
+				F245D6F91E33B65B007C32F5 /* MiPalRinglet.swift */,
+				F245D6FA1E33B65B007C32F5 /* MiPalRingletFactory.swift */,
+				F245D6FB1E33B65B007C32F5 /* MiPalState.swift */,
+				F245D6FC1E33B65B007C32F5 /* MirrorPropertyExtractor.swift */,
+				F2A79C9C1E33C6AC00155D41 /* module.map */,
+				F245D6FD1E33B65B007C32F5 /* MutableSnapshotable.swift */,
+				F245D6FE1E33B65B007C32F5 /* OptimizedStateExecuter.swift */,
+				F245D6FF1E33B65B007C32F5 /* PropertiesExtractor.swift */,
+				F245D7001E33B65B007C32F5 /* Restartable.swift */,
+				F245D7011E33B65C007C32F5 /* Resumeable.swift */,
+				F245D7021E33B65C007C32F5 /* Ringlet.swift */,
+				F245D7031E33B65C007C32F5 /* SimpleVariablesContainer.swift */,
+				F245D7041E33B65C007C32F5 /* Snapshotable.swift */,
+				F245D7051E33B65C007C32F5 /* SnapshotCollectionController.swift */,
+				F245D7061E33B65C007C32F5 /* SnapshotContainer.swift */,
+				F245D7071E33B65C007C32F5 /* SnapshotController.swift */,
+				F245D7081E33B65C007C32F5 /* SpinnerRunner.swift */,
+				F245D7091E33B65C007C32F5 /* SpinnerRunnerType.swift */,
+				F245D70A1E33B65C007C32F5 /* Spinners.swift */,
+				F245D70B1E33B65C007C32F5 /* Stack.swift */,
+				F245D70C1E33B65C007C32F5 /* StateContainer.swift */,
+				F245D70D1E33B65C007C32F5 /* StateExecuter.swift */,
+				F245D70E1E33B65C007C32F5 /* StateExecuterDelegator.swift */,
+				F245D70F1E33B65C007C32F5 /* StateType.swift */,
+				F245D7101E33B65C007C32F5 /* Suspendable.swift */,
+				F245D7111E33B65C007C32F5 /* TeleportingTurtleCycleDetector.swift */,
+				F245D7121E33B65C007C32F5 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift */,
+				F245D7131E33B65C007C32F5 /* Transition.swift */,
+				F245D7141E33B65C007C32F5 /* Transitionable.swift */,
+				F245D7151E33B65C007C32F5 /* TransitionType.swift */,
+				F245D7161E33B65C007C32F5 /* Variables.swift */,
+				F245D7171E33B65C007C32F5 /* VariablesContainer.swift */,
+				F245D7181E33B65C007C32F5 /* Whiteboard.swift */,
+				F245D7191E33B65C007C32F5 /* WhiteboardBehaviour.swift */,
+				F245D71A1E33B65C007C32F5 /* World.swift */,
+				F245D7801E33B674007C32F5 /* FSM.h */,
+				F245D7811E33B674007C32F5 /* Info.plist */,
+			);
+			path = FSM;
+			sourceTree = "<group>";
+		};
+		F245D81A1E33B9F8007C32F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F245D8301E33B9F8007C32F5 /* libgusimplewhiteboard.a */,
+				F245D8321E33B9F8007C32F5 /* SimpleWhiteboardTest.xctest */,
+				F245D8341E33B9F8007C32F5 /* libguobjcwhiteboard.a */,
+				F245D8361E33B9F8007C32F5 /* guobjcwhiteboardTests.xctest */,
+				F245D8381E33B9F8007C32F5 /* libgusimplewhiteboardios.a */,
+				F245D83A1E33B9F8007C32F5 /* guudpwhiteboard */,
+				F245D83C1E33B9F8007C32F5 /* SimpleWhiteboardTest.bundle */,
+				F245D83E1E33B9F8007C32F5 /* wbperf */,
+				F245D8401E33B9F8007C32F5 /* wbPerfTests.octest */,
+				F245D8421E33B9F8007C32F5 /* swift_wb */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F2A79C981E33BECA00155D41 /* FSM Tests */ = {
+			isa = PBXGroup;
+			children = (
 				F2A59C981CF830D600E218C3 /* Info.plist */,
 			);
-			path = tests;
+			name = "FSM Tests";
+			sourceTree = "<group>";
+		};
+		F2A79CA31E33C89C00155D41 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2A79CA41E33C89D00155D41 /* Functional.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F2B159581CF42A9700D43564 = {
 			isa = PBXGroup;
 			children = (
-				F2A9EAB21DC64ED000147681 /* aliases.swift */,
-				F2A9EAB31DC64ED000147681 /* AnyScheduleableFiniteStateMachine.swift */,
-				F2A9EAB41DC64ED000147681 /* AnyState.swift */,
-				F2A9EAB51DC64ED000147681 /* Behaviour.swift */,
-				F2A9EAB61DC64ED000147681 /* CallbackMiPalState.swift */,
-				F2A9EAB71DC64ED000147681 /* CArray.swift */,
-				F2A9EAB81DC64ED000147681 /* Cloneable.swift */,
-				F2A9EAB91DC64ED000147681 /* CloneableState.swift */,
-				F2A9EABA1DC64ED000147681 /* ConvertibleCArray.swift */,
-				F2A9EABB1DC64ED000147681 /* CycleDetector.swift */,
-				F2A9EABC1DC64ED000147681 /* Dictionary.swift */,
-				F2A9EABD1DC64ED000147681 /* EmptyGlobalVariablesContainer.swift */,
-				F2A9EABE1DC64ED000147681 /* EmptyMiPalState.swift */,
-				F2A9EABF1DC64ED000147681 /* EmptySnapshotable.swift */,
-				F2A9EAC01DC64ED000147681 /* EmptyVariables.swift */,
-				F2A9EAC11DC64ED000147681 /* Exitable.swift */,
-				F2A9EAC21DC64ED000147681 /* ExitableStateExecuter.swift */,
-				F2A9EAC31DC64ED000147681 /* Factories.swift */,
-				F2A9EAC41DC64ED000147681 /* Finishable.swift */,
-				F2A9EAC51DC64ED000147681 /* FiniteStateMachine.swift */,
-				F2A9EAC61DC64ED000147681 /* FiniteStateMachineType.swift */,
-				F2A9EAC71DC64ED000147681 /* FSM-Bridging-Header.h */,
-				F2A9EAC81DC64ED000147681 /* FSM.swift */,
-				F2A9EAC91DC64ED000147681 /* FSMVariablesContainerHolder.swift */,
-				F2A9EACA1DC64ED000147681 /* FunctionalArray.swift */,
-				F2A9EACB1DC64ED000147681 /* FunctionalOperators.swift */,
-				F2A9EACC1DC64ED000147681 /* FunctionalOptional.swift */,
-				F2A9EACD1DC64ED000147681 /* FunctionalSequence.swift */,
-				F2A9EACE1DC64ED000147681 /* GenericWhiteboard.swift */,
-				F2A9EACF1DC64ED000147681 /* GlobalPropertyExtractor.swift */,
-				F2A9EAD01DC64ED000147681 /* globals.swift */,
-				F2A9EAD11DC64ED000147681 /* GlobalsSpinnerConstructor.swift */,
-				F2A9EAD21DC64ED000147681 /* GlobalsSpinnerConstructorFactory.swift */,
-				F2A9EAD31DC64ED000147681 /* GlobalsSpinnerConstructorFactoryType.swift */,
-				F2A9EAD41DC64ED000147681 /* GlobalsSpinnerConstructorType.swift */,
-				F2A9EAD51DC64ED000147681 /* GlobalsSpinnerDataExtractor.swift */,
-				F2A9EAD61DC64ED000147681 /* GlobalsSpinnerDataExtractorType.swift */,
-				F2A9EAD71DC64ED000147681 /* GlobalVariables.swift */,
-				F2A9EAD81DC64ED000147681 /* GlobalVariablesCollection.swift */,
-				F2A9EAD91DC64ED000147681 /* GlobalVariablesContainer.swift */,
-				F2A9EADA1DC64ED000147681 /* GlobalVariablesContainerHolder.swift */,
-				F2A9EADB1DC64ED000147681 /* HashTableCycleDetector.swift */,
-				F2A9EADC1DC64ED000147681 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift */,
-				F2A9EADD1DC64ED000147681 /* Identifiable.swift */,
-				F2A9EADE1DC64ED000147681 /* KripkeCollection.swift */,
-				F2A9EADF1DC64ED000147681 /* KripkeFiniteStateMachine.swift */,
-				F2A9EAE01DC64ED000147681 /* KripkeMiPalRinglet.swift */,
-				F2A9EAE11DC64ED000147681 /* KripkeMiPalRingletFactory.swift */,
-				F2A9EAE21DC64ED000147681 /* KripkeRinglet.swift */,
-				F2A9EAE31DC64ED000147681 /* KripkeRingletKripkeStructureGenerator.swift */,
-				F2A9EAE41DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorDelegator.swift */,
-				F2A9EAE51DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorType.swift */,
-				F2A9EAE61DC64ED000147681 /* KripkeState.swift */,
-				F2A9EAE71DC64ED000147681 /* KripkeStateProperty.swift */,
-				F2A9EAE81DC64ED000147681 /* KripkeStatePropertyList.swift */,
-				F2A9EAE91DC64ED000147681 /* KripkeStatePropertySpinnerConverter.swift */,
-				F2A9EAEA1DC64ED000147681 /* KripkeStatePropertySpinnerConverterType.swift */,
-				F2A9EAEB1DC64ED000147681 /* KripkeStatePropertyTypes.swift */,
-				F2A9EAEC1DC64ED000147681 /* KripkeStateType.swift */,
-				F2A9EAED1DC64ED000147681 /* KripkeStructure.swift */,
-				F2A9EAEE1DC64ED000147681 /* KripkeStructureGenerator.swift */,
-				F2A9EAEF1DC64ED000147681 /* KripkeStructureType.swift */,
-				F2A9EAF01DC64ED000147681 /* KripkeVariablesModifier.swift */,
-				F2A9EAF11DC64ED000147681 /* MiPalActions.swift */,
-				F2A9EAF21DC64ED000147681 /* MiPalRinglet.swift */,
-				F2A9EAF31DC64ED000147681 /* MiPalRingletFactory.swift */,
-				F2A9EAF41DC64ED000147681 /* MiPalState.swift */,
-				F2A9EAF51DC64ED000147681 /* MirrorPropertyExtractor.swift */,
-				F2A9EAF61DC64ED000147681 /* MutableSnapshotable.swift */,
-				F2A9EAF71DC64ED000147681 /* OptimizedStateExecuter.swift */,
-				F2A9EAF81DC64ED000147681 /* PropertiesExtractor.swift */,
-				F2A9EAF91DC64ED000147681 /* Restartable.swift */,
-				F2A9EAFA1DC64ED000147681 /* Resumeable.swift */,
-				F2A9EAFB1DC64ED000147681 /* Ringlet.swift */,
-				F2A9EAFC1DC64ED000147681 /* SimpleVariablesContainer.swift */,
-				F2A9EAFD1DC64ED000147681 /* Snapshotable.swift */,
-				F2A9EAFE1DC64ED000147681 /* SnapshotCollectionController.swift */,
-				F2A9EAFF1DC64ED000147681 /* SnapshotContainer.swift */,
-				F2A9EB001DC64ED000147681 /* SnapshotController.swift */,
-				F2A9EB011DC64ED000147681 /* SpinnerRunner.swift */,
-				F2A9EB021DC64ED000147681 /* SpinnerRunnerType.swift */,
-				F2A9EB031DC64ED000147681 /* Spinners.swift */,
-				F2A9EB041DC64ED000147681 /* Stack.swift */,
-				F2A9EB051DC64ED000147681 /* StateContainer.swift */,
-				F2A9EB061DC64ED000147681 /* StateExecuter.swift */,
-				F2A9EB071DC64ED000147681 /* StateExecuterDelegator.swift */,
-				F2A9EB081DC64ED000147681 /* StateType.swift */,
-				F2A9EB091DC64ED000147681 /* Suspendable.swift */,
-				F2A9EB0A1DC64ED000147681 /* TeleportingTurtleCycleDetector.swift */,
-				F2A9EB0B1DC64ED000147681 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift */,
-				F2A9EB0C1DC64ED000147681 /* Transition.swift */,
-				F2A9EB0D1DC64ED000147681 /* Transitionable.swift */,
-				F2A9EB0E1DC64ED000147681 /* TransitionType.swift */,
-				F2A9EB0F1DC64ED000147681 /* Variables.swift */,
-				F2A9EB101DC64ED000147681 /* VariablesContainer.swift */,
-				F2A9EB111DC64ED000147681 /* Whiteboard.swift */,
-				F2A9EB121DC64ED000147681 /* WhiteboardBehaviour.swift */,
-				F2A9EB131DC64ED000147681 /* World.swift */,
-				F2B159DF1CF5509700D43564 /* gusimplewhiteboard.c */,
-				F2B159E31CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c */,
-				F2A59C951CF830D600E218C3 /* tests */,
+				F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */,
+				F245D77F1E33B674007C32F5 /* FSM */,
+				F2A79C981E33BECA00155D41 /* FSM Tests */,
 				F2B159621CF42A9700D43564 /* Products */,
+				F2A79CA31E33C89C00155D41 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		F2B159621CF42A9700D43564 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F2B159611CF42A9700D43564 /* libFSM.dylib */,
 				F2A59C941CF830D600E218C3 /* FSMTests.xctest */,
+				F245D77E1E33B674007C32F5 /* FSM.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -403,17 +480,39 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		F2B1595F1CF42A9700D43564 /* Headers */ = {
+		F245D77B1E33B674007C32F5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A9EB291DC64ED000147681 /* FSM-Bridging-Header.h in Headers */,
+				F245D7821E33B674007C32F5 /* FSM.h in Headers */,
+				F2A79CA01E33C80900155D41 /* gusimplewhiteboard.h in Headers */,
+				F2A79C9E1E33C6CA00155D41 /* FSM-Bridging-Header.h in Headers */,
+				F2A79CA21E33C82A00155D41 /* guwhiteboardtypelist_c_generated.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F245D77D1E33B674007C32F5 /* FSM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F245D7831E33B674007C32F5 /* Build configuration list for PBXNativeTarget "FSM" */;
+			buildPhases = (
+				F245D7791E33B674007C32F5 /* Sources */,
+				F245D77A1E33B674007C32F5 /* Frameworks */,
+				F245D77B1E33B674007C32F5 /* Headers */,
+				F245D77C1E33B674007C32F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F245D8451E33BA22007C32F5 /* PBXTargetDependency */,
+			);
+			name = FSM;
+			productName = FSM;
+			productReference = F245D77E1E33B674007C32F5 /* FSM.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		F2A59C931CF830D600E218C3 /* FSMTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2A59C9C1CF830D600E218C3 /* Build configuration list for PBXNativeTarget "FSMTests" */;
@@ -425,29 +524,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				F2A59C9B1CF830D600E218C3 /* PBXTargetDependency */,
 			);
 			name = FSMTests;
 			productName = tests;
 			productReference = F2A59C941CF830D600E218C3 /* FSMTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		F2B159601CF42A9700D43564 /* FSM */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "FSM" */;
-			buildPhases = (
-				F2B1595D1CF42A9700D43564 /* Sources */,
-				F2B1595E1CF42A9700D43564 /* Frameworks */,
-				F2B1595F1CF42A9700D43564 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = FSM;
-			productName = FSM;
-			productReference = F2B159611CF42A9700D43564 /* libFSM.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
 
@@ -456,13 +537,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Callum McColl";
 				TargetAttributes = {
-					F2A59C931CF830D600E218C3 = {
-						CreatedOnToolsVersion = 7.3;
+					F245D77D1E33B674007C32F5 = {
+						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 					};
-					F2B159601CF42A9700D43564 = {
+					F2A59C931CF830D600E218C3 = {
 						CreatedOnToolsVersion = 7.3;
 					};
 				};
@@ -477,157 +560,305 @@
 			mainGroup = F2B159581CF42A9700D43564;
 			productRefGroup = F2B159621CF42A9700D43564 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F245D81A1E33B9F8007C32F5 /* Products */;
+					ProjectRef = F245D8191E33B9F8007C32F5 /* gusimplewhiteboard.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				F2B159601CF42A9700D43564 /* FSM */,
+				F245D77D1E33B674007C32F5 /* FSM */,
 				F2A59C931CF830D600E218C3 /* FSMTests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		F245D8301E33B9F8007C32F5 /* libgusimplewhiteboard.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libgusimplewhiteboard.a;
+			remoteRef = F245D82F1E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D8321E33B9F8007C32F5 /* SimpleWhiteboardTest.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SimpleWhiteboardTest.xctest;
+			remoteRef = F245D8311E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D8341E33B9F8007C32F5 /* libguobjcwhiteboard.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libguobjcwhiteboard.a;
+			remoteRef = F245D8331E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D8361E33B9F8007C32F5 /* guobjcwhiteboardTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = guobjcwhiteboardTests.xctest;
+			remoteRef = F245D8351E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D8381E33B9F8007C32F5 /* libgusimplewhiteboardios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libgusimplewhiteboardios.a;
+			remoteRef = F245D8371E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D83A1E33B9F8007C32F5 /* guudpwhiteboard */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = guudpwhiteboard;
+			remoteRef = F245D8391E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D83C1E33B9F8007C32F5 /* SimpleWhiteboardTest.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SimpleWhiteboardTest.bundle;
+			remoteRef = F245D83B1E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D83E1E33B9F8007C32F5 /* wbperf */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = wbperf;
+			remoteRef = F245D83D1E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D8401E33B9F8007C32F5 /* wbPerfTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = wbPerfTests.octest;
+			remoteRef = F245D83F1E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F245D8421E33B9F8007C32F5 /* swift_wb */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = swift_wb;
+			remoteRef = F245D8411E33B9F8007C32F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
+		F245D77C1E33B674007C32F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F245D7AE1E33B692007C32F5 /* jazzy.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2A59C921CF830D600E218C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A59CB11CF8311B00E218C3 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F245D7791E33B674007C32F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F245D7C11E33B692007C32F5 /* KripkeVariablesModifier.swift in Sources */,
+				F245D79F1E33B692007C32F5 /* GlobalPropertyExtractor.swift in Sources */,
+				F245D7971E33B692007C32F5 /* Factories.swift in Sources */,
+				F245D7B91E33B692007C32F5 /* KripkeStatePropertyList.swift in Sources */,
+				F245D7D41E33B692007C32F5 /* Spinners.swift in Sources */,
+				F245D7871E33B692007C32F5 /* AnyScheduleableFiniteStateMachine.swift in Sources */,
+				F245D7E41E33B692007C32F5 /* World.swift in Sources */,
+				F245D7AB1E33B692007C32F5 /* HashTableCycleDetector.swift in Sources */,
+				F245D7931E33B692007C32F5 /* EmptySnapshotable.swift in Sources */,
+				F245D78A1E33B692007C32F5 /* CallbackMiPalState.swift in Sources */,
+				F245D7911E33B692007C32F5 /* EmptyGlobalVariablesContainer.swift in Sources */,
+				F245D7C91E33B692007C32F5 /* PropertiesExtractor.swift in Sources */,
+				F245D7C31E33B692007C32F5 /* MiPalRinglet.swift in Sources */,
+				F245D7A71E33B692007C32F5 /* GlobalVariables.swift in Sources */,
+				F245D7DC1E33B692007C32F5 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */,
+				F245D7881E33B692007C32F5 /* AnyState.swift in Sources */,
+				F245D7D11E33B692007C32F5 /* SnapshotController.swift in Sources */,
+				F245D78C1E33B692007C32F5 /* Cloneable.swift in Sources */,
+				F245D7A51E33B692007C32F5 /* GlobalsSpinnerDataExtractor.swift in Sources */,
+				F245D7AF1E33B692007C32F5 /* KripkeCollection.swift in Sources */,
+				F245D7901E33B692007C32F5 /* Dictionary.swift in Sources */,
+				F245D7B51E33B692007C32F5 /* KripkeRingletKripkeStructureGeneratorDelegator.swift in Sources */,
+				F245D7BF1E33B692007C32F5 /* KripkeStructureGenerator.swift in Sources */,
+				F245D7DA1E33B692007C32F5 /* Suspendable.swift in Sources */,
+				F245D7D21E33B692007C32F5 /* SpinnerRunner.swift in Sources */,
+				F245D7BA1E33B692007C32F5 /* KripkeStatePropertySpinnerConverter.swift in Sources */,
+				F245D7951E33B692007C32F5 /* Exitable.swift in Sources */,
+				F245D7E21E33B692007C32F5 /* Whiteboard.swift in Sources */,
+				F245D7A91E33B692007C32F5 /* GlobalVariablesContainer.swift in Sources */,
+				F245D7A21E33B692007C32F5 /* GlobalsSpinnerConstructorFactory.swift in Sources */,
+				F245D7981E33B692007C32F5 /* Finishable.swift in Sources */,
+				F245D7E11E33B692007C32F5 /* VariablesContainer.swift in Sources */,
+				F245D7E01E33B692007C32F5 /* Variables.swift in Sources */,
+				F245D7CB1E33B692007C32F5 /* Resumeable.swift in Sources */,
+				F245D78B1E33B692007C32F5 /* CArray.swift in Sources */,
+				F245D7A31E33B692007C32F5 /* GlobalsSpinnerConstructorFactoryType.swift in Sources */,
+				F245D7D61E33B692007C32F5 /* StateContainer.swift in Sources */,
+				F245D7C81E33B692007C32F5 /* OptimizedStateExecuter.swift in Sources */,
+				F245D7B01E33B692007C32F5 /* KripkeFiniteStateMachine.swift in Sources */,
+				F245D7A01E33B692007C32F5 /* globals.swift in Sources */,
+				F245D7DD1E33B692007C32F5 /* Transition.swift in Sources */,
+				F245D7C51E33B692007C32F5 /* MiPalState.swift in Sources */,
+				F245D7AD1E33B692007C32F5 /* Identifiable.swift in Sources */,
+				F245D7D71E33B692007C32F5 /* StateExecuter.swift in Sources */,
+				F245D7961E33B692007C32F5 /* ExitableStateExecuter.swift in Sources */,
+				F245D78D1E33B692007C32F5 /* CloneableState.swift in Sources */,
+				F245D7BC1E33B692007C32F5 /* KripkeStatePropertyTypes.swift in Sources */,
+				F245D7D31E33B692007C32F5 /* SpinnerRunnerType.swift in Sources */,
+				F245D79D1E33B692007C32F5 /* FSMVariablesContainerHolder.swift in Sources */,
+				F245D7D51E33B692007C32F5 /* Stack.swift in Sources */,
+				F245D7C21E33B692007C32F5 /* MiPalActions.swift in Sources */,
+				F245D7D01E33B692007C32F5 /* SnapshotContainer.swift in Sources */,
+				F245D7DB1E33B692007C32F5 /* TeleportingTurtleCycleDetector.swift in Sources */,
+				F245D7C71E33B692007C32F5 /* MutableSnapshotable.swift in Sources */,
+				F245D7A81E33B692007C32F5 /* GlobalVariablesCollection.swift in Sources */,
+				F245D7B81E33B692007C32F5 /* KripkeStateProperty.swift in Sources */,
+				F245D7DF1E33B692007C32F5 /* TransitionType.swift in Sources */,
+				F245D7C01E33B692007C32F5 /* KripkeStructureType.swift in Sources */,
+				F245D7AA1E33B692007C32F5 /* GlobalVariablesContainerHolder.swift in Sources */,
+				F245D78E1E33B692007C32F5 /* ConvertibleCArray.swift in Sources */,
+				F245D7A41E33B692007C32F5 /* GlobalsSpinnerConstructorType.swift in Sources */,
+				F245D7941E33B692007C32F5 /* EmptyVariables.swift in Sources */,
+				F245D7B61E33B692007C32F5 /* KripkeRingletKripkeStructureGeneratorType.swift in Sources */,
+				F245D7DE1E33B692007C32F5 /* Transitionable.swift in Sources */,
+				F245D7A11E33B692007C32F5 /* GlobalsSpinnerConstructor.swift in Sources */,
+				F245D79E1E33B692007C32F5 /* GenericWhiteboard.swift in Sources */,
+				F245D7861E33B692007C32F5 /* aliases.swift in Sources */,
+				F245D7D91E33B692007C32F5 /* StateType.swift in Sources */,
+				F245D7B71E33B692007C32F5 /* KripkeState.swift in Sources */,
+				F245D7B21E33B692007C32F5 /* KripkeMiPalRingletFactory.swift in Sources */,
+				F245D7CA1E33B692007C32F5 /* Restartable.swift in Sources */,
+				F245D7C41E33B692007C32F5 /* MiPalRingletFactory.swift in Sources */,
+				F245D7CC1E33B692007C32F5 /* Ringlet.swift in Sources */,
+				F245D7B11E33B692007C32F5 /* KripkeMiPalRinglet.swift in Sources */,
+				F245D7B41E33B692007C32F5 /* KripkeRingletKripkeStructureGenerator.swift in Sources */,
+				F245D7BD1E33B692007C32F5 /* KripkeStateType.swift in Sources */,
+				F245D7CF1E33B692007C32F5 /* SnapshotCollectionController.swift in Sources */,
+				F245D79C1E33B692007C32F5 /* FSM.swift in Sources */,
+				F245D7991E33B692007C32F5 /* FiniteStateMachine.swift in Sources */,
+				F245D7A61E33B692007C32F5 /* GlobalsSpinnerDataExtractorType.swift in Sources */,
+				F245D7CE1E33B692007C32F5 /* Snapshotable.swift in Sources */,
+				F245D7D81E33B692007C32F5 /* StateExecuterDelegator.swift in Sources */,
+				F245D7BB1E33B692007C32F5 /* KripkeStatePropertySpinnerConverterType.swift in Sources */,
+				F245D7CD1E33B692007C32F5 /* SimpleVariablesContainer.swift in Sources */,
+				F245D78F1E33B692007C32F5 /* CycleDetector.swift in Sources */,
+				F245D79A1E33B692007C32F5 /* FiniteStateMachineType.swift in Sources */,
+				F245D7AC1E33B692007C32F5 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */,
+				F245D7BE1E33B692007C32F5 /* KripkeStructure.swift in Sources */,
+				F245D7B31E33B692007C32F5 /* KripkeRinglet.swift in Sources */,
+				F245D7C61E33B692007C32F5 /* MirrorPropertyExtractor.swift in Sources */,
+				F245D7921E33B692007C32F5 /* EmptyMiPalState.swift in Sources */,
+				F245D7E31E33B692007C32F5 /* WhiteboardBehaviour.swift in Sources */,
+				F245D7891E33B692007C32F5 /* Behaviour.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F2A59C901CF830D600E218C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2A59CB41CF8311B00E218C3 /* WhiteboardBehaviourTests.swift in Sources */,
-				F2A59CAE1CF8311B00E218C3 /* FactoriesTests.swift in Sources */,
-				F2A59CAF1CF8311B00E218C3 /* FunctionalOptionalTests.swift in Sources */,
-				F2A59CAC1CF8311B00E218C3 /* CArrayTests.swift in Sources */,
-				F2A59CAB1CF8311B00E218C3 /* BehaviourTests.swift in Sources */,
-				F2A59CAD1CF8311B00E218C3 /* Count.swift in Sources */,
-				F2A59CB01CF8311B00E218C3 /* GenericWhiteboardTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F2B1595D1CF42A9700D43564 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F2A9EB4B1DC64ED000147681 /* KripkeStatePropertySpinnerConverter.swift in Sources */,
-				F2A9EB4E1DC64ED000147681 /* KripkeStateType.swift in Sources */,
-				F2A9EB3A1DC64ED000147681 /* GlobalVariablesCollection.swift in Sources */,
-				F2A9EB551DC64ED000147681 /* MiPalRingletFactory.swift in Sources */,
-				F2A9EB6F1DC64ED100147681 /* Transitionable.swift in Sources */,
-				F2A9EB181DC64ED000147681 /* CallbackMiPalState.swift in Sources */,
-				F2A9EB201DC64ED000147681 /* EmptyMiPalState.swift in Sources */,
-				F2A9EB681DC64ED100147681 /* StateExecuter.swift in Sources */,
-				F2A9EB191DC64ED000147681 /* CArray.swift in Sources */,
-				F2A9EB381DC64ED000147681 /* GlobalsSpinnerDataExtractorType.swift in Sources */,
-				F2A9EB401DC64ED000147681 /* KripkeCollection.swift in Sources */,
-				F2A9EB4D1DC64ED000147681 /* KripkeStatePropertyTypes.swift in Sources */,
-				F2A9EB221DC64ED000147681 /* EmptyVariables.swift in Sources */,
-				F2A9EB631DC64ED100147681 /* SpinnerRunner.swift in Sources */,
-				F2A9EB5E1DC64ED000147681 /* SimpleVariablesContainer.swift in Sources */,
-				F2A9EB2B1DC64ED000147681 /* FSMVariablesContainerHolder.swift in Sources */,
-				F2A9EB511DC64ED000147681 /* KripkeStructureType.swift in Sources */,
-				F2A9EB2F1DC64ED000147681 /* FunctionalSequence.swift in Sources */,
-				F2A9EB751DC64ED100147681 /* World.swift in Sources */,
-				F2A9EB6B1DC64ED100147681 /* Suspendable.swift in Sources */,
-				F2A9EB661DC64ED100147681 /* Stack.swift in Sources */,
-				F2A9EB491DC64ED000147681 /* KripkeStateProperty.swift in Sources */,
-				F2A9EB341DC64ED000147681 /* GlobalsSpinnerConstructorFactory.swift in Sources */,
-				F2A9EB271DC64ED000147681 /* FiniteStateMachine.swift in Sources */,
-				F2A9EB591DC64ED000147681 /* OptimizedStateExecuter.swift in Sources */,
-				F2A9EB3C1DC64ED000147681 /* GlobalVariablesContainerHolder.swift in Sources */,
-				F2A9EB571DC64ED000147681 /* MirrorPropertyExtractor.swift in Sources */,
-				F2A9EB3E1DC64ED000147681 /* HashTableKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */,
-				F2A9EB561DC64ED000147681 /* MiPalState.swift in Sources */,
-				F2A9EB701DC64ED100147681 /* TransitionType.swift in Sources */,
-				F2A9EB151DC64ED000147681 /* AnyScheduleableFiniteStateMachine.swift in Sources */,
-				F2A9EB581DC64ED000147681 /* MutableSnapshotable.swift in Sources */,
-				F2A9EB3F1DC64ED000147681 /* Identifiable.swift in Sources */,
-				F2A9EB741DC64ED100147681 /* WhiteboardBehaviour.swift in Sources */,
-				F2A9EB4A1DC64ED000147681 /* KripkeStatePropertyList.swift in Sources */,
-				F2A9EB541DC64ED000147681 /* MiPalRinglet.swift in Sources */,
-				F2A9EB731DC64ED100147681 /* Whiteboard.swift in Sources */,
-				F2A9EB1E1DC64ED000147681 /* Dictionary.swift in Sources */,
-				F2A9EB241DC64ED000147681 /* ExitableStateExecuter.swift in Sources */,
-				F2A9EB211DC64ED000147681 /* EmptySnapshotable.swift in Sources */,
-				F2A9EB351DC64ED000147681 /* GlobalsSpinnerConstructorFactoryType.swift in Sources */,
-				F2A9EB461DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorDelegator.swift in Sources */,
-				F2A9EB601DC64ED000147681 /* SnapshotCollectionController.swift in Sources */,
-				F2A9EB5C1DC64ED000147681 /* Resumeable.swift in Sources */,
-				F2A9EB361DC64ED000147681 /* GlobalsSpinnerConstructorType.swift in Sources */,
-				F2A9EB231DC64ED000147681 /* Exitable.swift in Sources */,
-				F2A9EB611DC64ED100147681 /* SnapshotContainer.swift in Sources */,
-				F2A9EB3D1DC64ED000147681 /* HashTableCycleDetector.swift in Sources */,
-				F2A9EB621DC64ED100147681 /* SnapshotController.swift in Sources */,
-				F2A9EB321DC64ED000147681 /* globals.swift in Sources */,
-				F2A9EB721DC64ED100147681 /* VariablesContainer.swift in Sources */,
-				F2A9EB501DC64ED000147681 /* KripkeStructureGenerator.swift in Sources */,
-				F2A9EB6A1DC64ED100147681 /* StateType.swift in Sources */,
-				F2A9EB711DC64ED100147681 /* Variables.swift in Sources */,
-				F2A9EB4C1DC64ED000147681 /* KripkeStatePropertySpinnerConverterType.swift in Sources */,
-				F2A9EB2A1DC64ED000147681 /* FSM.swift in Sources */,
-				F2A9EB411DC64ED000147681 /* KripkeFiniteStateMachine.swift in Sources */,
-				F2A9EB1C1DC64ED000147681 /* ConvertibleCArray.swift in Sources */,
-				F2A9EB1D1DC64ED000147681 /* CycleDetector.swift in Sources */,
-				F2A9EB311DC64ED000147681 /* GlobalPropertyExtractor.swift in Sources */,
-				F2A9EB6D1DC64ED100147681 /* TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift in Sources */,
-				F2A9EB1B1DC64ED000147681 /* CloneableState.swift in Sources */,
-				F2A9EB521DC64ED000147681 /* KripkeVariablesModifier.swift in Sources */,
-				F2A9EB641DC64ED100147681 /* SpinnerRunnerType.swift in Sources */,
-				F2A9EB531DC64ED000147681 /* MiPalActions.swift in Sources */,
-				F2A9EB451DC64ED000147681 /* KripkeRingletKripkeStructureGenerator.swift in Sources */,
-				F2A9EB6C1DC64ED100147681 /* TeleportingTurtleCycleDetector.swift in Sources */,
-				F2A9EB441DC64ED000147681 /* KripkeRinglet.swift in Sources */,
-				F2A9EB331DC64ED000147681 /* GlobalsSpinnerConstructor.swift in Sources */,
-				F2A9EB6E1DC64ED100147681 /* Transition.swift in Sources */,
-				F2A9EB691DC64ED100147681 /* StateExecuterDelegator.swift in Sources */,
-				F2A9EB431DC64ED000147681 /* KripkeMiPalRingletFactory.swift in Sources */,
-				F2A9EB5B1DC64ED000147681 /* Restartable.swift in Sources */,
-				F2A9EB301DC64ED000147681 /* GenericWhiteboard.swift in Sources */,
-				F2A9EB281DC64ED000147681 /* FiniteStateMachineType.swift in Sources */,
-				F2A9EB2C1DC64ED000147681 /* FunctionalArray.swift in Sources */,
-				F2A9EB421DC64ED000147681 /* KripkeMiPalRinglet.swift in Sources */,
-				F2A9EB471DC64ED000147681 /* KripkeRingletKripkeStructureGeneratorType.swift in Sources */,
-				F2A9EB141DC64ED000147681 /* aliases.swift in Sources */,
-				F2A9EB4F1DC64ED000147681 /* KripkeStructure.swift in Sources */,
-				F2A9EB5D1DC64ED000147681 /* Ringlet.swift in Sources */,
-				F2A9EB3B1DC64ED000147681 /* GlobalVariablesContainer.swift in Sources */,
-				F2A9EB1F1DC64ED000147681 /* EmptyGlobalVariablesContainer.swift in Sources */,
-				F2B159E41CF550F100D43564 /* guwhiteboardtypelist_c_typestrings_generated.c in Sources */,
-				F2A9EB2E1DC64ED000147681 /* FunctionalOptional.swift in Sources */,
-				F2A9EB391DC64ED000147681 /* GlobalVariables.swift in Sources */,
-				F2A9EB171DC64ED000147681 /* Behaviour.swift in Sources */,
-				F2A9EB5F1DC64ED000147681 /* Snapshotable.swift in Sources */,
-				F2B159E01CF5509700D43564 /* gusimplewhiteboard.c in Sources */,
-				F2A9EB161DC64ED000147681 /* AnyState.swift in Sources */,
-				F2A9EB671DC64ED100147681 /* StateContainer.swift in Sources */,
-				F2A9EB371DC64ED000147681 /* GlobalsSpinnerDataExtractor.swift in Sources */,
-				F2A9EB261DC64ED000147681 /* Finishable.swift in Sources */,
-				F2A9EB251DC64ED000147681 /* Factories.swift in Sources */,
-				F2A9EB651DC64ED100147681 /* Spinners.swift in Sources */,
-				F2A9EB1A1DC64ED000147681 /* Cloneable.swift in Sources */,
-				F2A9EB5A1DC64ED000147681 /* PropertiesExtractor.swift in Sources */,
-				F2A9EB2D1DC64ED000147681 /* FunctionalOperators.swift in Sources */,
-				F2A9EB481DC64ED000147681 /* KripkeState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F2A59C9B1CF830D600E218C3 /* PBXTargetDependency */ = {
+		F245D8451E33BA22007C32F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F2B159601CF42A9700D43564 /* FSM */;
-			targetProxy = F2A59C9A1CF830D600E218C3 /* PBXContainerItemProxy */;
+			name = gusimplewhiteboard;
+			targetProxy = F245D8441E33BA22007C32F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		F245D7841E33B674007C32F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../..",
+					"$(SRCROOT)/../../..",
+					"$(SRCROOT)/../..",
+				);
+				INFOPLIST_FILE = FSM/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MODULEMAP_FILE = module.map;
+				PRODUCT_BUNDLE_IDENTIFIER = net.MiPal.FSM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F245D7851E33B674007C32F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../..",
+					"$(SRCROOT)/../../..",
+					"$(SRCROOT)/../..",
+				);
+				INFOPLIST_FILE = FSM/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MODULEMAP_FILE = module.map;
+				PRODUCT_BUNDLE_IDENTIFIER = net.MiPal.FSM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		F2A59C9D1CF830D600E218C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -691,8 +922,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -736,8 +969,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -756,66 +991,23 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		F2B159661CF42A9700D43564 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/build.host\"",
-					"\"$(SRCROOT)/../../gusimplewhiteboard\"",
-					"\"$(SRCROOT)/../../../Common\"",
-					"\"$(SRCROOT)/../../cdl/gucdlmodule\"",
-					"\"$(SRCROOT)/../../cdl/Engine\"",
-					"\"/usr/local/include\"",
-					"\"/opt/local/include\"",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "../../../Common/** ../../ ../../gusimplewhiteboard/**";
-				SWIFT_OBJC_BRIDGING_HEADER = "FSM-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "../../gusimplewhiteboard/ ../../ ../../../Common";
-			};
-			name = Debug;
-		};
-		F2B159671CF42A9700D43564 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				FRAMEWORK_SEARCH_PATHS = "";
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/build.host\"",
-					"\"$(SRCROOT)/../../gusimplewhiteboard\"",
-					"\"$(SRCROOT)/../../../Common\"",
-					"\"$(SRCROOT)/../../cdl/gucdlmodule\"",
-					"\"$(SRCROOT)/../../cdl/Engine\"",
-					"\"/usr/local/include\"",
-					"\"/opt/local/include\"",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "../../../Common/** ../../ ../../gusimplewhiteboard/**";
-				SWIFT_OBJC_BRIDGING_HEADER = "FSM-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "../../gusimplewhiteboard/ ../../ ../../../Common";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F245D7831E33B674007C32F5 /* Build configuration list for PBXNativeTarget "FSM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F245D7841E33B674007C32F5 /* Debug */,
+				F245D7851E33B674007C32F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F2A59C9C1CF830D600E218C3 /* Build configuration list for PBXNativeTarget "FSMTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -830,15 +1022,6 @@
 			buildConfigurations = (
 				F2B159631CF42A9700D43564 /* Debug */,
 				F2B159641CF42A9700D43564 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F2B159651CF42A9700D43564 /* Build configuration list for PBXNativeTarget "FSM" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F2B159661CF42A9700D43564 /* Debug */,
-				F2B159671CF42A9700D43564 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
