@@ -1,5 +1,0 @@
-framework module FSM {
-    umbrella header "FSM-Bridging-Header.h"
-    header "gusimplewhiteboard.h"
-    header "guwhiteboardtypelist_c_generated.h"
-}
