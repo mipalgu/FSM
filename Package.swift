@@ -67,7 +67,7 @@ let package = Package(
         Target(name: "FSM", dependencies: ["Functional", "KripkeStructure"])
     ],
     dependencies: [
-        .Package(url: "git@github.com:mipalgu/CGUSimpleWhiteboard.git", majorVersion: 1)
+        .Package(url: "ssh://git.mipal.net/git/CGUSimpleWhiteboard", majorVersion: 1)
     ]
 )
 
