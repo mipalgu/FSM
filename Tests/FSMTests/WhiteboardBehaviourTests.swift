@@ -58,6 +58,7 @@
 
 import XCTest
 import CGUSimpleWhiteboard
+import GUSimpleWhiteboard
 @testable import FSM
 
 #if os(OSX)
@@ -77,7 +78,7 @@ class WhiteboardBehaviourTests: XCTestCase {
     override func setUp() {
         let wb: GenericWhiteboard = GenericWhiteboard<wb_count>(msgType: kCount_v)
         for _ in 0 ..< wb.generations {
-            wb.post(val: wb_count())
+            wb.post(val: wb_count(count: 0))
         }
         wb.eventCount = 0
     }
