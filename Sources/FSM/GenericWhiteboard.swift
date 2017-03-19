@@ -1,9 +1,9 @@
 /*
- * ExternalVariablesCollection.swift 
+ * GenericWhiteboard.swift 
  * FSM 
  *
- * Created by Callum McColl on 19/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 19/03/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,25 +56,6 @@
  *
  */
 
-/**
- *  A `Sequence` that contains `ExternalVariables`.
- *
- *  - SeeAlso: `ExternalVariables`
- */
-public protocol ExternalVariablesCollection: Sequence {
+import GUSimpleWhiteboard
 
-    /**
-     *  Retrieve the latest values.
-     *
-     *  - Returns: The latest `Element`.
-     */
-    func get() -> Self.Iterator.Element
-
-    /**
-     *  Append a new value.
-     *
-     *  - Parameter val: The new `Element`.
-     */
-    func post(val: Self.Iterator.Element) -> Void
-
-}
+extension GenericWhiteboard: ExternalVariablesCollection {}

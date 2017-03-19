@@ -59,19 +59,19 @@
 /**
  *  Provides a way to manage snapshots from an `ExternalVariablesCollection`.
  */
-public class SnapshotCollectionController<Collection: ExternalVariablesCollection>: Snapshotable, ExternalVariablesContainer {
+public class SnapshotCollectionController<Collection: ExternalVariablesCollection>: Snapshotable, ExternalVariablesContainer where Collection.Iterator.Element: ExternalVariables {
 
     /**
      *  `Class` is equal to `Collection.Element`.
      */
-    public typealias Class = Collection.Element
+    public typealias Class = Collection.Iterator.Element
     
     private let collection: Collection 
 
     /**
      *  The latest element in the `ExternalVariablesCollection`.
      */
-    public var val: Collection.Element 
+    public var val: Collection.Iterator.Element 
 
     /**
      *  Createa new `SnapshotCollectionController`.
