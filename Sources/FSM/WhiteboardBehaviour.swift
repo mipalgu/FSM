@@ -57,6 +57,7 @@
  */
 
 import CGUSimpleWhiteboard
+import GUSimpleWhiteboard
 
 /**
  *  Used to create `Behaviours` that work with the `Whiteboard`.
