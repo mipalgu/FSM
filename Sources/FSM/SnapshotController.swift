@@ -97,7 +97,7 @@ public class SnapshotController<T: ExternalVariables>: Snapshotable, ExternalVar
         if let v = b.at(now()) {
             self.val = v
         } else {
-            self.val = Class()
+            fatalError()
         }
     }
 

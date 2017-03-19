@@ -69,11 +69,6 @@
 public protocol ExternalVariables: Equatable {
     
     /**
-     *  Create a new instance with default values for all variables.
-     */
-    init()
-
-    /**
      *  Create a new instance from a dictionary where the key represents the
      *  variables label and the value represents the value of the variable.
      *
