@@ -92,7 +92,6 @@ products.append(
         ]
     )
 )
-*/
 products.append(
     Product(
         name: "FSM",
@@ -104,3 +103,4 @@ products.append(
         ]
     )
 )
+*/
