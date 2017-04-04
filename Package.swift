@@ -72,6 +72,7 @@ let package = Package(
 )
 
 products = []
+
 /*
 products.append(
     Product(
@@ -92,6 +93,7 @@ products.append(
         ]
     )
 )
+*/
 products.append(
     Product(
         name: "FSM",
@@ -103,4 +105,3 @@ products.append(
         ]
     )
 )
-*/
