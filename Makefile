@@ -22,8 +22,6 @@ install:
 	sudo cp .build/${SWIFT_BUILD_CONFIG}/lib*.${EXT} /usr/local/lib/swiftfsm/
 	sudo cp .build/${SWIFT_BUILD_CONFIG}/*.swift* /usr/local/include/swiftfsm/
 
-test:	swift-test-package
-
 .include "../../../mk/mipal.mk"		# comes last!
 
 CFLAGS+=-I../../../Common
