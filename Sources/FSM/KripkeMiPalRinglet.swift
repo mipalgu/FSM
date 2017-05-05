@@ -98,7 +98,7 @@ public final class KripkeMiPalRinglet<
      *  access to.
      *
      *  - Parameter extractor: Used to extract the values of the
-     *  `GlobalVariables`, Finite State Machine `Variables` and the state
+     *  `ExternalVariables`, Finite State Machine `Variables` and the state
      *  variables.
      *
      *  - Parameter previousState: The last `MiPalState` that was executed.
@@ -133,9 +133,7 @@ public final class KripkeMiPalRinglet<
      *
      *  Returns a state representing the next state to execute.
      */
-    public override func execute(
-        state: MiPalState
-    ) -> MiPalState {
+    public override func execute(state: MiPalState) -> MiPalState {
         self.snapshots = []
         // Take a snapshot
         self.record(state: state)
