@@ -86,10 +86,12 @@ public func addFactory(_ f: @escaping FSMArrayFactory) {
 }
 
 public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2, T>] {
-    return transitions.map { (transition) in
-        Transition<S2, T>(transition.target) {
-            transition.canTransition($0 as! S1)
-        }
+    return transitions.map(cast)
+}
+
+public func cast<S1, S2, T>(_ transition: Transition<S1, T>) -> Transition<S2, T> {
+    return Transition<S2, T>(transition.target) {
+        transition.canTransition($0 as! S1)
     }
 }
 
