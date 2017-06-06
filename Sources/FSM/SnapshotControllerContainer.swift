@@ -1,9 +1,9 @@
 /*
- * Snapshotable.swift
- * swiftfsm
+ * SnapshotContainer.swift 
+ * FSM 
  *
- * Created by Callum McColl on 12/12/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 28/07/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,34 +56,8 @@
  *
  */
 
-/**
- *  Conforming types are responsible for updating themselves from an external
- *  data source.  Simply put this protocol is intended to assert that conforming
- *  types can take a 'snapshot' of the values from the external source and store
- *  them locally where they can be used.
- */
-public protocol Snapshotable {
-    
-    /**
-     *  Save the current snapshot.
-     */
-    func saveSnapshot() -> Void
+public protocol SnapshotControllerContainer {
 
-    /**
-     *  Perform the snapshot.
-     */
-    mutating func takeSnapshot() -> Void
-    
-}
-
-extension Snapshotable where Self: SnapshotControllerContainer {
-
-    public func saveSnapshot() {
-        self.externalVariables.forEach { $0.saveSnapshot() }
-    }
-
-    public func takeSnapshot() {
-        self.externalVariables.forEach { $0.takeSnapshot() }
-    }
+    var externalVariables: [AnySnapshotController] { get }
 
 }

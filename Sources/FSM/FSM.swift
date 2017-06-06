@@ -393,6 +393,7 @@ public func FSM<V: VariablesContainer>(
 public func FSM<R: Ringlet>(
     _ name: String,
     initialState: MiPalState,
+    externalVariables: [AnySnapshotController] = [],
     ringlet: R,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
     suspendedState: MiPalState? = nil,
@@ -403,6 +404,7 @@ public func FSM<R: Ringlet>(
         FiniteStateMachine<R>(
             name,
             initialState: initialState,
+            externalVariables: externalVariables,
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -449,6 +451,7 @@ public func FSM<R: Ringlet>(
 public func FSM<R: KripkeRinglet>(
     _ name: String,
     initialState: MiPalState,
+    externalVariables: [AnySnapshotController] = [],
     ringlet: R,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
     suspendedState: MiPalState? = nil,
@@ -459,6 +462,7 @@ public func FSM<R: KripkeRinglet>(
         KripkeFiniteStateMachine(
             name,
             initialState: initialState,
+            externalVariables: externalVariables,
             ringlet: ringlet,
             generator: HashTableKripkeRingletKripkeStructureGeneratorFactory().make(),
             initialPreviousState: initialPreviousState,
@@ -472,6 +476,7 @@ public func FSM<R: KripkeRinglet>(
 public func MachineFSM<R: KripkeRinglet>(
     _ name: String,
     initialState: R._StateType,
+    externalVariables: [AnySnapshotController] = [],
     ringlet: R,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
@@ -486,6 +491,7 @@ public func MachineFSM<R: KripkeRinglet>(
         KripkeFiniteStateMachine(
             name,
             initialState: initialState,
+            externalVariables: externalVariables,
             ringlet: ringlet,
             generator: HashTableKripkeRingletKripkeStructureGeneratorFactory().make(),
             initialPreviousState: initialPreviousState,
@@ -521,7 +527,7 @@ public func FSM<FSM: FiniteStateMachineType>(
     FSM: KripkeStructureGenerator,
     FSM: Restartable,
     FSM: Resumeable,
-    FSM: SnapshotContainer
+    FSM: Snapshotable
 {
     return AnyScheduleableFiniteStateMachine(fsm)
 }
@@ -550,7 +556,7 @@ public func FSMS<FSM: FiniteStateMachineType>(
     FSM: KripkeStructureGenerator,
     FSM: Restartable,
     FSM: Resumeable,
-    FSM: SnapshotContainer
+    FSM: Snapshotable
 {
     return fsms.map { AnyScheduleableFiniteStateMachine($0) }
 }
