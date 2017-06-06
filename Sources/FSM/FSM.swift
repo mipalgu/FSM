@@ -107,6 +107,7 @@ public func FSM(
         return FSM(
             name,
             initialState: initialState,
+            externalVariables: [],
             ringlet: KripkeMiPalRingletFactory.make(
                 previousState: initialPreviousState
             ),
@@ -119,6 +120,7 @@ public func FSM(
     return FSM(
         name,
         initialState: initialState,
+        externalVariables: [],
         ringlet: MiPalRingletFactory.make(
             previousState: initialPreviousState
         ),
@@ -330,6 +332,7 @@ public func FSM<V: VariablesContainer>(
         return FSM(
             name,
             initialState: initialState,
+            externalVariables: externalVariables,
             ringlet: KripkeMiPalRinglet(
                 externalVariables: externalVariables,
                 fsmVars: fsmVars,
@@ -345,6 +348,7 @@ public func FSM<V: VariablesContainer>(
     return FSM(
         name,
         initialState: initialState,
+        externalVariables: externalVariables,
         ringlet: MiPalRinglet(
             externalVariables: externalVariables,
             previousState: initialPreviousState
@@ -393,7 +397,7 @@ public func FSM<V: VariablesContainer>(
 public func FSM<R: Ringlet>(
     _ name: String,
     initialState: MiPalState,
-    externalVariables: [AnySnapshotController] = [],
+    externalVariables: [AnySnapshotController],
     ringlet: R,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
     suspendedState: MiPalState? = nil,
@@ -451,7 +455,7 @@ public func FSM<R: Ringlet>(
 public func FSM<R: KripkeRinglet>(
     _ name: String,
     initialState: MiPalState,
-    externalVariables: [AnySnapshotController] = [],
+    externalVariables: [AnySnapshotController],
     ringlet: R,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
     suspendedState: MiPalState? = nil,
@@ -476,7 +480,7 @@ public func FSM<R: KripkeRinglet>(
 public func MachineFSM<R: KripkeRinglet>(
     _ name: String,
     initialState: R._StateType,
-    externalVariables: [AnySnapshotController] = [],
+    externalVariables: [AnySnapshotController],
     ringlet: R,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,

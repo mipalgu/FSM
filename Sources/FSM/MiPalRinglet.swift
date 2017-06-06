@@ -99,7 +99,7 @@ public class MiPalRinglet: Ringlet {
      */
     public func execute(state: MiPalState) -> MiPalState {
         // Take a snapshot
-        self.takeSnapshot()
+        //self.takeSnapshot()
         // Call onEntry if we have just transitioned to this state. 
         if (state != self.previousState) {
             state.onEntry()
@@ -114,7 +114,7 @@ public class MiPalRinglet: Ringlet {
         }
         // No - Execute main method and return state.
         state.main()
-        self.saveSnapshot()
+        //self.saveSnapshot()
         return state
     }
 

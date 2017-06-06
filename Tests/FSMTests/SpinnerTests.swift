@@ -209,6 +209,7 @@ class SpinnerTests: XCTestCase {
         self.fsm = FSM(
             "test_fsm",
             initialState: state,
+            externalVariables: [AnySnapshotController(self.container)],
             ringlet: ringlet,
             exitState: exitState
         )
