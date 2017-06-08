@@ -67,7 +67,7 @@ public enum KripkeStatePropertyTypes: Equatable {
     case String
     case EmptyCollection
     case Collection([KripkeStateProperty])
-    case Some
+    case Compound(KripkeStatePropertyList)
 }
 
 /**
@@ -112,8 +112,8 @@ public func ==(
             return true
         case (let .Collection(p1), let .Collection(p2)):
             return p1 == p2
-        case (.Some, .Some):
-            return true
+        case (let .Compound(c1), let .Compound(c2)):
+            return c1 == c2
         default:
             return false
     }
