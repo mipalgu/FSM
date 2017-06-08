@@ -1,5 +1,5 @@
 /*
- * KripkePropertiesRecordable.swift 
+ * KripkePropertiesRecorderDelegator.swift 
  * KripkeStructure 
  *
  * Created by Callum McColl on 08/06/2017.
@@ -56,16 +56,10 @@
  *
  */
 
-public protocol KripkePropertiesRecordable {
+public protocol KripkePropertiesRecorderDelegator {
 
-    var currentRecord: KripkeStatePropertyList { get }
+    associatedtype Recorder: KripkePropertiesRecorder
 
-}
-
-extension KripkePropertiesRecordable where Self: KripkePropertiesRecorderDelegator {
-
-    var currentRecord: KripkeStatePropertyList {
-        return self.recorder.takeRecord(of: self)
-    }
+    var recorder: Recorder { get }
 
 }
