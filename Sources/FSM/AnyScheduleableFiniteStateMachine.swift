@@ -77,7 +77,8 @@ public struct AnyScheduleableFiniteStateMachine:
     Finishable,
     KripkeStructureGenerator,
     Resumeable,
-    Restartable
+    Restartable,
+    Snapshotable
 {
 
     public typealias _StateType = AnyState
@@ -109,6 +110,10 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _suspendedState: () -> AnyState?
 
     private let _suspendState: () -> AnyState
+
+    private let _saveSnapshot: () -> Void
+
+    private let _takeSnapshot: () -> Void
 
     /**
      *  The next state to execute.
@@ -196,7 +201,8 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: Finishable,
         FSM: KripkeStructureGenerator,
         FSM: Resumeable,
-        FSM: Restartable
+        FSM: Restartable,
+        FSM: Snapshotable
     {
         var base = base
         self._currentState = { AnyState(base.currentState) }
@@ -213,6 +219,8 @@ public struct AnyScheduleableFiniteStateMachine:
         self._suspend = { base.suspend() }
         self._suspendedState = { { AnyState($0) } <^> base.suspendedState }
         self._suspendState = { AnyState(base.suspendState) }
+        self._saveSnapshot = { base.saveSnapshot() }
+        self._takeSnapshot = { base.takeSnapshot() }
     }
 
     /**
@@ -261,6 +269,14 @@ public struct AnyScheduleableFiniteStateMachine:
      */
     public func suspend() {
         self._suspend()
+    }
+
+    public func saveSnapshot() {
+        self._saveSnapshot()
+    }
+
+    public func takeSnapshot() {
+        self._takeSnapshot()
     }
 
  }

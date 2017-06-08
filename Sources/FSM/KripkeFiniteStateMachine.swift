@@ -120,6 +120,8 @@ public struct KripkeFiniteStateMachine<
     OptimizedStateExecuter,
     Restartable,
     Resumeable,
+    Snapshotable,
+    SnapshotControllerContainer,
     SnapshotContainer,
     StateExecuterDelegator where
     R._StateType: Transitionable,
@@ -141,6 +143,8 @@ public struct KripkeFiniteStateMachine<
      *  The state that is used to exit the FSM.
      */
     public let exitState: R._StateType
+
+    public let externalVariables: [AnySnapshotController]
 
     /**
      *  The `KripkeRingletKripkeStructureGenerator`.
@@ -213,6 +217,7 @@ public struct KripkeFiniteStateMachine<
     public init(
         _ name: String,
         initialState: R._StateType,
+        externalVariables: [AnySnapshotController],
         ringlet: R,
         generator: G,
         initialPreviousState: R._StateType,
@@ -222,6 +227,7 @@ public struct KripkeFiniteStateMachine<
     ) {
         self.currentState = initialState
         self.exitState = exitState
+        self.externalVariables = externalVariables
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
         self.name = name

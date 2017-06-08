@@ -1,9 +1,9 @@
 /*
- * MiPalRinglet.swift
- * swiftfsm
+ * SnapshotContainer.swift 
+ * FSM 
  *
- * Created by Callum McColl on 12/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 28/07/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,74 +56,8 @@
  *
  */
 
-/**
- *  A standard ringlet.
- *
- *  Firstly calls onEntry if we have just transitioned to this state.  If a
- *  transition is possible then the states onExit method is called and the new
- *  state is returned.  If no transitions are possible then the main method is
- *  called and the state is returned.
- */
-public class MiPalRinglet: Ringlet {
+public protocol SnapshotControllerContainer {
 
-    /**
-     *  Used to take and save snapshots of the `ExternalVariables`.
-     */
-    public private(set) var externalVariables: [AnySnapshotController]
+    var externalVariables: [AnySnapshotController] { get }
 
-    internal var previousState: MiPalState
-
-    /**
-     *  Create a new `MiPalRinglet`.
-     *
-     *  - Parameter externalVariables: Used to take and save snapshots of the
-     *  `ExternalVariables`.
-     *
-     *  - Parameter previousState:  The last `MiPalState` that was executed.
-     *  This is used to check whether the `MiPalState.onEntry()` should run.
-     */
-    public init(
-        externalVariables: [AnySnapshotController] = [],
-        previousState: MiPalState = EmptyMiPalState("_previous")
-    ) {
-        self.externalVariables = externalVariables 
-        self.previousState = previousState
-    }
-    
-    /**
-     *  Execute the ringlet.
-     *
-     *  - Parameter state: The `MiPalState` that is being executed.
-     *
-     *  - Returns: A state representing the next state to execute.
-     */
-    public func execute(state: MiPalState) -> MiPalState {
-        // Take a snapshot
-        //self.takeSnapshot()
-        // Call onEntry if we have just transitioned to this state. 
-        if (state != self.previousState) {
-            state.onEntry()
-        }
-        self.previousState = state
-        // Can we transition to another state?
-        if let t = state.transitions.lazy.filter({ $0.canTransition(state) }).first {
-            // Yes - Exit state and return the new state.
-            state.onExit()
-            self.saveSnapshot()
-            return t.target
-        }
-        // No - Execute main method and return state.
-        state.main()
-        //self.saveSnapshot()
-        return state
-    }
-
-    internal func takeSnapshot() {
-        let _ = self.externalVariables.map { $0.takeSnapshot() }
-    }
-
-    internal func saveSnapshot() {
-        let _ = self.externalVariables.map { $0.saveSnapshot() }
-    }
-    
 }

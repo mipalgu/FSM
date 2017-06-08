@@ -75,3 +75,15 @@ public protocol Snapshotable {
     mutating func takeSnapshot() -> Void
     
 }
+
+extension Snapshotable where Self: SnapshotControllerContainer {
+
+    public func saveSnapshot() {
+        self.externalVariables.forEach { $0.saveSnapshot() }
+    }
+
+    public func takeSnapshot() {
+        self.externalVariables.forEach { $0.takeSnapshot() }
+    }
+
+}

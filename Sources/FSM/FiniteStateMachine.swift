@@ -115,7 +115,9 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     OptimizedStateExecuter,
     Restartable,
     Resumeable,
-    StateExecuterDelegator where
+    StateExecuterDelegator,
+    Snapshotable,
+    SnapshotControllerContainer where
     R._StateType: Transitionable
 {
 
@@ -133,6 +135,8 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
      *  The state that is used to exit the FSM.
      */
     public let exitState: R._StateType
+
+    public let externalVariables: [AnySnapshotController]
 
     /**
      *  The initial state of the previous state.
@@ -197,6 +201,7 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     public init(
         _ name: String,
         initialState: R._StateType,
+        externalVariables: [AnySnapshotController],
         ringlet: R,
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
@@ -205,6 +210,7 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
     ) {
         self.currentState = initialState
         self.exitState = exitState
+        self.externalVariables = externalVariables
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
         self.name = name
