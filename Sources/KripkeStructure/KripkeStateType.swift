@@ -63,23 +63,10 @@
  */
 public protocol _KripkeStateType: Equatable {
     
+    var id: String { get }
+
     var properties: KripkeStatePropertyList { get }
 
-    /**
-     *  The fsm that this state belongs to.
-     */
-    var fsm: String { get }
-
-    /**
-     *  The machine that this state belongs to.
-     */
-    var machine: String { get }
-
-    /**
-     *  The actual state within the finite state machine.
-     */
-    var state: String { get }
-    
     /**
      *  The state which we will transition to.
      */
@@ -92,9 +79,7 @@ public protocol _KripkeStateType: Equatable {
 extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
     
     public var description: String {
-        var str: String = "state = \(self.state)\n"
-        str += "fsm = \(self.fsm)\n"
-        str += "machine = \(self.machine)\n"
+        var str: String = "id = \(self.id)\n"
         //str += "previous = \(self.previous?.state)\n"
         str += "properties: {\n"
         str += self.properties.description
@@ -114,10 +99,8 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
 extension _KripkeStateType where Self: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        var str: String = "state = \(self.state)\n"
-        str += "fsm = \(self.fsm)\n"
-        str += "machine = \(self.machine)\n"
-        str += "previous = \(self.previous?.state)\n"
+        var str: String = "id = \(self.id)\n"
+        str += "previous = \(self.previous?.id)\n"
         str += "properties: {\n"
         str += self.properties.description
         str += "\n}\n"
@@ -137,9 +120,7 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
    lhs: T,
    rhs: U
 ) -> Bool {
-    return lhs.machine == rhs.machine &&
-        lhs.fsm == rhs.fsm &&
-        lhs.state == rhs.state &&
+    return lhs.id == rhs.id &&
         lhs.properties == rhs.properties
 }
 

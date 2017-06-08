@@ -61,16 +61,8 @@
  */
 public class KripkeState: KripkeStateType {
 
-    /**
-     *  The name of the `FiniteStateMachineType` that this state belongs to.
-     */
-    public let fsm: String
+    public let id: String
 
-    /**
-     *  The name of the machine that this state belongs to.
-     */
-    public let machine: String 
-    
     /**
      *  The `KripkeState` that is linked to `self`.
      */
@@ -80,11 +72,6 @@ public class KripkeState: KripkeStateType {
      *  A snapshot of all properties that affected the execution of `state`.
      */
     public let properties: KripkeStatePropertyList
-
-    /**
-     *  The name of the state that this `KripkeState` was generated from.
-     */
-    public let state: String
 
     /**
      *  All possible `KripkeStates` that can be transitioned to.
@@ -108,18 +95,14 @@ public class KripkeState: KripkeStateType {
      *  transition to.
      */
     public init(
-        state: String,
-        fsm: String,
-        machine: String,
+        id: String,
         properties: KripkeStatePropertyList,
         previous: KripkeState? = nil,
         targets: [KripkeState] = []
     ) {
-        self.fsm = fsm
-        self.machine = machine
+        self.id = id
         self.previous = previous
         self.properties = properties
-        self.state = state
         self.targets = targets
     }
     
