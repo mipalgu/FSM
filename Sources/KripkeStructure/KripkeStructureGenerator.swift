@@ -64,10 +64,8 @@ public protocol KripkeStructureGenerator {
     /**
      *  Generate the `KripkeStructure`.
      *
-     *  - Parameter machine: The name of the machine that this type belongs to.
-     *
      *  - Returns: The newly created `KripkeStructure`.
      */
-    func generate(machine: String) -> KripkeStructure
+    func generate() -> KripkeStructure
     
 }
