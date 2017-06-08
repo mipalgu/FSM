@@ -66,27 +66,15 @@
  */
 public class MiPalRinglet: Ringlet {
 
-    /**
-     *  Used to take and save snapshots of the `ExternalVariables`.
-     */
-    public private(set) var externalVariables: [AnySnapshotController]
-
     internal var previousState: MiPalState
 
     /**
      *  Create a new `MiPalRinglet`.
      *
-     *  - Parameter externalVariables: Used to take and save snapshots of the
-     *  `ExternalVariables`.
-     *
      *  - Parameter previousState:  The last `MiPalState` that was executed.
      *  This is used to check whether the `MiPalState.onEntry()` should run.
      */
-    public init(
-        externalVariables: [AnySnapshotController] = [],
-        previousState: MiPalState = EmptyMiPalState("_previous")
-    ) {
-        self.externalVariables = externalVariables 
+    public init(previousState: MiPalState = EmptyMiPalState("_previous")) {
         self.previousState = previousState
     }
     
@@ -98,8 +86,6 @@ public class MiPalRinglet: Ringlet {
      *  - Returns: A state representing the next state to execute.
      */
     public func execute(state: MiPalState) -> MiPalState {
-        // Take a snapshot
-        //self.takeSnapshot()
         // Call onEntry if we have just transitioned to this state. 
         if (state != self.previousState) {
             state.onEntry()
@@ -109,21 +95,11 @@ public class MiPalRinglet: Ringlet {
         if let t = state.transitions.lazy.filter({ $0.canTransition(state) }).first {
             // Yes - Exit state and return the new state.
             state.onExit()
-            self.saveSnapshot()
             return t.target
         }
         // No - Execute main method and return state.
         state.main()
-        //self.saveSnapshot()
         return state
-    }
-
-    internal func takeSnapshot() {
-        let _ = self.externalVariables.map { $0.takeSnapshot() }
-    }
-
-    internal func saveSnapshot() {
-        let _ = self.externalVariables.map { $0.saveSnapshot() }
     }
     
 }
