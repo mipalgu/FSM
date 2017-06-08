@@ -109,9 +109,10 @@ import KripkeStructure
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
-public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: FiniteStateMachineType,
     ExitableStateExecuter,
-    KripkeStructureGenerator,
+    KripkePropertiesRecordable,
+    KripkePropertiesRecorderDelegator,
     OptimizedStateExecuter,
     Restartable,
     Resumeable,
@@ -126,10 +127,16 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
      */
     public typealias _StateType = R._StateType
 
+    public typealias Recorder = KR
+
     /**
      *  The state that is currently executing.
      */
     public var currentState: R._StateType
+
+    public var currentRecord: KripkeStatePropertyList {
+        self.recorder.takeRecord(of: self)
+    }
 
     /**
      *  The state that is used to exit the FSM.
@@ -161,6 +168,12 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
      *  The last state that was executed.
      */
     public var previousState: R._StateType
+
+    /**
+     *  The `KripkePropertiesRecorder` responsible for recording all the
+     *  variables used in formal verification.
+     */
+    public let recorder: Recorder
 
     /**
      *  An instance of `Ringlet` that is used to execute the states.
@@ -202,6 +215,7 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
         _ name: String,
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
+        recorder: KR,
         ringlet: R,
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
@@ -215,6 +229,7 @@ public struct FiniteStateMachine<R: Ringlet>: FiniteStateMachineType,
         self.initialPreviousState = initialPreviousState
         self.name = name
         self.previousState = initialPreviousState
+        self.recorder = recorder
         self.ringlet = ringlet
         self.suspendedState = suspendedState
         self.suspendState = suspendState
