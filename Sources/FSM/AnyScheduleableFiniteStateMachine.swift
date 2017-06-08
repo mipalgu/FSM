@@ -75,13 +75,15 @@ public struct AnyScheduleableFiniteStateMachine:
     StateExecuter,
     Exitable,
     Finishable,
-    KripkeStructureGenerator,
+    KripkePropertiesRecordable,
     Resumeable,
     Restartable,
     Snapshotable
 {
 
     public typealias _StateType = AnyState
+
+    private let _currentRecord: () -> KripkeStatePropertyList
 
     private let _currentState: () -> AnyState
 
@@ -96,8 +98,6 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _name: () -> String
 
     private let _next: () -> Void
-
-    private let _generate: (String) -> KripkeStructure
 
     private let _previousState: () -> AnyState
 
@@ -114,6 +114,10 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _saveSnapshot: () -> Void
 
     private let _takeSnapshot: () -> Void
+
+    public var currentRecord: KripkeStatePropertyList {
+        return self._currentRecord()
+    }
 
     /**
      *  The next state to execute.
@@ -199,12 +203,13 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: StateExecuter,
         FSM: Exitable,
         FSM: Finishable,
-        FSM: KripkeStructureGenerator,
+        FSM: KripkePropertiesRecordable,
         FSM: Resumeable,
         FSM: Restartable,
         FSM: Snapshotable
     {
         var base = base
+        self._currentRecord = { base.currentRecord }
         self._currentState = { AnyState(base.currentState) }
         self._exit = { base.exit() }
         self._hasFinished = { base.hasFinished }
@@ -212,7 +217,6 @@ public struct AnyScheduleableFiniteStateMachine:
         self._isSuspended = { base.isSuspended }
         self._name = { base.name }
         self._next = { base.next() }
-        self._generate = { base.generate(machine: $0) }
         self._previousState = { AnyState(base.previousState) }
         self._restart = { base.restart() }
         self._resume = { base.resume() }
@@ -230,17 +234,6 @@ public struct AnyScheduleableFiniteStateMachine:
      */
     public func exit() {
         self._exit()
-    }
-
-    /**
-     *  Generate a Kripke Structure for `base`.
-     *
-     *  - Parameter machine: The name of the machine that `base` belongs to.
-     *
-     *  - Returns: The generated `KripkeStructure`.
-     */
-    public func generate(machine: String) -> KripkeStructure {
-        return self._generate(machine)
     }
 
     /**
