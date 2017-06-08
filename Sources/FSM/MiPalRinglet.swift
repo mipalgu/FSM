@@ -109,7 +109,7 @@ public class MiPalRinglet: Ringlet {
         if let t = state.transitions.lazy.filter({ $0.canTransition(state) }).first {
             // Yes - Exit state and return the new state.
             state.onExit()
-            self.saveSnapshot()
+            //self.saveSnapshot()
             return t.target
         }
         // No - Execute main method and return state.
