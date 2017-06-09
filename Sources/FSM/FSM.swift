@@ -61,11 +61,9 @@ import KripkeStructure
 /**
  *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
  *
- *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
- *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
- *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
- *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *  The `Ringlet` that is used will be a `MiPalRinglet`.
  *
  *  - Parameter name: The name of the `FiniteStateMachineType`.
  *
@@ -103,20 +101,6 @@ public func FSM(
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    if (true == KRIPKE) {
-        return FSM(
-            name,
-            initialState: initialState,
-            externalVariables: [],
-            ringlet: KripkeMiPalRingletFactory.make(
-                previousState: initialPreviousState
-            ),
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState: suspendState,
-            exitState: exitState
-        )
-    }
     return FSM(
         name,
         initialState: initialState,
@@ -134,11 +118,9 @@ public func FSM(
 /**
  *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
  *
- *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
- *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
- *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
- *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *  The `Ringlet` that is used will be a `MiPalRinglet`.
  *
  *  - Parameter name: The name of the `FiniteStateMachineType`.
  *
@@ -194,11 +176,9 @@ public func FSM<EV: ExternalVariablesContainer>(
 /**
  *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
  *
- *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
- *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
- *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
- *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *  The `Ringlet` that is used will be a `MiPalRinglet`.
  *
  *  - Parameter name: The name of the `FiniteStateMachineType`.
  *
@@ -256,11 +236,9 @@ public func FSM<V: VariablesContainer>(
 /**
  *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
  *
- *  The underlying `FiniteStateMachineType` will either be `FiniteStateMachine`
- *  or `KripkeFiniteStateMachine` depending on the value of `KRIPKE`.
+ *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
- *  The `Ringlet` that is used will either be a `MiPalRinglet` or a
- *  `KripkeMiPalRinglet` depending on the value of `KRIPKE`.
+ *  The `Ringlet` that is used will be a `MiPalRinglet`.
  *
  *  - Parameter name: The name of the `FiniteStateMachineType`.
  *
@@ -328,29 +306,11 @@ public func FSM<V: VariablesContainer>(
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
 ) -> AnyScheduleableFiniteStateMachine {
-    if (true == KRIPKE) {
-        return FSM(
-            name,
-            initialState: initialState,
-            externalVariables: externalVariables,
-            ringlet: KripkeMiPalRinglet(
-                externalVariables: externalVariables,
-                fsmVars: fsmVars,
-                extractor: MirrorPropertyExtractor(),
-                previousState: initialPreviousState
-            ),
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState: suspendState,
-            exitState: exitState
-        )
-    }
     return FSM(
         name,
         initialState: initialState,
         externalVariables: externalVariables,
         ringlet: MiPalRinglet(
-            externalVariables: externalVariables,
             previousState: initialPreviousState
         ),
         initialPreviousState: initialPreviousState,
@@ -405,10 +365,11 @@ public func FSM<R: Ringlet>(
     exitState: MiPalState = EmptyMiPalState("_exit")
 ) -> AnyScheduleableFiniteStateMachine where R._StateType == MiPalState {
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<R>(
+        FiniteStateMachine<R, MirrorKripkePropertiesRecorder>(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -418,66 +379,7 @@ public func FSM<R: Ringlet>(
     )
 }
 
-/**
- *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
- *
- *  The underlying `FiniteStateMachineType` is `KripkeFiniteStateMachine`.
- *
- *  - Parameter name: The name of the `FiniteStateMachineType`.
- *
- *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
- *
- *  - Parameter initialPreviousState: The initial previous state.  This
- *  satisfies requirements from `OptimizedStateExecuter`.
- *
- *  - Parameter ringlet: The `KripkeRinglet` to use to execute the
- *  `MiPalState`s.  `Ringlet._StateType` must equal `MiPalState`.
- *
- *  - Parameter suspendedState: When this is not nil, the
- *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
- *  set to this state.  This partially satisfies requirements from
- *  `Suspendable`.
- *
- *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
- *  `currentState` is set to this state.  This partially satisfies requirements
- *  from `Suspendable`.
- *
- *  - Parameter exitState: When `exit()` is called, `currentState` is set to
- *  this state.  This satisfies requirements from `ExitableState`.
- *
- *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
- *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
- *  - SeeAlso: `FiniteStateMachineType`
- *  - SeeAlso: `KripkeFiniteStateMachine`
- *  - SeeAlso: `KripkeRinglet`
- */
-public func FSM<R: KripkeRinglet>(
-    _ name: String,
-    initialState: MiPalState,
-    externalVariables: [AnySnapshotController],
-    ringlet: R,
-    initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
-    suspendedState: MiPalState? = nil,
-    suspendState: MiPalState = EmptyMiPalState("_suspend"),
-    exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine where R._StateType == MiPalState {
-    return AnyScheduleableFiniteStateMachine(
-        KripkeFiniteStateMachine(
-            name,
-            initialState: initialState,
-            externalVariables: externalVariables,
-            ringlet: ringlet,
-            generator: HashTableKripkeRingletKripkeStructureGeneratorFactory().make(),
-            initialPreviousState: initialPreviousState,
-            suspendedState: suspendedState,
-            suspendState: suspendState,
-            exitState: exitState
-        )
-    )
-}
-
-public func MachineFSM<R: KripkeRinglet>(
+public func MachineFSM<R: Ringlet>(
     _ name: String,
     initialState: R._StateType,
     externalVariables: [AnySnapshotController],
@@ -492,12 +394,12 @@ public func MachineFSM<R: KripkeRinglet>(
     R._StateType: KripkeVariablesModifier
 {
     return AnyScheduleableFiniteStateMachine(
-        KripkeFiniteStateMachine(
+        FiniteStateMachine(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
-            generator: HashTableKripkeRingletKripkeStructureGeneratorFactory().make(),
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
@@ -528,7 +430,7 @@ public func FSM<FSM: FiniteStateMachineType>(
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
-    FSM: KripkeStructureGenerator,
+    FSM: KripkePropertiesRecordable,
     FSM: Restartable,
     FSM: Resumeable,
     FSM: Snapshotable
@@ -557,7 +459,7 @@ public func FSMS<FSM: FiniteStateMachineType>(
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
-    FSM: KripkeStructureGenerator,
+    FSM: KripkePropertiesRecordable,
     FSM: Restartable,
     FSM: Resumeable,
     FSM: Snapshotable
