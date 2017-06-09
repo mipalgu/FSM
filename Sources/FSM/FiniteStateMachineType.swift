@@ -200,3 +200,30 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
     }
     
 }
+
+/**
+ *  Provide default implementations for when a Finite State Machine is a
+ *  `StateExecuter` and a `StateExecuterDelegator`.
+ */
+public extension FiniteStateMachineType where
+    Self: StateExecuterDelegator,
+    Self._StateType == Self.RingletType._StateType
+{
+    
+    /**
+     *  Executes `currentState`.
+     *
+     *  Once `currentState` is executed, `previousState` is set to
+     *  `currentState` and the state that is to be executed next is set to
+     *  `currentState`.
+     *
+     *  This method uses `ringlet` to execute the `currentState` and the state
+     *  that is returned from `Ringlet.execute(state:)` is the next state to
+     *  execute.
+     */
+    public mutating func next() {
+        self.previousState = self.currentState
+        self.currentState = self.ringlet.execute(state: self.currentState)
+    }
+    
+}
