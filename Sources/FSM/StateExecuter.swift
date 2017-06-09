@@ -59,7 +59,7 @@
 /**
  *  Provides a common interface for types that execute states.
  */
-public protocol StateExecuter: StateContainer {
+public protocol StateExecuter: StateContainer, PartialExecuter {
 
     /**
      *  The `StateType` that is going to be executed.
@@ -71,9 +71,4 @@ public protocol StateExecuter: StateContainer {
      */
     var previousState: _StateType { get set }
 
-    /**
-     *  Execute the next state.
-     */
-    mutating func next()
-    
 }

@@ -1,9 +1,9 @@
 /*
- * KripkeRingletKripkeStructureGeneratorType.swift 
- * FSM 
+ * KripkePropertiesRecorder.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 24/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,36 +56,8 @@
  *
  */
 
-import KripkeStructure
+public protocol KripkePropertiesRecorder {
 
-/**
- *  Conforming types are responsible for providing a way to generate a
- *  `KripkeStructure` from a `KripkeRinglet`.
- */
-public protocol KripkeRingletKripkeStructureGeneratorType {
-
-    /**
-     *  Generate a new `KripkeStructure`.
-     *
-     *  - Parameter machine: The name of the machine.
-     *
-     *  - Parameter fsm: The name of the Finite State Machine.
-     *
-     *  - Parameter intialState: The starting state of the Finite State Machine.
-     *
-     *  - Parameter ringlet: The `KripkeRinglet` which is used to execute and
-     *  take snapshots of the states.
-     *
-     *  - Returns: A `KripkeStructure` which represents all the possible ways
-     *  in which the Finite State Machine can be executed.
-     */
-     func generate<R: KripkeRinglet>(
-        machine: String,
-        fsm: String,
-        initialState: R._StateType,
-        ringlet: R
-    ) -> KripkeStructure where
-        R._StateType: KripkeVariablesModifier,
-        R._StateType._TransitionType == Transition<R._StateType, R._StateType>
+    func takeRecord(of: Any) -> KripkeStatePropertyList
 
 }

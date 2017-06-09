@@ -1,9 +1,9 @@
 /*
- * MirrorPropertyExtractor.swift
- * swiftfsm
+ * MirrorKripkePropertiesRecorder.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 20/11/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,72 +56,18 @@
  *
  */
 
-import KripkeStructure
+public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
 
-public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtractor {
-
-    /**
-     *  Create a new `MirrorPropertyExtractor`.
-     */
     public init() {}
 
-    /**
-     *  Extract all properties of a `ExternalVariables`.
-     *
-     *  - Parameter externalVariables: The `ExternalVariables`.
-     *
-     *  - Returns: A dictionary where the key is the label of each variable in
-     *  the `ExternalVariables` and the value is a `KripkeStateProperty`,
-     *  representing the value of the variable.
-     */
-    public func extract(
-        externalVariables: AnySnapshotController
-    ) -> [String: KripkeStateProperty] {
-        return self.getPropertiesFromMirror(mirror: Mirror(reflecting: externalVariables.val))
+    public func takeRecord(of object: Any) -> KripkeStatePropertyList {
+        return self._takeRecord(of: object, withMemoryCache: [])
     }
 
-    /**
-     *  Extract all properties of `ExternalVariables`, Finite State Machine
-     *  `Variables` and state properties.
-     *
-     *  - Parameter externalVariables: The `ExternalVariables`.
-     *
-     *  - Parameter fsmVars: The `Variables` accessible for a Finite State
-     *  Machine.
-     *
-     *  - Parameter state: The `StateType` that contains the state properties.
-     *
-     *  - Returns: A `KripkeStatePropertyList` that contains all the values for
-     *  all the variables.
-     */
-    public func extract<F: Variables, S: StateType>(
-        externalVariables: [AnySnapshotController],
-        fsmVars: F,
-        state: S
-    ) -> KripkeStatePropertyList where S: KripkeVariablesModifier {
-        var stateProperties: [String: KripkeStateProperty] =
-            self.getPropertiesFromMirror(
-                mirror: Mirror(reflecting: state),
-                manipulators: state.manipulators,
-                validValues: state.validVars
-            )
-        // Ignore the validVars
-        stateProperties["validVars"] = nil
-        // Ignore the states name
-        stateProperties["name"] = nil
-        let fsmProperties: [String: KripkeStateProperty] =
-            self.getPropertiesFromMirror(
-                mirror: Mirror(reflecting: fsmVars)
-            )
-        let externalProperties: [[String: KripkeStateProperty]] = externalVariables.map {
-            self.getPropertiesFromMirror(
-                mirror: Mirror(reflecting: $0.val)
-            )
-        }
-        return KripkeStatePropertyList(
-            stateProperties: stateProperties,
-            fsmProperties: fsmProperties,
-            externalProperties: externalProperties
+    private func _takeRecord(of object: Any, withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>) -> KripkeStatePropertyList {
+        return self.getPropertiesFromMirror(
+            mirror: Mirror(reflecting: object),
+            withMemoryCache: memoryCache
         )
     }
 
@@ -135,14 +81,16 @@ public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtr
     private func getPropertiesFromMirror(
         mirror: Mirror,
         manipulators: [String: (Any) -> Any] = [:],
-        validValues: [String: [Any]] = [:]
+        validValues: [String: [Any]] = [:],
+        withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
     ) -> [String: KripkeStateProperty] {
         var p: [String: KripkeStateProperty] = [:]
         let parent: Mirror? = mirror.superclassMirror
         if (nil != parent) {
             p = self.getPropertiesFromMirror(
                 mirror: parent!,
-                validValues: validValues
+                validValues: validValues,
+                withMemoryCache: memoryCache
             )
         }
         for child: Mirror.Child in mirror.children {
@@ -152,7 +100,8 @@ public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtr
             if let manipulator = manipulators[label] {
                 p[label] = self.convertValue(
                     value: child.value,
-                    validValues: [manipulator(child.value)]
+                    validValues: [manipulator(child.value)],
+                    withMemoryCache: memoryCache
                 )
                 continue
             }
@@ -161,7 +110,8 @@ public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtr
             }
             p[label] = self.convertValue(
                 value: child.value,
-                validValues: validValues[label]
+                validValues: validValues[label],
+                withMemoryCache: memoryCache
             )
         }
         return p
@@ -170,10 +120,11 @@ public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtr
     /*
     *  Convert the value to a KripkeStateProperty.
     */
-    private func convertValue(value: Any, validValues: [Any]?) -> KripkeStateProperty {
+    private func convertValue(value: Any, validValues: [Any]?, withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>) -> KripkeStateProperty {
         let t = self.getKripkeStatePropertyType(
             value,
-            validValues: validValues ?? [value]
+            validValues: validValues ?? [value],
+            withMemoryCache: memoryCache
         )
         return KripkeStateProperty(
             type: t.0,
@@ -186,7 +137,8 @@ public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtr
     */
     private func getKripkeStatePropertyType(
         _ val: Any,
-        validValues values: [Any]
+        validValues values: [Any],
+        withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
     ) -> (KripkeStatePropertyTypes, Any) {
         switch (val) {
         case is Bool:
@@ -269,12 +221,23 @@ public class MirrorPropertyExtractor: PropertiesExtractor, ExternalsPropertyExtr
             let collection = (val as! KripkeCollection).toArray()
             var arr: [Any] = []
             collection.forEach {
-                arr.append(self.getKripkeStatePropertyType($0, validValues: values).1)
+                arr.append(self.getKripkeStatePropertyType($0, validValues: values, withMemoryCache: memoryCache).1)
             }
-            return (.Collection(collection.map({ self.convertValue(value: $0, validValues: values) })), arr)
+            return (.Collection(collection.map({ self.convertValue(value: $0, validValues: values, withMemoryCache: memoryCache) })), arr)
         default:
-            return (.Some, val)
+            var memoryCache = memoryCache
+            if var temp = val as? AnyClass {
+                let p = withUnsafePointer(to: &temp) { $0 }
+                if (true == memoryCache.contains(p)) {
+                    return (.Compound(KripkeStatePropertyList()), val)
+                }
+                memoryCache.insert(p)
+            }
+            if (values.count == 1) {
+                return (.Compound(self._takeRecord(of: values[0], withMemoryCache: memoryCache)), values[0])
+            }
+            return (.Compound(self._takeRecord(of: val, withMemoryCache: memoryCache)), val)
         }
     }
-    
+
 }

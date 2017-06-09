@@ -1,9 +1,9 @@
 /*
- * HashTableKripkeRingletKripkeStructureGeneratorFactory.swift 
+ * PartialExecuter.swift 
  * FSM 
  *
- * Created by Callum McColl on 29/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 09/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,44 +56,8 @@
  *
  */
 
-/**
- *  Creates a `KripkeRingletKripkeStructureGeneratorType` that uses a
- *  `HashTableCycleDetector`.
- */
-public final class HashTableKripkeRingletKripkeStructureGeneratorFactory {
+public protocol PartialExecuter {
 
-    /**
-     *  The `KripkeringletKripkeStructureGeneratorType`.
-     */
-    public typealias Generator = KripkeRingletKripkeStructureGenerator<
-        HashTableCycleDetector<World>,
-        MirrorPropertyExtractor,
-        ExternalsSpinnerConstructorFactory<
-            ExternalsSpinnerConstructor<SpinnerRunner>,
-            ExternalsSpinnerDataExtractor<
-                MirrorPropertyExtractor,
-                KripkeStatePropertySpinnerConverter
-            >
-        >
-    >
-
-    /**
-     *  Create the `Generator`.
-     */
-    public func make() -> Generator {
-        return KripkeRingletKripkeStructureGenerator(
-            cycleDetector: HashTableCycleDetector<World>(),
-            extractor: MirrorPropertyExtractor(),
-            factory: ExternalsSpinnerConstructorFactory(
-                constructor: ExternalsSpinnerConstructor(
-                    runner: SpinnerRunner()
-                ),
-                extractor: ExternalsSpinnerDataExtractor(
-                    converter: KripkeStatePropertySpinnerConverter(),
-                    extractor: MirrorPropertyExtractor()
-                )
-            )
-        )
-    }
+    mutating func next()
 
 }

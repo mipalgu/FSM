@@ -1,9 +1,9 @@
 /*
- * KripkeRingletKripkeStructureGeneratorDelegator.swift 
- * FSM 
+ * KripkePropertiesRecorderDelegator.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 29/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,20 +56,10 @@
  *
  */
 
-/**
- *  Conforming types delegate the generation of a `KripkeStructure` to a 
- *  `KripkeRingletKripkeStructureGeneratorType`.
- */
-public protocol KripkeRingletKripkeStructureGeneratorDelegator {
+public protocol KripkePropertiesRecorderDelegator {
 
-    /**
-     *  The type of the `KripkeRingletKripkeStructureGeneratorType`.
-     */
-    associatedtype Generator: KripkeRingletKripkeStructureGeneratorType
+    associatedtype Recorder: KripkePropertiesRecorder
 
-    /**
-     *  The `Generator`.
-     */
-    var generator: Generator { get }
+    var recorder: Recorder { get }
 
 }

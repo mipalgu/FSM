@@ -1,9 +1,9 @@
 /*
- * TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory.swift 
- * FSM 
+ * KripkePropertiesRecordable.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 12/10/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,16 @@
  *
  */
 
-/**
- *  Creates a `KripkeRingletKripkeStructureGeneratorType` that uses a
- *  `TeleportingTurtleCycleDetector`.
- */
-public final class TeleportingTurtleKripkeRingletKripkeStructureGeneratorFactory {
+public protocol KripkePropertiesRecordable {
 
-    /**
-     *  The `KripkeringletKripkeStructureGeneratorType`.
-     */
-    public typealias Generator = KripkeRingletKripkeStructureGenerator<
-        TeleportingTurtleCycleDetector<World>,
-        MirrorPropertyExtractor,
-        ExternalsSpinnerConstructorFactory<
-            ExternalsSpinnerConstructor<SpinnerRunner>,
-            ExternalsSpinnerDataExtractor<
-                MirrorPropertyExtractor,
-                KripkeStatePropertySpinnerConverter
-            >
-        >
-    >
-        
+    var currentRecord: KripkeStatePropertyList { get }
 
-    /**
-     *  Create the `Generator`.
-     */
-    public func make() -> Generator {
-        return KripkeRingletKripkeStructureGenerator(
-            cycleDetector: TeleportingTurtleCycleDetector<World>(),
-            extractor: MirrorPropertyExtractor(),
-            factory: ExternalsSpinnerConstructorFactory(
-                constructor: ExternalsSpinnerConstructor(
-                    runner: SpinnerRunner()
-                ),
-                extractor: ExternalsSpinnerDataExtractor(
-                    converter: KripkeStatePropertySpinnerConverter(),
-                    extractor: MirrorPropertyExtractor()
-                )
-            )
-        )
+}
+
+extension KripkePropertiesRecordable where Self: KripkePropertiesRecorderDelegator {
+
+    var currentRecord: KripkeStatePropertyList {
+        return self.recorder.takeRecord(of: self)
     }
-
 
 }
