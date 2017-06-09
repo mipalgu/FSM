@@ -135,7 +135,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     public var currentState: R._StateType
 
     public var currentRecord: KripkeStatePropertyList {
-        self.recorder.takeRecord(of: self)
+        return self.recorder.takeRecord(of: self)
     }
 
     /**
