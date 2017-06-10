@@ -78,7 +78,8 @@ public struct AnyScheduleableFiniteStateMachine:
     KripkePropertiesRecordable,
     Resumeable,
     Restartable,
-    Snapshotable
+    Snapshotable,
+    SnapshotControllerContainer
 {
 
     public typealias _StateType = AnyState
@@ -88,6 +89,8 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _currentState: () -> AnyState
 
     private let _exit: () -> Void
+
+    private let _externalVariables: () -> [AnySnapshotController]
 
     private let _hasFinished: () -> Bool
 
@@ -129,6 +132,10 @@ public struct AnyScheduleableFiniteStateMachine:
         get {
             return self._currentState()
         } set {}
+    }
+
+    public var externalVariables: [AnySnapshotController] {
+        return self._externalVariables()
     }
 
     /**
@@ -206,12 +213,14 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: KripkePropertiesRecordable,
         FSM: Resumeable,
         FSM: Restartable,
-        FSM: Snapshotable
+        FSM: Snapshotable,
+        FSM: SnapshotControllerContainer
     {
         var base = base
         self._currentRecord = { base.currentRecord }
         self._currentState = { AnyState(base.currentState) }
         self._exit = { base.exit() }
+        self._externalVariables = { base.externalVariables }
         self._hasFinished = { base.hasFinished }
         self._initialState = { AnyState(base.initialState) }
         self._isSuspended = { base.isSuspended }

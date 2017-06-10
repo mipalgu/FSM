@@ -433,7 +433,8 @@ public func FSM<FSM: FiniteStateMachineType>(
     FSM: KripkePropertiesRecordable,
     FSM: Restartable,
     FSM: Resumeable,
-    FSM: Snapshotable
+    FSM: Snapshotable,
+    FSM: SnapshotControllerContainer
 {
     return AnyScheduleableFiniteStateMachine(fsm)
 }
@@ -462,7 +463,8 @@ public func FSMS<FSM: FiniteStateMachineType>(
     FSM: KripkePropertiesRecordable,
     FSM: Restartable,
     FSM: Resumeable,
-    FSM: Snapshotable
+    FSM: Snapshotable,
+    FSM: SnapshotControllerContainer
 {
     return fsms.map { AnyScheduleableFiniteStateMachine($0) }
 }
