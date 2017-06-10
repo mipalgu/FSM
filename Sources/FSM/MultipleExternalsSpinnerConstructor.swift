@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType> {
 
     private let constructor: Constructor
@@ -67,7 +69,7 @@ final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerCon
     public func makeSpinner(
         forExternals data: [(
             externalVariables: AnySnapshotController,
-            defaultValues: [String: Any],
+            defaultValues: KripkeStatePropertyList,
             spinners: [String: (Any) -> Any]
         )]
     ) -> () -> [AnySnapshotController]? {

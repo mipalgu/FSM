@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Conforming types are responsible for creating `Spinners.Spinner`s for
  *  `ExternalVariables`.
@@ -78,7 +80,7 @@ public protocol ExternalsSpinnerConstructorType {
      */
     func makeSpinner(
         fromExternalVariables: AnySnapshotController,
-        defaultValues: [String: Any],
+        defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
     ) -> () -> AnySnapshotController?
 

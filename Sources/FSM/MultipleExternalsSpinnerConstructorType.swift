@@ -56,11 +56,13 @@
  *
  */
 
+import KripkeStructure
+
 public protocol MultipleExternalsSpinnerConstructorType {
 
     func makeSpinner(forExternals: [(
         externalVariables: AnySnapshotController,
-        defaultValues: [String: Any],
+        defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any]
     )]) -> () -> [AnySnapshotController]?
 

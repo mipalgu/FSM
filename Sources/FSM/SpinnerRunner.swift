@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Provides a way to retrieve the next values within a `Spinners.Spinner`.
  */
@@ -81,18 +83,18 @@ public class SpinnerRunner: SpinnerRunnerType {
      *  - Returns: The next set of values on the series.
      */
     public func spin(
-        index: DictionaryIndex<String, Any>,
-        vars: [String: Any],
-        defaultValues: [String: Any],
+        index: DictionaryIndex<String, KripkeStateProperty>,
+        vars: KripkeStatePropertyList,
+        defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
-    ) -> [String: Any]? {
+    ) -> KripkeStatePropertyList? {
         if (index == vars.endIndex) {
             return nil
         }
         var vars = vars
         let name: String = vars[index].key
         let currentValue = vars[index].value
-        guard let newValue = spinners[name]?(currentValue) else {
+        guard let newValue = spinners[name]?(currentValue.value) else {
             vars[vars[index].key] = defaultValues[name]!
             return self.spin(
                 index: vars.index(after: index),
@@ -101,7 +103,10 @@ public class SpinnerRunner: SpinnerRunnerType {
                 spinners: spinners
             )
         }
-        vars[vars[index].key] = newValue
+        vars[vars[index].key] = KripkeStateProperty(
+            type: vars[index].value.type,
+            value: newValue
+        )
         return vars
     }
 
