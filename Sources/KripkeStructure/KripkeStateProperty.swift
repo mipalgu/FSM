@@ -139,35 +139,41 @@ public struct KripkeStateProperty: Equatable {
 extension KripkeStateProperty: CustomStringConvertible {
     
     public var description: String {
-        switch (self.value) {
-        case is UInt:
+        switch (self.type) {
+        case .Bool:
+            return (self.value as! Bool).description
+        case .UInt:
             return (self.value as! UInt).description
-        case is UInt8:
+        case .UInt8:
             return (self.value as! UInt8).description
-        case is UInt16:
+        case .UInt16:
             return (self.value as! UInt16).description
-        case is UInt32:
+        case .UInt32:
             return (self.value as! UInt32).description
-        case is UInt64:
+        case .UInt64:
             return (self.value as! UInt64).description
-        case is Int:
+        case .Int:
             return (self.value as! Int).description
-        case is Int8:
+        case .Int8:
             return (self.value as! Int8).description
-        case is Int16:
+        case .Int16:
             return (self.value as! Int16).description
-        case is Int32:
+        case .Int32:
             return (self.value as! Int32).description
-        case is Int64:
+        case .Int64:
             return (self.value as! Int64).description
-        case is Float80:
+        case .Float80:
             return (self.value as! Float80).description
-        case is Float:
+        case .Float:
             return (self.value as! Float).description
-        case is Double:
+        case .Double:
             return (self.value as! Double).description
-        case is String:
+        case .String:
             return self.value as! String
+        case .Collection(let ps):
+            return ps.map { $0.description }.description
+        case .Compound(let list):
+            return list.description
         default:
             return "Some"
         }
