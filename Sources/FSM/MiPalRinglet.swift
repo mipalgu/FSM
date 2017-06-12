@@ -64,7 +64,7 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class MiPalRinglet: Ringlet {
+public final class MiPalRinglet: Ringlet, Cloneable {
 
     internal var previousState: MiPalState
 
@@ -100,6 +100,10 @@ public class MiPalRinglet: Ringlet {
         // No - Execute main method and return state.
         state.main()
         return state
+    }
+
+    public func clone() -> MiPalRinglet {
+        return MiPalRinglet(previousState: self.previousState.clone())
     }
     
 }

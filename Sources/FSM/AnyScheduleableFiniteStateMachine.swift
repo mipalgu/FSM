@@ -72,6 +72,7 @@ import KripkeStructure
  */
 public struct AnyScheduleableFiniteStateMachine:
     FiniteStateMachineType,
+    Cloneable,
     StateExecuter,
     Exitable,
     Finishable,
@@ -83,6 +84,8 @@ public struct AnyScheduleableFiniteStateMachine:
 {
 
     public typealias _StateType = AnyState
+
+    private let _clone: () -> AnyScheduleableFiniteStateMachine
 
     private let _currentRecord: () -> KripkeStatePropertyList
 
@@ -207,6 +210,7 @@ public struct AnyScheduleableFiniteStateMachine:
      *  forwards operations to `base`.
      */
     public init<FSM: FiniteStateMachineType>(_ base: FSM) where
+        FSM: Cloneable,
         FSM: StateExecuter,
         FSM: Exitable,
         FSM: Finishable,
@@ -217,6 +221,7 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: SnapshotControllerContainer
     {
         var base = base
+        self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
         self._currentRecord = { base.currentRecord }
         self._currentState = { AnyState(base.currentState) }
         self._exit = { base.exit() }
@@ -234,6 +239,10 @@ public struct AnyScheduleableFiniteStateMachine:
         self._suspendState = { AnyState(base.suspendState) }
         self._saveSnapshot = { base.saveSnapshot() }
         self._takeSnapshot = { base.takeSnapshot() }
+    }
+
+    public func clone() -> AnyScheduleableFiniteStateMachine {
+        return self._clone()
     }
 
     /**

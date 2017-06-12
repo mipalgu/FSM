@@ -110,6 +110,7 @@ import KripkeStructure
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
 public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: FiniteStateMachineType,
+    Cloneable,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
     KripkePropertiesRecorderDelegator,
@@ -119,7 +120,9 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     StateExecuterDelegator,
     Snapshotable,
     SnapshotControllerContainer where
-    R._StateType: Transitionable
+    R: Cloneable,
+    R._StateType: Transitionable,
+    R._StateType: Cloneable
 {
 
     /**
@@ -235,20 +238,18 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         self.suspendState = suspendState
     }
 
-    /**
-     *  The FSM needs to be able to generate a `KripkeStructure` in order to be
-     *  scheduleable.  Therefore this function creates an empty
-     *  `KripkeStructure`.
-     *
-     *  - Parameter machine: The name of the machine that the FSM belongs to.
-     *
-     *  - Returns: An empty `KripkeStructure`.
-     *
-     *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
-     *  - SeeAlso: `KripkeStructure`
-     */
-    public func generate(machine _: String) -> KripkeStructure {
-        return KripkeStructure(states: [])
+    public func clone() -> FiniteStateMachine<R, KR>{
+        return FiniteStateMachine(
+            self.name,
+            initialState: self.initialState.clone(),
+            externalVariables: self.externalVariables,
+            recorder: self.recorder,
+            ringlet: self.ringlet.clone(),
+            initialPreviousState: self.initialPreviousState.clone(),
+            suspendedState: self.suspendedState?.clone(),
+            suspendState: self.suspendState.clone(),
+            exitState: self.exitState.clone()
+        )
     }
 
 }

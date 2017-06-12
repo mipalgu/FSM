@@ -363,7 +363,7 @@ public func FSM<R: Ringlet>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine where R._StateType == MiPalState {
+) -> AnyScheduleableFiniteStateMachine where R: Cloneable, R._StateType == MiPalState {
     return AnyScheduleableFiniteStateMachine(
         FiniteStateMachine<R, MirrorKripkePropertiesRecorder>(
             name,
@@ -389,6 +389,8 @@ public func MachineFSM<R: Ringlet>(
     suspendState: R._StateType,
     exitState: R._StateType
 ) -> AnyScheduleableFiniteStateMachine where
+    R: Cloneable,
+    R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: KripkeVariablesModifier
@@ -427,6 +429,7 @@ public func MachineFSM<R: Ringlet>(
 public func FSM<FSM: FiniteStateMachineType>(
     _ fsm: FSM
 ) -> AnyScheduleableFiniteStateMachine where
+    FSM: Cloneable,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
@@ -457,6 +460,7 @@ public func FSM<FSM: FiniteStateMachineType>(
 public func FSMS<FSM: FiniteStateMachineType>(
     _ fsms: FSM ...
 ) -> [AnyScheduleableFiniteStateMachine] where
+    FSM: Cloneable,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
