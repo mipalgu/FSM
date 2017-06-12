@@ -95,6 +95,8 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _externalVariables: () -> [AnySnapshotController]
 
+    private let _setExternalVariables: ([AnySnapshotController]) -> ()
+
     private let _hasFinished: () -> Bool
 
     private let _initialState: () -> AnyState
@@ -138,7 +140,11 @@ public struct AnyScheduleableFiniteStateMachine:
     }
 
     public var externalVariables: [AnySnapshotController] {
-        return self._externalVariables()
+        get {
+            return self._externalVariables()
+        } set {
+            self._setExternalVariables(newValue)
+        }
     }
 
     /**
@@ -225,6 +231,7 @@ public struct AnyScheduleableFiniteStateMachine:
         self._currentRecord = { base.currentRecord }
         self._currentState = { AnyState(base.currentState) }
         self._exit = { base.exit() }
+        self._setExternalVariables = { base.externalVariables = $0 }
         self._externalVariables = { base.externalVariables }
         self._hasFinished = { base.hasFinished }
         self._initialState = { AnyState(base.initialState) }

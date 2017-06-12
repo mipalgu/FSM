@@ -58,6 +58,6 @@
 
 public protocol SnapshotControllerContainer {
 
-    var externalVariables: [AnySnapshotController] { get }
+    var externalVariables: [AnySnapshotController] { get set }
 
 }

@@ -146,7 +146,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
      */
     public let exitState: R._StateType
 
-    public let externalVariables: [AnySnapshotController]
+    public var externalVariables: [AnySnapshotController]
 
     /**
      *  The initial state of the previous state.
