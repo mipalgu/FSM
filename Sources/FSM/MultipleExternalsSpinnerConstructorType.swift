@@ -63,7 +63,7 @@ public protocol MultipleExternalsSpinnerConstructorType {
     func makeSpinner(forExternals: [(
         externalVariables: AnySnapshotController,
         defaultValues: KripkeStatePropertyList,
-        spinners: [String: (Any) -> Any]
+        spinners: [String: (Any) -> Any?]
     )]) -> () -> [AnySnapshotController]?
 
 }

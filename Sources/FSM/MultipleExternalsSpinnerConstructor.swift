@@ -70,7 +70,7 @@ final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerCon
         forExternals data: [(
             externalVariables: AnySnapshotController,
             defaultValues: KripkeStatePropertyList,
-            spinners: [String: (Any) -> Any]
+            spinners: [String: (Any) -> Any?]
         )]
     ) -> () -> [AnySnapshotController]? {
         var externalSpinners = data.map {
