@@ -83,7 +83,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
         var i = 0
         var latest: [(AnySnapshotController, KripkeStatePropertyList)] = data.map {
             var new = $0.externalVariables
-            new.val = $0.externalVariables.create(fromDictionary: $0.defaultValues)
+            new.val = $0.externalVariables.create(fromDictionary: self.convert(from: $0.defaultValues))
             return (new, $0.defaultValues)
         }
         return { () -> [(AnySnapshotController, KripkeStatePropertyList)]? in
@@ -96,7 +96,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
                         spinners: data[i].spinners
                     )
                     var new = data[i].externalVariables
-                    new.val = data[i].externalVariables.create(fromDictionary: data[i].defaultValues)
+                    new.val = data[i].externalVariables.create(fromDictionary: self.convert(from: data[i].defaultValues))
                     latest[i] = (new, data[i].defaultValues)
                     i += 1
                     reset = true
@@ -110,6 +110,14 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
             }
             return nil
         }
+    }
+
+    private func convert(from data: KripkeStatePropertyList) -> [String: Any] {
+        var d: [String: Any] = [:]
+        data.forEach {
+            d[$0] = $1.value
+        }
+        return d
     }
 
 }
