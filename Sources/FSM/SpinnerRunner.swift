@@ -63,6 +63,8 @@ import KripkeStructure
  */
 public class SpinnerRunner: SpinnerRunnerType {
 
+    public init() {}
+
     /**
      *  Retrieve the next within a `Spinners.Spinner`.
      *

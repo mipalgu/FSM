@@ -80,6 +80,8 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      */
     public let initialData: Data = [:]
 
+    public init() {}
+
     /**
      *  Is this element in the hash table?
      *
