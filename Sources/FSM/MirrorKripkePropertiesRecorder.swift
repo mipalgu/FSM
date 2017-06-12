@@ -61,7 +61,7 @@ import KripkeStructure
 extension MirrorKripkePropertiesRecorder: ExternalsPropertyExtractor {
 
     public func extract(externalVariables: AnySnapshotController) -> KripkeStatePropertyList {
-        return self.takeRecord(of: externalVariables)
+        return self.takeRecord(of: externalVariables.val)
     }
 
 }
