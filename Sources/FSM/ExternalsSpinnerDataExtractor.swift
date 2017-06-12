@@ -103,7 +103,7 @@ public class ExternalsSpinnerDataExtractor<
     ) -> (KripkeStatePropertyList, [String: (Any) -> Any?]) {
         // Get Global Properties Info
         let list = self.extractor.extract(externalVariables: externalVariables)
-        var spinners: [String: (Any) -> Any] = [:]
+        var spinners: [String: (Any) -> Any?] = [:]
         list.forEach {
             spinners[$0] = self.converter.convert(from: $1).1
         }
