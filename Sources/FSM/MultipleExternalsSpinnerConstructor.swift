@@ -72,7 +72,7 @@ final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerCon
             defaultValues: KripkeStatePropertyList,
             spinners: [String: (Any) -> Any?]
         )]
-    ) -> () -> [AnySnapshotController]? {
+    ) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
         var externalSpinners = data.map {
             self.constructor.makeSpinner(
                 fromExternalVariables: $0.externalVariables,
@@ -81,15 +81,15 @@ final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerCon
             )
         }
         var i = 0
-        var latest: [AnySnapshotController] = data.map {
+        var latest: [(AnySnapshotController, KripkeStatePropertyList)] = data.map {
             var new = $0.externalVariables
             new.val = $0.externalVariables.create(fromDictionary: $0.defaultValues)
-            return new
+            return (new, $0.defaultValues)
         }
-        return { () -> [AnySnapshotController]? in
+        return { () -> [(AnySnapshotController, KripkeStatePropertyList)]? in
             var reset = false
             while i < data.count {
-                guard let val = externalSpinners[i]() else {
+                guard let (val, ps) = externalSpinners[i]() else {
                     externalSpinners[i] = self.constructor.makeSpinner(
                         fromExternalVariables: data[i].externalVariables,
                         defaultValues: data[i].defaultValues,
@@ -97,7 +97,7 @@ final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerCon
                     )
                     var new = data[i].externalVariables
                     new.val = data[i].externalVariables.create(fromDictionary: data[i].defaultValues)
-                    latest[i] = new
+                    latest[i] = (new, data[i].defaultValues)
                     i += 1
                     reset = true
                     continue
@@ -105,7 +105,7 @@ final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerCon
                 if true == reset {
                     i = 0
                 }
-                latest[i] = val
+                latest[i] = (val, ps)
                 return latest
             }
             return nil

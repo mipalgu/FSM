@@ -82,6 +82,6 @@ public protocol ExternalsSpinnerConstructorType {
         fromExternalVariables: AnySnapshotController,
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
-    ) -> () -> AnySnapshotController?
+    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)?
 
 }

@@ -90,9 +90,9 @@ public class ExternalsSpinnerConstructor<
         fromExternalVariables externalVariables: AnySnapshotController,
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
-    ) -> () -> AnySnapshotController? {
+    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)? {
         var latest: KripkeStatePropertyList? = defaultValues
-        return { () -> AnySnapshotController? in
+        return { () -> (AnySnapshotController, KripkeStatePropertyList)? in
             guard let temp = latest else {
                 return nil
             }
@@ -113,7 +113,7 @@ public class ExternalsSpinnerConstructor<
                 d[$0] = $1.value
             }
             new.val = externalVariables.create(fromDictionary: d)
-            return new
+            return (new, temp)
         }
     }
 

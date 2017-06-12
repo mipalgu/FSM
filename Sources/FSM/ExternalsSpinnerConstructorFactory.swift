@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Creates instances of `ExternalsSpinnerConstructorType`.
  */
@@ -97,10 +99,10 @@ public class ExternalsSpinnerConstructorFactory<
      */
     public func make(
         externalVariables: AnySnapshotController
-    ) -> () -> () -> AnySnapshotController?
+    ) -> () -> () -> (AnySnapshotController, KripkeStatePropertyList)?
     {
         let spinnerData = self.extractor.extract(externalVariables: externalVariables)
-        return { () -> () -> AnySnapshotController? in
+        return { () -> () -> (AnySnapshotController, KripkeStatePropertyList)? in
             return self.constructor.makeSpinner(
                 fromExternalVariables: externalVariables,
                 defaultValues: spinnerData.0,
