@@ -58,7 +58,7 @@
 
 import KripkeStructure
 
-final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType> {
+public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType>: MultipleExternalsSpinnerConstructorType {
 
     private let constructor: Constructor
 
