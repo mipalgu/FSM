@@ -109,7 +109,7 @@ import KripkeStructure
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
-public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer>: FiniteStateMachineType,
     Cloneable,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
@@ -122,6 +122,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     SnapshotControllerContainer where
     R: Cloneable,
     R._StateType: Transitionable,
+    R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable
 {
 
@@ -147,6 +148,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     public let exitState: R._StateType
 
     public var externalVariables: [AnySnapshotController]
+
+    public let fsmVars: V
 
     /**
      *  The initial state of the previous state.
@@ -218,6 +221,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         _ name: String,
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
+        fsmVars: V,
         recorder: KR,
         ringlet: R,
         initialPreviousState: R._StateType,
@@ -228,6 +232,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         self.currentState = initialState
         self.exitState = exitState
         self.externalVariables = externalVariables
+        self.fsmVars = fsmVars
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
         self.name = name
@@ -238,11 +243,15 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         self.suspendState = suspendState
     }
 
-    public func clone() -> FiniteStateMachine<R, KR>{
-        return FiniteStateMachine(
+    public func clone() -> FiniteStateMachine<R, KR, V>{
+        self.fsmVars.vars = self.fsmVars.vars.clone()
+        var currentState = self.currentState
+        currentState.transitions = self.currentState.transitions.map { $0.map { $0.clone() } }
+        var fsm = FiniteStateMachine(
             self.name,
             initialState: self.initialState.clone(),
             externalVariables: self.externalVariables,
+            fsmVars: self.fsmVars,
             recorder: self.recorder,
             ringlet: self.ringlet.clone(),
             initialPreviousState: self.initialPreviousState.clone(),
@@ -250,6 +259,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
             suspendState: self.suspendState.clone(),
             exitState: self.exitState.clone()
         )
+        fsm.currentState = currentState
+        return fsm
     }
 
 }
