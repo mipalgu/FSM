@@ -1,9 +1,9 @@
 /*
- * CloneableState.swift 
- * FSM 
+ * Updateable.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 30/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 13/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,12 +56,11 @@
  *
  */
 
-import KripkeStructure
+public protocol Updateable {
 
-/**
- *  States that are `Cloneable` must also be able to be updated from a clone.
- *
- *  - SeeAlso: `Cloneable`
- *  - SeeAlso: `StateType`
- */
-public protocol CloneableState: Cloneable, StateType, Transitionable, Updateable {}
+    /**
+     *  Update self from a dictionary.
+     */
+    mutating func update(fromDictionary dictionary: [String: Any])
+
+}

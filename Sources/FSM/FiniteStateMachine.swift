@@ -119,11 +119,14 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     Resumeable,
     StateExecuterDelegator,
     Snapshotable,
-    SnapshotControllerContainer where
+    SnapshotControllerContainer,
+    Updateable where
     R: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
-    R._StateType: Cloneable
+    R._StateType: Cloneable,
+    R._StateType: Updateable,
+    V.Vars: Updateable
 {
 
     /**
@@ -139,7 +142,10 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     public var currentState: R._StateType
 
     public var currentRecord: KripkeStatePropertyList {
-        return self.recorder.takeRecord(of: self)
+        return [
+            "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
+            "currentState": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.currentState)), value: self.currentState)
+        ]
     }
 
     /**
@@ -262,5 +268,14 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         fsm.currentState = currentState
         return fsm
     }
+
+    public mutating func update(fromDictionary dictionary: [String: Any]) {
+        print("update: \(dictionary)")
+        self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
+        print("updated fsms")
+        self.currentState.update(fromDictionary: dictionary["currentState"] as! [String: Any])
+        print("updated state")
+    }
+
 
 }

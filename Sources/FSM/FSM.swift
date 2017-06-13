@@ -398,7 +398,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
-    R._StateType: KripkeVariablesModifier
+    R._StateType: KripkeVariablesModifier,
+    R._StateType: Updateable
 {
     return AnyScheduleableFiniteStateMachine(
         FiniteStateMachine(
@@ -443,7 +444,8 @@ public func FSM<FSM: FiniteStateMachineType>(
     FSM: Restartable,
     FSM: Resumeable,
     FSM: Snapshotable,
-    FSM: SnapshotControllerContainer
+    FSM: SnapshotControllerContainer,
+    FSM: Updateable
 {
     return AnyScheduleableFiniteStateMachine(fsm)
 }
@@ -474,7 +476,8 @@ public func FSMS<FSM: FiniteStateMachineType>(
     FSM: Restartable,
     FSM: Resumeable,
     FSM: Snapshotable,
-    FSM: SnapshotControllerContainer
+    FSM: SnapshotControllerContainer,
+    FSM: Updateable
 {
     return fsms.map { AnyScheduleableFiniteStateMachine($0) }
 }

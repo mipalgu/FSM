@@ -80,7 +80,8 @@ public struct AnyScheduleableFiniteStateMachine:
     Resumeable,
     Restartable,
     Snapshotable,
-    SnapshotControllerContainer
+    SnapshotControllerContainer,
+    Updateable
 {
 
     public typealias _StateType = AnyState
@@ -122,6 +123,8 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _saveSnapshot: () -> Void
 
     private let _takeSnapshot: () -> Void
+
+    private let _update: ([String: Any]) -> Void
 
     public var currentRecord: KripkeStatePropertyList {
         return self._currentRecord()
@@ -224,7 +227,8 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: Resumeable,
         FSM: Restartable,
         FSM: Snapshotable,
-        FSM: SnapshotControllerContainer
+        FSM: SnapshotControllerContainer,
+        FSM: Updateable
     {
         var base = base
         self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
@@ -246,6 +250,7 @@ public struct AnyScheduleableFiniteStateMachine:
         self._suspendState = { AnyState(base.suspendState) }
         self._saveSnapshot = { base.saveSnapshot() }
         self._takeSnapshot = { base.takeSnapshot() }
+        self._update = { base.update(fromDictionary: $0) }
     }
 
     public func clone() -> AnyScheduleableFiniteStateMachine {
@@ -295,6 +300,10 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public func takeSnapshot() {
         self._takeSnapshot()
+    }
+
+    public func update(fromDictionary dictionary: [String: Any]) {
+        self._update(dictionary)
     }
 
  }

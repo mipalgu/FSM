@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  An empty set of variables.
  *
@@ -65,7 +67,7 @@
  *  - SeeAlso: `Variables`
  *  - SeeAlso: `ExternalVariables`
  */
-public final class EmptyVariables: Variables, ExternalVariables {
+public final class EmptyVariables: Variables, ExternalVariables, Updateable {
 
     /**
      * Just initialize the class with no properties.
@@ -86,6 +88,8 @@ public final class EmptyVariables: Variables, ExternalVariables {
     public final func clone() -> EmptyVariables {
         return EmptyVariables()
     }
+
+    public final func update(fromDictionary dictionary: [String: Any]) {}
 
 }
 
