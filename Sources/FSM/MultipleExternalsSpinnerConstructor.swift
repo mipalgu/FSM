@@ -73,6 +73,16 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
             spinners: [String: (Any) -> Any?]
         )]
     ) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
+        if true == data.isEmpty {
+            var generated = false
+            return  {
+                if true == generated {
+                    return nil
+                }
+                generated = true
+                return []
+            }
+        }
         var externalSpinners = data.map {
             self.constructor.makeSpinner(
                 fromExternalVariables: $0.externalVariables,
