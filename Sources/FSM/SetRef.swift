@@ -1,9 +1,9 @@
 /*
- * HashTableCycleDetector.swift 
+ * SetRef.swift 
  * FSM 
  *
- * Created by Callum McColl on 23/10/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,51 +56,12 @@
  *
  */
 
-/**
- *  Detects cycles using a hash table.
- */
-public class HashTableCycleDetector<E: Hashable>: CycleDetector {
+public class SetRef<E: Hashable> {
 
-    /**
-     *  A dictionary where `Element` is the key and a `Bool` is the value.
-     *
-     *  The `Bool` is used just to give the hash a value.
-     */
-    public typealias Data = SetRef<Element>
-   
-    /**
-     *  The elements of the cycle.
-     *
-     *  - Attention: This must be `Hashable`.
-     */
-    public typealias Element = E
+    public var s: Set<E>
 
-    /**
-     *  An empty hash table.
-     */
-    public var initialData: Data {
-        let s: Set<Element> = []
-        return SetRef(s: s)
-    } 
-
-    public init() {}
-
-    /**
-     *  Is this element in the hash table?
-     *
-     *  - Parameter data: The current hash table.
-     *
-     *  - Parameter element: The current element in the series.
-     *
-     *  - Returns: A tuple where the first element is a Bool indicating whether
-     *  a cycle was detected.  The second element is the new hash table.
-     */
-    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
-        if data.s.contains(element) {
-            return (true, data)
-        }
-        data.s.insert(element)
-        return (false, data)
+    public init(s: Set<E> = Set<E>()) {
+        self.s = s
     }
 
 }
