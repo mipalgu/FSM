@@ -65,8 +65,19 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     }
 
     private func _takeRecord(of object: Any, withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>) -> KripkeStatePropertyList {
+        let manipulators: [String: (Any) -> Any]
+        let validValues: [String: [Any]]
+        if let modifier = object as? KripkeVariablesModifier {
+            manipulators = modifier.manipulators
+            validValues = modifier.validVars
+        } else {
+            manipulators = [:]
+            validValues = [:]
+        }
         return self.getPropertiesFromMirror(
             mirror: Mirror(reflecting: object),
+            manipulators: manipulators,
+            validValues: validValues,
             withMemoryCache: memoryCache
         )
     }

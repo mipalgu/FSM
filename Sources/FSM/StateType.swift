@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Implement this protocol for any states that you wish to create within your
  *  machines.

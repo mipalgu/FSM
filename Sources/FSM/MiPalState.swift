@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  The base class for all states that conform to `MiPalAction`s.
  */

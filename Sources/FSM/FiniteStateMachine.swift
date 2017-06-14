@@ -144,7 +144,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     public var currentRecord: KripkeStatePropertyList {
         return [
             "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
-            "currentState": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.currentState)), value: self.currentState)
+            "\(self.currentState.name)": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.currentState)), value: self.currentState),
+            "currentState": KripkeStateProperty(type: .String, value: self.currentState.name)
         ]
     }
 
@@ -270,11 +271,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     }
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
-        print("update: \(dictionary)")
         self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
-        print("updated fsms")
-        self.currentState.update(fromDictionary: dictionary["currentState"] as! [String: Any])
-        print("updated state")
+        self.currentState.update(fromDictionary: dictionary[self.currentState.name] as! [String: Any])
     }
 
 
