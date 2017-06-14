@@ -143,9 +143,18 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
 
     public var currentRecord: KripkeStatePropertyList {
         return [
+            "externalVariables": KripkeStateProperty(
+                type: .Collection(self.externalVariables.map {
+                    KripkeStateProperty(
+                        type: .Compound(self.recorder.takeRecord(of: $0.val)),
+                        value: $0.val
+                    )
+                }),
+                value: self.externalVariables.map { $0.val }
+            ),
             "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
-            "\(self.currentState.name)": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.currentState)), value: self.currentState),
-            "currentState": KripkeStateProperty(type: .String, value: self.currentState.name)
+            "\(self.currentState.name)": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.currentState)), value: self.currentState)
+            //"currentState": KripkeStateProperty(type: .String, value: self.currentState.name)
         ]
     }
 
@@ -271,8 +280,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     }
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
-        self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
-        self.currentState.update(fromDictionary: dictionary[self.currentState.name] as! [String: Any])
+        //self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
+        //self.currentState.update(fromDictionary: dictionary[self.currentState.name] as! [String: Any])
     }
 
 
