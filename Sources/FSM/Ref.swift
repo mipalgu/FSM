@@ -1,5 +1,5 @@
 /*
- * SetRef.swift 
+ * Ref.swift 
  * FSM 
  *
  * Created by Callum McColl on 15/06/2017.
@@ -56,12 +56,20 @@
  *
  */
 
-public class SetRef<E: Hashable> {
+public class Ref<Value> {
 
-    public var s: Set<E>
+    public var value: Value
 
-    public init(s: Set<E> = Set<E>()) {
-        self.s = s
+    public init(value: Value) {
+        self.value = value
+    }
+
+}
+
+extension Ref: CustomStringConvertible {
+
+    public var description: String {
+        return "\(self.value)"
     }
 
 }
