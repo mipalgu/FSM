@@ -281,7 +281,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     }
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
-        //self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
+        self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
         //self.currentState.update(fromDictionary: dictionary[self.currentState.name] as! [String: Any])
     }
 
