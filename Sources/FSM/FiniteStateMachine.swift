@@ -276,6 +276,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             exitState: self.exitState.clone()
         )
         fsm.currentState = currentState
+        fsm.previousState = self.previousState.clone()
         return fsm
     }
 
