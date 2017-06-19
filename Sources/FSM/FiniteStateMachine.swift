@@ -142,7 +142,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     public var currentState: R._StateType
 
     public var currentRecord: KripkeStatePropertyList {
-        return [
+        var d: KripkeStatePropertyList = [
             "externalVariables": KripkeStateProperty(
                 type: .Collection(self.externalVariables.map {
                     KripkeStateProperty(
@@ -153,9 +153,14 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
                 value: self.externalVariables.map { $0.val }
             ),
             "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
-            "\(self.currentState.name)": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.currentState)), value: self.currentState),
-            "currentState": KripkeStateProperty(type: .String, value: self.currentState.name)
+            "currentState": KripkeStateProperty(type: .String, value: self.currentState.name),
+            "previousState": KripkeStateProperty(type: .String, value: self.previousState.name),
+            "suspendedState": KripkeStateProperty(type: .String, value: self.suspendedState?.name ?? "_none")
         ]
+        self.allStates.forEach {
+            d[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
+        }
+        return d
     }
 
     /**
@@ -281,9 +286,38 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     }
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
-        self.currentState.update(fromDictionary: dictionary[self.currentState.name] as! [String: Any])
+        let currentState = dictionary["currentState"] as! String
+        let previousState = dictionary["previousState"] as! String
+        let suspendedState = dictionary["suspendedState"] as! String
+        self.allStates.forEach { (key: String, state: R._StateType) in
+            var s = state
+            s.update(fromDictionary: dictionary[key] as! [String: Any])
+            if currentState == s.name {
+                self.currentState = s
+            }
+            if previousState == s.name {
+                self.previousState = s
+            }
+            if suspendedState == s.name {
+                self.suspendedState = s
+            }
+        }
         self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
     }
 
+    fileprivate var allStates: [String: R._StateType] {
+        var stateCache: [String: R._StateType] = [:]
+        func fetchAllStates(fromState state: R._StateType) {
+            if let _ = stateCache[state.name] {
+                return
+            }
+            stateCache[state.name] = state
+            state.transitions.forEach {
+                fetchAllStates(fromState: $0.target)
+            }
+        }
+        fetchAllStates(fromState: self.initialState)
+        return stateCache
+    }
 
 }
