@@ -62,6 +62,8 @@
  */
 public protocol KripkeVariablesModifier {
 
+    var computedVars: [String: Any] { get }
+
     /**
      *  A dictionary where the keys represent the label of each variables and
      *  the values represent a function which takes a current value and
