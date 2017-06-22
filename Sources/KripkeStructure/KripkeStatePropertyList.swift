@@ -72,10 +72,11 @@ public extension Dictionary {
      *  - Attention: If there are conflicting keys, `other` has priority.
      */
     public func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
-        guard var d = self as? KripkeStatePropertyList else {
+        guard let current = self as? KripkeStatePropertyList else {
             fatalError("Unable to cast to KripkeStatePropertyList")
         }
-        other.forEach { (key, val) in
+        var d = KripkeStatePropertyList(minimumCapacity: self.count + other.count)
+        func add(key: String, val: KripkeStateProperty) {
             switch val.type {
             case .Compound(let list):
                 guard let currentVal = d[key] else {
@@ -95,6 +96,8 @@ public extension Dictionary {
                 return
             }
         }
+        current.forEach { (key, val) in add(key: key, val: val) }
+        other.forEach { (key, val) in add(key: key, val: val) }
         return d
     }
 
