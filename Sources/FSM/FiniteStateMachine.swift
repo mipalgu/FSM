@@ -122,6 +122,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     SnapshotControllerContainer,
     Updateable where
     R: Cloneable,
+    R: Updateable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable,
@@ -154,8 +155,9 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             ),
             "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
             "currentState": KripkeStateProperty(type: .String, value: self.currentState.name),
-            "previousState": KripkeStateProperty(type: .String, value: self.previousState.name),
-            "suspendedState": KripkeStateProperty(type: .String, value: self.suspendedState?.name ?? "_none")
+            "ringlet": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.ringlet)), value: self.ringlet),
+            //"isSuspended": KripkeStateProperty(type: .Bool, value: self.isSuspended),
+            //"isFinished": KripkeStateProperty(type: .Bool, value: self.isFinished)
         ]
         self.allStates.forEach {
             d[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
@@ -205,7 +207,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     /**
      *  An instance of `Ringlet` that is used to execute the states.
      */
-    public let ringlet: R
+    public fileprivate(set) var ringlet: R
 
     /**
      *  The state that was the `currentState` before the FSM was suspended.
@@ -287,21 +289,22 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
         let currentState = dictionary["currentState"] as! String
-        let previousState = dictionary["previousState"] as! String
-        let suspendedState = dictionary["suspendedState"] as! String
+        //let previousState = dictionary["previousState"] as! String
+        //let suspendedState = dictionary["suspendedState"] as! String
         self.allStates.forEach { (key: String, state: R._StateType) in
             var s = state
             s.update(fromDictionary: dictionary[key] as! [String: Any])
             if currentState == s.name {
                 self.currentState = s
             }
-            if previousState == s.name {
+            /*if previousState == s.name {
                 self.previousState = s
             }
             if suspendedState == s.name {
                 self.suspendedState = s
-            }
+            }*/
         }
+        self.ringlet.update(fromDictionary: dictionary["ringlet"] as! [String: Any])
         self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
     }
 
