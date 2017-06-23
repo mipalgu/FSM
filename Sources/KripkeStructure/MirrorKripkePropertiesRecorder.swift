@@ -65,17 +65,21 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     }
 
     private func _takeRecord(of object: Any, withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>) -> KripkeStatePropertyList {
+        let computedVars: [String: Any]
         let manipulators: [String: (Any) -> Any]
         let validValues: [String: [Any]]
         if let modifier = object as? KripkeVariablesModifier {
+            computedVars = modifier.computedVars
             manipulators = modifier.manipulators
             validValues = modifier.validVars
         } else {
+            computedVars = [:]
             manipulators = [:]
             validValues = [:]
         }
         return self.getPropertiesFromMirror(
             mirror: Mirror(reflecting: object),
+            computedVars: computedVars,
             manipulators: manipulators,
             validValues: validValues,
             withMemoryCache: memoryCache
@@ -91,6 +95,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
      */
     private func getPropertiesFromMirror(
         mirror: Mirror,
+        computedVars: [String: Any] = [:],
         manipulators: [String: (Any) -> Any] = [:],
         validValues: [String: [Any]] = [:],
         withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
@@ -108,6 +113,14 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             guard let label = child.label else {
                 continue
             }
+            if let computedVal = computedVars[label] {
+                p[label] = self.convertValue(
+                    value: computedVal,
+                    validValues: [computedVal],
+                    withMemoryCache: memoryCache
+                )
+                continue
+            }
             if let manipulator = manipulators[label] {
                 p[label] = self.convertValue(
                     value: child.value,
@@ -122,6 +135,16 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             p[label] = self.convertValue(
                 value: child.value,
                 validValues: validValues[label],
+                withMemoryCache: memoryCache
+            )
+        }
+        for (key, val) in computedVars {
+            if nil != p[key] {
+                continue
+            }
+            p[key] = self.convertValue(
+                value: val,
+                validValues: [val],
                 withMemoryCache: memoryCache
             )
         }
