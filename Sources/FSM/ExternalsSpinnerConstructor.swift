@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Provides a way to create a `ExternalVariables` `Spinners.Spinner`.
  */
@@ -86,11 +88,11 @@ public class ExternalsSpinnerConstructor<
      */
     public func makeSpinner(
         fromExternalVariables externalVariables: AnySnapshotController,
-        defaultValues: [String: Any],
+        defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
-    ) -> () -> AnySnapshotController? {
-        var latest: [String: Any]? = defaultValues
-        return { () -> AnySnapshotController? in
+    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)? {
+        var latest: KripkeStatePropertyList? = defaultValues
+        return { () -> (AnySnapshotController, KripkeStatePropertyList)? in
             guard let temp = latest else {
                 return nil
             }
@@ -106,8 +108,12 @@ public class ExternalsSpinnerConstructor<
                 latest = nil
             }
             var new = externalVariables
-            new.val = externalVariables.create(fromDictionary: temp)
-            return new
+            var d: [String: Any] = [:]
+            temp.forEach {
+                d[$0] = $1.value
+            }
+            new.val = externalVariables.create(fromDictionary: d)
+            return (new, temp)
         }
     }
 

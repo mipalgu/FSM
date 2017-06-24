@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Conforming types are responsible for providing a way to retrieve the next
  *  values within a `Spinners.Spinner`.
@@ -82,10 +84,10 @@ public protocol SpinnerRunnerType {
      *  - Returns: The next set of values on the series.
      */
      func spin(
-        index: DictionaryIndex<String, Any>,
-        vars: [String: Any],
-        defaultValues: [String: Any],
+        index: DictionaryIndex<String, KripkeStateProperty>,
+        vars: KripkeStatePropertyList,
+        defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
-    ) -> [String: Any]?
+    ) -> KripkeStatePropertyList?
 
 }

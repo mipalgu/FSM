@@ -109,7 +109,8 @@ import KripkeStructure
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
-public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer>: FiniteStateMachineType,
+    Cloneable,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
     KripkePropertiesRecorderDelegator,
@@ -118,8 +119,15 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     Resumeable,
     StateExecuterDelegator,
     Snapshotable,
-    SnapshotControllerContainer where
-    R._StateType: Transitionable
+    SnapshotControllerContainer,
+    Updateable where
+    R: Cloneable,
+    R: Updateable,
+    R._StateType: Transitionable,
+    R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
+    R._StateType: Cloneable,
+    R._StateType: Updateable,
+    V.Vars: Updateable
 {
 
     /**
@@ -135,7 +143,26 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     public var currentState: R._StateType
 
     public var currentRecord: KripkeStatePropertyList {
-        return self.recorder.takeRecord(of: self)
+        var d: KripkeStatePropertyList = [
+            "externalVariables": KripkeStateProperty(
+                type: .Collection(self.externalVariables.map {
+                    KripkeStateProperty(
+                        type: .Compound(self.recorder.takeRecord(of: $0.val)),
+                        value: $0.val
+                    )
+                }),
+                value: self.externalVariables.map { $0.val }
+            ),
+            "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
+            "currentState": KripkeStateProperty(type: .String, value: self.currentState.name),
+            "ringlet": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.ringlet)), value: self.ringlet),
+            //"isSuspended": KripkeStateProperty(type: .Bool, value: self.isSuspended),
+            //"isFinished": KripkeStateProperty(type: .Bool, value: self.isFinished)
+        ]
+        self.allStates.forEach {
+            d[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
+        }
+        return d
     }
 
     /**
@@ -143,7 +170,9 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
      */
     public let exitState: R._StateType
 
-    public let externalVariables: [AnySnapshotController]
+    public var externalVariables: [AnySnapshotController]
+
+    public let fsmVars: V
 
     /**
      *  The initial state of the previous state.
@@ -178,7 +207,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
     /**
      *  An instance of `Ringlet` that is used to execute the states.
      */
-    public let ringlet: R
+    public fileprivate(set) var ringlet: R
 
     /**
      *  The state that was the `currentState` before the FSM was suspended.
@@ -215,6 +244,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         _ name: String,
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
+        fsmVars: V,
         recorder: KR,
         ringlet: R,
         initialPreviousState: R._StateType,
@@ -225,6 +255,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         self.currentState = initialState
         self.exitState = exitState
         self.externalVariables = externalVariables
+        self.fsmVars = fsmVars
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
         self.name = name
@@ -235,20 +266,61 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder>: Fini
         self.suspendState = suspendState
     }
 
-    /**
-     *  The FSM needs to be able to generate a `KripkeStructure` in order to be
-     *  scheduleable.  Therefore this function creates an empty
-     *  `KripkeStructure`.
-     *
-     *  - Parameter machine: The name of the machine that the FSM belongs to.
-     *
-     *  - Returns: An empty `KripkeStructure`.
-     *
-     *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
-     *  - SeeAlso: `KripkeStructure`
-     */
-    public func generate(machine _: String) -> KripkeStructure {
-        return KripkeStructure(states: [])
+    public func clone() -> FiniteStateMachine<R, KR, V>{
+        self.fsmVars.vars = self.fsmVars.vars.clone()
+        var currentState = self.currentState
+        currentState.transitions = self.currentState.transitions.map { $0.map { $0.clone() } }
+        var fsm = FiniteStateMachine(
+            self.name,
+            initialState: self.initialState.clone(),
+            externalVariables: self.externalVariables,
+            fsmVars: self.fsmVars,
+            recorder: self.recorder,
+            ringlet: self.ringlet.clone(),
+            initialPreviousState: self.initialPreviousState.clone(),
+            suspendedState: self.suspendedState?.clone(),
+            suspendState: self.suspendState.clone(),
+            exitState: self.exitState.clone()
+        )
+        fsm.currentState = currentState
+        fsm.previousState = self.previousState.clone()
+        return fsm
+    }
+
+    public mutating func update(fromDictionary dictionary: [String: Any]) {
+        let currentState = dictionary["currentState"] as! String
+        //let previousState = dictionary["previousState"] as! String
+        //let suspendedState = dictionary["suspendedState"] as! String
+        self.allStates.forEach { (key: String, state: R._StateType) in
+            var s = state
+            s.update(fromDictionary: dictionary[key] as! [String: Any])
+            if currentState == s.name {
+                self.currentState = s
+            }
+            /*if previousState == s.name {
+                self.previousState = s
+            }
+            if suspendedState == s.name {
+                self.suspendedState = s
+            }*/
+        }
+        self.ringlet.update(fromDictionary: dictionary["ringlet"] as! [String: Any])
+        self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
+    }
+
+    fileprivate var allStates: [String: R._StateType] {
+        var stateCache: [String: R._StateType] = [:]
+        func fetchAllStates(fromState state: R._StateType) {
+            if let _ = stateCache[state.name] {
+                return
+            }
+            stateCache[state.name] = state
+            state.transitions.forEach {
+                fetchAllStates(fromState: $0.target)
+            }
+        }
+        fetchAllStates(fromState: self.initialState)
+        return stateCache
     }
 
 }

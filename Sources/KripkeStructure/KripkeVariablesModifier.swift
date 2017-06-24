@@ -1,8 +1,8 @@
 /*
- * SnapshotContainer.swift 
+ * KripkeVariablesModifier.swift 
  * FSM 
  *
- * Created by Callum McColl on 28/07/2016.
+ * Created by Callum McColl on 05/10/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,8 +56,26 @@
  *
  */
 
-public protocol SnapshotControllerContainer {
+/**
+ *  Allows conforming types to manipulate the values of variables that are used
+ *  in `KripkeStructures`.
+ */
+public protocol KripkeVariablesModifier {
 
-    var externalVariables: [AnySnapshotController] { get set }
+    var computedVars: [String: Any] { get }
+
+    /**
+     *  A dictionary where the keys represent the label of each variables and
+     *  the values represent a function which takes a current value and
+     *  manipulates it and returns the new value, which the `KripkeStructure`
+     *  should use.
+     */
+    var manipulators: [String: (Any) -> Any] { get }
+
+    /**
+     *  A dictionary where the keys represent the labels of each variable and
+     *  the values represent all possible valid values of the variables.
+     */
+    var validVars: [String: [Any]] { get }
 
 }

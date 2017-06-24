@@ -72,22 +72,31 @@ import KripkeStructure
  */
 public struct AnyScheduleableFiniteStateMachine:
     FiniteStateMachineType,
+    Cloneable,
     StateExecuter,
     Exitable,
     Finishable,
     KripkePropertiesRecordable,
     Resumeable,
     Restartable,
-    Snapshotable
+    Snapshotable,
+    SnapshotControllerContainer,
+    Updateable
 {
 
     public typealias _StateType = AnyState
+
+    private let _clone: () -> AnyScheduleableFiniteStateMachine
 
     private let _currentRecord: () -> KripkeStatePropertyList
 
     private let _currentState: () -> AnyState
 
     private let _exit: () -> Void
+
+    private let _externalVariables: () -> [AnySnapshotController]
+
+    private let _setExternalVariables: ([AnySnapshotController]) -> ()
 
     private let _hasFinished: () -> Bool
 
@@ -115,6 +124,8 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _takeSnapshot: () -> Void
 
+    private let _update: ([String: Any]) -> Void
+
     public var currentRecord: KripkeStatePropertyList {
         return self._currentRecord()
     }
@@ -129,6 +140,14 @@ public struct AnyScheduleableFiniteStateMachine:
         get {
             return self._currentState()
         } set {}
+    }
+
+    public var externalVariables: [AnySnapshotController] {
+        get {
+            return self._externalVariables()
+        } set {
+            self._setExternalVariables(newValue)
+        }
     }
 
     /**
@@ -200,18 +219,24 @@ public struct AnyScheduleableFiniteStateMachine:
      *  forwards operations to `base`.
      */
     public init<FSM: FiniteStateMachineType>(_ base: FSM) where
+        FSM: Cloneable,
         FSM: StateExecuter,
         FSM: Exitable,
         FSM: Finishable,
         FSM: KripkePropertiesRecordable,
         FSM: Resumeable,
         FSM: Restartable,
-        FSM: Snapshotable
+        FSM: Snapshotable,
+        FSM: SnapshotControllerContainer,
+        FSM: Updateable
     {
         var base = base
+        self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
         self._currentRecord = { base.currentRecord }
         self._currentState = { AnyState(base.currentState) }
         self._exit = { base.exit() }
+        self._setExternalVariables = { base.externalVariables = $0 }
+        self._externalVariables = { base.externalVariables }
         self._hasFinished = { base.hasFinished }
         self._initialState = { AnyState(base.initialState) }
         self._isSuspended = { base.isSuspended }
@@ -225,6 +250,11 @@ public struct AnyScheduleableFiniteStateMachine:
         self._suspendState = { AnyState(base.suspendState) }
         self._saveSnapshot = { base.saveSnapshot() }
         self._takeSnapshot = { base.takeSnapshot() }
+        self._update = { base.update(fromDictionary: $0) }
+    }
+
+    public func clone() -> AnyScheduleableFiniteStateMachine {
+        return self._clone()
     }
 
     /**
@@ -270,6 +300,10 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public func takeSnapshot() {
         self._takeSnapshot()
+    }
+
+    public func update(fromDictionary dictionary: [String: Any]) {
+        self._update(dictionary)
     }
 
  }

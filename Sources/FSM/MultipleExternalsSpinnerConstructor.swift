@@ -1,9 +1,9 @@
 /*
- * ExternalsSpinnerConstructorFactory.swift 
+ * MultipleExternalsSpinnerConstructor.swift 
  * FSM 
  *
- * Created by Callum McColl on 27/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 10/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -58,57 +58,76 @@
 
 import KripkeStructure
 
-/**
- *  Creates instances of `ExternalsSpinnerConstructorType`.
- */
-public class ExternalsSpinnerConstructorFactory<
-    ESC: ExternalsSpinnerConstructorType,
-    ESE: ExternalsSpinnerDataExtractorType
->: ExternalsSpinnerConstructorFactoryType {
+public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType>: MultipleExternalsSpinnerConstructorType {
 
-    private let constructor: ESC
+    private let constructor: Constructor
 
-    private let extractor: ESE
-
-    /**
-     *  Create a new `ExternalsSpinnerConstructorFactory`.
-     *
-     *  - Parameter constructor: This is used to convert a dictionary of
-     *  `Spinners.Spinner`s to a `ExternalVariables` `Spinners.Spinner`.
-     *
-     *  - Parameter extractor: This is used to extract the `Spinners.Spinner`s
-     *  from the `ExternalVariables`.
-     *
-     *  - SeeAlso: `ExternalsSpinnerConstructorType`
-     *  - SeeAlso: `ExternalsSpinnerDataExtractorType`
-     */
-    public init(constructor: ESC, extractor: ESE) {
+    public init(constructor: Constructor) {
         self.constructor = constructor
-        self.extractor = extractor
     }
 
-    /**
-     *  Create a function that, when called, creates a `Spinners.Spinner` for
-     *  a the `ExternalVariables`.
-     *
-     *  - Parameter externalVariables: The `ExternalVariables` that will be
-     *  used to create the `Spinners.Spinner`.
-     *
-     *  - Returns: A function that creates the `ExternalVariables`
-     *  `Spinners.Spinner`.
-     */
-    public func make(
-        externalVariables: AnySnapshotController
-    ) -> () -> () -> (AnySnapshotController, KripkeStatePropertyList)?
-    {
-        let spinnerData = self.extractor.extract(externalVariables: externalVariables)
-        return { () -> () -> (AnySnapshotController, KripkeStatePropertyList)? in
-            return self.constructor.makeSpinner(
-                fromExternalVariables: externalVariables,
-                defaultValues: spinnerData.0,
-                spinners: spinnerData.1
+    public func makeSpinner(
+        forExternals data: [(
+            externalVariables: AnySnapshotController,
+            defaultValues: KripkeStatePropertyList,
+            spinners: [String: (Any) -> Any?]
+        )]
+    ) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
+        if true == data.isEmpty {
+            var generated = false
+            return  {
+                if true == generated {
+                    return nil
+                }
+                generated = true
+                return []
+            }
+        }
+        var externalSpinners = data.map {
+            self.constructor.makeSpinner(
+                fromExternalVariables: $0.externalVariables,
+                defaultValues: $0.defaultValues,
+                spinners: $0.spinners
             )
         }
+        var i = 0
+        var latest: [(AnySnapshotController, KripkeStatePropertyList)] = data.map {
+            var new = $0.externalVariables
+            new.val = $0.externalVariables.create(fromDictionary: self.convert(from: $0.defaultValues))
+            return (new, $0.defaultValues)
+        }
+        return { () -> [(AnySnapshotController, KripkeStatePropertyList)]? in
+            var reset = false
+            while i < data.count {
+                guard let (val, ps) = externalSpinners[i]() else {
+                    externalSpinners[i] = self.constructor.makeSpinner(
+                        fromExternalVariables: data[i].externalVariables,
+                        defaultValues: data[i].defaultValues,
+                        spinners: data[i].spinners
+                    )
+                    var new = data[i].externalVariables
+                    new.val = data[i].externalVariables.create(fromDictionary: self.convert(from: data[i].defaultValues))
+                    latest[i] = (new, data[i].defaultValues)
+                    i += 1
+                    reset = true
+                    continue
+                }
+                if true == reset {
+                    i = 0
+                }
+                latest[i] = (val, ps)
+                return latest
+            }
+            return nil
+        }
+    }
+
+    private func convert(from data: KripkeStatePropertyList) -> [String: Any] {
+        var d: [String: Any] = [:]
+        data.forEach {
+            d[$0] = $1.value
+        }
+        return d
     }
 
 }

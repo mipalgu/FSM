@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Conforming types are responsible for creating functions that return a
  *  `Spinners.Spinner` for a specific instance of `ExternalVariables`.
@@ -72,6 +74,6 @@ public protocol ExternalsSpinnerConstructorFactoryType {
      *  - Returns: A function that creates the `ExternalVariables`
      *  `Spinners.Spinner`.
      */
-    func make(externalVariables: AnySnapshotController) -> () -> () -> AnySnapshotController?
+    func make(externalVariables: AnySnapshotController) -> () -> () -> (AnySnapshotController, KripkeStatePropertyList)?
 
 }

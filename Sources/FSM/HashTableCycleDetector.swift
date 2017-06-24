@@ -66,7 +66,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *
      *  The `Bool` is used just to give the hash a value.
      */
-    public typealias Data = [Element: Bool]
+    public typealias Data = Ref<[Element: Bool]>
    
     /**
      *  The elements of the cycle.
@@ -78,7 +78,12 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
     /**
      *  An empty hash table.
      */
-    public let initialData: Data = [:]
+    public var initialData: Data {
+        let d = [Element: Bool](minimumCapacity: 500000)
+        return Ref(value: d)
+    } 
+
+    public init() {}
 
     /**
      *  Is this element in the hash table?
@@ -91,11 +96,11 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  a cycle was detected.  The second element is the new hash table.
      */
     public func inCycle(data: Data, element: Element) -> (Bool, Data) {
-        guard data[element] == nil else {
+        //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
+        if data.value[element] != nil {
             return (true, data)
         }
-        var data = data
-        data[element] = true
+        data.value[element] = true
         return (false, data)
     }
 

@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  A standard ringlet.
  *
@@ -64,9 +66,28 @@
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public class MiPalRinglet: Ringlet {
+public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Updateable {
 
     internal var previousState: MiPalState
+
+    internal var currentState: MiPalState? = nil
+
+    public var computedVars: [String: Any] {
+        return [
+            "shouldExecuteOnEntry": nil == self.currentState ? true : self.previousState == self.currentState!
+        ]
+    }
+
+    public var manipulators: [String : (Any) -> Any] {
+        return [:]
+    } 
+
+    public var validVars: [String: [Any]] {
+        return [
+            "currentState": [],
+            "previousState": []
+        ]
+    }
 
     /**
      *  Create a new `MiPalRinglet`.
@@ -95,11 +116,28 @@ public class MiPalRinglet: Ringlet {
         if let t = state.transitions.lazy.filter({ $0.canTransition(state) }).first {
             // Yes - Exit state and return the new state.
             state.onExit()
+            self.currentState = t.target
             return t.target
         }
         // No - Execute main method and return state.
         state.main()
+        self.currentState = state
         return state
+    }
+
+    public func clone() -> MiPalRinglet {
+        let r = MiPalRinglet(previousState: self.previousState.clone())
+        r.currentState = self.currentState
+        return r
+    }
+
+    public func update(fromDictionary dictionary: [String: Any]) {
+        let shouldExecuteOnEntry = dictionary["shouldExecuteOnEntry"] as! Bool
+        if true == shouldExecuteOnEntry {
+            self.previousState = EmptyMiPalState("_previous")
+            return
+        }
+        self.previousState = self.currentState!
     }
     
 }

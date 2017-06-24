@@ -76,6 +76,6 @@ public protocol ExternalsPropertyExtractor {
      */
     func extract(
         externalVariables: AnySnapshotController
-    ) -> [String: KripkeStateProperty]
+    ) -> KripkeStatePropertyList 
 
 }

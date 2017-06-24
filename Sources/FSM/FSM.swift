@@ -105,6 +105,7 @@ public func FSM(
         name,
         initialState: initialState,
         externalVariables: [],
+        fsmVars: SimpleVariablesContainer(vars: EmptyVariables()),
         ringlet: MiPalRingletFactory.make(
             previousState: initialPreviousState
         ),
@@ -310,6 +311,7 @@ public func FSM<V: VariablesContainer>(
         name,
         initialState: initialState,
         externalVariables: externalVariables,
+        fsmVars: fsmVars,
         ringlet: MiPalRinglet(
             previousState: initialPreviousState
         ),
@@ -354,21 +356,23 @@ public func FSM<V: VariablesContainer>(
  *  - SeeAlso: `FiniteStateMachine`
  *  - SeeAlso: `Ringlet`
  */
-public func FSM<R: Ringlet>(
+public func FSM<R: Ringlet, V: VariablesContainer>(
     _ name: String,
     initialState: MiPalState,
     externalVariables: [AnySnapshotController],
+    fsmVars: V,
     ringlet: R,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine where R._StateType == MiPalState {
+) -> AnyScheduleableFiniteStateMachine where R: Cloneable, R: Updateable, R._StateType == MiPalState {
     return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine<R, MirrorKripkePropertiesRecorder>(
+        FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V>(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            fsmVars: fsmVars,
             recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
@@ -379,25 +383,31 @@ public func FSM<R: Ringlet>(
     )
 }
 
-public func MachineFSM<R: Ringlet>(
+public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     _ name: String,
     initialState: R._StateType,
     externalVariables: [AnySnapshotController],
+    fsmVars: V,
     ringlet: R,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
     suspendState: R._StateType,
     exitState: R._StateType
 ) -> AnyScheduleableFiniteStateMachine where
+    R: Cloneable,
+    R: Updateable,
+    R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
-    R._StateType: KripkeVariablesModifier
+    R._StateType: KripkeVariablesModifier,
+    R._StateType: Updateable
 {
     return AnyScheduleableFiniteStateMachine(
         FiniteStateMachine(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            fsmVars: fsmVars,
             recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
@@ -427,13 +437,16 @@ public func MachineFSM<R: Ringlet>(
 public func FSM<FSM: FiniteStateMachineType>(
     _ fsm: FSM
 ) -> AnyScheduleableFiniteStateMachine where
+    FSM: Cloneable,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
     FSM: KripkePropertiesRecordable,
     FSM: Restartable,
     FSM: Resumeable,
-    FSM: Snapshotable
+    FSM: Snapshotable,
+    FSM: SnapshotControllerContainer,
+    FSM: Updateable
 {
     return AnyScheduleableFiniteStateMachine(fsm)
 }
@@ -456,13 +469,16 @@ public func FSM<FSM: FiniteStateMachineType>(
 public func FSMS<FSM: FiniteStateMachineType>(
     _ fsms: FSM ...
 ) -> [AnyScheduleableFiniteStateMachine] where
+    FSM: Cloneable,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
     FSM: KripkePropertiesRecordable,
     FSM: Restartable,
     FSM: Resumeable,
-    FSM: Snapshotable
+    FSM: Snapshotable,
+    FSM: SnapshotControllerContainer,
+    FSM: Updateable
 {
     return fsms.map { AnyScheduleableFiniteStateMachine($0) }
 }

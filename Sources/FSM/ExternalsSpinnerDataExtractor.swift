@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 /**
  *  Provides a way to extract the variables from a `ExternalVariables` and create
  *  `Spinners.Spinner`s for each variables.
@@ -98,19 +100,14 @@ public class ExternalsSpinnerDataExtractor<
      */
     public func extract(
         externalVariables: AnySnapshotController
-    ) -> ([String: Any], [String: (Any) -> Any?]) {
+    ) -> (KripkeStatePropertyList, [String: (Any) -> Any?]) {
         // Get Global Properties Info
-        let temp: [(String, (Any, (Any) -> Any?))] = self.extractor.extract(
-                externalVariables: externalVariables
-            ).map {
-                ($0.0, self.converter.convert(from: $0.1))
-            }
-        return temp.reduce(([:], [:])) {
-            var t = $0
-            t.0[$1.0] = $1.1.0
-            t.1[$1.0] = $1.1.1
-            return t
+        let list = self.extractor.extract(externalVariables: externalVariables)
+        var spinners: [String: (Any) -> Any?] = [:]
+        list.forEach {
+            spinners[$0] = self.converter.convert(from: $1).1
         }
+        return (list, spinners)
     }
 
 }

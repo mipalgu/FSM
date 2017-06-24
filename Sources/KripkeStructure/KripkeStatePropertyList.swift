@@ -56,4 +56,87 @@
  *
  */
 
+import Functional
+
 public typealias KripkeStatePropertyList = [String: KripkeStateProperty]
+
+/**
+ *  Provides merge functionality for dictionaries.
+ */
+public extension Dictionary {
+
+    /**
+     *  Create a new `Dictionary` where the result is the merging of `other`
+     *  with `self`.
+     *
+     *  - Attention: If there are conflicting keys, `other` has priority.
+     */
+    public func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
+        guard let current = self as? KripkeStatePropertyList else {
+            fatalError("Unable to cast to KripkeStatePropertyList")
+        }
+        var d = KripkeStatePropertyList(minimumCapacity: self.count + other.count)
+        func add(key: String, val: KripkeStateProperty) {
+            switch val.type {
+            case .Compound(let list):
+                guard let currentVal = d[key] else {
+                    d[key] = val
+                    return
+                }
+                switch currentVal.type {
+                case .Compound(let currentList):
+                    d[key] = KripkeStateProperty(type: .Compound(currentList.merged(list)), value: val.value)
+                    return
+                default:
+                    d[key] = val
+                    return
+                }
+            default:
+                d[key] = val
+                return
+            }
+        }
+        current.forEach { (key, val) in add(key: key, val: val) }
+        other.forEach { (key, val) in add(key: key, val: val) }
+        return d
+    }
+
+}
+
+/**
+ *  Creates a new dictioanry where `lhs` is merged with `rhs`.
+ *
+ *  - Attention: If there are conflicting keys, `rhs` has priority.
+ *
+ *  - SeeAlso: `Dictionary.merged(_:)`.
+ */
+public func <| (
+    lhs: KripkeStatePropertyList,
+    rhs: KripkeStatePropertyList
+) -> KripkeStatePropertyList {
+    return lhs.merged(rhs)
+}
+
+/**
+ *  Creates a new dictioanry where `lhs` is merged with `rhs`.
+ *
+ *  - Attention: If there are conflicting keys, `lhs` has priority.
+ *
+ *  - SeeAlso: `Dictionary.merged(_:)`.
+ */
+public func |> (
+    lhs: KripkeStatePropertyList,
+    rhs: KripkeStatePropertyList
+) -> KripkeStatePropertyList {
+    return rhs.merged(lhs)
+}
+
+/**
+ *  The `Dictionary` merge operator with right priority.
+ */
+infix operator <| : LeftFunctionalPrecedence
+
+/**
+ *  The `Dictionary` merge operator with left priority.
+ */
+infix operator |> : LeftFunctionalPrecedence

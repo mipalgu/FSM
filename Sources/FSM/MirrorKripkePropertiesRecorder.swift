@@ -1,9 +1,9 @@
 /*
- * Dictionary.swift 
+ * MirrorKripkePropertiesRecorder.swift 
  * FSM 
  *
- * Created by Callum McColl on 06/10/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 12/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,76 +56,12 @@
  *
  */
 
-import Functional
+import KripkeStructure
 
-/**
- *  Provides merge functionality for dictionaries.
- */
-public extension Dictionary {
+extension MirrorKripkePropertiesRecorder: ExternalsPropertyExtractor {
 
-    /**
-     *  Merge `other` with `self`.
-     *
-     *  - Attention: If there are conflicting keys, `other` has priority.
-     */
-    public mutating func merge<S: Sequence>(_ other: S) where 
-        S.Iterator.Element == Element
-    {
-        other.forEach { (key, val) in
-            self[key] = val
-        }
-    }
-
-    /**
-     *  Create a new `Dictionary` where the result is the merging of `other`
-     *  with `self`.
-     *
-     *  - Attention: If there are conflicting keys, `other` has priority.
-     */
-    public func merged<S: Sequence>(_ other: S) -> Dictionary<Key, Value> where
-        S.Iterator.Element == Element
-    {
-        var d = self
-        d.merge(other)
-        return d
+    public func extract(externalVariables: AnySnapshotController) -> KripkeStatePropertyList {
+        return self.takeRecord(of: externalVariables.val)
     }
 
 }
-
-/**
- *  Creates a new dictioanry where `lhs` is merged with `rhs`.
- *
- *  - Attention: If there are conflicting keys, `rhs` has priority.
- *
- *  - SeeAlso: `Dictionary.merged(_:)`.
- */
-public func <| <Key: Hashable, Value>(
-    lhs: Dictionary<Key, Value>,
-    rhs: Dictionary<Key, Value>
-) -> Dictionary<Key, Value> {
-    return lhs.merged(rhs)
-}
-
-/**
- *  Creates a new dictioanry where `lhs` is merged with `rhs`.
- *
- *  - Attention: If there are conflicting keys, `lhs` has priority.
- *
- *  - SeeAlso: `Dictionary.merged(_:)`.
- */
-public func |> <Key: Hashable, Value>(
-    lhs: Dictionary<Key, Value>,
-    rhs: Dictionary<Key, Value>
-) -> Dictionary<Key, Value> {
-    return rhs.merged(lhs)
-}
-
-/**
- *  The `Dictionary` merge operator with right priority.
- */
-infix operator <| : LeftFunctionalPrecedence
-
-/**
- *  The `Dictionary` merge operator with left priority.
- */
-infix operator |> : LeftFunctionalPrecedence
