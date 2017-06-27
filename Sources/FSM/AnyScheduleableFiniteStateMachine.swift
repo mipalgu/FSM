@@ -116,10 +116,6 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _suspend: () -> Void
 
-    private let _suspendedState: () -> AnyState?
-
-    private let _suspendState: () -> AnyState
-
     private let _saveSnapshot: () -> Void
 
     private let _takeSnapshot: () -> Void
@@ -193,28 +189,6 @@ public struct AnyScheduleableFiniteStateMachine:
     }
 
     /**
-     *  The state that was set as `currentState` before the Finite State
-     *  Machine was suspended.
-     *
-     *  - Attention: This state is read-only, attempting to set this to a new
-     *  value will not do anything.
-     */
-    public var suspendedState: AnyState? {
-        get {
-            return self._suspendedState()
-        } set {}
-    }
-
-    /**
-     *  The state that is set to `currentState` when the Finite State Machine
-     *  is suspended, assuming that the underlying base fsm follows the default
-     *  procedure for Finite State Machine suspension.
-     */
-    public var suspendState: AnyState {
-        return self._suspendState()
-    }
-
-    /**
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
@@ -246,8 +220,6 @@ public struct AnyScheduleableFiniteStateMachine:
         self._restart = { base.restart() }
         self._resume = { base.resume() }
         self._suspend = { base.suspend() }
-        self._suspendedState = { { AnyState($0) } <^> base.suspendedState }
-        self._suspendState = { AnyState(base.suspendState) }
         self._saveSnapshot = { base.saveSnapshot() }
         self._takeSnapshot = { base.takeSnapshot() }
         self._update = { base.update(fromDictionary: $0) }

@@ -1,9 +1,9 @@
 /*
- * Suspendable.swift
- * FSM
+ * ResumeableStateExecuter.swift 
+ * FSM 
  *
- * Created by Callum McColl on 23/08/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 27/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,19 +56,4 @@
  *
  */
 
-/**
- *  Conforming types are capable of being suspended.
- */
-public protocol Suspendable {
-    
-    /**
-     *  Are we currently suspended?
-     */
-    var isSuspended: Bool { get }
-    
-    /**
-     *  Suspend `self`.
-     */
-    mutating func suspend() -> Void
-    
-}
+public protocol ResumeableStateExecuter: Resumeable, SuspendableStateExecuter {}

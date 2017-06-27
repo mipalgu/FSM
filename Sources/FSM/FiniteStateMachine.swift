@@ -116,7 +116,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     KripkePropertiesRecorderDelegator,
     OptimizedStateExecuter,
     Restartable,
-    Resumeable,
+    ResumeableStateExecuter,
     StateExecuterDelegator,
     Snapshotable,
     SnapshotControllerContainer,

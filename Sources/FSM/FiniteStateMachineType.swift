@@ -103,7 +103,7 @@ public extension FiniteStateMachineType where
 public extension FiniteStateMachineType where
     Self._StateType: Transitionable,
     Self: Finishable,
-    Self: Suspendable
+    Self: SuspendableStateExecuter
 {
 
     /**
@@ -123,7 +123,7 @@ public extension FiniteStateMachineType where
  *  Provide default implemtations for when a Finite State Machine is
  *  `Resumeable`.
  */
-public extension FiniteStateMachineType where Self: Resumeable {
+public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
 
     /**
      *  Resume the Finite State Machine.
@@ -150,7 +150,7 @@ public extension FiniteStateMachineType where Self: Resumeable {
  *  Provide default implementations for when a Finite State Machine is
  *  `Suspendable`.
  */
-public extension FiniteStateMachineType where Self._StateType: Equatable, Self: Suspendable {
+public extension FiniteStateMachineType where Self._StateType: Equatable, Self: SuspendableStateExecuter {
     
     /**
      *  Is the Finite State Machine currently suspended?
