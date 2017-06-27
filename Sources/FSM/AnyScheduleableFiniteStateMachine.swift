@@ -86,6 +86,8 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public typealias _StateType = AnyState
 
+	public let base: Any
+
     private let _clone: () -> AnyScheduleableFiniteStateMachine
 
     private let _currentRecord: () -> KripkeStatePropertyList
@@ -204,6 +206,7 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: SnapshotControllerContainer,
         FSM: Updateable
     {
+		self.base = base
         var base = base
         self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
         self._currentRecord = { base.currentRecord }
