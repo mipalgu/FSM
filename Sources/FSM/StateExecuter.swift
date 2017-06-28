@@ -59,7 +59,7 @@
 /**
  *  Provides a common interface for types that execute states.
  */
-public protocol StateExecuter: StateContainer, PartialExecuter {
+public protocol StateExecuter: StateContainer, IncrementalExecuter {
 
     /**
      *  The `StateType` that is going to be executed.

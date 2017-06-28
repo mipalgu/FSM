@@ -1,5 +1,5 @@
 /*
- * PartialExecuter.swift 
+ * IncrementalExecuter.swift 
  * FSM 
  *
  * Created by Callum McColl on 09/06/2017.
@@ -60,7 +60,7 @@
  *	Provides a common interface for types that are able to execute in
  *	incremental steps.
  */
-public protocol PartialExecuter {
+public protocol IncrementalExecuter {
 
 	/**
 	 *	Execute a single unit of execution.
