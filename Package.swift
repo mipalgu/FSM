@@ -63,7 +63,7 @@ let package = Package(
     name: "libs",
     targets: [
         Target(name: "Functional", dependencies: []),
-        Target(name: "KripkeStructure", dependencies: []),
+        Target(name: "KripkeStructure", dependencies: ["Functional"]),
         Target(name: "FSM", dependencies: ["Functional", "KripkeStructure"])
     ],
     dependencies: [
