@@ -110,8 +110,6 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _next: () -> Void
 
-    private let _previousState: () -> AnyState
-
     private let _restart: () -> Void
 
     private let _resume: () -> Void
@@ -179,18 +177,6 @@ public struct AnyScheduleableFiniteStateMachine:
     }
 
     /**
-     *  The last state that was executed.
-     *
-     *  - Attention: This state is read-only, attempting to set this to a new
-     *  value will not do anything.
-     */
-    public var previousState: AnyState {
-        get {
-            return self._previousState()
-        } set {}
-    }
-
-    /**
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
@@ -219,7 +205,6 @@ public struct AnyScheduleableFiniteStateMachine:
         self._isSuspended = { base.isSuspended }
         self._name = { base.name }
         self._next = { base.next() }
-        self._previousState = { AnyState(base.previousState) }
         self._restart = { base.restart() }
         self._resume = { base.resume() }
         self._suspend = { base.suspend() }

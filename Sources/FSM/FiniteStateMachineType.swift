@@ -79,6 +79,7 @@ public protocol FiniteStateMachineType: Identifiable, StateContainer {
  */
 public extension FiniteStateMachineType where
     Self: ExitableStateExecuter,
+	Self: PreviousStateContainer,
     Self: Resumeable
 {
 
@@ -103,6 +104,7 @@ public extension FiniteStateMachineType where
 public extension FiniteStateMachineType where
     Self._StateType: Transitionable,
     Self: Finishable,
+	Self: PreviousStateContainer,
     Self: SuspendableStateExecuter
 {
 
@@ -206,6 +208,7 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
  *  `StateExecuter` and a `StateExecuterDelegator`.
  */
 public extension FiniteStateMachineType where
+	Self: PreviousStateContainer,
     Self: StateExecuterDelegator,
     Self._StateType == Self.RingletType._StateType
 {

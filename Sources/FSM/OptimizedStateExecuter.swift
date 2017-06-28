@@ -59,7 +59,7 @@
 /**
  *  Allows `StateExecuter`s to specify a starting value for `previousState`.
  */
-public protocol OptimizedStateExecuter: StateExecuter {
+public protocol OptimizedStateExecuter: StateExecuter, PreviousStateContainer {
 
     /**
      *  An initial value for `previousState`.
