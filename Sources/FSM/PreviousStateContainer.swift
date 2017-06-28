@@ -56,6 +56,13 @@
  *
  */
 
+/**
+ *	Provides a common interface for types that keep track of a previous state.
+ *
+ *	Generally this means that the conforming type is executing states in some
+ *	way and the previous state refers to the last state that was executed.
+ *	However, this is not enforced.
+ */
 public protocol PreviousStateContainer: StateContainer {
 
     /**

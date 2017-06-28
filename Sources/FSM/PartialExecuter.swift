@@ -56,8 +56,15 @@
  *
  */
 
+/**
+ *	Provides a common interface for types that are able to execute in
+ *	incremental steps.
+ */
 public protocol PartialExecuter {
 
+	/**
+	 *	Execute a single unit of execution.
+	 */
     mutating func next()
 
 }
