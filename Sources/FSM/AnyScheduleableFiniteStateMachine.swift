@@ -86,7 +86,7 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public typealias _StateType = AnyState
 
-	public let base: Any
+    public let base: Any
 
     private let _clone: () -> AnyScheduleableFiniteStateMachine
 
@@ -192,7 +192,7 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: SnapshotControllerContainer,
         FSM: Updateable
     {
-		self.base = base
+	self.base = base
         var base = base
         self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
         self._currentRecord = { base.currentRecord }

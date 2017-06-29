@@ -62,19 +62,19 @@
  */
 public protocol KripkeVariablesModifier {
 
-	/**
-	 *	Allows conforming types to create computed variables that are only seen
-	 *	by the model generation.  This is especially useful when representing
-	 *	conditions that influence the execution.  For example: when executing
-	 *	a state using the `MiPalRinglet`, the onEntry action is not executed
-	 *	if the previous state equals the current state.  In order to minimise
-	 *	combinatorial state explosion, it is worth ignoring the previous state,
-	 *	and simply using a 'shouldExecuteOnEntry' computedVar instead.  This
-	 *	means that there are only 2 possible combinations, either
-	 *	'shouldExecuteOnEntry' is false, or 'shouldExecuteOnEntry' is true,
-	 *	rather than the 'n' possible situations where the previous state could
-	 *	be set to some arbitrary value.
-	 */
+    /**
+     * Allows conforming types to create computed variables that are only seen
+     * by the model generation.  This is especially useful when representing
+     * conditions that influence the execution.  For example: when executing
+     * a state using the `MiPalRinglet`, the onEntry action is not executed
+     * if the previous state equals the current state.  In order to minimise
+     * combinatorial state explosion, it is worth ignoring the previous state,
+     * and simply using a 'shouldExecuteOnEntry' computedVar instead.  This
+     * means that there are only 2 possible combinations, either
+     * 'shouldExecuteOnEntry' is false, or 'shouldExecuteOnEntry' is true,
+     * rather than the 'n' possible situations where the previous state could
+     * be set to some arbitrary value.
+     */
     var computedVars: [String: Any] { get }
 
     /**

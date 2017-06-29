@@ -64,7 +64,7 @@
  */
 public class AnyState: StateType {
 
-	public let base: Any
+    public let base: Any
 
     private let _name: () -> String
 
@@ -81,7 +81,7 @@ public class AnyState: StateType {
      *  Creates a new `AnyState` that wraps and forwards operations to `base`.
      */
     public init<S: StateType>(_ base: S) {
-		self.base = base
+        self.base = base
         self._name = { base.name }
     }
 

@@ -57,14 +57,14 @@
  */
 
 /**
- *	Provides a common interface for types that are able to execute in
- *	incremental steps.
+ * Provides a common interface for types that are able to execute in
+ * incremental steps.
  */
 public protocol IncrementalExecuter {
 
-	/**
-	 *	Execute a single unit of execution.
-	 */
+    /**
+     * Execute a single unit of execution.
+     */
     mutating func next()
 
 }
