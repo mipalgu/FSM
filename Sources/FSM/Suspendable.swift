@@ -60,15 +60,15 @@
  *  Conforming types are capable of being suspended.
  */
 public protocol Suspendable {
-    
+
     /**
      *  Are we currently suspended?
      */
     var isSuspended: Bool { get }
-    
+
     /**
      *  Suspend `self`.
      */
-    mutating func suspend() -> Void
-    
+    mutating func suspend()
+
 }

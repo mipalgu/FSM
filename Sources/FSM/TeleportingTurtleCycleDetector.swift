@@ -93,7 +93,7 @@ public class TeleportingTurtleCycleDetector<E: Equatable>: CycleDetector {
      */
     public func inCycle(data: Data, element: Element) -> (Bool, Data) {
         let inCycle = nil == data.turtle ? false : data.turtle! == element
-        if (data.length >= data.power) {
+        if data.length >= data.power {
             return (inCycle, (element, data.power * 2, 1))
         }
         return (inCycle, (data.turtle, data.power, data.length + 1))

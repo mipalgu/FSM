@@ -75,6 +75,6 @@ public protocol ExternalVariablesCollection: Sequence {
      *
      *  - Parameter val: The new `Element`.
      */
-    func post(val: Self.Iterator.Element) -> Void
+    func post(val: Self.Iterator.Element)
 
 }

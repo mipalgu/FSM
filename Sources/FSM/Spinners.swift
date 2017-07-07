@@ -156,15 +156,15 @@ public struct Spinners {
      *  been reached, returns nil.
      */
     let float: Spinner<Float> = {
-        if ($0 == Float.infinity) {
+        if $0 == Float.infinity {
             return Float.nan
         }
-        if ($0 == Float.nan) {
+        if $0 == Float.nan {
             return nil
         }
         return $0.nextUp
     }
-    
+
     /**
      *  Starts with negative infinity.
      *
@@ -172,10 +172,10 @@ public struct Spinners {
      *  has been reached, returns nil.
      */
     let float80: Spinner<Float80> = {
-        if (Float80.infinity == $0) {
+        if Float80.infinity == $0 {
             return Float80.nan
         }
-        if (Float80.nan == $0) {
+        if Float80.nan == $0 {
             return nil
         }
         return $0.nextUp
@@ -188,10 +188,10 @@ public struct Spinners {
      *  been reached, returns nil.
      */
     let double: Spinner<Double> = {
-        if (Double.infinity == $0) {
+        if Double.infinity == $0 {
             return Double.nan
         }
-        if (Double.nan == $0) {
+        if Double.nan == $0 {
             return nil
         }
         return $0.nextUp

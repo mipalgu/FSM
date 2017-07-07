@@ -66,6 +66,6 @@ public protocol Exitable: Finishable {
      *
      *  This implies that `hasFinished` is set to true when this is executed.
      */
-    mutating func exit() -> Void
-    
+    mutating func exit()
+
 }

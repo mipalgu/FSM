@@ -133,17 +133,17 @@ extension CArray: Sequence {
      *  - Returns: the newly created iterator.
      */
     public func makeIterator() -> AnyIterator<Element> {
-        if (nil == self.p) {
+        if nil == self.p {
             return AnyIterator { nil }
         }
         var pos: Int = 0
         return AnyIterator {
-            if (pos >= self.length) {
+            if pos >= self.length {
                 return nil
             }
             let v: Element = self.p![pos]
-            pos = pos + 1
-            return v 
+            pos += 1
+            return v
         }
     }
 
@@ -188,7 +188,7 @@ extension CArray: Collection {
         get {
             return p![i]
         } set {
-            if (i >= self.length) {
+            if i >= self.length {
                 fatalError("Array index out of bounds")
             }
             p![i] = newValue

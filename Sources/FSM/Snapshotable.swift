@@ -63,17 +63,17 @@
  *  them locally where they can be used.
  */
 public protocol Snapshotable {
-    
+
     /**
      *  Save the current snapshot.
      */
-    func saveSnapshot() -> Void
+    func saveSnapshot()
 
     /**
      *  Perform the snapshot.
      */
-    mutating func takeSnapshot() -> Void
-    
+    mutating func takeSnapshot()
+
 }
 
 extension Snapshotable where Self: SnapshotControllerContainer {

@@ -109,6 +109,7 @@ import KripkeStructure
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
+// swiftlint:disable:next line_length
 public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer>: FiniteStateMachineType,
     Cloneable,
     ExitableStateExecuter,
@@ -153,11 +154,15 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
                 }),
                 value: self.externalVariables.map { $0.val }
             ),
-            "fsmVars": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)), value: self.fsmVars.vars),
+            "fsmVars": KripkeStateProperty(type: .Compound(
+                self.recorder.takeRecord(of: self.fsmVars.vars)),
+                value: self.fsmVars.vars
+            ),
             "currentState": KripkeStateProperty(type: .String, value: self.currentState.name),
-            "ringlet": KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: self.ringlet)), value: self.ringlet),
-            //"isSuspended": KripkeStateProperty(type: .Bool, value: self.isSuspended),
-            //"isFinished": KripkeStateProperty(type: .Bool, value: self.isFinished)
+            "ringlet": KripkeStateProperty(type: .Compound(
+                self.recorder.takeRecord(of: self.ringlet)),
+                value: self.ringlet
+            )
         ]
         self.allStates.forEach {
             d[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
@@ -218,7 +223,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
      *  The state that is set to `currentState` when the FSM is suspended.
      */
     public let suspendState: R._StateType
-    
+
     /**
      *  Create a new `FiniteStateMachine`.
      *
@@ -288,12 +293,17 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     }
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
-        let currentState = dictionary["currentState"] as! String
+        guard let currentState = dictionary["currentState"] as? String else {
+            fatalError("Unable to fetch currentState")
+        }
         //let previousState = dictionary["previousState"] as! String
         //let suspendedState = dictionary["suspendedState"] as! String
         self.allStates.forEach { (key: String, state: R._StateType) in
             var s = state
-            s.update(fromDictionary: dictionary[key] as! [String: Any])
+            guard let d = dictionary[key] as? [String: Any] else {
+                fatalError("Unable to fetch \(key) from dictionary")
+            }
+            s.update(fromDictionary: d)
             if currentState == s.name {
                 self.currentState = s
             }
@@ -304,14 +314,20 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
                 self.suspendedState = s
             }*/
         }
-        self.ringlet.update(fromDictionary: dictionary["ringlet"] as! [String: Any])
-        self.fsmVars.vars.update(fromDictionary: dictionary["fsmVars"] as! [String: Any])
+        guard
+            let ringlet = dictionary["ringlet"] as? [String: Any],
+            let fsmVars = dictionary["fsmVars"] as? [String: Any]
+        else {
+            fatalError("Unable to fetch all variables from dictionary")
+        }
+        self.ringlet.update(fromDictionary: ringlet)
+        self.fsmVars.vars.update(fromDictionary: fsmVars)
     }
 
     fileprivate var allStates: [String: R._StateType] {
         var stateCache: [String: R._StateType] = [:]
         func fetchAllStates(fromState state: R._StateType) {
-            if let _ = stateCache[state.name] {
+            if stateCache[state.name] != nil {
                 return
             }
             stateCache[state.name] = state

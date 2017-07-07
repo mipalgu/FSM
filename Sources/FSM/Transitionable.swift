@@ -60,7 +60,7 @@
  *  Provides a common interface for types that are capable of transitioning.
  */
 public protocol Transitionable {
-    
+
     /**
      *  The type of `TransitionType`s used.
      */
@@ -76,6 +76,6 @@ public protocol Transitionable {
      *
      * - Parameter _: One or more `_TransitionType`s.
      */
-    mutating func addTransition(_ : _TransitionType ...) -> Void
-    
+    mutating func addTransition(_ : _TransitionType ...)
+
 }

@@ -77,6 +77,7 @@ import GUSimpleWhiteboard
  *  element is a function used to post to the `Behaviour`, and the third element
  *  is a function which retrieves the current `Time` for the `Behaviour`.
  */
+// swiftlint:disable large_tuple
 public func trigger<T: ExternalVariables>(
     type: wb_types,
     wbd: Whiteboard = Whiteboard(),
@@ -101,20 +102,20 @@ public func trigger<T: ExternalVariables>(
         let eventCount: Time = Time(wb.eventCount)
         let generations: Time = Time(wb.generations)
         let min: Time
-        if (eventCount < generations) {
+        if eventCount < generations {
             min = Time.min
         } else {
             min = Time.min + eventCount - generations
         }
         // Check if t is valid.
         guard t <= eventCount && t >= min else {
-            let _ = wb.vacate()
+            _ = wb.vacate()
             return nil
         }
         // Fetch the value.
         let i: Int = Int(0 == t ? 0 : t % generations)
-        let v: T = wb.messages[i] 
-        let _ = wb.vacate()
+        let v: T = wb.messages[i]
+        _ = wb.vacate()
         return v
     }
     return (b, { wb.post(val: $0) }, { Time(wb.eventCount) })

@@ -74,6 +74,7 @@ public protocol ExternalsSpinnerConstructorFactoryType {
      *  - Returns: A function that creates the `ExternalVariables`
      *  `Spinners.Spinner`.
      */
-    func make(externalVariables: AnySnapshotController) -> () -> () -> (AnySnapshotController, KripkeStatePropertyList)?
+    func make(externalVariables: AnySnapshotController)
+        -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
 
 }

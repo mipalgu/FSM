@@ -56,7 +56,7 @@
  *
  */
 
-import KripkeStructure 
+import KripkeStructure
 
 /**
  *  Models all possible variables that affect the execution of states.
@@ -103,6 +103,6 @@ extension World: Hashable {
 
 }
 
-public func ==(lhs: World, rhs: World) -> Bool {
+public func == (lhs: World, rhs: World) -> Bool {
     return lhs.description == rhs.description
 }

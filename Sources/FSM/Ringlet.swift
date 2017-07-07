@@ -69,12 +69,12 @@ public protocol Ringlet {
      *  The type that the `Ringlet` is executing.
      */
     associatedtype _StateType: StateType
-    
+
     /**
      *  Execute a state.
      *
      *  Returns the next state to execute.
      */
     func execute(state: _StateType) -> _StateType
-    
+
 }

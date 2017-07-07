@@ -77,7 +77,7 @@
  *  element to `From` before delegating to the underlying `CArray`.
  */
 public struct ConvertibleCArray<From, To> {
-    
+
     /**
      *  The element that we are converting to.
      */
@@ -122,18 +122,18 @@ extension ConvertibleCArray: Sequence {
      *  - Returns: The newly created iterator.
      */
     public func makeIterator() -> AnyIterator<Element> {
-        if (0 == self.arr.count) {
+        if 0 == self.arr.count {
             return AnyIterator { nil }
         }
         var pos: Int = 0
         return AnyIterator {
-            if (pos >= self.arr.length || nil == self.arr.p) {
+            if pos >= self.arr.length || nil == self.arr.p {
                 return nil
             }
             let v: Element = UnsafeRawPointer(
                 self.arr.p!.advanced(by: pos)
             ).bindMemory(to: Element.self, capacity: 1).pointee
-            pos = pos + 1
+            pos += 1
             return v
         }
     }

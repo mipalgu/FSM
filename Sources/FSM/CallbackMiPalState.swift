@@ -70,22 +70,22 @@
  *  - SeeAlso: `MiPalState`
  */
 public final class CallbackMiPalState: MiPalState {
-    
+
     /**
      *  The actual onEntry implementation.
      */
     public let _onEntry: () -> Void
-    
+
     /**
      *  The actual main implementation.
      */
     public let _main: () -> Void
-    
+
     /**
      *  The actual onExit implementation.
      */
     public let _onExit: () -> Void
-    
+
     /**
      *  Create a new `CallbackMiPalState`.
      */
@@ -104,28 +104,28 @@ public final class CallbackMiPalState: MiPalState {
             transitions: cast(transitions: transitions)
         )
     }
-    
+
     /**
      *  This method delegates to `_onEntry`.
      */
     public override final func onEntry() {
         self._onEntry()
     }
-    
+
     /**
      *  This method delegates to `_main`.
      */
     public override final func main() {
         self._main()
     }
-    
+
     /**
      *  This method delegates to `_onExit`.
      */
     public override final func onExit() {
         self._onExit()
     }
-    
+
     /**
      *  Create a new `CallbackMiPalState` that is an exact copy of `self`.
      */

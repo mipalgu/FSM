@@ -56,7 +56,7 @@
  *
  */
 
-import KripkeStructure 
+import KripkeStructure
 
 /**
  *  Conforming types are responsible for extracting the values of

@@ -214,7 +214,7 @@ public struct Behaviour<T> {
 ///
 /// - SeeAlso: Behaviour
 public func always<T>(_ value: T) -> Behaviour<T> {
-    return pure { (t: Time) -> T in value }
+    return pure { (_: Time) -> T in value }
 }
 
 /// Lifts a function of time so that it becomes a `Behaviour`.
@@ -245,13 +245,13 @@ public func trigger<T>() -> (Behaviour<T?>, (T) -> Void) {
     var data: [T] = []
     var t: Time = Time.min
     return (
-        pure { 
+        pure {
             let temp: Int = Int($0)
-            return temp >= data.count || temp < 0 ? nil : data[temp] 
+            return temp >= data.count || temp < 0 ? nil : data[temp]
         },
-        { 
+        {
             data.append($0)
-            t = t + 1
+            t += 1
         }
     )
 }
@@ -271,14 +271,14 @@ public func trigger<T>(remember: Int) -> (Behaviour<T?>, (T) -> Void) {
     var t: Time = Time.min
     return (
         pure {
-            if ($0 < 0 || $0 > t || ($0 == 0 && t == 0) || $0 < t - Time(remember)) {
+            if $0 < 0 || $0 > t || ($0 == 0 && t == 0) || $0 < t - Time(remember) {
                 return nil
             }
             return data[$0 == 0 ? 0 : Int($0) % remember]
         },
         {
             data.insert($0, at: t == 0 ? 0 : Int(t) % remember)
-            t = t + 1
+            t += 1
         }
     )
 }
@@ -298,7 +298,7 @@ public func <*> <T, U>(f: Behaviour<(T) -> U>, b: Behaviour<T>) -> Behaviour<U> 
 }
 
 public func >>- <T, U>(b: Behaviour<T>, f: @escaping (T) -> Behaviour<U>) -> Behaviour<U> {
-    return b.flatMap(f) 
+    return b.flatMap(f)
 }
 
 public func -<< <T, U>(f: @escaping (T) -> Behaviour<U>, b: Behaviour<T>) -> Behaviour<U> {
@@ -373,7 +373,7 @@ public func *<T: IntegerArithmetic>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
-    return pure { (t: Time) -> T in lhs.at(t) * rhs.at(t) }    
+    return pure { (t: Time) -> T in lhs.at(t) * rhs.at(t) }
 }
 
 public func /<T: IntegerArithmetic>(
@@ -390,7 +390,7 @@ public func %<T: IntegerArithmetic>(
     return pure { (t: Time) -> T in lhs.at(t) % rhs.at(t) }
 }
 
-public func +(
+public func + (
     lhs: Behaviour<String>,
     rhs: Behaviour<String>
 ) -> Behaviour<String> {

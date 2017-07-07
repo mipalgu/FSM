@@ -69,7 +69,7 @@ public protocol TransitionType {
      *  The type of the source of the transition.
      */
     associatedtype Source
-    
+
     /**
      *  The type of the target of the transition.
      */
@@ -86,4 +86,3 @@ public protocol TransitionType {
     var target: Target { get }
 
 }
-

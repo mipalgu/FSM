@@ -60,7 +60,7 @@
  *  A LIFO `Stack`.
  */
 public struct Stack<T> {
-    
+
     /**
      *  The type of the elements within the `Stack`.
      */
@@ -127,7 +127,7 @@ public struct Stack<T> {
 
 extension Stack: Sequence {
 
-    public typealias Iterator = Stack 
+    public typealias Iterator = Stack
 
     public func makeIterator() -> Stack<Element> {
         return self
@@ -138,7 +138,7 @@ extension Stack: Sequence {
 extension Stack: IteratorProtocol {
 
     public mutating func next() -> Element? {
-        if (nil == self.peek()) {
+        if nil == self.peek() {
             return nil
         }
         return self.pop()

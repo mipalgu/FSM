@@ -84,6 +84,8 @@ public class KripkeStatePropertySpinnerConverter:
      *  - Returns: A tuple where the first element is the starting value of the
      *  `Spinners.Spinner` and the second element is the `Spinners.Spinner`.
      */
+    // swiftlint:disable force_cast
+    // swiftlint:disable cyclomatic_complexity
     public func convert(from ksp: KripkeStateProperty) -> (Any, (Any) -> Any?) {
         switch ksp.type {
         case .Bool:
@@ -115,7 +117,7 @@ public class KripkeStatePropertySpinnerConverter:
         case .Double:
             return (Double.infinity.negated(), { self.spinners.double($0 as! Double) })
         default:
-            return (ksp.value, self.spinners.nilSpinner) 
+            return (ksp.value, self.spinners.nilSpinner)
         }
     }
 }

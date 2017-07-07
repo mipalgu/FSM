@@ -65,12 +65,12 @@
  *  - SeeAlso: `MiPalState`
  */
 public final class EmptyMiPalState: MiPalState {
-    
+
     /**
      *  Does nothing.
      */
     public override final func onEntry() {}
-    
+
     /**
      *  Does nothing.
      */
@@ -84,5 +84,5 @@ public final class EmptyMiPalState: MiPalState {
     public override final func clone() -> EmptyMiPalState {
         return EmptyMiPalState(self.name, transitions: self.transitions)
     }
-    
+
 }

@@ -68,7 +68,7 @@ import KripkeStructure
  *  the `Suspendable` protocol.
  */
 public protocol FiniteStateMachineType: Identifiable, StateContainer {
-    
+
     var initialState: _StateType { get }
 
 }
@@ -94,7 +94,7 @@ public extension FiniteStateMachineType where
         self.currentState = self.exitState
         self.previousState = self.currentState
     }
-    
+
 }
 
 /**
@@ -139,7 +139,7 @@ public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
      *  - Precondition: The Finite State Machine must be suspended.
      */
     public mutating func resume() {
-        if (nil == self.suspendedState) {
+        if nil == self.suspendedState {
             return
         }
         self.currentState = self.suspendedState!
@@ -153,7 +153,7 @@ public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
  *  `Suspendable`.
  */
 public extension FiniteStateMachineType where Self._StateType: Equatable, Self: SuspendableStateExecuter {
-    
+
     /**
      *  Is the Finite State Machine currently suspended?
      *  
@@ -162,7 +162,7 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
     var isSuspended: Bool {
         return self.suspendState == self.currentState
     }
-    
+
     /**
      *  Suspend the Finite State Machine.
      *
@@ -172,13 +172,13 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
      *  - Precondition: The Finite State Machine must not be suspended.
      */
     public mutating func suspend() {
-        if (true == self.isSuspended) {
+        if true == self.isSuspended {
             return
         }
         self.suspendedState = self.currentState
         self.currentState = self.suspendState
     }
-    
+
 }
 
 /**
@@ -186,7 +186,7 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
  *  `Restartable` and `Resumeable`.
  */
 public extension FiniteStateMachineType where Self: Restartable, Self: Resumeable, Self: OptimizedStateExecuter {
-    
+
     /**
      *  Restart the Finite State Machine.
      *
@@ -200,7 +200,7 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
         self.previousState = self.initialPreviousState
         self.currentState = self.initialState
     }
-    
+
 }
 
 /**
@@ -212,7 +212,7 @@ public extension FiniteStateMachineType where
     Self: StateExecuterDelegator,
     Self._StateType == Self.RingletType._StateType
 {
-    
+
     /**
      *  Executes `currentState`.
      *
@@ -228,5 +228,5 @@ public extension FiniteStateMachineType where
         self.previousState = self.currentState
         self.currentState = self.ringlet.execute(state: self.currentState)
     }
-    
+
 }

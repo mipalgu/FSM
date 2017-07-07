@@ -58,7 +58,9 @@
 
 import KripkeStructure
 
-public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType>: MultipleExternalsSpinnerConstructorType {
+public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType>:
+    MultipleExternalsSpinnerConstructorType
+{
 
     private let constructor: Constructor
 
@@ -66,6 +68,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
         self.constructor = constructor
     }
 
+    // swiftlint:disable large_tuple
     public func makeSpinner(
         forExternals data: [(
             externalVariables: AnySnapshotController,
@@ -106,7 +109,9 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
                         spinners: data[i].spinners
                     )
                     var new = data[i].externalVariables
-                    new.val = data[i].externalVariables.create(fromDictionary: self.convert(from: data[i].defaultValues))
+                    new.val = data[i].externalVariables.create(
+                        fromDictionary: self.convert(from: data[i].defaultValues)
+                    )
                     latest[i] = (new, data[i].defaultValues)
                     i += 1
                     reset = true

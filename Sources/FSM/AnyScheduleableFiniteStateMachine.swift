@@ -98,7 +98,7 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _externalVariables: () -> [AnySnapshotController]
 
-    private let _setExternalVariables: ([AnySnapshotController]) -> ()
+    private let _setExternalVariables: ([AnySnapshotController]) -> Void
 
     private let _hasFinished: () -> Bool
 

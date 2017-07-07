@@ -56,7 +56,7 @@
  *
  */
 
-import Functional 
+import Functional
 import KripkeStructure
 
 /**
@@ -91,7 +91,10 @@ public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2,
 
 public func cast<S1, S2, T>(_ transition: Transition<S1, T>) -> Transition<S2, T> {
     return Transition<S2, T>(transition.target) {
-        transition.canTransition($0 as! S1)
+        guard let state = $0 as? S1 else {
+            fatalError("Unable to cast \($0) to \(S1.self)")
+        }
+        return transition.canTransition(state)
     }
 }
 
@@ -103,10 +106,10 @@ public func dprint(
     separator: String = " ",
     terminator: String = "\n"
 ) {
-    if (false == DEBUG) {
+    if false == DEBUG {
         return
     }
-    let _ = items.map {
+    _ = items.map {
         print($0, separator: separator, terminator: terminator)
     }
 }
@@ -120,10 +123,10 @@ public func dprint<Target: TextOutputStream>(
     terminator: String = "\n",
     toStream output: inout Target
 ) {
-    if (false == DEBUG) {
+    if false == DEBUG {
         return
     }
-    let _ = items.map {
+    _ = items.map {
         print(
             $0,
             separator: separator,
@@ -154,7 +157,7 @@ public func getFactoryCount() -> Int {
  *  was empty.
  */
 public func getLastFactory() -> FSMArrayFactory? {
-    if (true == factories.isEmpty) {
+    if true == factories.isEmpty {
         return nil
     }
     return factories.pop()

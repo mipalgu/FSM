@@ -68,7 +68,7 @@ public protocol StateType: Identifiable {}
  *  Default implementation for adding transitions to a state.
  */
 extension StateType where Self: Transitionable {
-    
+
     /**
      *  Adds the transitions to the `transitions` array.
      *
@@ -77,25 +77,22 @@ extension StateType where Self: Transitionable {
     public mutating func addTransition(_ transitions: _TransitionType ...) {
         self.transitions.append(contentsOf: transitions)
     }
-    
+
 }
 
 /**
  *  Make states printable and debug printable by default.
  */
-extension StateType where
-    Self: CustomStringConvertible,
-    Self: CustomDebugStringConvertible
-{
-    
+extension StateType where Self: CustomStringConvertible, Self: CustomDebugStringConvertible {
+
     public var description: String {
         return name
     }
-    
+
     public var debugDescription: String {
         return description
     }
-    
+
 }
 
 public extension StateType where Self: KripkeVariablesModifier {

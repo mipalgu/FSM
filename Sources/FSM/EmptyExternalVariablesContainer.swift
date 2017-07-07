@@ -62,7 +62,7 @@
  *  - SeeAlso: `ExternalVariablesContainer`
  */
 public class EmptyExternalVariablesContainer: ExternalVariablesContainer {
-    
+
     /**
      *  No variables, therefore use an instance of `EmptyVariables`
      *

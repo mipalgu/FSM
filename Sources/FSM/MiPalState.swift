@@ -87,7 +87,7 @@ open class MiPalState:
     open var validVars: [String: [Any]] {
         return [:]
     }
-    
+
     /**
      *  Create a new `MiPalState`.
      *

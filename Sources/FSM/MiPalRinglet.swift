@@ -70,7 +70,7 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
 
     internal var previousState: MiPalState
 
-    internal var currentState: MiPalState? = nil
+    internal var currentState: MiPalState?
 
     public var computedVars: [String: Any] {
         return [
@@ -80,7 +80,7 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
 
     public var manipulators: [String : (Any) -> Any] {
         return [:]
-    } 
+    }
 
     public var validVars: [String: [Any]] {
         return [
@@ -98,7 +98,7 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
     public init(previousState: MiPalState = EmptyMiPalState("_previous")) {
         self.previousState = previousState
     }
-    
+
     /**
      *  Execute the ringlet.
      *
@@ -108,7 +108,7 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
      */
     public func execute(state: MiPalState) -> MiPalState {
         // Call onEntry if we have just transitioned to this state. 
-        if (state != self.previousState) {
+        if state != self.previousState {
             state.onEntry()
         }
         self.previousState = state
@@ -132,12 +132,14 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
     }
 
     public func update(fromDictionary dictionary: [String: Any]) {
-        let shouldExecuteOnEntry = dictionary["shouldExecuteOnEntry"] as! Bool
-        if true == shouldExecuteOnEntry {
+        guard
+            let shouldExecuteOnEntry = dictionary["shouldExecuteOnEntry"] as? Bool,
+            false == shouldExecuteOnEntry
+        else {
             self.previousState = EmptyMiPalState("_previous")
             return
         }
         self.previousState = self.currentState!
     }
-    
+
 }

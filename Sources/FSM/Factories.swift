@@ -67,10 +67,9 @@
  *  stack is shared between each instance of Factories.
  */
 public struct Factories {
-    
-    private static var factories: Stack<FSMArrayFactory> = 
-        Stack<FSMArrayFactory>()
-    
+
+    private static var factories: Stack<FSMArrayFactory> = Stack<FSMArrayFactory>()
+
     /**
      *  Provides access to the underlying `factories` `Stack`.
      */
@@ -81,14 +80,14 @@ public struct Factories {
             Factories.factories = newValue
         }
     }
-    
+
     /**
      *  The number of factories within the `Stack`.
      */
     public var count: Int {
         return self.factories.count
     }
-    
+
     /**
      *  Is the `Stack` empty?
      */
@@ -185,7 +184,7 @@ extension Factories: IteratorProtocol {
      *  - Returns: The last element that was added to the stack.
      */
     public mutating func next() -> Element? {
-        if (nil == self.peek()) {
+        if nil == self.peek() {
             return nil
         }
         return self.pop()

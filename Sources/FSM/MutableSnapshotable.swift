@@ -56,16 +56,15 @@
  *
  */
 
-
 /**
  *  Conforming types are responsible for updating the external source with the
  *  local copies of the data.
  */
 public protocol MutableSnapshotable: Snapshotable {
-    
+
     /**
      *  Update the external data store.
      */
-    func updateSnapshot() -> Void
-    
+    func updateSnapshot()
+
 }

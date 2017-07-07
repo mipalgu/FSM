@@ -64,7 +64,7 @@
  *  reference.
  */
 public protocol ExternalVariablesContainer: class {
-    
+
     /**
      *  The type of the `ExternalVariables`.
      */

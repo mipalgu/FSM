@@ -99,7 +99,7 @@ public class ExternalsSpinnerConstructorFactory<
      */
     public func make(
         externalVariables: AnySnapshotController
-    ) -> () -> () -> (AnySnapshotController, KripkeStatePropertyList)?
+    ) -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
     {
         let spinnerData = self.extractor.extract(externalVariables: externalVariables)
         return { () -> () -> (AnySnapshotController, KripkeStatePropertyList)? in

@@ -57,6 +57,9 @@
  */
 
 import KripkeStructure
+//
+// swiftlint:disable function_parameter_count
+// swiftlint:disable file_length
 
 /**
  *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
@@ -417,7 +420,6 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
         )
     )
 }
-
 
 /**
  *  Converts a `FiniteStateMachineType` that is capable of being scheduled, to

@@ -56,7 +56,7 @@
  *
  */
 
-import KripkeStructure 
+import KripkeStructure
 
 /**
  *  Conforming types are able to extract the values of the variables for 
@@ -76,6 +76,6 @@ public protocol ExternalsPropertyExtractor {
      */
     func extract(
         externalVariables: AnySnapshotController
-    ) -> KripkeStatePropertyList 
+    ) -> KripkeStatePropertyList
 
 }

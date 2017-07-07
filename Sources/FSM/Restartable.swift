@@ -60,10 +60,10 @@
  *  Conforming types are able to be restarted.
  */
 public protocol Restartable {
-    
+
     /**
      *  Restart `self`.
      */
-    mutating func restart() -> Void
-    
+    mutating func restart()
+
 }

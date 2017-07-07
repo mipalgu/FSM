@@ -90,7 +90,7 @@ public class SpinnerRunner: SpinnerRunnerType {
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
     ) -> KripkeStatePropertyList? {
-        if (index == vars.endIndex) {
+        if index == vars.endIndex {
             return nil
         }
         var vars = vars
