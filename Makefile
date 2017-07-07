@@ -23,8 +23,6 @@ install:
 
 .include "../../../mk/mipal.mk"		# comes last!
 
-CFLAGS+=-I../../../Common
-
 .if ${OS} == Darwin
 LDFLAGS+=-lc++
 .endif
