@@ -63,7 +63,7 @@ public typealias KripkeStatePropertyList = [String: KripkeStateProperty]
 /**
  *  Provides merge functionality for dictionaries.
  */
-public extension Dictionary {
+public extension Dictionary where Key == String, Value == KripkeStateProperty {
 
     /**
      *  Create a new `Dictionary` where the result is the merging of `other`
@@ -72,9 +72,6 @@ public extension Dictionary {
      *  - Attention: If there are conflicting keys, `other` has priority.
      */
     public func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
-        guard let current = self as? KripkeStatePropertyList else {
-            fatalError("Unable to cast to KripkeStatePropertyList")
-        }
         var d = KripkeStatePropertyList(minimumCapacity: self.count + other.count)
         func add(key: String, val: KripkeStateProperty) {
             switch val.type {
@@ -96,7 +93,7 @@ public extension Dictionary {
                 return
             }
         }
-        current.forEach { (key, val) in add(key: key, val: val) }
+        self.forEach { (key, val) in add(key: key, val: val) }
         other.forEach { (key, val) in add(key: key, val: val) }
         return d
     }
