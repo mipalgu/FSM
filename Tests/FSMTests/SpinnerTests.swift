@@ -58,7 +58,7 @@
 
 import XCTest
 @testable import FSM
-
+/*
 internal struct SimpleGlobals: ExternalVariables {
 
     var count: UInt8
@@ -220,3 +220,4 @@ class SpinnerTests: XCTestCase {
     }
 
 }
+*/
