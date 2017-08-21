@@ -12,7 +12,7 @@ EXT=dylib
 EXT=so
 .endif
 
-SWIFTCFLAGS+=-L/usr/local/lib -I/usr/local/include
+SWIFTCFLAGS+=-L/usr/local/lib -I/usr/local/include -I${GUNAO_DIR}/posix/CLReflect
 
 all:	all-real
 
