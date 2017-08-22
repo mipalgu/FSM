@@ -87,7 +87,7 @@ open class CFSMState: MiPalState
      *  - Parameter metaMachine: The underlying CLReflect metamachine.
      *  - Parameter stateNumber: The state's number as represented in the CLReflect metamachine.
      */
-    public init(_ name: String, transitions: [Transition<MiPalState, MiPalState>] = [], metaMachine: refl_metaMachine, stateNumber: Int) {
+    public init(_ name: String, transitions: [Transition<CFSMState, CFSMState>] = [], metaMachine: refl_metaMachine, stateNumber: Int) {
         self.metaMachine = metaMachine
         self.stateNumber = stateNumber
         super.init(name, transitions: transitions)
@@ -122,7 +122,7 @@ open class CFSMState: MiPalState
      *  `KripkeStructures`.
      */
     open override func clone() -> Self {
-        fatalError("Please implement your own clone")
+        fatalError("CFSM.clone() is not implemented")
     }
 
     /**
