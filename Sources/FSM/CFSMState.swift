@@ -67,7 +67,7 @@ open class CFSMState: MiPalState
     /**
      * The underlying CLReflect metamachine.
      */
-    public let metaMachine: refl_metaMachine
+    fileprivate let metaMachine: refl_metaMachine
 
     /**
      * This state's number as represented in the CLReflect metamachine.
