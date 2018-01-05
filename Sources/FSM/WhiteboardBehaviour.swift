@@ -86,7 +86,7 @@ public func trigger<T: ExternalVariables>(
 ) -> (Behaviour<T?>, (T) -> Void, () -> Time) {
     let wb: GenericWhiteboard = GenericWhiteboard<T>(
         msgType: type,
-        wb: wbd,
+        wbd: wbd,
         atomic: atomic,
         shouldNotifySubscribers: shouldNotifySubscribers
     )

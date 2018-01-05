@@ -67,8 +67,7 @@ let package = Package(
         Target(name: "FSM", dependencies: ["Functional", "KripkeStructure"])
     ],
     dependencies: [
-        .Package(url: "ssh://git.mipal.net/git/swift_wb.git", majorVersion: 1),
-        .Package(url: "git@gitlab.com:brenmous/swift_CLReflect.git", majorVersion: 1)
+        .Package(url: "ssh://git.mipal.net/git/swift_wb.git", majorVersion: 1)
     ]
 )
 

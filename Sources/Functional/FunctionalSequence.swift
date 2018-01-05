@@ -89,7 +89,7 @@ public func >>- <T, U, S: Sequence>(a: S, f: (T) -> [U]) -> [U] where
  *
  * - returns: A value of type `[U]`
  */
-public func -<< <T, U, S: Sequence>(f: (T) -> [U], a: [T]) -> [U] where
+public func -<< <T, U, S: Sequence>(f: (T) -> [U], a: S) -> [U] where
     S.Iterator.Element == T
 {
     
