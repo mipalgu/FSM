@@ -111,11 +111,11 @@ public class KripkeStatePropertySpinnerConverter:
         case .UInt64:
             return (UInt64.min, { self.spinners.uint64($0 as! UInt64) })
         case .Float:
-            return (Float.infinity.negated(), { self.spinners.float($0 as! Float) })
+            return (-Float.infinity, { self.spinners.float($0 as! Float) })
         case .Float80:
-            return (Float80.infinity.negated(), { self.spinners.float80($0 as! Float80) })
+            return (-Float80.infinity, { self.spinners.float80($0 as! Float80) })
         case .Double:
-            return (Double.infinity.negated(), { self.spinners.double($0 as! Double) })
+            return (-Double.infinity, { self.spinners.double($0 as! Double) })
         default:
             return (ksp.value, self.spinners.nilSpinner)
         }

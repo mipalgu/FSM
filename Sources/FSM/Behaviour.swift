@@ -355,35 +355,35 @@ public func >=<T: Comparable>(
     return pure { (t: Time) -> Bool in lhs.at(t) >= rhs.at(t) }
 }
 
-public func +<T: IntegerArithmetic>(
+public func +<T: BinaryInteger>(
     lhs: Behaviour<T>,
     rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return pure { (t: Time) -> T in lhs.at(t) + rhs.at(t) }
 }
 
-public func -<T: IntegerArithmetic>(
+public func -<T: BinaryInteger>(
     lhs: Behaviour<T>,
     rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return pure { (t: Time) -> T in lhs.at(t) - rhs.at(t) }
 }
 
-public func *<T: IntegerArithmetic>(
+public func *<T: BinaryInteger>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return pure { (t: Time) -> T in lhs.at(t) * rhs.at(t) }
 }
 
-public func /<T: IntegerArithmetic>(
+public func /<T: BinaryInteger>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {
     return pure { (t: Time) -> T in lhs.at(t) / rhs.at(t) }
 }
 
-public func %<T: IntegerArithmetic>(
+public func %<T: BinaryInteger>(
    lhs: Behaviour<T>,
    rhs: Behaviour<T>
 ) -> Behaviour<T> {

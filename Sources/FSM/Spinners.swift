@@ -202,4 +202,6 @@ public struct Spinners {
      */
     let nilSpinner: Spinner<Any> = { _ -> Any? in nil }
 
+    public init() {}
+
 }

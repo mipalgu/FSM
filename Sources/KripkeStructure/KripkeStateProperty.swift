@@ -96,7 +96,7 @@ public struct KripkeStateProperty: Equatable {
     }
     
     private func equalValues(other: KripkeStateProperty) -> Bool {
-        if (type(of: self.value) != type(of: other.value)) {
+        if (Swift.type(of: self.value) != Swift.type(of: other.value)) {
             return false
         }
         // Cast the values to the correct type and perform the equality check.
