@@ -164,9 +164,13 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
                 value: self.ringlet
             )
         ]
+        var states: KripkeStatePropertyList = [:]
+        var values: [R._StateType] = []
         self.allStates.forEach {
-            d[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
+            states[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
+            values.append($1)
         }
+        d["states"] = KripkeStateProperty(type: .Compound(states), value: values)
         return d
     }
 
@@ -273,8 +277,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
 
     public func clone() -> FiniteStateMachine<R, KR, V>{
         self.fsmVars.vars = self.fsmVars.vars.clone()
-        var currentState = self.currentState
-        currentState.transitions = self.currentState.transitions.map { $0.map { $0.clone() } }
         var fsm = FiniteStateMachine(
             self.name,
             initialState: self.initialState.clone(),
@@ -287,7 +289,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             suspendState: self.suspendState.clone(),
             exitState: self.exitState.clone()
         )
-        fsm.currentState = currentState
+        fsm.currentState = self.currentState.clone()
         fsm.previousState = self.previousState.clone()
         return fsm
     }
@@ -298,9 +300,12 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         }
         //let previousState = dictionary["previousState"] as! String
         //let suspendedState = dictionary["suspendedState"] as! String
+        guard let states = dictionary["states"] as? [String: Any] else {
+            fatalError("Unable to fetch states from dictionary")
+        }
         self.allStates.forEach { (key: String, state: R._StateType) in
             var s = state
-            guard let d = dictionary[key] as? [String: Any] else {
+            guard let d = states[key] as? [String: Any] else {
                 fatalError("Unable to fetch \(key) from dictionary")
             }
             s.update(fromDictionary: d)
