@@ -158,17 +158,18 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
                 self.recorder.takeRecord(of: self.fsmVars.vars)),
                 value: self.fsmVars.vars
             ),
-            "currentState": KripkeStateProperty(type: .String, value: self.currentState.name),
             "ringlet": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.ringlet)),
                 value: self.ringlet
-            )
+            ),
+            "hasFinished": KripkeStateProperty(type: .Bool, value: self.hasFinished),
+            "isSuspended": KripkeStateProperty(type: .Bool, value: self.isSuspended)
         ]
         var states: KripkeStatePropertyList = [:]
-        var values: [R._StateType] = []
+        var values: [String: R._StateType] = [:]
         self.allStates.forEach {
             states[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
-            values.append($1)
+            values[$0] = $1
         }
         d["states"] = KripkeStateProperty(type: .Compound(states), value: values)
         return d
@@ -275,29 +276,49 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         self.suspendState = suspendState
     }
 
+    //swiftlint:disable:next function_body_length
     public func clone() -> FiniteStateMachine<R, KR, V>{
+        var stateCache: [String: R._StateType] = [:]
+        let allStates = self.allStates
+        func apply(_ state: R._StateType) -> R._StateType {
+            if let s = stateCache[state.name] {
+                return s
+            }
+            var state = state
+            stateCache[state.name] = state
+            state.transitions = state.transitions.map {
+                if $0.target == state {
+                    return $0
+                }
+                guard let target = allStates[$0.target.name] else {
+                    return $0
+                }
+                return $0.map { _ in apply(target.clone()) }
+            }
+            return state
+        }
         self.fsmVars.vars = self.fsmVars.vars.clone()
         var fsm = FiniteStateMachine(
             self.name,
-            initialState: self.initialState.clone(),
+            initialState: apply(self.initialState.clone()),
             externalVariables: self.externalVariables,
             fsmVars: self.fsmVars,
             recorder: self.recorder,
             ringlet: self.ringlet.clone(),
-            initialPreviousState: self.initialPreviousState.clone(),
-            suspendedState: self.suspendedState?.clone(),
-            suspendState: self.suspendState.clone(),
-            exitState: self.exitState.clone()
+            initialPreviousState: apply(self.initialPreviousState.clone()),
+            suspendedState: self.suspendedState.map { apply($0.clone()) },
+            suspendState: apply(self.suspendState.clone()),
+            exitState: apply(self.exitState.clone())
         )
-        fsm.currentState = self.currentState.clone()
-        fsm.previousState = self.previousState.clone()
+        fsm.currentState = apply(self.currentState.clone())
+        fsm.previousState = apply(self.previousState.clone())
+        fsm.allStates.forEach {
+            apply($1)
+        }
         return fsm
     }
 
     public mutating func update(fromDictionary dictionary: [String: Any]) {
-        guard let currentState = dictionary["currentState"] as? String else {
-            fatalError("Unable to fetch currentState")
-        }
         //let previousState = dictionary["previousState"] as! String
         //let suspendedState = dictionary["suspendedState"] as! String
         guard let states = dictionary["states"] as? [String: Any] else {
@@ -309,9 +330,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
                 fatalError("Unable to fetch \(key) from dictionary")
             }
             s.update(fromDictionary: d)
-            if currentState == s.name {
-                self.currentState = s
-            }
             /*if previousState == s.name {
                 self.previousState = s
             }
