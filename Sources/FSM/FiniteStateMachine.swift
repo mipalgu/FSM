@@ -161,9 +161,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             "ringlet": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.ringlet)),
                 value: self.ringlet
-            ),
-            "hasFinished": KripkeStateProperty(type: .Bool, value: self.hasFinished),
-            "isSuspended": KripkeStateProperty(type: .Bool, value: self.isSuspended)
+            )
         ]
         var states: KripkeStatePropertyList = [:]
         var values: [String: R._StateType] = [:]
