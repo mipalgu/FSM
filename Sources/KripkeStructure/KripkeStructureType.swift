@@ -62,6 +62,8 @@
  *  - Warning: Do not use this type directly.  Instead use `KripkeStructure`.
  */
 public protocol _KripkeStructureType {
+
+    associatedtype KripkeState: KripkeStateType
     
     var states: [[KripkeState]] { get }
     

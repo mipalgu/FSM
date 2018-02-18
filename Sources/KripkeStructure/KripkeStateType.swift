@@ -61,7 +61,7 @@
  *
  *  - Warning: Do not use this type directly.  Instead use `KripkeState`.
  */
-public protocol _KripkeStateType: Equatable {
+public protocol _KripkeStateType: class, Equatable {
     
     var id: String { get }
 
@@ -70,9 +70,9 @@ public protocol _KripkeStateType: Equatable {
     /**
      *  The state which we will transition to.
      */
-    weak var previous: KripkeState? { get set }
+    weak var previous: Self? { get set }
 
-    var targets: [KripkeState] { get set }
+    var targets: [Self] { get set }
     
 }
 
