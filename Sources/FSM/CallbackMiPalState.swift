@@ -71,6 +71,14 @@
  */
 public final class CallbackMiPalState: MiPalState {
 
+    public override var validVars: [String: [Any]] {
+        return [
+            "_onEntry": [],
+            "_main": [],
+            "_onExit": []
+        ]
+    }
+
     /**
      *  The actual onEntry implementation.
      */
