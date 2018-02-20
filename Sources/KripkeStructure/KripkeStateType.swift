@@ -62,52 +62,42 @@
  *  - Warning: Do not use this type directly.  Instead use `KripkeState`.
  */
 public protocol _KripkeStateType: class, Equatable {
-    
-    var id: String { get }
 
     var properties: KripkeStatePropertyList { get }
 
-    /**
-     *  The state which we will transition to.
-     */
-    weak var previous: Self? { get set }
+    var effects: [KripkeStatePropertyList] { get set }
 
-    var targets: [Self] { get set }
-    
 }
 
 extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
-    
+
     public var description: String {
-        var str: String = "id = \(self.id)\n"
+        var str: String = ""
         //str += "previous = \(self.previous?.state)\n"
         str += "properties: {\n"
         str += self.properties.description
-        str += "\n}\n"
-        str += "}"
+        str += "\n}"
         return str
     }
 
     public var hashValue: Int {
-        return self.targets.reduce(self.description) {
+        return self.effects.reduce(self.description) {
             $0 + $1.description
         }.hashValue
     }
-    
+
 }
 
 extension _KripkeStateType where Self: CustomDebugStringConvertible {
-    
+
     public var debugDescription: String {
-        var str: String = "id = \(self.id)\n"
-        str += "previous = \(self.previous?.id)\n"
+        var str: String = ""
         str += "properties: {\n"
         str += self.properties.description
-        str += "\n}\n"
-        str += "}"
+        str += "\n}"
         return str
     }
-    
+
 }
 
 /**
@@ -120,13 +110,14 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
    lhs: T,
    rhs: U
 ) -> Bool {
-    return lhs.id == rhs.id &&
-        lhs.properties == rhs.properties
+    if lhs.effects.count != rhs.effects.count {
+        return false
+    }
+    return lhs.properties == rhs.properties &&
+        nil == zip(lhs.effects, rhs.effects).first { $0 != $1 }
 }
 
-public protocol KripkeStateType:
-    _KripkeStateType,
+public protocol KripkeStateType: _KripkeStateType,
     CustomStringConvertible,
     CustomDebugStringConvertible,
-    Hashable
-{}
+    Hashable {}

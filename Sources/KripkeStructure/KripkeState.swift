@@ -59,55 +59,28 @@
 /**
  *  A `KripkeState` represents a node in a `KripkeStructure`.
  */
-public final class KripkeState<Object>: KripkeStateType {
-
-    public let id: String
-
-    public let object: Object
-
-    /**
-     *  The `KripkeState` that is linked to `self`.
-     */
-    public weak var previous: KripkeState<Object>?
+public final class KripkeState: KripkeStateType {
 
     /**
      *  A snapshot of all properties that affected the execution of `state`.
      */
     public let properties: KripkeStatePropertyList
 
-    /**
-     *  All possible `KripkeStates` that can be transitioned to.
-     */
-    public var targets: [KripkeState<Object>]
-    
+    public var effects: [KripkeStatePropertyList]
+
     /**
      *  Create a new `KripkeState`.
      *
-     *  - Parameter state: The name of the state.
-     *
-     *  - Parameter fsm: The name of the Finite State Machine.
-     *
-     *  - Parameter machine: The name of the machine.
-     *
      *  - Parameter properties: A snapshot of all the properties.
      *
-     *  - Parameter previous: The previous `KripkeState` that links to `self`.
-     *
-     *  - Parameter targets: All `KripkeStates` that this `KripkeState` can
-     *  transition to.
+     *  - Parameter effects: All changes to properties.
      */
     public init(
-        id: String,
-        object: Object,
         properties: KripkeStatePropertyList,
-        previous: KripkeState<Object>? = nil,
-        targets: [KripkeState<Object>] = []
+        effects: [KripkeStatePropertyList] = []
     ) {
-        self.id = id
-        self.object = object
-        self.previous = previous
         self.properties = properties
-        self.targets = targets
+        self.effects = effects
     }
-    
+
 }
