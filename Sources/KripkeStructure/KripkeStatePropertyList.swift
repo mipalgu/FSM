@@ -58,44 +58,106 @@
 
 import Functional
 
-public typealias KripkeStatePropertyList = [String: KripkeStateProperty]
+public struct KripkeStatePropertyList {
 
-/**
- *  Provides merge functionality for dictionaries.
- */
-public extension Dictionary where Key == String, Value == KripkeStateProperty {
+    public fileprivate(set) var properties: [String: KripkeStateProperty]
 
-    /**
-     *  Create a new `Dictionary` where the result is the merging of `other`
-     *  with `self`.
-     *
-     *  - Attention: If there are conflicting keys, `other` has priority.
-     */
-    public func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
-        var d = KripkeStatePropertyList(minimumCapacity: self.count + other.count)
-        func add(key: String, val: KripkeStateProperty) {
-            switch val.type {
-            case .Compound(let list):
-                guard let currentVal = d[key] else {
-                    d[key] = val
-                    return
-                }
-                switch currentVal.type {
-                case .Compound(let currentList):
-                    d[key] = KripkeStateProperty(type: .Compound(currentList.merged(list)), value: val.value)
-                    return
-                default:
-                    d[key] = val
-                    return
-                }
-            default:
-                d[key] = val
-                return
-            }
+    public init(_ properties: [String: KripkeStateProperty] = [:]) {
+        self.properties = properties
+    }
+
+    public subscript(key: String) -> KripkeStateProperty? {
+        get {
+            return self.properties[key]
+        } set {
+            self.properties[key] = newValue
         }
-        self.forEach { (key, val) in add(key: key, val: val) }
-        other.forEach { (key, val) in add(key: key, val: val) }
-        return d
+    }
+
+}
+
+extension KripkeStatePropertyList: ExpressibleByDictionaryLiteral {
+
+    public init(dictionaryLiteral elements: (String, KripkeStateProperty) ... ) {
+        var ps: [String: KripkeStateProperty] = [:]
+        ps.reserveCapacity(elements.count)
+        elements.forEach {
+            ps[$0] = $1
+        }
+        self.init(ps)
+    }
+
+}
+
+extension KripkeStatePropertyList: Equatable {
+
+    public static func == (lhs: KripkeStatePropertyList, rhs: KripkeStatePropertyList) -> Bool {
+        return lhs.properties == rhs.properties
+    }
+
+}
+
+extension KripkeStatePropertyList: Hashable, CustomStringConvertible {
+
+    public var description: String {
+        return self.properties.description
+    }
+
+    public var hashValue: Int {
+        return self.description.hashValue
+    }
+
+}
+
+extension KripkeStatePropertyList: Sequence {
+
+    public typealias Element = Dictionary<String, KripkeStateProperty>.Element
+
+    public func makeIterator() -> DictionaryIterator<String, KripkeStateProperty> {
+        return self.properties.makeIterator()
+    }
+
+}
+
+extension KripkeStatePropertyList: Collection {
+
+    public typealias Index = Dictionary<String, KripkeStateProperty>.Index
+    public typealias IndexDistance = Dictionary<String, KripkeStateProperty>.IndexDistance
+
+    public var startIndex: Index {
+        return self.properties.startIndex
+    }
+
+    public var endIndex: Index {
+        return self.properties.endIndex
+    }
+
+    public subscript(index: Index) -> Element {
+        return self.properties[index]
+    }
+
+    public func index(_ i: Index, offsetBy n: IndexDistance) -> Index {
+        return self.properties.index(i, offsetBy: n)
+    }
+
+    public func index(_ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index) -> Index? {
+        return self.properties.index(i, offsetBy: n, limitedBy: limit)
+    }
+
+    public func index(where predicate: @escaping (Element) throws -> Bool) rethrows -> Index? {
+        return try self.properties.index(where: predicate)
+    }
+
+    public func index(after i: Index) -> Index {
+        return self.properties.index(after: i)
+    }
+
+}
+
+public extension KripkeStatePropertyList {
+
+    public func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
+        return KripkeStatePropertyList(self.properties <| other.properties)
     }
 
 }
@@ -125,6 +187,60 @@ public func |> (
     lhs: KripkeStatePropertyList,
     rhs: KripkeStatePropertyList
 ) -> KripkeStatePropertyList {
+    return rhs.merged(lhs)
+}
+
+/**
+ *  Provides merge functionality for dictionaries.
+ */
+public extension Dictionary where Key == String, Value == KripkeStateProperty {
+
+    /**
+     *  Create a new `Dictionary` where the result is the merging of `other`
+     *  with `self`.
+     *
+     *  - Attention: If there are conflicting keys, `other` has priority.
+     */
+    public func merged(_ other: [String: KripkeStateProperty]) -> [String: KripkeStateProperty] {
+        var d = [String: KripkeStateProperty](minimumCapacity: self.count + other.count)
+        func add(key: String, val: KripkeStateProperty) {
+            switch val.type {
+            case .Compound(let list):
+                guard let currentVal = d[key] else {
+                    d[key] = val
+                    return
+                }
+                switch currentVal.type {
+                case .Compound(let currentList):
+                    d[key] = KripkeStateProperty(type: .Compound(currentList.merged(list)), value: val.value)
+                    return
+                default:
+                    d[key] = val
+                    return
+                }
+            default:
+                d[key] = val
+                return
+            }
+        }
+        self.forEach { (key, val) in add(key: key, val: val) }
+        other.forEach { (key, val) in add(key: key, val: val) }
+        return d
+    }
+
+}
+
+public func <| (
+    lhs: [String: KripkeStateProperty],
+    rhs: [String: KripkeStateProperty]
+) -> [String: KripkeStateProperty] {
+    return lhs.merged(rhs)
+}
+
+public func |> (
+    lhs: [String: KripkeStateProperty],
+    rhs: [String: KripkeStateProperty]
+) -> [String: KripkeStateProperty] {
     return rhs.merged(lhs)
 }
 

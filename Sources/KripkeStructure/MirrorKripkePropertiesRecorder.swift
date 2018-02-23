@@ -99,8 +99,8 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         manipulators: [String: (Any) -> Any] = [:],
         validValues: [String: [Any]] = [:],
         withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
-    ) -> [String: KripkeStateProperty] {
-        var p: [String: KripkeStateProperty] = [:]
+    ) -> KripkeStatePropertyList {
+        var p = KripkeStatePropertyList()
         let parent: Mirror? = mirror.superclassMirror
         if (nil != parent) {
             p = self.getPropertiesFromMirror(

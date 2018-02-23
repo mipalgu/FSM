@@ -65,7 +65,7 @@ public protocol _KripkeStateType: class, Equatable {
 
     var properties: KripkeStatePropertyList { get }
 
-    var effects: [KripkeStatePropertyList] { get set }
+    var effects: Set<KripkeStatePropertyList> { get set }
 
 }
 
