@@ -64,13 +64,15 @@
 public protocol _KripkeStructureType {
 
     associatedtype KripkeState: KripkeStateType
-    
-    var states: [[KripkeState]] { get }
-    
+
+    var initialStates: [KripkeState] { get }
+
+    var states: [KripkeState] { get }
+
 }
 
 extension _KripkeStructureType where Self: CustomStringConvertible {
-    
+
     public var description: String {
         // Total width of the printable area
         let width: Int = 40
@@ -85,17 +87,12 @@ extension _KripkeStructureType where Self: CustomStringConvertible {
         // Create the states.
         var str: String = start + "\n"
         self.states.forEach {
-            $0.forEach {
-                str += arrow + border + "\n"
-                str += $0.description + "\n" + border + "\n"
-            }
+            str += arrow + border + "\n"
+            str += $0.description + "\n" + border + "\n"
         }
         return str
     }
-    
+
 }
 
-public protocol KripkeStructureType:
-    _KripkeStructureType,
-    CustomStringConvertible
-{}
+public protocol KripkeStructureType: _KripkeStructureType, CustomStringConvertible {}
