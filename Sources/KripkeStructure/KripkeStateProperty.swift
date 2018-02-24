@@ -82,19 +82,48 @@ public struct KripkeStateProperty: Equatable {
         self.type = type
         self.value = value
     }
-    
+
     /**
      *  Is `other` equal to `self`?
      */
     public func equals(other: KripkeStateProperty) -> Bool {
         // Check if rhs property type matches
-        if (self.type != other.type) {
+        if self.type != other.type {
             return false
         }
-        // Compare the values
-        return self.equalValues(other: other)
+        switch self.type {
+        case .EmptyCollection:
+            switch other.type {
+            case .EmptyCollection:
+                return true
+            default:
+                return false
+            }
+        case .Collection(let llists):
+            switch other.type {
+            case .Collection(let rlists):
+                if llists.count != rlists.count {
+                    return false
+                }
+                return nil == zip(llists, rlists).first {
+                    $0 != $1
+                }
+            default:
+                return false
+            }
+        case .Compound(let llist):
+            switch other.type {
+            case .Compound(let rlist):
+                return llist == rlist
+            default:
+                return false
+            }
+        default:
+            // Compare the values
+            return self.equalValues(other: other)
+        }
     }
-    
+
     private func equalValues(other: KripkeStateProperty) -> Bool {
         if (Swift.type(of: self.value) != Swift.type(of: other.value)) {
             return false

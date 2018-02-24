@@ -114,7 +114,7 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
         return false
     }
     return lhs.properties == rhs.properties &&
-        nil == zip(lhs.effects, rhs.effects).first { $0 != $1 }
+        nil == lhs.effects.first { false == rhs.effects.contains($0) }
 }
 
 public protocol KripkeStateType: _KripkeStateType,
