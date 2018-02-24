@@ -92,13 +92,7 @@ extension KripkeStatePropertyList: ExpressibleByDictionaryLiteral {
 extension KripkeStatePropertyList: Equatable {
 
     public static func == (lhs: KripkeStatePropertyList, rhs: KripkeStatePropertyList) -> Bool {
-        let keys = Set(lhs.properties.keys).union(Set(rhs.properties.keys))
-        return nil == keys.first {
-            guard let lvalue = lhs[$0], let rvalue = rhs[$0] else {
-                return true
-            }
-            return lvalue != rvalue
-        }
+        return lhs.description == rhs.description
     }
 
 }
