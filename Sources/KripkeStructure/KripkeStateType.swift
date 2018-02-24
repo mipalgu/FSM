@@ -76,6 +76,11 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
         //str += "previous = \(self.previous?.state)\n"
         str += "properties: {\n"
         str += self.properties.description
+        str += "\n},\n"
+        str += "effects: [\n"
+        str += self.effects.first?.description ?? "" + self.effects.dropFirst().reduce("") {
+            $0 + ",\n    " + $1.description
+        }
         str += "\n}"
         return str
     }
