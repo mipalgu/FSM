@@ -145,15 +145,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
 
     public var currentRecord: KripkeStatePropertyList {
         var d: KripkeStatePropertyList = [
-            "externalVariables": KripkeStateProperty(
-                type: .Collection(self.externalVariables.map {
-                    KripkeStateProperty(
-                        type: .Compound(self.recorder.takeRecord(of: $0.val)),
-                        value: $0.val
-                    )
-                }),
-                value: self.externalVariables.map { $0.val }
-            ),
             "fsmVars": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.fsmVars.vars)),
                 value: self.fsmVars.vars
