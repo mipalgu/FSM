@@ -62,7 +62,7 @@ import KripkeStructure
 // swiftlint:disable file_length
 
 /**
- *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
  *
  *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
@@ -87,7 +87,7 @@ import KripkeStructure
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
  *  - SeeAlso: `KRIPKE`
@@ -103,7 +103,7 @@ public func FSM(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine {
+) -> AnyControllableFiniteStateMachine {
     return FSM(
         name,
         initialState: initialState,
@@ -120,7 +120,7 @@ public func FSM(
 }
 
 /**
- *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
  *
  *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
@@ -147,7 +147,7 @@ public func FSM(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
  *  - SeeAlso: `KRIPKE`
@@ -164,7 +164,7 @@ public func FSM<EV: ExternalVariablesContainer>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine where EV: Snapshotable {
+) -> AnyControllableFiniteStateMachine where EV: Snapshotable {
     return FSM(
         name,
         initialState: initialState,
@@ -178,7 +178,7 @@ public func FSM<EV: ExternalVariablesContainer>(
 }
 
 /**
- *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
  *
  *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
@@ -205,9 +205,9 @@ public func FSM<EV: ExternalVariablesContainer>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
- *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *  - Returns: A new instance of `AnyControllableFiniteStateMachine`.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
  *  - SeeAlso: `KRIPKE`
@@ -224,7 +224,7 @@ public func FSM<V: VariablesContainer>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine {
+) -> AnyControllableFiniteStateMachine {
     return FSM(
         name,
         initialState: initialState,
@@ -238,7 +238,7 @@ public func FSM<V: VariablesContainer>(
 }
 
 /**
- *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
  *
  *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
  *
@@ -267,9 +267,9 @@ public func FSM<V: VariablesContainer>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
- *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *  - Returns: A new instance of `AnyControllableFiniteStateMachine`.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
  *  - SeeAlso: `KRIPKE`
@@ -287,7 +287,7 @@ public func FSM<EV: ExternalVariablesContainer, V: VariablesContainer>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine where EV: Snapshotable {
+) -> AnyControllableFiniteStateMachine where EV: Snapshotable {
     return FSM(
         name,
         initialState: initialState,
@@ -309,7 +309,7 @@ public func FSM<V: VariablesContainer>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine {
+) -> AnyControllableFiniteStateMachine {
     return FSM(
         name,
         initialState: initialState,
@@ -326,7 +326,7 @@ public func FSM<V: VariablesContainer>(
 }
 
 /**
- *  Create an `AnyScheduleableFiniteStateMachine` that uses `MiPalState`s.
+ *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
  *
  *  The underlying `FiniteStateMachineType` is `FiniteStateMachine`.
  *
@@ -352,9 +352,9 @@ public func FSM<V: VariablesContainer>(
  *  - Parameter exitState: When `exit()` is called, `currentState` is set to
  *  this state.  This satisfies requirements from `ExitableState`.
  *
- *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *  - Returns: A new instance of `AnyControllableFiniteStateMachine`.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  *  - SeeAlso: `FiniteStateMachine`
  *  - SeeAlso: `Ringlet`
@@ -369,8 +369,8 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyScheduleableFiniteStateMachine where R: Cloneable, R: Updateable, R._StateType == MiPalState {
-    return AnyScheduleableFiniteStateMachine(
+) -> AnyControllableFiniteStateMachine where R: Cloneable, R: Updateable, R._StateType == MiPalState {
+    return AnyControllableFiniteStateMachine(
         FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V>(
             name,
             initialState: initialState,
@@ -396,7 +396,7 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     suspendedState: R._StateType? = nil,
     suspendState: R._StateType,
     exitState: R._StateType
-) -> AnyScheduleableFiniteStateMachine where
+) -> AnyControllableFiniteStateMachine where
     R: Cloneable,
     R: Updateable,
     R._StateType: Cloneable,
@@ -405,7 +405,7 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     R._StateType: KripkeVariablesModifier,
     R._StateType: Updateable
 {
-    return AnyScheduleableFiniteStateMachine(
+    return AnyControllableFiniteStateMachine(
         FiniteStateMachine(
             name,
             initialState: initialState,
@@ -423,22 +423,22 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
 
 /**
  *  Converts a `FiniteStateMachineType` that is capable of being scheduled, to
- *  an `AnyScheduleableFiniteStateMachine`.
+ *  an `AnyControllableFiniteStateMachine`.
  *
  *  - Attention: This function just supplies some syntactic sugar, you can of
- *  course use the `AnyScheduleableFiniteStateMachine` constructor to achieve
+ *  course use the `AnyControllableFiniteStateMachine` constructor to achieve
  *  the same effect.
  *
  *  - Parameter fsm: The `FiniteStateMachineType` to convert.
  *
- *  - Returns: A new instance of `AnyScheduleableFiniteStateMachine`.
+ *  - Returns: A new instance of `AnyControllableFiniteStateMachine`.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  */
 public func FSM<FSM: FiniteStateMachineType>(
     _ fsm: FSM
-) -> AnyScheduleableFiniteStateMachine where
+) -> AnyControllableFiniteStateMachine where
     FSM: Cloneable,
     FSM: StateExecuter,
     FSM: Exitable,
@@ -450,27 +450,27 @@ public func FSM<FSM: FiniteStateMachineType>(
     FSM: SnapshotControllerContainer,
     FSM: Updateable
 {
-    return AnyScheduleableFiniteStateMachine(fsm)
+    return AnyControllableFiniteStateMachine(fsm)
 }
 
 /**
  *  Converts an array of `FiniteStateMachineType`s that are capable of being
- *  scheduled, to an array of `AnyScheduleableFiniteStateMachine`s.
+ *  scheduled, to an array of `AnyControllableFiniteStateMachine`s.
  *
  *  - Attention: This function just supplies some syntactic sugar, you can of
- *  course use the `AnyScheduleableFiniteStateMachine` constructor on each
+ *  course use the `AnyControllableFiniteStateMachine` constructor on each
  *  `FiniteStateMachineType` to achieve the same effect.
  *
  *  - Parameters fsms: The array of `FiniteStateMachineType`s to convert.
  *
- *  - Returns: An array of `AnyScheduleableFiniteStateMachine`s.
+ *  - Returns: An array of `AnyControllableFiniteStateMachine`s.
  *
- *  - SeeAlso: `AnyScheduleableFiniteStateMachine`
+ *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  */
 public func FSMS<FSM: FiniteStateMachineType>(
     _ fsms: FSM ...
-) -> [AnyScheduleableFiniteStateMachine] where
+) -> [AnyControllableFiniteStateMachine] where
     FSM: Cloneable,
     FSM: StateExecuter,
     FSM: Exitable,
@@ -482,5 +482,5 @@ public func FSMS<FSM: FiniteStateMachineType>(
     FSM: SnapshotControllerContainer,
     FSM: Updateable
 {
-    return fsms.map { AnyScheduleableFiniteStateMachine($0) }
+    return fsms.map { AnyControllableFiniteStateMachine($0) }
 }

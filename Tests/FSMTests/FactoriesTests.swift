@@ -109,7 +109,7 @@ class FactoriesTests: XCTestCase {
     func test_peek() {
         var f: Factories = Factories()
         let fact: () -> [AnyScheduleableFiniteStateMachine] = {
-            [FSM("test", initialState: EmptyMiPalState("initial"))]
+            [FSM("test", initialState: EmptyMiPalState("initial")).asScheduleableFiniteStateMachine]
         }
         f.push({[]})
         f.push(fact)

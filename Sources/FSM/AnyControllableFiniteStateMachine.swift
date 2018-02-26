@@ -1,9 +1,9 @@
 /*
- * AnyScheduleableFiniteStateMachine.swift 
+ * AnyControllableFiniteStateMachine.swift 
  * FSM 
  *
- * Created by Callum McColl on 28/07/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 26/02/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -60,25 +60,26 @@ import Functional
 import KripkeStructure
 
 /**
- *  A type-erased Finite State Machine that is loadable by the swiftfsm
- *  scheduler.
+ *  A type-erased Finite State Machine that can be controlled.
  *
- *  An instance of `AnyScheduleableFiniteStateMachine` forwards its operations
+ *  An instance of `AnyControllableFiniteStateMachine` forwards its operations
  *  to an underlying base `FiniteStateMachineType`, wrapping all states within
  *  an `AnyState`, hiding the specifics of the underlying fsm.
  *
  *  - SeeAlso: `AnyState`
  *  - SeeAlso: `FiniteStateMachineType`
  */
-public struct AnyScheduleableFiniteStateMachine:
+public struct AnyControllableFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,
     StateExecuter,
+    Exitable,
     Finishable,
     KripkePropertiesRecordable,
+    Resumeable,
+    Restartable,
     Snapshotable,
     SnapshotControllerContainer,
-    Suspendable,
     Updateable
 {
 
@@ -86,11 +87,15 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public let base: Any
 
-    private let _clone: () -> AnyScheduleableFiniteStateMachine
+    private let _asScheduleableFiniteStateMachine: () -> AnyScheduleableFiniteStateMachine
+
+    private let _clone: () -> AnyControllableFiniteStateMachine
 
     private let _currentRecord: () -> KripkeStatePropertyList
 
     private let _currentState: () -> AnyState
+
+    private let _exit: () -> Void
 
     private let _externalVariables: () -> [AnySnapshotController]
 
@@ -106,6 +111,10 @@ public struct AnyScheduleableFiniteStateMachine:
 
     private let _next: () -> Void
 
+    private let _restart: () -> Void
+
+    private let _resume: () -> Void
+
     private let _suspend: () -> Void
 
     private let _saveSnapshot: () -> Void
@@ -116,6 +125,10 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public var currentRecord: KripkeStatePropertyList {
         return self._currentRecord()
+    }
+
+    public var asScheduleableFiniteStateMachine: AnyScheduleableFiniteStateMachine {
+        return self._asScheduleableFiniteStateMachine()
     }
 
     /**
@@ -175,18 +188,22 @@ public struct AnyScheduleableFiniteStateMachine:
     public init<FSM: FiniteStateMachineType>(_ base: FSM) where
         FSM: Cloneable,
         FSM: StateExecuter,
+        FSM: Exitable,
         FSM: Finishable,
         FSM: KripkePropertiesRecordable,
+        FSM: Resumeable,
+        FSM: Restartable,
         FSM: Snapshotable,
         FSM: SnapshotControllerContainer,
-        FSM: Suspendable,
         FSM: Updateable
     {
-	self.base = base
+	    self.base = base
         var base = base
-        self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
+        self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(base) }
+        self._clone = { AnyControllableFiniteStateMachine(base.clone()) }
         self._currentRecord = { base.currentRecord }
         self._currentState = { AnyState(base.currentState) }
+        self._exit = { base.exit() }
         self._setExternalVariables = { base.externalVariables = $0 }
         self._externalVariables = { base.externalVariables }
         self._hasFinished = { base.hasFinished }
@@ -194,14 +211,25 @@ public struct AnyScheduleableFiniteStateMachine:
         self._isSuspended = { base.isSuspended }
         self._name = { base.name }
         self._next = { base.next() }
+        self._restart = { base.restart() }
+        self._resume = { base.resume() }
         self._suspend = { base.suspend() }
         self._saveSnapshot = { base.saveSnapshot() }
         self._takeSnapshot = { base.takeSnapshot() }
         self._update = { base.update(fromDictionary: $0) }
     }
 
-    public func clone() -> AnyScheduleableFiniteStateMachine {
+    public func clone() -> AnyControllableFiniteStateMachine {
         return self._clone()
+    }
+
+    /**
+     *  Stop the Finite State Machine from running.
+     *
+     *  - Postcondition: `hasFinished` is true.
+     */
+    public func exit() {
+        self._exit()
     }
 
     /**
@@ -209,6 +237,20 @@ public struct AnyScheduleableFiniteStateMachine:
      */
     public func next() {
         self._next()
+    }
+
+    /**
+     *  Restart the Finite State Machine.
+     */
+    public func restart() {
+        self._restart()
+    }
+
+    /**
+     *  Resume the Finite State Machine so that it is no longer suspended.
+     */
+    public func resume() {
+        self._resume()
     }
 
     /**
