@@ -72,10 +72,10 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
 
     internal var currentState: MiPalState?
 
+    internal var shouldExecuteOnEntry: Bool = true
+
     public var computedVars: [String: Any] {
-        return [
-            "shouldExecuteOnEntry": nil == self.currentState ? true : self.previousState == self.currentState!
-        ]
+        return [:]
     }
 
     public var manipulators: [String : (Any) -> Any] {
@@ -117,29 +117,37 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
             // Yes - Exit state and return the new state.
             state.onExit()
             self.currentState = t.target
+            self.shouldExecuteOnEntry = self.previousState != t.target
             return t.target
         }
         // No - Execute main method and return state.
         state.main()
         self.currentState = state
+        self.shouldExecuteOnEntry = false
         return state
     }
 
     public func clone() -> MiPalRinglet {
         let r = MiPalRinglet(previousState: self.previousState.clone())
-        r.currentState = self.currentState
+        r.shouldExecuteOnEntry = self.shouldExecuteOnEntry
+        r.currentState = self.currentState?.clone()
         return r
     }
 
     public func update(fromDictionary dictionary: [String: Any]) {
-        guard
-            let shouldExecuteOnEntry = dictionary["shouldExecuteOnEntry"] as? Bool,
-            false == shouldExecuteOnEntry
-        else {
+        guard let shouldExecuteOnEntry = dictionary["shouldExecuteOnEntry"] as? Bool else {
+            return
+        }
+        self.shouldExecuteOnEntry = shouldExecuteOnEntry
+        if true == self.shouldExecuteOnEntry {
+            if self.currentState?.name == "_previous" {
+                self.previousState = EmptyMiPalState("__previous")
+                return
+            }
             self.previousState = EmptyMiPalState("_previous")
             return
         }
-        self.previousState = self.currentState!
+        self.currentState = self.previousState
     }
 
 }
