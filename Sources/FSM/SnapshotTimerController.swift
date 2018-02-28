@@ -64,13 +64,17 @@ import Glibc
 
 public final class SnapshotTimerController<T: TimerProtocol>: Snapshotable, ExternalVariablesContainer {
 
-    public var val: T = T(startTime: UInt(time(nil)))
+    public var val: T
 
     public func saveSnapshot() {
     }
 
     public func takeSnapshot() {
         self.val = T(startTime: UInt(time(nil)))
+    }
+
+    public init(_ val: T = T(startTime: UInt(time(nil)))) {
+        self.val = val
     }
 
 }
