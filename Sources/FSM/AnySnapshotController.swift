@@ -60,6 +60,8 @@ public struct AnySnapshotController: Snapshotable {
 
     private let _create: ([String: Any]) -> Any
 
+    private let _name: () -> String
+
     private let _saveSnapshot: () -> Void
 
     private let _takeSnapshot: () -> Void
@@ -67,6 +69,10 @@ public struct AnySnapshotController: Snapshotable {
     private let _getval: () -> Any
 
     private let _setval: (Any) -> Void
+
+    public var name: String {
+        return self._name()
+    }
 
     public var val: Any {
         get {
@@ -76,9 +82,10 @@ public struct AnySnapshotController: Snapshotable {
         }
     }
 
-    public init<S: Snapshotable>(_ base: S) where S: ExternalVariablesContainer {
+    public init<S: Snapshotable>(_ base: S) where S: Identifiable, S: ExternalVariablesContainer {
         var base = base
         self._create = { S.Class(fromDictionary: $0) }
+        self._name = { base.name }
         self._saveSnapshot = { base.saveSnapshot() }
         self._takeSnapshot = { base.takeSnapshot() }
         self._getval = { base.val }
