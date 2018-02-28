@@ -85,7 +85,10 @@ open class MiPalState:
     public var transitions: [Transition<MiPalState, MiPalState>]
 
     open var validVars: [String: [Any]] {
-        return [:]
+        return [
+            "name": [],
+            "transitions": []
+        ]
     }
 
     /**
