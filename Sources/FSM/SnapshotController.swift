@@ -66,6 +66,8 @@ public class SnapshotController<T: ExternalVariables>: Snapshotable, ExternalVar
      */
     public typealias Class = T
 
+    public let name: String
+
     private let behaviour: Behaviour<Class?>
 
     private let now: () -> Time
@@ -87,10 +89,12 @@ public class SnapshotController<T: ExternalVariables>: Snapshotable, ExternalVar
      *  - Parameter now: A function used to retrieve the current `Time`.
      */
     public init(
+        _ name: String,
         b: Behaviour<Class?>,
         post: @escaping (Class) -> Void,
         now: @escaping () -> Time
     )  {
+        self.name = name
         self.behaviour = b
         self.now = now
         self.post = post
@@ -110,9 +114,10 @@ public class SnapshotController<T: ExternalVariables>: Snapshotable, ExternalVar
      */
     // swiftlint:disable large_tuple
     public convenience init(
+        _ name: String,
         _ t: (Behaviour<Class?>, (Class) -> Void, () -> Time)
     ) {
-        self.init(b: t.0, post: t.1, now: t.2)
+        self.init(name, b: t.0, post: t.1, now: t.2)
     }
 
     /**

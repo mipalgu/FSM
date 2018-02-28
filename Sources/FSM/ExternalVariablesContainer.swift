@@ -63,7 +63,7 @@
  *  application since the the container must be a class and will pass by
  *  reference.
  */
-public protocol ExternalVariablesContainer: class {
+public protocol ExternalVariablesContainer: class, Identifiable {
 
     /**
      *  The type of the `ExternalVariables`.

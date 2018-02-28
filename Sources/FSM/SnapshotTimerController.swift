@@ -66,15 +66,18 @@ public final class SnapshotTimerController<T: TimerProtocol>: Snapshotable, Exte
 
     public var val: T
 
+    public let name: String
+
+    public init(_ name: String, _ val: T = T(startTime: UInt(time(nil)))) {
+        self.name = name
+        self.val = val
+    }
+
     public func saveSnapshot() {
     }
 
     public func takeSnapshot() {
         self.val = T(startTime: UInt(time(nil)))
-    }
-
-    public init(_ val: T = T(startTime: UInt(time(nil)))) {
-        self.val = val
     }
 
 }

@@ -63,12 +63,18 @@
  */
 public class EmptyExternalVariablesContainer: ExternalVariablesContainer {
 
+    public let name: String
+
     /**
      *  No variables, therefore use an instance of `EmptyVariables`
      *
      *  - SeeAlso: `EmptyVariables`
      */
     public var val: EmptyVariables = EmptyVariables()
+
+    public init(_ name: String) {
+        self.name = name
+    }
 
 }
 

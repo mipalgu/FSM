@@ -70,6 +70,8 @@ public class SnapshotCollectionController<Collection: ExternalVariablesCollectio
      */
     public typealias Class = Collection.Iterator.Element
 
+    public let name: String
+
     private let collection: Collection
 
     /**
@@ -83,7 +85,8 @@ public class SnapshotCollectionController<Collection: ExternalVariablesCollectio
      *  - Parameter collection: The `ExternalVariablesCollection` that is used to
      *  post/fetch values.
      */
-    public init(collection: Collection) {
+    public init(_ name: String, collection: Collection) {
+        self.name = name
         self.collection = collection
         self.val = self.collection.get()
     }
