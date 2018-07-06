@@ -84,7 +84,11 @@ public struct AnyScheduleableFiniteStateMachine:
 
     public typealias _StateType = AnyState
 
-    public let base: Any
+    public var base: Any {
+        return self._base()
+    }
+
+    private let _base: () -> Any
 
     private let _clone: () -> AnyScheduleableFiniteStateMachine
 
@@ -168,6 +172,33 @@ public struct AnyScheduleableFiniteStateMachine:
         return self._name()
     }
 
+    internal init<FSM: FiniteStateMachineType>(_ ref: Ref<FSM>) where
+        FSM: Cloneable,
+        FSM: StateExecuter,
+        FSM: Finishable,
+        FSM: KripkePropertiesRecordable,
+        FSM: Snapshotable,
+        FSM: SnapshotControllerContainer,
+        FSM: Suspendable,
+        FSM: Updateable
+    {
+        self._base = { ref.value as Any }
+        self._clone = { AnyScheduleableFiniteStateMachine(ref.value.clone()) }
+        self._currentRecord = { ref.value.currentRecord }
+        self._currentState = { AnyState(ref.value.currentState) }
+        self._setExternalVariables = { ref.value.externalVariables = $0 }
+        self._externalVariables = { ref.value.externalVariables }
+        self._hasFinished = { ref.value.hasFinished }
+        self._initialState = { AnyState(ref.value.initialState) }
+        self._isSuspended = { ref.value.isSuspended }
+        self._name = { ref.value.name }
+        self._next = { ref.value.next() }
+        self._suspend = { ref.value.suspend() }
+        self._saveSnapshot = { ref.value.saveSnapshot() }
+        self._takeSnapshot = { ref.value.takeSnapshot() }
+        self._update = { ref.value.update(fromDictionary: $0) }
+    }
+
     /**
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
@@ -182,22 +213,8 @@ public struct AnyScheduleableFiniteStateMachine:
         FSM: Suspendable,
         FSM: Updateable
     {
-	self.base = base
-        var base = base
-        self._clone = { AnyScheduleableFiniteStateMachine(base.clone()) }
-        self._currentRecord = { base.currentRecord }
-        self._currentState = { AnyState(base.currentState) }
-        self._setExternalVariables = { base.externalVariables = $0 }
-        self._externalVariables = { base.externalVariables }
-        self._hasFinished = { base.hasFinished }
-        self._initialState = { AnyState(base.initialState) }
-        self._isSuspended = { base.isSuspended }
-        self._name = { base.name }
-        self._next = { base.next() }
-        self._suspend = { base.suspend() }
-        self._saveSnapshot = { base.saveSnapshot() }
-        self._takeSnapshot = { base.takeSnapshot() }
-        self._update = { base.update(fromDictionary: $0) }
+        let ref = Ref(value: base)
+        self.init(ref)
     }
 
     public func clone() -> AnyScheduleableFiniteStateMachine {
