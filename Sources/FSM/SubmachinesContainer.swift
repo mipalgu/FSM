@@ -58,6 +58,8 @@
 
 public protocol SubmachinesContainer {
 
-    var submachines: [AnyScheduleableFiniteStateMachine] { get }
+    associatedtype Submachine: FiniteStateMachineType
+
+    var submachines: [Submachine] { get }
 
 }
