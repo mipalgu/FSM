@@ -395,7 +395,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
     suspendState: R._StateType,
-    exitState: R._StateType
+    exitState: R._StateType,
+    submachines: [AnyControllableFiniteStateMachine] = []
 ) -> AnyControllableFiniteStateMachine where
     R: Cloneable,
     R: Updateable,
@@ -406,7 +407,7 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     R._StateType: Updateable
 {
     return AnyControllableFiniteStateMachine(
-        FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V, AnyControllableFiniteStateMachine>(
+        FiniteStateMachine(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
@@ -416,7 +417,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
-            exitState: exitState
+            exitState: exitState,
+            submachines: submachines
         )
     )
 }
