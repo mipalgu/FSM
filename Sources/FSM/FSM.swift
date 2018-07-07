@@ -440,6 +440,7 @@ public func FSM<FSM: FiniteStateMachineType>(
     _ fsm: FSM
 ) -> AnyControllableFiniteStateMachine where
     FSM: Cloneable,
+    FSM: ConvertibleToScheduleableFiniteStateMachine,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
@@ -472,6 +473,7 @@ public func FSMS<FSM: FiniteStateMachineType>(
     _ fsms: FSM ...
 ) -> [AnyControllableFiniteStateMachine] where
     FSM: Cloneable,
+    FSM: ConvertibleToScheduleableFiniteStateMachine,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,

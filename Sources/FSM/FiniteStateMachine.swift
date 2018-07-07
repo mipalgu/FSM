@@ -112,6 +112,7 @@ import KripkeStructure
 // swiftlint:disable:next line_length
 public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,
     Cloneable,
+    ConvertibleToScheduleableFiniteStateMachine,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
     KripkePropertiesRecorderDelegator,
@@ -130,6 +131,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     R._StateType: Cloneable,
     R._StateType: Updateable,
     SM: Cloneable,
+    SM: ConvertibleToScheduleableFiniteStateMachine,
     SM: Suspendable,
     SM: Resumeable,
     SM: Restartable,
