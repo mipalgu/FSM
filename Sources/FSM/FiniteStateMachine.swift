@@ -110,11 +110,12 @@ import KripkeStructure
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
 // swiftlint:disable:next line_length
-public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer>: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,
     Cloneable,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
     KripkePropertiesRecorderDelegator,
+    MutableSubmachinesContainer,
     OptimizedStateExecuter,
     Restartable,
     ResumeableStateExecuter,
@@ -128,6 +129,10 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable,
     R._StateType: Updateable,
+    SM: Cloneable,
+    SM: Suspendable,
+    SM: Resumeable,
+    SM: Restartable,
     V.Vars: Updateable
 {
 
@@ -208,6 +213,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
      */
     public fileprivate(set) var ringlet: R
 
+    public var submachines: [SM]
+
     /**
      *  The state that was the `currentState` before the FSM was suspended.
      */
@@ -249,7 +256,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
         suspendState: R._StateType,
-        exitState: R._StateType
+        exitState: R._StateType,
+        submachines: [SM] = []
     ) {
         self.currentState = initialState
         self.exitState = exitState
@@ -261,12 +269,13 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         self.previousState = initialPreviousState
         self.recorder = recorder
         self.ringlet = ringlet
+        self.submachines = submachines
         self.suspendedState = suspendedState
         self.suspendState = suspendState
     }
 
     //swiftlint:disable:next function_body_length
-    public func clone() -> FiniteStateMachine<R, KR, V>{
+    public func clone() -> FiniteStateMachine<R, KR, V, SM>{
         var stateCache: [String: R._StateType] = [:]
         let allStates = self.allStates
         func apply(_ state: R._StateType) -> R._StateType {
@@ -297,7 +306,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             initialPreviousState: apply(self.initialPreviousState.clone()),
             suspendedState: self.suspendedState.map { apply($0.clone()) },
             suspendState: apply(self.suspendState.clone()),
-            exitState: apply(self.exitState.clone())
+            exitState: apply(self.exitState.clone()),
+            submachines: self.submachines.map { $0.clone() }
         )
         fsm.currentState = apply(self.currentState.clone())
         fsm.previousState = apply(self.previousState.clone())
