@@ -57,7 +57,7 @@
  */
 
 /// A function that creates an array of `FiniteStateMachine`s.
-public typealias FSMArrayFactory = () -> [AnyScheduleableFiniteStateMachine]
+public typealias FSMArrayFactory = () -> AnyScheduleableFiniteStateMachine
 
 /// A counter that represents time and starts at 0 where 0 represents the
 /// beginning of time.
