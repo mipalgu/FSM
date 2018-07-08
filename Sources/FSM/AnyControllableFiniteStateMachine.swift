@@ -72,6 +72,7 @@ import KripkeStructure
 public struct AnyControllableFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,
+    ConvertibleToScheduleableFiniteStateMachine,
     StateExecuter,
     Exitable,
     Finishable,
@@ -80,6 +81,7 @@ public struct AnyControllableFiniteStateMachine:
     Restartable,
     Snapshotable,
     SnapshotControllerContainer,
+    SubmachinesContainer,
     Updateable
 {
 
@@ -118,6 +120,8 @@ public struct AnyControllableFiniteStateMachine:
     private let _restart: () -> Void
 
     private let _resume: () -> Void
+
+    private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
 
     private let _suspend: () -> Void
 
@@ -185,17 +189,14 @@ public struct AnyControllableFiniteStateMachine:
         return self._name()
     }
 
-    internal init<FSM: FiniteStateMachineType>(_ ref: Ref<FSM>) where
-        FSM: Cloneable,
-        FSM: StateExecuter,
+    public var submachines: [AnyScheduleableFiniteStateMachine] {
+        return self._submachines()
+    }
+
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where
         FSM: Exitable,
-        FSM: Finishable,
-        FSM: KripkePropertiesRecordable,
         FSM: Resumeable,
-        FSM: Restartable,
-        FSM: Snapshotable,
-        FSM: SnapshotControllerContainer,
-        FSM: Updateable
+        FSM: Restartable
     {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
@@ -212,6 +213,7 @@ public struct AnyControllableFiniteStateMachine:
         self._next = { ref.value.next() }
         self._restart = { ref.value.restart() }
         self._resume = { ref.value.resume() }
+        self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }
         self._takeSnapshot = { ref.value.takeSnapshot() }
@@ -222,17 +224,10 @@ public struct AnyControllableFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: FiniteStateMachineType>(_ base: FSM) where
-        FSM: Cloneable,
-        FSM: StateExecuter,
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where
         FSM: Exitable,
-        FSM: Finishable,
-        FSM: KripkePropertiesRecordable,
         FSM: Resumeable,
-        FSM: Restartable,
-        FSM: Snapshotable,
-        FSM: SnapshotControllerContainer,
-        FSM: Updateable
+        FSM: Restartable
     {
         let ref = Ref(value: base)
         self.init(ref)

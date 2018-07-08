@@ -73,11 +73,13 @@ import KripkeStructure
 public struct AnyScheduleableFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,
+    ConvertibleToScheduleableFiniteStateMachine,
     StateExecuter,
     Finishable,
     KripkePropertiesRecordable,
     Snapshotable,
     SnapshotControllerContainer,
+    SubmachinesContainer,
     Suspendable,
     Updateable
 {
@@ -109,6 +111,8 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _name: () -> String
 
     private let _next: () -> Void
+
+    private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
 
     private let _suspend: () -> Void
 
@@ -172,16 +176,11 @@ public struct AnyScheduleableFiniteStateMachine:
         return self._name()
     }
 
-    internal init<FSM: FiniteStateMachineType>(_ ref: Ref<FSM>) where
-        FSM: Cloneable,
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM: KripkePropertiesRecordable,
-        FSM: Snapshotable,
-        FSM: SnapshotControllerContainer,
-        FSM: Suspendable,
-        FSM: Updateable
-    {
+    public var submachines: [AnyScheduleableFiniteStateMachine] {
+        return self._submachines()
+    }
+
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) {
         self._base = { ref.value as Any }
         self._clone = { AnyScheduleableFiniteStateMachine(ref.value.clone()) }
         self._currentRecord = { ref.value.currentRecord }
@@ -193,6 +192,7 @@ public struct AnyScheduleableFiniteStateMachine:
         self._isSuspended = { ref.value.isSuspended }
         self._name = { ref.value.name }
         self._next = { ref.value.next() }
+        self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }
         self._takeSnapshot = { ref.value.takeSnapshot() }
@@ -203,16 +203,7 @@ public struct AnyScheduleableFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: FiniteStateMachineType>(_ base: FSM) where
-        FSM: Cloneable,
-        FSM: StateExecuter,
-        FSM: Finishable,
-        FSM: KripkePropertiesRecordable,
-        FSM: Snapshotable,
-        FSM: SnapshotControllerContainer,
-        FSM: Suspendable,
-        FSM: Updateable
-    {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) {
         let ref = Ref(value: base)
         self.init(ref)
     }

@@ -371,7 +371,7 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     exitState: MiPalState = EmptyMiPalState("_exit")
 ) -> AnyControllableFiniteStateMachine where R: Cloneable, R: Updateable, R._StateType == MiPalState {
     return AnyControllableFiniteStateMachine(
-        FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V>(
+        FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V, AnyControllableFiniteStateMachine>(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
@@ -395,7 +395,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
     suspendState: R._StateType,
-    exitState: R._StateType
+    exitState: R._StateType,
+    submachines: [AnyControllableFiniteStateMachine] = []
 ) -> AnyControllableFiniteStateMachine where
     R: Cloneable,
     R: Updateable,
@@ -416,7 +417,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
             suspendState: suspendState,
-            exitState: exitState
+            exitState: exitState,
+            submachines: submachines
         )
     )
 }
@@ -440,6 +442,7 @@ public func FSM<FSM: FiniteStateMachineType>(
     _ fsm: FSM
 ) -> AnyControllableFiniteStateMachine where
     FSM: Cloneable,
+    FSM: ConvertibleToScheduleableFiniteStateMachine,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,
@@ -472,6 +475,7 @@ public func FSMS<FSM: FiniteStateMachineType>(
     _ fsms: FSM ...
 ) -> [AnyControllableFiniteStateMachine] where
     FSM: Cloneable,
+    FSM: ConvertibleToScheduleableFiniteStateMachine,
     FSM: StateExecuter,
     FSM: Exitable,
     FSM: Finishable,

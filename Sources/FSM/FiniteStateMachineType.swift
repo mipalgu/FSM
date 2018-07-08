@@ -125,7 +125,11 @@ public extension FiniteStateMachineType where
  *  Provide default implemtations for when a Finite State Machine is
  *  `Resumeable`.
  */
-public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
+public extension FiniteStateMachineType where
+    Self: ResumeableStateExecuter,
+    Self: MutableSubmachinesContainer,
+    Self.Submachine: Resumeable
+{
 
     /**
      *  Resume the Finite State Machine.
@@ -144,6 +148,11 @@ public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
         }
         self.currentState = self.suspendedState!
         self.suspendedState = nil
+        self.submachines = self.submachines.map {
+            var submachine = $0
+            submachine.resume()
+            return submachine
+        }
     }
 
 }
@@ -152,7 +161,12 @@ public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
  *  Provide default implementations for when a Finite State Machine is
  *  `Suspendable`.
  */
-public extension FiniteStateMachineType where Self._StateType: Equatable, Self: SuspendableStateExecuter {
+public extension FiniteStateMachineType where
+    Self._StateType: Equatable,
+    Self: SuspendableStateExecuter,
+    Self: MutableSubmachinesContainer,
+    Self.Submachine: Suspendable
+{
 
     /**
      *  Is the Finite State Machine currently suspended?
@@ -160,7 +174,7 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
      *  This is only true if `suspendState` equals `currentState`.
      */
     var isSuspended: Bool {
-        return self.suspendState == self.currentState
+        return self.suspendState == self.currentState && nil == self.submachines.first { !$0.isSuspended }
     }
 
     /**
@@ -177,6 +191,11 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
         }
         self.suspendedState = self.currentState
         self.currentState = self.suspendState
+        self.submachines = self.submachines.map {
+            var submachine = $0
+            submachine.suspend()
+            return submachine
+        }
     }
 
 }
@@ -185,7 +204,13 @@ public extension FiniteStateMachineType where Self._StateType: Equatable, Self: 
  *  Provide default implementations for when a Finite State Machine is
  *  `Restartable` and `Resumeable`.
  */
-public extension FiniteStateMachineType where Self: Restartable, Self: Resumeable, Self: OptimizedStateExecuter {
+public extension FiniteStateMachineType where
+    Self: Restartable,
+    Self: Resumeable,
+    Self: OptimizedStateExecuter,
+    Self: MutableSubmachinesContainer,
+    Self.Submachine: Restartable
+{
 
     /**
      *  Restart the Finite State Machine.
@@ -199,6 +224,11 @@ public extension FiniteStateMachineType where Self: Restartable, Self: Resumeabl
         self.resume()
         self.previousState = self.initialPreviousState
         self.currentState = self.initialState
+        self.submachines = self.submachines.map {
+            var submachine = $0
+            submachine.restart()
+            return submachine
+        }
     }
 
 }

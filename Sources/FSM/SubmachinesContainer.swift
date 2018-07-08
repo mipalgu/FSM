@@ -1,9 +1,9 @@
 /*
- * aliases.swift 
+ * SubmachinesContainer.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/02/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/07/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,9 +56,10 @@
  *
  */
 
-/// A function that creates an array of `FiniteStateMachine`s.
-public typealias FSMArrayFactory = () -> AnyScheduleableFiniteStateMachine
+public protocol SubmachinesContainer {
 
-/// A counter that represents time and starts at 0 where 0 represents the
-/// beginning of time.
-public typealias Time = UInt
+    associatedtype Submachine: FiniteStateMachineType
+
+    var submachines: [Submachine] { get }
+
+}

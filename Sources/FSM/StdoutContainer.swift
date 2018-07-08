@@ -1,9 +1,9 @@
 /*
- * aliases.swift 
+ * StdoutContainer.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/02/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/07/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,9 +56,37 @@
  *
  */
 
-/// A function that creates an array of `FiniteStateMachine`s.
-public typealias FSMArrayFactory = () -> AnyScheduleableFiniteStateMachine
+public final class StdoutContainer: ExternalVariables {
 
-/// A counter that represents time and starts at 0 where 0 represents the
-/// beginning of time.
-public typealias Time = UInt
+    internal var stdout: [String] = []
+
+    public var str: String? {
+        get {
+            guard let first = self.stdout.first else {
+                return nil
+            }
+            return self.stdout.dropFirst().reduce(first) { $0 + "\n" + $1 }
+        } set {
+            guard let str = newValue else {
+                return
+            }
+            self.stdout.append(str)
+        }
+    }
+
+    public init() {}
+
+    public init(fromDictionary dictionary: [String: Any]) {
+        guard let stdout = dictionary["stdout"] as? [String] else {
+            fatalError("Unable to initialise StdoutContainer from dictionary.")
+        }
+        self.stdout = stdout
+    }
+
+}
+
+extension StdoutContainer: Equatable {}
+
+public func == (lhs: StdoutContainer, rhs: StdoutContainer) -> Bool {
+    return lhs.stdout == rhs.stdout
+}
