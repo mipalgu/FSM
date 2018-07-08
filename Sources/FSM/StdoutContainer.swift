@@ -58,12 +58,29 @@
 
 public final class StdoutContainer: ExternalVariables {
 
-    public var stdout: String?
+    internal var stdout: [String] = []
+
+    public var str: String? {
+        get {
+            guard let first = self.stdout.first else {
+                return nil
+            }
+            return self.stdout.dropFirst().reduce(first) { $0 + "\n" + $1 }
+        } set {
+            guard let str = newValue else {
+                return
+            }
+            self.stdout.append(str)
+        }
+    }
 
     public init() {}
 
     public init(fromDictionary dictionary: [String: Any]) {
-        self.stdout = dictionary["stdout"] as? String
+        guard let stdout = dictionary["stdout"] as? [String] else {
+            fatalError("Unable to initialise StdoutContainer from dictionary.")
+        }
+        self.stdout = stdout
     }
 
 }

@@ -65,14 +65,14 @@ public final class StdoutExternalVariables: ExternalVariablesContainer, Identifi
     public init() {}
 
     public func saveSnapshot() {
-        guard let str = val.stdout else {
+        guard let str = val.str else {
             return
         }
         print(str)
     }
 
     public func takeSnapshot() {
-        self.val.stdout = nil
+        self.val.stdout = []
     }
 
 }
