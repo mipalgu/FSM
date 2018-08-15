@@ -58,6 +58,9 @@
 
 public protocol InvokerDelegate {
 
-    func invoker<I: Invoker>(_: I, invoke: AnyScheduleableFiniteStateMachine) -> Promise<I.ReturnType>
+    func invoker<
+        I: Invoker,
+        FSM: ConvertibleToScheduleableFiniteStateMachine
+    >(_: I, invoke: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
 
 }

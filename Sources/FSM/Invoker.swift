@@ -58,6 +58,6 @@
 
 public protocol Invoker {
 
-    associatedtype ReturnType
+    weak var delegate: Ref<InvokerDelegate>? { get set }
 
 }
