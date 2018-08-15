@@ -58,7 +58,7 @@
 
 import KripkeStructure
 
-public final class AnyParameterisedFiniteStateMachine:
+public struct AnyParameterisedFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,
     ConvertibleToScheduleableFiniteStateMachine,
@@ -176,7 +176,7 @@ public final class AnyParameterisedFiniteStateMachine:
     internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
-        self._clone = { AnyScheduleableFiniteStateMachine(ref.value.clone()) }
+        self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
         self._currentRecord = { ref.value.currentRecord }
         self._currentState = { AnyState(ref.value.currentState) }
         self._setExternalVariables = { ref.value.externalVariables = $0 }
