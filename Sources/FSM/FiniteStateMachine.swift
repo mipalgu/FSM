@@ -110,7 +110,7 @@ import KripkeStructure
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
 // swiftlint:disable:next line_length
-public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, P: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,
     Cloneable,
     ConvertibleToScheduleableFiniteStateMachine,
     ExitableStateExecuter,
@@ -124,7 +124,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     Snapshotable,
     SnapshotControllerContainer,
     Updateable where
-    P.Vars: Updateable,
     R: Cloneable,
     R: Updateable,
     R._StateType: Transitionable,
@@ -156,10 +155,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             "fsmVars": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.fsmVars.vars)),
                 value: self.fsmVars.vars
-            ),
-            "parameters": KripkeStateProperty(type:
-                .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)),
-                value: self.parameters.vars
             ),
             "ringlet": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.ringlet)),
@@ -203,11 +198,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
      *  - Warning: This must be unique between FSMs.
      */
     public let name: String
-
-    /**
-     *  The parameters of the FSM.
-     */
-    public let parameters: P
 
     /**
      *  The last state that was executed.
@@ -263,7 +253,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
         fsmVars: V,
-        parameters: P,
         recorder: KR,
         ringlet: R,
         initialPreviousState: R._StateType,
@@ -279,7 +268,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
         self.name = name
-        self.parameters = parameters
         self.previousState = initialPreviousState
         self.recorder = recorder
         self.ringlet = ringlet
@@ -289,7 +277,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     }
 
     //swiftlint:disable:next function_body_length
-    public func clone() -> FiniteStateMachine<R, KR, V, P, SM>{
+    public func clone() -> FiniteStateMachine<R, KR, V, SM>{
         var stateCache: [String: R._StateType] = [:]
         let allStates = self.allStates
         func apply(_ state: R._StateType) -> R._StateType {
@@ -310,13 +298,11 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             return state
         }
         self.fsmVars.vars = self.fsmVars.vars.clone()
-        self.parameters.vars = self.parameters.vars.clone()
         var fsm = FiniteStateMachine(
             self.name,
             initialState: apply(self.initialState.clone()),
             externalVariables: self.externalVariables,
             fsmVars: self.fsmVars,
-            parameters: self.parameters,
             recorder: self.recorder,
             ringlet: self.ringlet.clone(),
             initialPreviousState: apply(self.initialPreviousState.clone()),
@@ -354,14 +340,12 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         }
         guard
             let ringlet = dictionary["ringlet"] as? [String: Any],
-            let fsmVars = dictionary["fsmVars"] as? [String: Any],
-            let parameters = dictionary["parameters"] as? [String: Any]
+            let fsmVars = dictionary["fsmVars"] as? [String: Any]
         else {
             fatalError("Unable to fetch all variables from dictionary")
         }
         self.ringlet.update(fromDictionary: ringlet)
         self.fsmVars.vars.update(fromDictionary: fsmVars)
-        self.parameters.vars.update(fromDictionary: parameters)
     }
 
     fileprivate var allStates: [String: R._StateType] {

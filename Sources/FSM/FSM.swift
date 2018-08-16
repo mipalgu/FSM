@@ -371,12 +371,11 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     exitState: MiPalState = EmptyMiPalState("_exit")
 ) -> AnyControllableFiniteStateMachine where R: Cloneable, R: Updateable, R._StateType == MiPalState {
     return AnyControllableFiniteStateMachine(
-        FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V, SimpleVariablesContainer<EmptyVariables>, AnyControllableFiniteStateMachine>(
+        FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V, AnyControllableFiniteStateMachine>(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
             fsmVars: fsmVars,
-            parameters: SimpleVariablesContainer(vars: EmptyVariables()),
             recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
@@ -387,19 +386,20 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     )
 }
 
-public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesContainer>(
+public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesContainer, ResultType>(
     _ name: String,
     initialState: R._StateType,
     externalVariables: [AnySnapshotController],
     fsmVars: V,
     parameters: P,
+    result: ResultType,
     ringlet: R,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
     suspendState: R._StateType,
     exitState: R._StateType,
     submachines: [AnyControllableFiniteStateMachine] = []
-) -> AnyScheduleableFiniteStateMachine where
+) -> AnyParameterisedFiniteStateMachine where
     R: Cloneable,
     R: Updateable,
     R._StateType: Cloneable,
@@ -408,14 +408,15 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
     R._StateType: KripkeVariablesModifier,
     R._StateType: Updateable
 {
-    return AnyScheduleableFiniteStateMachine(
-        FiniteStateMachine(
+    return AnyParameterisedFiniteStateMachine(
+        ParameterisedFiniteStateMachine(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
             fsmVars: fsmVars,
             parameters: parameters,
             recorder: MirrorKripkePropertiesRecorder(),
+            result: result,
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,
@@ -452,7 +453,6 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
             initialState: initialState,
             externalVariables: externalVariables,
             fsmVars: fsmVars,
-            parameters: SimpleVariablesContainer(vars: EmptyVariables()),
             recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
