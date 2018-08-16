@@ -1,8 +1,8 @@
 /*
- * globals.swift
+ * CallbackMiPalState.swift
  * swiftfsm
  *
- * Created by Callum McColl on 8/09/2015.
+ * Created by Callum McColl on 23/08/2015.
  * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,116 +56,100 @@
  *
  */
 
-import Functional
-import KripkeStructure
-
 /**
- *  Set to true when debugging is turned on.
- */
-public var DEBUG: Bool = false
-
-/**
- *  Set to true when generate `KripkeStructure`s.
- */
-public var KRIPKE: Bool = false
-
-/**
- *  Set to true when all Finite State Machines should be stopped.
- */
-public var STOP: Bool = false
-
-private var factories = Factories()
-
-/**
- *  Add an `FSMArrayFactory` onto the `Factories` `Stack`.
+ *  Provides a way for developers to pass in the onEntry, main and onExit
+ *  methods when initializing a `MiPalState` so that they can more easily create
+ *  simple states.
  *
- *  - Parameter _: The `FSMArrayFactory`.
+ *  - Warning: It is important that when creating the `_onEntry`, `_main` and
+ *  `_onExit` functions, you do not refer to variables that are outside the
+ *  scope of the functions.  If you do so, you will possibly introduce
+ *  side-effects that cannot be detected by the Kripke Structure generation and
+ *  will therefore throw off the formal verification.
+ *
+ *  - SeeAlso: `MiPalState`
  */
-public func addFactory(_ f: @escaping FSMArrayFactory) {
-    factories.push(f)
-}
 
-public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2, T>] {
-    return transitions.map(cast)
-}
+import FSM
 
-public func cast<S1, S2, T>(_ transition: Transition<S1, T>) -> Transition<S2, T> {
-    return Transition<S2, T>(transition.target) {
-        guard let state = $0 as? S1 else {
-            fatalError("Unable to cast \($0) to \(S1.self)")
-        }
-        return transition.canTransition(state)
-    }
-}
+public final class CallbackMiPalState: MiPalState {
 
-/**
- *  A convenience function which only prints when `DEBUG` is true.
- */
-public func dprint(
-    _ items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n"
-) {
-    if false == DEBUG {
-        return
+    public override var validVars: [String: [Any]] {
+        return [
+            "name": [],
+            "transitions": [],
+            "_onEntry": [],
+            "_main": [],
+            "_onExit": []
+        ]
     }
-    _ = items.map {
-        print($0, separator: separator, terminator: terminator)
-    }
-}
 
-/**
- *  A convenience function which only prints when `DEBUG` is true.
- */
-public func dprint<Target: TextOutputStream>(
-    _ items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n",
-    toStream output: inout Target
-) {
-    if false == DEBUG {
-        return
-    }
-    _ = items.map {
-        print(
-            $0,
-            separator: separator,
-            terminator: terminator,
-            to: &output
+    /**
+     *  The actual onEntry implementation.
+     */
+    public let _onEntry: () -> Void
+
+    /**
+     *  The actual main implementation.
+     */
+    public let _main: () -> Void
+
+    /**
+     *  The actual onExit implementation.
+     */
+    public let _onExit: () -> Void
+
+    /**
+     *  Create a new `CallbackMiPalState`.
+     */
+    public init(
+        _ name: String,
+        transitions: [Transition<CallbackMiPalState, MiPalState>] = [],
+        onEntry: @escaping () -> Void = {},
+        main: @escaping () -> Void = {},
+        onExit: @escaping () -> Void = {}
+    ) {
+        self._onEntry = onEntry
+        self._main = main
+        self._onExit = onExit
+        super.init(
+            name,
+            transitions: cast(transitions: transitions)
         )
     }
-}
 
-/**
- *  Retrieve the number of `FSMArrayFactory`s that are on the `Factories`
- *  `Stack`.
- *  
- *  - Returns: The number of `FSMArrayFactory`s that are on the `Factories`
- *  `Stack`.
- */
-public func getFactoryCount() -> Int {
-    return factories.count
-}
-
-/**
- *  Retrieve the top most `FSMArrayFactory` from the `Factories` `Stack`.
- *
- *  - Postcondition: The top most `FSMArrayFactory` is removed from the
- *  `Factories` `Stack`.
- *
- *  - Returns: The retrieved `FSMArrayFactory` or nil if the `Factories` `Stack`
- *  was empty.
- */
-public func getLastFactory() -> FSMArrayFactory? {
-    if true == factories.isEmpty {
-        return nil
+    /**
+     *  This method delegates to `_onEntry`.
+     */
+    public override final func onEntry() {
+        self._onEntry()
     }
-    return factories.pop()
-}
 
-/**
- *  Sets `STOP` to true.
- */
-public func stopAll() {
-    STOP = true
+    /**
+     *  This method delegates to `_main`.
+     */
+    public override final func main() {
+        self._main()
+    }
+
+    /**
+     *  This method delegates to `_onExit`.
+     */
+    public override final func onExit() {
+        self._onExit()
+    }
+
+    /**
+     *  Create a new `CallbackMiPalState` that is an exact copy of `self`.
+     */
+    public override final func clone() -> CallbackMiPalState {
+        return CallbackMiPalState(
+            self.name,
+            transitions: cast(transitions: self.transitions),
+            onEntry: self._onEntry,
+            main: self._main,
+            onExit: self._onExit
+        )
+    }
+
 }

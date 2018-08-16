@@ -56,6 +56,7 @@
  *
  */
 
+import FSM
 import Functional
 import KripkeStructure
 

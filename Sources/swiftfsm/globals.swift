@@ -1,9 +1,9 @@
 /*
- * WhiteboardBehaviourTests.swift 
- * tests 
+ * globals.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 12/03/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 8/09/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,44 +56,117 @@
  *
  */
 
-import XCTest
-import CGUSimpleWhiteboard
-import GUSimpleWhiteboard
-@testable import FSM
+import FSM
+import Functional
+import KripkeStructure
 
-#if os(OSX)
-import Darwin
-#elseif os(Linux)
-import Glibc
-#endif
+/**
+ *  Set to true when debugging is turned on.
+ */
+public var DEBUG: Bool = false
 
-class WhiteboardBehaviourTests: XCTestCase {
+/**
+ *  Set to true when generate `KripkeStructure`s.
+ */
+public var KRIPKE: Bool = false
 
-    static var allTests: [(String, (WhiteboardBehaviourTests) -> () throws -> Void)] {
-        return [
-            ("test_trigger", test_trigger)
-        ]
-    }
+/**
+ *  Set to true when all Finite State Machines should be stopped.
+ */
+public var STOP: Bool = false
 
-    override func setUp() {
-        let wb: GenericWhiteboard = GenericWhiteboard<wb_count>(msgType: kCount_v)
-        for _ in 0 ..< wb.generations {
-            wb.post(val: wb_count(count: 0))
+private var factories = Factories()
+
+/**
+ *  Add an `FSMArrayFactory` onto the `Factories` `Stack`.
+ *
+ *  - Parameter _: The `FSMArrayFactory`.
+ */
+public func addFactory(_ f: @escaping FSMArrayFactory) {
+    factories.push(f)
+}
+
+public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2, T>] {
+    return transitions.map(cast)
+}
+
+public func cast<S1, S2, T>(_ transition: Transition<S1, T>) -> Transition<S2, T> {
+    return Transition<S2, T>(transition.target) {
+        guard let state = $0 as? S1 else {
+            fatalError("Unable to cast \($0) to \(S1.self)")
         }
-        wb.eventCount = 0
+        return transition.canTransition(state)
     }
+}
 
-    func test_trigger() {
-        /*let t: (b: Behaviour<wb_count?>, push: (wb_count) -> Void, now: () -> Time) =
-            trigger(type: kCount_v)
-        t.push(wb_count(count: 1))
-        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 1))
-        t.push(wb_count(count: 2))
-        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 2))
-        t.push(wb_count(count: 3))
-        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 3))
-        t.push(wb_count(count: 4))
-        XCTAssertEqual(t.b.at(t.now()), wb_count(count: 4))*/
+/**
+ *  A convenience function which only prints when `DEBUG` is true.
+ */
+public func dprint(
+    _ items: Any ...,
+    separator: String = " ",
+    terminator: String = "\n"
+) {
+    if false == DEBUG {
+        return
     }
+    _ = items.map {
+        print($0, separator: separator, terminator: terminator)
+    }
+}
 
+/**
+ *  A convenience function which only prints when `DEBUG` is true.
+ */
+public func dprint<Target: TextOutputStream>(
+    _ items: Any ...,
+    separator: String = " ",
+    terminator: String = "\n",
+    toStream output: inout Target
+) {
+    if false == DEBUG {
+        return
+    }
+    _ = items.map {
+        print(
+            $0,
+            separator: separator,
+            terminator: terminator,
+            to: &output
+        )
+    }
+}
+
+/**
+ *  Retrieve the number of `FSMArrayFactory`s that are on the `Factories`
+ *  `Stack`.
+ *  
+ *  - Returns: The number of `FSMArrayFactory`s that are on the `Factories`
+ *  `Stack`.
+ */
+public func getFactoryCount() -> Int {
+    return factories.count
+}
+
+/**
+ *  Retrieve the top most `FSMArrayFactory` from the `Factories` `Stack`.
+ *
+ *  - Postcondition: The top most `FSMArrayFactory` is removed from the
+ *  `Factories` `Stack`.
+ *
+ *  - Returns: The retrieved `FSMArrayFactory` or nil if the `Factories` `Stack`
+ *  was empty.
+ */
+public func getLastFactory() -> FSMArrayFactory? {
+    if true == factories.isEmpty {
+        return nil
+    }
+    return factories.pop()
+}
+
+/**
+ *  Sets `STOP` to true.
+ */
+public func stopAll() {
+    STOP = true
 }

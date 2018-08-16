@@ -1,9 +1,9 @@
 /*
- * InvokerDelegate.swift 
- * FSM 
+ * MiPalState.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/08/2018.
- * Copyright © 2018 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/08/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,11 +56,92 @@
  *
  */
 
-public protocol InvokerDelegate {
+import FSM
+import KripkeStructure
 
-    func invoker<
-        I: Invoker,
-        FSM: ConvertibleToScheduleableFiniteStateMachine
-    >(_: I, invoke: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
+/**
+ *  The base class for all states that conform to `MiPalAction`s.
+ */
+open class MiPalState:
+    StateType,
+    CloneableState,
+    CustomStringConvertible,
+    CustomDebugStringConvertible,
+    MiPalActions,
+    Transitionable,
+    KripkeVariablesModifier
+{
 
+    /**
+     *  The name of the state.
+     *
+     *  - Requires: Must be unique for each state.
+     */
+    public let name: String
+
+    /**
+     *  An array of transitions that this state may use to move to another
+     *  state.
+     */
+    public var transitions: [Transition<MiPalState, MiPalState>]
+
+    open var validVars: [String: [Any]] {
+        return [
+            "name": [],
+            "transitions": []
+        ]
+    }
+
+    /**
+     *  Create a new `MiPalState`.
+     *
+     *  - Parameter name: The name of the state.
+     *
+     *  - transitions: All transitions to other states that this state can use.
+     */
+    public init(_ name: String, transitions: [Transition<MiPalState, MiPalState>] = []) {
+        self.name = name
+        self.transitions = transitions
+    }
+
+    /**
+     *  Does nothing.
+     */
+    open func onEntry() {}
+
+    /**
+     *  Does nothing.
+     */
+    open func main() {}
+
+    /**
+     *  Does nothing.
+     */
+    open func onExit() {}
+
+    /**
+     *  Create a copy of `self`.
+     *
+     *  - Warning: Child classes should override this method.  If they do not
+     *  then the application will crash when trying to generate
+     *  `KripkeStructures`.
+     */
+    open func clone() -> Self {
+        fatalError("Please implement your own clone")
+    }
+
+    /**
+     *  Update `self` from a dictionary.
+     *
+     *  Since `MiPalState` contains no mutable properties, it does not bother
+     *  to update itself based on anything in the dictionary. 
+     *
+     *  - Parameter fromDictionary: The dictionary of properties where the keys
+     *  represents the properties labels and the values are the values of the
+     *  properties.
+     *
+     *  - Attention: Child classes should override this method when they add
+     *  mutable properties.
+     */
+    open func update(fromDictionary dictionary: [String: Any]) {}
 }

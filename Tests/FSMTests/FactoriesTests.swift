@@ -58,6 +58,7 @@
 
 import XCTest
 @testable import FSM
+@testable import swiftfsm
 
 class FactoriesTests: XCTestCase {
 

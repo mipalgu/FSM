@@ -56,6 +56,8 @@
  *
  */
 
+import FSM
+
 /**
  *  A stack of `FSMArrayFactory`s.
  *

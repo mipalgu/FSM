@@ -8,7 +8,7 @@ let package = Package(
         .library(
             name: "FSM",
             type: .dynamic,
-            targets: ["Functional", "KripkeStructure", "FSM"]
+            targets: ["Functional", "KripkeStructure", "FSM", "swiftfsm"]
         )
     ],
     dependencies: [
@@ -18,6 +18,7 @@ let package = Package(
         .target(name: "Functional", dependencies: []),
         .target(name: "KripkeStructure", dependencies: ["Functional"]),
         .target(name: "FSM", dependencies: ["GUSimpleWhiteboard", "Functional", "KripkeStructure"]),
-        .testTarget(name: "FSMTests", dependencies: [.target(name: "FSM")])
+        .target(name: "swiftfsm", dependencies: ["GUSimpleWhiteboard", "Functional", "KripkeStructure", "FSM"]),
+        .testTarget(name: "FSMTests", dependencies: [.target(name: "FSM"), .target(name: "swiftfsm")])
     ]
 )

@@ -1,9 +1,9 @@
 /*
- * MiPalActions.swift
- * swiftfsm
+ * Invoker.swift 
+ * FSM 
  *
- * Created by Callum McColl on 9/09/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/08/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,24 +56,10 @@
  *
  */
 
-/**
- *  All actions that are used in the MiPal model of state execution.
- */
-public protocol MiPalActions {
+import FSM
 
-    /**
-     *  An entry action.
-     */
-    func onEntry()
+public protocol Invoker {
 
-    /**
-     *  Normally refered to as internal.
-     */
-    func main()
-
-    /**
-     *  An exit action.
-     */
-    func onExit()
+    weak var delegate: Ref<InvokerDelegate>? { get set }
 
 }

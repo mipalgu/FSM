@@ -1,8 +1,8 @@
 /*
- * SnapshotController.swift 
+ * MiPalRingletFactory.swift 
  * FSM 
  *
- * Created by Callum McColl on 03/05/2016.
+ * Created by Callum McColl on 28/07/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,83 +56,27 @@
  *
  */
 
+import FSM
+
 /**
- *  A way to manage the snapshots using a `Behaviour`.
+ *  Provides an easy way to create a `MiPalRinglet` that does not use any
+ *  `GlobalVariables`.
  */
-public class SnapshotController<T: ExternalVariables>: Snapshotable, ExternalVariablesContainer {
+public class MiPalRingletFactory {
 
     /**
-     *  The type of the `ExternalVariables`.
-     */
-    public typealias Class = T
-
-    public let name: String
-
-    private let behaviour: Behaviour<Class?>
-
-    private let now: () -> Time
-
-    private let post: (Class) -> Void
-
-    /**
-     *  The latest value of the `ExternalVariables`.
-     */
-    public var val: Class
-
-    /**
-     *  Create a new `SnapshotController`.
+     *  Create the `MiPalRinglet`.
      *
-     *  - Parameter b: The `Behaviour` that contains the `ExternalVariables`.
+     *  - Parameter previousState: The last `MiPalState` that was executed.
      *
-     *  - Parameter post: A function used to post to the `Behaviour`.
-     *
-     *  - Parameter now: A function used to retrieve the current `Time`.
+     *  - Returns: A new `MiPalRinglet`.
      */
-    public init(
-        _ name: String,
-        b: Behaviour<Class?>,
-        post: @escaping (Class) -> Void,
-        now: @escaping () -> Time
-    )  {
-        self.name = name
-        self.behaviour = b
-        self.now = now
-        self.post = post
-        if let v = b.at(now()) {
-            self.val = v
-        } else {
-            fatalError()
-        }
+    public static func make(
+        previousState: MiPalState = EmptyMiPalState("_previous")
+    ) -> MiPalRinglet {
+        return MiPalRinglet(
+            previousState: previousState
+        )
     }
 
-    /**
-     *  Create a new `SnapshotController`.
-     *
-     *  - Parameter _: A tuple where the first element is the `Behaviour`,
-     *  the second element is a post function and the third element is a
-     *  function which returns the current `Time`.
-     */
-    // swiftlint:disable large_tuple
-    public convenience init(
-        _ name: String,
-        _ t: (Behaviour<Class?>, (Class) -> Void, () -> Time)
-    ) {
-        self.init(name, b: t.0, post: t.1, now: t.2)
-    }
-
-    /**
-     *  Save `val` into the `Behaviour`.
-     */
-    public func saveSnapshot() {
-        self.post(self.val)
-    }
-
-    /**
-     *  Set `val` to the current value within the `Behaviour`.
-     */
-    public func takeSnapshot() {
-        if let v = self.behaviour.at(self.now()) {
-            self.val = v
-        }
-    }
 }

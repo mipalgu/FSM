@@ -1,9 +1,9 @@
 /*
- * aliases.swift 
- * FSM 
+ * MiPalActions.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/02/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 9/09/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,9 +56,26 @@
  *
  */
 
-/// A function that creates an array of `FiniteStateMachine`s.
-public typealias FSMArrayFactory = () -> AnyScheduleableFiniteStateMachine
+import FSM
 
-/// A counter that represents time and starts at 0 where 0 represents the
-/// beginning of time.
-public typealias Time = UInt
+/**
+ *  All actions that are used in the MiPal model of state execution.
+ */
+public protocol MiPalActions {
+
+    /**
+     *  An entry action.
+     */
+    func onEntry()
+
+    /**
+     *  Normally refered to as internal.
+     */
+    func main()
+
+    /**
+     *  An exit action.
+     */
+    func onExit()
+
+}

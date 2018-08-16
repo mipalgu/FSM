@@ -1,9 +1,9 @@
 /*
- * MiPalRingletFactory.swift 
+ * InvokerDelegate.swift 
  * FSM 
  *
- * Created by Callum McColl on 28/07/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/08/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,25 +56,13 @@
  *
  */
 
-/**
- *  Provides an easy way to create a `MiPalRinglet` that does not use any
- *  `GlobalVariables`.
- */
-public class MiPalRingletFactory {
+import FSM
 
-    /**
-     *  Create the `MiPalRinglet`.
-     *
-     *  - Parameter previousState: The last `MiPalState` that was executed.
-     *
-     *  - Returns: A new `MiPalRinglet`.
-     */
-    public static func make(
-        previousState: MiPalState = EmptyMiPalState("_previous")
-    ) -> MiPalRinglet {
-        return MiPalRinglet(
-            previousState: previousState
-        )
-    }
+public protocol InvokerDelegate {
+
+    func invoker<
+        I: Invoker,
+        FSM: ConvertibleToScheduleableFiniteStateMachine
+    >(_: I, invoke: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
 
 }

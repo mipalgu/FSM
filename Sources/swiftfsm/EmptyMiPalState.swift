@@ -1,8 +1,8 @@
 /*
- * CallbackMiPalState.swift
+ * EmptyMiPalState.swift
  * swiftfsm
  *
- * Created by Callum McColl on 23/08/2015.
+ * Created by Callum McColl on 11/08/2015.
  * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,97 +56,35 @@
  *
  */
 
+import FSM
+
 /**
- *  Provides a way for developers to pass in the onEntry, main and onExit
- *  methods when initializing a `MiPalState` so that they can more easily create
- *  simple states.
+ *  A `MiPalState` that does nothing.
  *
- *  - Warning: It is important that when creating the `_onEntry`, `_main` and
- *  `_onExit` functions, you do not refer to variables that are outside the
- *  scope of the functions.  If you do so, you will possibly introduce
- *  side-effects that cannot be detected by the Kripke Structure generation and
- *  will therefore throw off the formal verification.
+ *  Useful if you need an accepting state that does nothing but symbolize the
+ *  end of the FSM.
  *
  *  - SeeAlso: `MiPalState`
  */
-public final class CallbackMiPalState: MiPalState {
-
-    public override var validVars: [String: [Any]] {
-        return [
-            "name": [],
-            "transitions": [],
-            "_onEntry": [],
-            "_main": [],
-            "_onExit": []
-        ]
-    }
+public final class EmptyMiPalState: MiPalState {
 
     /**
-     *  The actual onEntry implementation.
+     *  Does nothing.
      */
-    public let _onEntry: () -> Void
+    public override final func onEntry() {}
 
     /**
-     *  The actual main implementation.
+     *  Does nothing.
      */
-    public let _main: () -> Void
+    public override final func main() {}
 
     /**
-     *  The actual onExit implementation.
+     *  Does nothing.
      */
-    public let _onExit: () -> Void
+    public override final func onExit() {}
 
-    /**
-     *  Create a new `CallbackMiPalState`.
-     */
-    public init(
-        _ name: String,
-        transitions: [Transition<CallbackMiPalState, MiPalState>] = [],
-        onEntry: @escaping () -> Void = {},
-        main: @escaping () -> Void = {},
-        onExit: @escaping () -> Void = {}
-    ) {
-        self._onEntry = onEntry
-        self._main = main
-        self._onExit = onExit
-        super.init(
-            name,
-            transitions: cast(transitions: transitions)
-        )
-    }
-
-    /**
-     *  This method delegates to `_onEntry`.
-     */
-    public override final func onEntry() {
-        self._onEntry()
-    }
-
-    /**
-     *  This method delegates to `_main`.
-     */
-    public override final func main() {
-        self._main()
-    }
-
-    /**
-     *  This method delegates to `_onExit`.
-     */
-    public override final func onExit() {
-        self._onExit()
-    }
-
-    /**
-     *  Create a new `CallbackMiPalState` that is an exact copy of `self`.
-     */
-    public override final func clone() -> CallbackMiPalState {
-        return CallbackMiPalState(
-            self.name,
-            transitions: cast(transitions: self.transitions),
-            onEntry: self._onEntry,
-            main: self._main,
-            onExit: self._onExit
-        )
+    public override final func clone() -> EmptyMiPalState {
+        return EmptyMiPalState(self.name, transitions: self.transitions)
     }
 
 }

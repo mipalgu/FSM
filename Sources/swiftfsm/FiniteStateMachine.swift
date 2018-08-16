@@ -1,9 +1,9 @@
 /*
- * ParameterisedFiniteStateMachine.swift 
- * FSM 
+ * FiniteStateMachine.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/08/2018.
- * Copyright © 2018 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 12/08/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -57,7 +57,7 @@
  */
 
 /**
- *  A Parameterised Finite State Machine.
+ *  A Finite State Machine.
  *
  *  Finite State Machines (FSMs) are defined as an algorithm that can be in any
  *  number of a finite set of states.  Each state therefore represents a single
@@ -90,6 +90,7 @@
  *  
  */
 
+import FSM
 import KripkeStructure
 
 /**
@@ -110,14 +111,7 @@ import KripkeStructure
  *  - SeeAlso: `KripkeFiniteStateMachine`
  */
 // swiftlint:disable:next line_length
-public struct ParameterisedFiniteStateMachine<
-    R: Ringlet,
-    KR: KripkePropertiesRecorder,
-    V: VariablesContainer,
-    P: VariablesContainer,
-    ResultType,
-    SM: FiniteStateMachineType
->: FiniteStateMachineType,
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,
     Cloneable,
     ConvertibleToScheduleableFiniteStateMachine,
     ExitableStateExecuter,
@@ -131,7 +125,6 @@ public struct ParameterisedFiniteStateMachine<
     Snapshotable,
     SnapshotControllerContainer,
     Updateable where
-    P.Vars: Updateable,
     R: Cloneable,
     R: Updateable,
     R._StateType: Transitionable,
@@ -163,10 +156,6 @@ public struct ParameterisedFiniteStateMachine<
             "fsmVars": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.fsmVars.vars)),
                 value: self.fsmVars.vars
-            ),
-            "parameters": KripkeStateProperty(type:
-                .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)),
-                value: self.parameters.vars
             ),
             "ringlet": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.ringlet)),
@@ -212,11 +201,6 @@ public struct ParameterisedFiniteStateMachine<
     public let name: String
 
     /**
-     *  The parameters of the FSM.
-     */
-    public let parameters: P
-
-    /**
      *  The last state that was executed.
      */
     public var previousState: R._StateType
@@ -226,8 +210,6 @@ public struct ParameterisedFiniteStateMachine<
      *  variables used in formal verification.
      */
     public let recorder: Recorder
-
-    public var result: ResultType!
 
     /**
      *  An instance of `Ringlet` that is used to execute the states.
@@ -272,9 +254,7 @@ public struct ParameterisedFiniteStateMachine<
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
         fsmVars: V,
-        parameters: P,
         recorder: KR,
-        result: ResultType? = nil,
         ringlet: R,
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
@@ -289,10 +269,8 @@ public struct ParameterisedFiniteStateMachine<
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
         self.name = name
-        self.parameters = parameters
         self.previousState = initialPreviousState
         self.recorder = recorder
-        self.result = result
         self.ringlet = ringlet
         self.submachines = submachines
         self.suspendedState = suspendedState
@@ -300,7 +278,7 @@ public struct ParameterisedFiniteStateMachine<
     }
 
     //swiftlint:disable:next function_body_length
-    public func clone() -> ParameterisedFiniteStateMachine<R, KR, V, P, ResultType, SM>{
+    public func clone() -> FiniteStateMachine<R, KR, V, SM>{
         var stateCache: [String: R._StateType] = [:]
         let allStates = self.allStates
         func apply(_ state: R._StateType) -> R._StateType {
@@ -321,15 +299,12 @@ public struct ParameterisedFiniteStateMachine<
             return state
         }
         self.fsmVars.vars = self.fsmVars.vars.clone()
-        self.parameters.vars = self.parameters.vars.clone()
-        var fsm = ParameterisedFiniteStateMachine(
+        var fsm = FiniteStateMachine(
             self.name,
             initialState: apply(self.initialState.clone()),
             externalVariables: self.externalVariables,
             fsmVars: self.fsmVars,
-            parameters: self.parameters,
             recorder: self.recorder,
-            result: self.result,
             ringlet: self.ringlet.clone(),
             initialPreviousState: apply(self.initialPreviousState.clone()),
             suspendedState: self.suspendedState.map { apply($0.clone()) },
@@ -366,15 +341,12 @@ public struct ParameterisedFiniteStateMachine<
         }
         guard
             let ringlet = dictionary["ringlet"] as? [String: Any],
-            let fsmVars = dictionary["fsmVars"] as? [String: Any],
-            let parameters = dictionary["parameters"] as? [String: Any]
+            let fsmVars = dictionary["fsmVars"] as? [String: Any]
         else {
             fatalError("Unable to fetch all variables from dictionary")
         }
         self.ringlet.update(fromDictionary: ringlet)
         self.fsmVars.vars.update(fromDictionary: fsmVars)
-        self.parameters.vars.update(fromDictionary: parameters)
-        self.result = dictionary["result"] as? ResultType
     }
 
     fileprivate var allStates: [String: R._StateType] {
