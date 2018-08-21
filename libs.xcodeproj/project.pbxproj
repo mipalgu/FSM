@@ -1,0 +1,2209 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		"libs::libsPackageTests::ProductTarget" /* libsPackageTests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = OBJ_354 /* Build configuration list for PBXAggregateTarget "libsPackageTests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				OBJ_357 /* PBXTargetDependency */,
+			);
+			name = libsPackageTests;
+			productName = libsPackageTests;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		F2657F3B212CDD6A00FBB77E /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_67 /* Stack.swift */; };
+		F2657F3C212CDDAD00FBB77E /* ConvertibleCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* ConvertibleCArray.swift */; };
+		F2657F3D212CDDAD00FBB77E /* CArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* CArray.swift */; };
+		OBJ_152 /* AnySnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_32 /* AnySnapshotController.swift */; };
+		OBJ_153 /* AnyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* AnyState.swift */; };
+		OBJ_155 /* CloneableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* CloneableState.swift */; };
+		OBJ_157 /* EmptyExternalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* EmptyExternalVariablesContainer.swift */; };
+		OBJ_158 /* EmptySnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* EmptySnapshotable.swift */; };
+		OBJ_159 /* EmptyVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* EmptyVariables.swift */; };
+		OBJ_160 /* Exitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* Exitable.swift */; };
+		OBJ_161 /* ExitableStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* ExitableStateExecuter.swift */; };
+		OBJ_162 /* ExternalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_42 /* ExternalVariables.swift */; };
+		OBJ_163 /* ExternalVariablesCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_43 /* ExternalVariablesCollection.swift */; };
+		OBJ_164 /* ExternalVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_44 /* ExternalVariablesContainer.swift */; };
+		OBJ_165 /* ExternalVariablesContainerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_45 /* ExternalVariablesContainerHolder.swift */; };
+		OBJ_166 /* FSMVariablesContainerHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* FSMVariablesContainerHolder.swift */; };
+		OBJ_167 /* Finishable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_47 /* Finishable.swift */; };
+		OBJ_168 /* FiniteStateMachineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_48 /* FiniteStateMachineType.swift */; };
+		OBJ_169 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_49 /* GenericWhiteboard.swift */; };
+		OBJ_170 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_50 /* Identifiable.swift */; };
+		OBJ_171 /* IncrementalExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_51 /* IncrementalExecuter.swift */; };
+		OBJ_172 /* MutableSnapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_52 /* MutableSnapshotable.swift */; };
+		OBJ_173 /* MutableSubmachinesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_53 /* MutableSubmachinesContainer.swift */; };
+		OBJ_174 /* OptimizedStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_54 /* OptimizedStateExecuter.swift */; };
+		OBJ_175 /* PreviousStateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_55 /* PreviousStateContainer.swift */; };
+		OBJ_176 /* Restartable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_56 /* Restartable.swift */; };
+		OBJ_177 /* ResultContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_57 /* ResultContainer.swift */; };
+		OBJ_178 /* Resumeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_58 /* Resumeable.swift */; };
+		OBJ_179 /* ResumeableStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_59 /* ResumeableStateExecuter.swift */; };
+		OBJ_180 /* Ringlet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_60 /* Ringlet.swift */; };
+		OBJ_181 /* SimpleVariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_61 /* SimpleVariablesContainer.swift */; };
+		OBJ_182 /* SnapshotCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_62 /* SnapshotCollectionController.swift */; };
+		OBJ_183 /* SnapshotContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_63 /* SnapshotContainer.swift */; };
+		OBJ_184 /* SnapshotControllerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_64 /* SnapshotControllerContainer.swift */; };
+		OBJ_185 /* SnapshotTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_65 /* SnapshotTimerController.swift */; };
+		OBJ_186 /* Snapshotable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_66 /* Snapshotable.swift */; };
+		OBJ_188 /* StateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_68 /* StateContainer.swift */; };
+		OBJ_189 /* StateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_69 /* StateExecuter.swift */; };
+		OBJ_190 /* StateExecuterDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_70 /* StateExecuterDelegator.swift */; };
+		OBJ_191 /* StateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_71 /* StateType.swift */; };
+		OBJ_192 /* StdoutContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_72 /* StdoutContainer.swift */; };
+		OBJ_193 /* StdoutExternalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_73 /* StdoutExternalVariables.swift */; };
+		OBJ_194 /* SubmachinesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_74 /* SubmachinesContainer.swift */; };
+		OBJ_195 /* Suspendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_75 /* Suspendable.swift */; };
+		OBJ_196 /* SuspendableStateExecuter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_76 /* SuspendableStateExecuter.swift */; };
+		OBJ_197 /* TimerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_77 /* TimerProtocol.swift */; };
+		OBJ_198 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_78 /* Transition.swift */; };
+		OBJ_199 /* TransitionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_79 /* TransitionType.swift */; };
+		OBJ_200 /* Transitionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_80 /* Transitionable.swift */; };
+		OBJ_201 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_81 /* Variables.swift */; };
+		OBJ_202 /* VariablesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_82 /* VariablesContainer.swift */; };
+		OBJ_204 /* ModelChecking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::ModelChecking::Product" /* ModelChecking.framework */; };
+		OBJ_205 /* GUSimpleWhiteboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */; };
+		OBJ_206 /* KripkeStructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::KripkeStructure::Product" /* KripkeStructure.framework */; };
+		OBJ_207 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Utilities::Product" /* Utilities.framework */; };
+		OBJ_208 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Functional::Product" /* Functional.framework */; };
+		OBJ_224 /* CArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_128 /* CArrayTests.swift */; };
+		OBJ_225 /* FactoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_129 /* FactoriesTests.swift */; };
+		OBJ_226 /* HashTableCycleDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_130 /* HashTableCycleDetectorTests.swift */; };
+		OBJ_227 /* SpinnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_131 /* SpinnerTests.swift */; };
+		OBJ_229 /* swiftfsm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::swiftfsm::Product" /* swiftfsm.framework */; };
+		OBJ_230 /* FSM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::FSM::Product" /* FSM.framework */; };
+		OBJ_231 /* ModelChecking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::ModelChecking::Product" /* ModelChecking.framework */; };
+		OBJ_232 /* GUSimpleWhiteboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */; };
+		OBJ_233 /* KripkeStructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::KripkeStructure::Product" /* KripkeStructure.framework */; };
+		OBJ_234 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Utilities::Product" /* Utilities.framework */; };
+		OBJ_235 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Functional::Product" /* Functional.framework */; };
+		OBJ_249 /* ExternalsPropertyExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_115 /* ExternalsPropertyExtractor.swift */; };
+		OBJ_250 /* ExternalsSpinnerConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_116 /* ExternalsSpinnerConstructor.swift */; };
+		OBJ_251 /* ExternalsSpinnerConstructorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_117 /* ExternalsSpinnerConstructorFactory.swift */; };
+		OBJ_252 /* ExternalsSpinnerConstructorFactoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_118 /* ExternalsSpinnerConstructorFactoryType.swift */; };
+		OBJ_253 /* ExternalsSpinnerConstructorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_119 /* ExternalsSpinnerConstructorType.swift */; };
+		OBJ_254 /* ExternalsSpinnerDataExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_120 /* ExternalsSpinnerDataExtractor.swift */; };
+		OBJ_255 /* ExternalsSpinnerDataExtractorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_121 /* ExternalsSpinnerDataExtractorType.swift */; };
+		OBJ_256 /* MirrorKripkePropertiesRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_122 /* MirrorKripkePropertiesRecorder.swift */; };
+		OBJ_257 /* MultipleExternalsSpinnerConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_123 /* MultipleExternalsSpinnerConstructor.swift */; };
+		OBJ_258 /* MultipleExternalsSpinnerConstructorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_124 /* MultipleExternalsSpinnerConstructorType.swift */; };
+		OBJ_259 /* PropertiesExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_125 /* PropertiesExtractor.swift */; };
+		OBJ_261 /* FSM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::FSM::Product" /* FSM.framework */; };
+		OBJ_262 /* ModelChecking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::ModelChecking::Product" /* ModelChecking.framework */; };
+		OBJ_263 /* GUSimpleWhiteboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */; };
+		OBJ_264 /* KripkeStructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::KripkeStructure::Product" /* KripkeStructure.framework */; };
+		OBJ_265 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Utilities::Product" /* Utilities.framework */; };
+		OBJ_266 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Functional::Product" /* Functional.framework */; };
+		OBJ_277 /* FunctionalArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_84 /* FunctionalArray.swift */; };
+		OBJ_278 /* FunctionalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_85 /* FunctionalOperators.swift */; };
+		OBJ_279 /* FunctionalOptional.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_86 /* FunctionalOptional.swift */; };
+		OBJ_280 /* FunctionalSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_87 /* FunctionalSequence.swift */; };
+		OBJ_286 /* GenericWhiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_135 /* GenericWhiteboard.swift */; };
+		OBJ_287 /* Whiteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_136 /* Whiteboard.swift */; };
+		OBJ_294 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_134 /* Package.swift */; };
+		OBJ_299 /* KripkeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_108 /* KripkeState.swift */; };
+		OBJ_300 /* KripkeStateProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_109 /* KripkeStateProperty.swift */; };
+		OBJ_301 /* KripkeStatePropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_110 /* KripkeStatePropertyList.swift */; };
+		OBJ_302 /* KripkeStatePropertyTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_111 /* KripkeStatePropertyTypes.swift */; };
+		OBJ_303 /* KripkeStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_112 /* KripkeStateType.swift */; };
+		OBJ_304 /* KripkeStructureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_113 /* KripkeStructureType.swift */; };
+		OBJ_306 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Utilities::Product" /* Utilities.framework */; };
+		OBJ_307 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Functional::Product" /* Functional.framework */; };
+		OBJ_314 /* Cloneable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_89 /* Cloneable.swift */; };
+		OBJ_315 /* CycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_90 /* CycleDetector.swift */; };
+		OBJ_316 /* HashTableCycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_91 /* HashTableCycleDetector.swift */; };
+		OBJ_317 /* KripkeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_92 /* KripkeCollection.swift */; };
+		OBJ_318 /* KripkePropertiesRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_93 /* KripkePropertiesRecordable.swift */; };
+		OBJ_319 /* KripkePropertiesRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_94 /* KripkePropertiesRecorder.swift */; };
+		OBJ_320 /* KripkePropertiesRecorderDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_95 /* KripkePropertiesRecorderDelegator.swift */; };
+		OBJ_321 /* KripkeStatePropertySpinnerConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_96 /* KripkeStatePropertySpinnerConverter.swift */; };
+		OBJ_322 /* KripkeStatePropertySpinnerConverterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_97 /* KripkeStatePropertySpinnerConverterType.swift */; };
+		OBJ_323 /* KripkeStructureGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_98 /* KripkeStructureGenerator.swift */; };
+		OBJ_324 /* KripkeVariablesModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_99 /* KripkeVariablesModifier.swift */; };
+		OBJ_325 /* MirrorKripkePropertiesRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_100 /* MirrorKripkePropertiesRecorder.swift */; };
+		OBJ_326 /* SpinnerRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_101 /* SpinnerRunner.swift */; };
+		OBJ_327 /* SpinnerRunnerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_102 /* SpinnerRunnerType.swift */; };
+		OBJ_328 /* Spinners.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_103 /* Spinners.swift */; };
+		OBJ_329 /* TeleportingTurtleCycleDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_104 /* TeleportingTurtleCycleDetector.swift */; };
+		OBJ_330 /* Updateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_105 /* Updateable.swift */; };
+		OBJ_331 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_106 /* World.swift */; };
+		OBJ_333 /* GUSimpleWhiteboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */; };
+		OBJ_334 /* KripkeStructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::KripkeStructure::Product" /* KripkeStructure.framework */; };
+		OBJ_335 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Utilities::Product" /* Utilities.framework */; };
+		OBJ_336 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Functional::Product" /* Functional.framework */; };
+		OBJ_345 /* Ref.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* Ref.swift */; };
+		OBJ_352 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
+		OBJ_362 /* AnyControllableFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* AnyControllableFiniteStateMachine.swift */; };
+		OBJ_363 /* AnyParameterisedFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* AnyParameterisedFiniteStateMachine.swift */; };
+		OBJ_364 /* AnyScheduleableFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* AnyScheduleableFiniteStateMachine.swift */; };
+		OBJ_365 /* CallbackMiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* CallbackMiPalState.swift */; };
+		OBJ_366 /* ConvertibleToScheduleableFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* ConvertibleToScheduleableFiniteStateMachine.swift */; };
+		OBJ_367 /* Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* Dependency.swift */; };
+		OBJ_368 /* EmptyMiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* EmptyMiPalState.swift */; };
+		OBJ_369 /* FSM.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* FSM.swift */; };
+		OBJ_370 /* Factories.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* Factories.swift */; };
+		OBJ_371 /* FiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* FiniteStateMachine.swift */; };
+		OBJ_372 /* Invoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Invoker.swift */; };
+		OBJ_373 /* InvokerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* InvokerDelegate.swift */; };
+		OBJ_374 /* MiPalActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* MiPalActions.swift */; };
+		OBJ_375 /* MiPalRinglet.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* MiPalRinglet.swift */; };
+		OBJ_376 /* MiPalRingletFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* MiPalRingletFactory.swift */; };
+		OBJ_377 /* MiPalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* MiPalState.swift */; };
+		OBJ_378 /* ParameterisedFiniteStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* ParameterisedFiniteStateMachine.swift */; };
+		OBJ_379 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* Promise.swift */; };
+		OBJ_380 /* aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* aliases.swift */; };
+		OBJ_381 /* globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* globals.swift */; };
+		OBJ_383 /* FSM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::FSM::Product" /* FSM.framework */; };
+		OBJ_384 /* ModelChecking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::ModelChecking::Product" /* ModelChecking.framework */; };
+		OBJ_385 /* GUSimpleWhiteboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */; };
+		OBJ_386 /* KripkeStructure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::KripkeStructure::Product" /* KripkeStructure.framework */; };
+		OBJ_387 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Utilities::Product" /* Utilities.framework */; };
+		OBJ_388 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "libs::Functional::Product" /* Functional.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F2657F1C212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::FSM";
+			remoteInfo = FSM;
+		};
+		F2657F1D212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::ModelChecking";
+			remoteInfo = ModelChecking;
+		};
+		F2657F1E212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GUSimpleWhiteboard::GUSimpleWhiteboard";
+			remoteInfo = GUSimpleWhiteboard;
+		};
+		F2657F1F212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::KripkeStructure";
+			remoteInfo = KripkeStructure;
+		};
+		F2657F20212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Utilities";
+			remoteInfo = Utilities;
+		};
+		F2657F21212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Functional";
+			remoteInfo = Functional;
+		};
+		F2657F22212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Utilities";
+			remoteInfo = Utilities;
+		};
+		F2657F23212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Functional";
+			remoteInfo = Functional;
+		};
+		F2657F24212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GUSimpleWhiteboard::GUSimpleWhiteboard";
+			remoteInfo = GUSimpleWhiteboard;
+		};
+		F2657F25212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::KripkeStructure";
+			remoteInfo = KripkeStructure;
+		};
+		F2657F26212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Utilities";
+			remoteInfo = Utilities;
+		};
+		F2657F27212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Functional";
+			remoteInfo = Functional;
+		};
+		F2657F28212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::ModelChecking";
+			remoteInfo = ModelChecking;
+		};
+		F2657F29212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GUSimpleWhiteboard::GUSimpleWhiteboard";
+			remoteInfo = GUSimpleWhiteboard;
+		};
+		F2657F2A212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::KripkeStructure";
+			remoteInfo = KripkeStructure;
+		};
+		F2657F2B212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Utilities";
+			remoteInfo = Utilities;
+		};
+		F2657F2C212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Functional";
+			remoteInfo = Functional;
+		};
+		F2657F2D212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::FSM";
+			remoteInfo = FSM;
+		};
+		F2657F2E212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::ModelChecking";
+			remoteInfo = ModelChecking;
+		};
+		F2657F2F212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GUSimpleWhiteboard::GUSimpleWhiteboard";
+			remoteInfo = GUSimpleWhiteboard;
+		};
+		F2657F30212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::KripkeStructure";
+			remoteInfo = KripkeStructure;
+		};
+		F2657F31212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Utilities";
+			remoteInfo = Utilities;
+		};
+		F2657F32212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Functional";
+			remoteInfo = Functional;
+		};
+		F2657F33212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::swiftfsm";
+			remoteInfo = swiftfsm;
+		};
+		F2657F34212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::FSM";
+			remoteInfo = FSM;
+		};
+		F2657F35212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::ModelChecking";
+			remoteInfo = ModelChecking;
+		};
+		F2657F36212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "GUSimpleWhiteboard::GUSimpleWhiteboard";
+			remoteInfo = GUSimpleWhiteboard;
+		};
+		F2657F37212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::KripkeStructure";
+			remoteInfo = KripkeStructure;
+		};
+		F2657F38212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Utilities";
+			remoteInfo = Utilities;
+		};
+		F2657F39212CD9BD00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::Functional";
+			remoteInfo = Functional;
+		};
+		F2657F3A212CD9BE00FBB77E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "libs::FSMTests";
+			remoteInfo = FSMTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		"GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GUSimpleWhiteboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_10 /* AnyParameterisedFiniteStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyParameterisedFiniteStateMachine.swift; sourceTree = "<group>"; };
+		OBJ_100 /* MirrorKripkePropertiesRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorKripkePropertiesRecorder.swift; sourceTree = "<group>"; };
+		OBJ_101 /* SpinnerRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerRunner.swift; sourceTree = "<group>"; };
+		OBJ_102 /* SpinnerRunnerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerRunnerType.swift; sourceTree = "<group>"; };
+		OBJ_103 /* Spinners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinners.swift; sourceTree = "<group>"; };
+		OBJ_104 /* TeleportingTurtleCycleDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeleportingTurtleCycleDetector.swift; sourceTree = "<group>"; };
+		OBJ_105 /* Updateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updateable.swift; sourceTree = "<group>"; };
+		OBJ_106 /* World.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		OBJ_108 /* KripkeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeState.swift; sourceTree = "<group>"; };
+		OBJ_109 /* KripkeStateProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStateProperty.swift; sourceTree = "<group>"; };
+		OBJ_11 /* AnyScheduleableFiniteStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyScheduleableFiniteStateMachine.swift; sourceTree = "<group>"; };
+		OBJ_110 /* KripkeStatePropertyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertyList.swift; sourceTree = "<group>"; };
+		OBJ_111 /* KripkeStatePropertyTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertyTypes.swift; sourceTree = "<group>"; };
+		OBJ_112 /* KripkeStateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStateType.swift; sourceTree = "<group>"; };
+		OBJ_113 /* KripkeStructureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStructureType.swift; sourceTree = "<group>"; };
+		OBJ_115 /* ExternalsPropertyExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsPropertyExtractor.swift; sourceTree = "<group>"; };
+		OBJ_116 /* ExternalsSpinnerConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsSpinnerConstructor.swift; sourceTree = "<group>"; };
+		OBJ_117 /* ExternalsSpinnerConstructorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsSpinnerConstructorFactory.swift; sourceTree = "<group>"; };
+		OBJ_118 /* ExternalsSpinnerConstructorFactoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsSpinnerConstructorFactoryType.swift; sourceTree = "<group>"; };
+		OBJ_119 /* ExternalsSpinnerConstructorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsSpinnerConstructorType.swift; sourceTree = "<group>"; };
+		OBJ_12 /* CallbackMiPalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackMiPalState.swift; sourceTree = "<group>"; };
+		OBJ_120 /* ExternalsSpinnerDataExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsSpinnerDataExtractor.swift; sourceTree = "<group>"; };
+		OBJ_121 /* ExternalsSpinnerDataExtractorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalsSpinnerDataExtractorType.swift; sourceTree = "<group>"; };
+		OBJ_122 /* MirrorKripkePropertiesRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorKripkePropertiesRecorder.swift; sourceTree = "<group>"; };
+		OBJ_123 /* MultipleExternalsSpinnerConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleExternalsSpinnerConstructor.swift; sourceTree = "<group>"; };
+		OBJ_124 /* MultipleExternalsSpinnerConstructorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleExternalsSpinnerConstructorType.swift; sourceTree = "<group>"; };
+		OBJ_125 /* PropertiesExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesExtractor.swift; sourceTree = "<group>"; };
+		OBJ_128 /* CArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CArrayTests.swift; sourceTree = "<group>"; };
+		OBJ_129 /* FactoriesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoriesTests.swift; sourceTree = "<group>"; };
+		OBJ_13 /* ConvertibleToScheduleableFiniteStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertibleToScheduleableFiniteStateMachine.swift; sourceTree = "<group>"; };
+		OBJ_130 /* HashTableCycleDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTableCycleDetectorTests.swift; sourceTree = "<group>"; };
+		OBJ_131 /* SpinnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerTests.swift; sourceTree = "<group>"; };
+		OBJ_134 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; name = Package.swift; path = "/Users/callum/src/MiPal/GUNao/posix/swiftfsm/FSM/.build/checkouts/swift_wb.git--4491423803633874324/Package.swift"; sourceTree = "<group>"; };
+		OBJ_135 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericWhiteboard.swift; sourceTree = "<group>"; };
+		OBJ_136 /* Whiteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Whiteboard.swift; sourceTree = "<group>"; };
+		OBJ_14 /* Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependency.swift; sourceTree = "<group>"; };
+		OBJ_15 /* EmptyMiPalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMiPalState.swift; sourceTree = "<group>"; };
+		OBJ_16 /* FSM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSM.swift; sourceTree = "<group>"; };
+		OBJ_17 /* Factories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factories.swift; sourceTree = "<group>"; };
+		OBJ_18 /* FiniteStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiniteStateMachine.swift; sourceTree = "<group>"; };
+		OBJ_19 /* Invoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoker.swift; sourceTree = "<group>"; };
+		OBJ_20 /* InvokerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvokerDelegate.swift; sourceTree = "<group>"; };
+		OBJ_21 /* MiPalActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiPalActions.swift; sourceTree = "<group>"; };
+		OBJ_22 /* MiPalRinglet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiPalRinglet.swift; sourceTree = "<group>"; };
+		OBJ_23 /* MiPalRingletFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiPalRingletFactory.swift; sourceTree = "<group>"; };
+		OBJ_24 /* MiPalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiPalState.swift; sourceTree = "<group>"; };
+		OBJ_25 /* ParameterisedFiniteStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterisedFiniteStateMachine.swift; sourceTree = "<group>"; };
+		OBJ_26 /* Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
+		OBJ_27 /* aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aliases.swift; sourceTree = "<group>"; };
+		OBJ_28 /* globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = globals.swift; sourceTree = "<group>"; };
+		OBJ_30 /* Ref.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ref.swift; sourceTree = "<group>"; };
+		OBJ_32 /* AnySnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnySnapshotController.swift; sourceTree = "<group>"; };
+		OBJ_33 /* AnyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyState.swift; sourceTree = "<group>"; };
+		OBJ_34 /* CArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CArray.swift; sourceTree = "<group>"; };
+		OBJ_35 /* CloneableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloneableState.swift; sourceTree = "<group>"; };
+		OBJ_36 /* ConvertibleCArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertibleCArray.swift; sourceTree = "<group>"; };
+		OBJ_37 /* EmptyExternalVariablesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyExternalVariablesContainer.swift; sourceTree = "<group>"; };
+		OBJ_38 /* EmptySnapshotable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySnapshotable.swift; sourceTree = "<group>"; };
+		OBJ_39 /* EmptyVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVariables.swift; sourceTree = "<group>"; };
+		OBJ_40 /* Exitable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exitable.swift; sourceTree = "<group>"; };
+		OBJ_41 /* ExitableStateExecuter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExitableStateExecuter.swift; sourceTree = "<group>"; };
+		OBJ_42 /* ExternalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalVariables.swift; sourceTree = "<group>"; };
+		OBJ_43 /* ExternalVariablesCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalVariablesCollection.swift; sourceTree = "<group>"; };
+		OBJ_44 /* ExternalVariablesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalVariablesContainer.swift; sourceTree = "<group>"; };
+		OBJ_45 /* ExternalVariablesContainerHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalVariablesContainerHolder.swift; sourceTree = "<group>"; };
+		OBJ_46 /* FSMVariablesContainerHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSMVariablesContainerHolder.swift; sourceTree = "<group>"; };
+		OBJ_47 /* Finishable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finishable.swift; sourceTree = "<group>"; };
+		OBJ_48 /* FiniteStateMachineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiniteStateMachineType.swift; sourceTree = "<group>"; };
+		OBJ_49 /* GenericWhiteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericWhiteboard.swift; sourceTree = "<group>"; };
+		OBJ_50 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		OBJ_51 /* IncrementalExecuter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementalExecuter.swift; sourceTree = "<group>"; };
+		OBJ_52 /* MutableSnapshotable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableSnapshotable.swift; sourceTree = "<group>"; };
+		OBJ_53 /* MutableSubmachinesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableSubmachinesContainer.swift; sourceTree = "<group>"; };
+		OBJ_54 /* OptimizedStateExecuter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizedStateExecuter.swift; sourceTree = "<group>"; };
+		OBJ_55 /* PreviousStateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousStateContainer.swift; sourceTree = "<group>"; };
+		OBJ_56 /* Restartable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restartable.swift; sourceTree = "<group>"; };
+		OBJ_57 /* ResultContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultContainer.swift; sourceTree = "<group>"; };
+		OBJ_58 /* Resumeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resumeable.swift; sourceTree = "<group>"; };
+		OBJ_59 /* ResumeableStateExecuter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeableStateExecuter.swift; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		OBJ_60 /* Ringlet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ringlet.swift; sourceTree = "<group>"; };
+		OBJ_61 /* SimpleVariablesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVariablesContainer.swift; sourceTree = "<group>"; };
+		OBJ_62 /* SnapshotCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotCollectionController.swift; sourceTree = "<group>"; };
+		OBJ_63 /* SnapshotContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotContainer.swift; sourceTree = "<group>"; };
+		OBJ_64 /* SnapshotControllerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotControllerContainer.swift; sourceTree = "<group>"; };
+		OBJ_65 /* SnapshotTimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTimerController.swift; sourceTree = "<group>"; };
+		OBJ_66 /* Snapshotable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Snapshotable.swift; sourceTree = "<group>"; };
+		OBJ_67 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		OBJ_68 /* StateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateContainer.swift; sourceTree = "<group>"; };
+		OBJ_69 /* StateExecuter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateExecuter.swift; sourceTree = "<group>"; };
+		OBJ_70 /* StateExecuterDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateExecuterDelegator.swift; sourceTree = "<group>"; };
+		OBJ_71 /* StateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateType.swift; sourceTree = "<group>"; };
+		OBJ_72 /* StdoutContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StdoutContainer.swift; sourceTree = "<group>"; };
+		OBJ_73 /* StdoutExternalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StdoutExternalVariables.swift; sourceTree = "<group>"; };
+		OBJ_74 /* SubmachinesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmachinesContainer.swift; sourceTree = "<group>"; };
+		OBJ_75 /* Suspendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suspendable.swift; sourceTree = "<group>"; };
+		OBJ_76 /* SuspendableStateExecuter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuspendableStateExecuter.swift; sourceTree = "<group>"; };
+		OBJ_77 /* TimerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerProtocol.swift; sourceTree = "<group>"; };
+		OBJ_78 /* Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		OBJ_79 /* TransitionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionType.swift; sourceTree = "<group>"; };
+		OBJ_80 /* Transitionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transitionable.swift; sourceTree = "<group>"; };
+		OBJ_81 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
+		OBJ_82 /* VariablesContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariablesContainer.swift; sourceTree = "<group>"; };
+		OBJ_84 /* FunctionalArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalArray.swift; sourceTree = "<group>"; };
+		OBJ_85 /* FunctionalOperators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalOperators.swift; sourceTree = "<group>"; };
+		OBJ_86 /* FunctionalOptional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalOptional.swift; sourceTree = "<group>"; };
+		OBJ_87 /* FunctionalSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionalSequence.swift; sourceTree = "<group>"; };
+		OBJ_89 /* Cloneable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cloneable.swift; sourceTree = "<group>"; };
+		OBJ_9 /* AnyControllableFiniteStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyControllableFiniteStateMachine.swift; sourceTree = "<group>"; };
+		OBJ_90 /* CycleDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleDetector.swift; sourceTree = "<group>"; };
+		OBJ_91 /* HashTableCycleDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTableCycleDetector.swift; sourceTree = "<group>"; };
+		OBJ_92 /* KripkeCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeCollection.swift; sourceTree = "<group>"; };
+		OBJ_93 /* KripkePropertiesRecordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkePropertiesRecordable.swift; sourceTree = "<group>"; };
+		OBJ_94 /* KripkePropertiesRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkePropertiesRecorder.swift; sourceTree = "<group>"; };
+		OBJ_95 /* KripkePropertiesRecorderDelegator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkePropertiesRecorderDelegator.swift; sourceTree = "<group>"; };
+		OBJ_96 /* KripkeStatePropertySpinnerConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertySpinnerConverter.swift; sourceTree = "<group>"; };
+		OBJ_97 /* KripkeStatePropertySpinnerConverterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStatePropertySpinnerConverterType.swift; sourceTree = "<group>"; };
+		OBJ_98 /* KripkeStructureGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeStructureGenerator.swift; sourceTree = "<group>"; };
+		OBJ_99 /* KripkeVariablesModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KripkeVariablesModifier.swift; sourceTree = "<group>"; };
+		"libs::FSM::Product" /* FSM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FSM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::FSMTests::Product" /* FSMTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = FSMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::FSMVerification::Product" /* FSMVerification.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FSMVerification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::Functional::Product" /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Functional.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::KripkeStructure::Product" /* KripkeStructure.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KripkeStructure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::ModelChecking::Product" /* ModelChecking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ModelChecking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::Utilities::Product" /* Utilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"libs::swiftfsm::Product" /* swiftfsm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = swiftfsm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_203 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_204 /* ModelChecking.framework in Frameworks */,
+				OBJ_205 /* GUSimpleWhiteboard.framework in Frameworks */,
+				OBJ_206 /* KripkeStructure.framework in Frameworks */,
+				OBJ_207 /* Utilities.framework in Frameworks */,
+				OBJ_208 /* Functional.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_228 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_229 /* swiftfsm.framework in Frameworks */,
+				OBJ_230 /* FSM.framework in Frameworks */,
+				OBJ_231 /* ModelChecking.framework in Frameworks */,
+				OBJ_232 /* GUSimpleWhiteboard.framework in Frameworks */,
+				OBJ_233 /* KripkeStructure.framework in Frameworks */,
+				OBJ_234 /* Utilities.framework in Frameworks */,
+				OBJ_235 /* Functional.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_260 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_261 /* FSM.framework in Frameworks */,
+				OBJ_262 /* ModelChecking.framework in Frameworks */,
+				OBJ_263 /* GUSimpleWhiteboard.framework in Frameworks */,
+				OBJ_264 /* KripkeStructure.framework in Frameworks */,
+				OBJ_265 /* Utilities.framework in Frameworks */,
+				OBJ_266 /* Functional.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_281 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_288 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_305 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_306 /* Utilities.framework in Frameworks */,
+				OBJ_307 /* Functional.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_332 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_333 /* GUSimpleWhiteboard.framework in Frameworks */,
+				OBJ_334 /* KripkeStructure.framework in Frameworks */,
+				OBJ_335 /* Utilities.framework in Frameworks */,
+				OBJ_336 /* Functional.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_346 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_382 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_383 /* FSM.framework in Frameworks */,
+				OBJ_384 /* ModelChecking.framework in Frameworks */,
+				OBJ_385 /* GUSimpleWhiteboard.framework in Frameworks */,
+				OBJ_386 /* KripkeStructure.framework in Frameworks */,
+				OBJ_387 /* Utilities.framework in Frameworks */,
+				OBJ_388 /* Functional.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		OBJ_107 /* KripkeStructure */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_108 /* KripkeState.swift */,
+				OBJ_109 /* KripkeStateProperty.swift */,
+				OBJ_110 /* KripkeStatePropertyList.swift */,
+				OBJ_111 /* KripkeStatePropertyTypes.swift */,
+				OBJ_112 /* KripkeStateType.swift */,
+				OBJ_113 /* KripkeStructureType.swift */,
+			);
+			name = KripkeStructure;
+			path = Sources/KripkeStructure;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_114 /* FSMVerification */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_115 /* ExternalsPropertyExtractor.swift */,
+				OBJ_116 /* ExternalsSpinnerConstructor.swift */,
+				OBJ_117 /* ExternalsSpinnerConstructorFactory.swift */,
+				OBJ_118 /* ExternalsSpinnerConstructorFactoryType.swift */,
+				OBJ_119 /* ExternalsSpinnerConstructorType.swift */,
+				OBJ_120 /* ExternalsSpinnerDataExtractor.swift */,
+				OBJ_121 /* ExternalsSpinnerDataExtractorType.swift */,
+				OBJ_122 /* MirrorKripkePropertiesRecorder.swift */,
+				OBJ_123 /* MultipleExternalsSpinnerConstructor.swift */,
+				OBJ_124 /* MultipleExternalsSpinnerConstructorType.swift */,
+				OBJ_125 /* PropertiesExtractor.swift */,
+			);
+			name = FSMVerification;
+			path = Sources/FSMVerification;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_126 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_127 /* FSMTests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_127 /* FSMTests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_128 /* CArrayTests.swift */,
+				OBJ_129 /* FactoriesTests.swift */,
+				OBJ_130 /* HashTableCycleDetectorTests.swift */,
+				OBJ_131 /* SpinnerTests.swift */,
+			);
+			name = FSMTests;
+			path = Tests/FSMTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_132 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_133 /* GUSimpleWhiteboard */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		OBJ_133 /* GUSimpleWhiteboard */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_134 /* Package.swift */,
+				OBJ_135 /* GenericWhiteboard.swift */,
+				OBJ_136 /* Whiteboard.swift */,
+			);
+			name = GUSimpleWhiteboard;
+			path = ".build/checkouts/swift_wb.git--4491423803633874324/Sources";
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_137 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"libs::Utilities::Product" /* Utilities.framework */,
+				"libs::FSMTests::Product" /* FSMTests.xctest */,
+				"GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */,
+				"libs::swiftfsm::Product" /* swiftfsm.framework */,
+				"libs::FSMVerification::Product" /* FSMVerification.framework */,
+				"libs::FSM::Product" /* FSM.framework */,
+				"libs::ModelChecking::Product" /* ModelChecking.framework */,
+				"libs::Functional::Product" /* Functional.framework */,
+				"libs::KripkeStructure::Product" /* KripkeStructure.framework */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_29 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_34 /* CArray.swift */,
+				OBJ_36 /* ConvertibleCArray.swift */,
+				OBJ_30 /* Ref.swift */,
+				OBJ_67 /* Stack.swift */,
+			);
+			name = Utilities;
+			path = Sources/Utilities;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_31 /* FSM */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_32 /* AnySnapshotController.swift */,
+				OBJ_33 /* AnyState.swift */,
+				OBJ_35 /* CloneableState.swift */,
+				OBJ_37 /* EmptyExternalVariablesContainer.swift */,
+				OBJ_38 /* EmptySnapshotable.swift */,
+				OBJ_39 /* EmptyVariables.swift */,
+				OBJ_40 /* Exitable.swift */,
+				OBJ_41 /* ExitableStateExecuter.swift */,
+				OBJ_42 /* ExternalVariables.swift */,
+				OBJ_43 /* ExternalVariablesCollection.swift */,
+				OBJ_44 /* ExternalVariablesContainer.swift */,
+				OBJ_45 /* ExternalVariablesContainerHolder.swift */,
+				OBJ_46 /* FSMVariablesContainerHolder.swift */,
+				OBJ_47 /* Finishable.swift */,
+				OBJ_48 /* FiniteStateMachineType.swift */,
+				OBJ_49 /* GenericWhiteboard.swift */,
+				OBJ_50 /* Identifiable.swift */,
+				OBJ_51 /* IncrementalExecuter.swift */,
+				OBJ_52 /* MutableSnapshotable.swift */,
+				OBJ_53 /* MutableSubmachinesContainer.swift */,
+				OBJ_54 /* OptimizedStateExecuter.swift */,
+				OBJ_55 /* PreviousStateContainer.swift */,
+				OBJ_56 /* Restartable.swift */,
+				OBJ_57 /* ResultContainer.swift */,
+				OBJ_58 /* Resumeable.swift */,
+				OBJ_59 /* ResumeableStateExecuter.swift */,
+				OBJ_60 /* Ringlet.swift */,
+				OBJ_61 /* SimpleVariablesContainer.swift */,
+				OBJ_62 /* SnapshotCollectionController.swift */,
+				OBJ_63 /* SnapshotContainer.swift */,
+				OBJ_64 /* SnapshotControllerContainer.swift */,
+				OBJ_65 /* SnapshotTimerController.swift */,
+				OBJ_66 /* Snapshotable.swift */,
+				OBJ_68 /* StateContainer.swift */,
+				OBJ_69 /* StateExecuter.swift */,
+				OBJ_70 /* StateExecuterDelegator.swift */,
+				OBJ_71 /* StateType.swift */,
+				OBJ_72 /* StdoutContainer.swift */,
+				OBJ_73 /* StdoutExternalVariables.swift */,
+				OBJ_74 /* SubmachinesContainer.swift */,
+				OBJ_75 /* Suspendable.swift */,
+				OBJ_76 /* SuspendableStateExecuter.swift */,
+				OBJ_77 /* TimerProtocol.swift */,
+				OBJ_78 /* Transition.swift */,
+				OBJ_79 /* TransitionType.swift */,
+				OBJ_80 /* Transitionable.swift */,
+				OBJ_81 /* Variables.swift */,
+				OBJ_82 /* VariablesContainer.swift */,
+			);
+			name = FSM;
+			path = Sources/FSM;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_5 /*  */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_126 /* Tests */,
+				OBJ_132 /* Dependencies */,
+				OBJ_137 /* Products */,
+			);
+			name = "";
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* swiftfsm */,
+				OBJ_29 /* Utilities */,
+				OBJ_31 /* FSM */,
+				OBJ_83 /* Functional */,
+				OBJ_88 /* ModelChecking */,
+				OBJ_107 /* KripkeStructure */,
+				OBJ_114 /* FSMVerification */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* swiftfsm */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_9 /* AnyControllableFiniteStateMachine.swift */,
+				OBJ_10 /* AnyParameterisedFiniteStateMachine.swift */,
+				OBJ_11 /* AnyScheduleableFiniteStateMachine.swift */,
+				OBJ_12 /* CallbackMiPalState.swift */,
+				OBJ_13 /* ConvertibleToScheduleableFiniteStateMachine.swift */,
+				OBJ_14 /* Dependency.swift */,
+				OBJ_15 /* EmptyMiPalState.swift */,
+				OBJ_16 /* FSM.swift */,
+				OBJ_17 /* Factories.swift */,
+				OBJ_18 /* FiniteStateMachine.swift */,
+				OBJ_19 /* Invoker.swift */,
+				OBJ_20 /* InvokerDelegate.swift */,
+				OBJ_21 /* MiPalActions.swift */,
+				OBJ_22 /* MiPalRinglet.swift */,
+				OBJ_23 /* MiPalRingletFactory.swift */,
+				OBJ_24 /* MiPalState.swift */,
+				OBJ_25 /* ParameterisedFiniteStateMachine.swift */,
+				OBJ_26 /* Promise.swift */,
+				OBJ_27 /* aliases.swift */,
+				OBJ_28 /* globals.swift */,
+			);
+			name = swiftfsm;
+			path = Sources/swiftfsm;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_83 /* Functional */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_84 /* FunctionalArray.swift */,
+				OBJ_85 /* FunctionalOperators.swift */,
+				OBJ_86 /* FunctionalOptional.swift */,
+				OBJ_87 /* FunctionalSequence.swift */,
+			);
+			name = Functional;
+			path = Sources/Functional;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_88 /* ModelChecking */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_89 /* Cloneable.swift */,
+				OBJ_90 /* CycleDetector.swift */,
+				OBJ_91 /* HashTableCycleDetector.swift */,
+				OBJ_92 /* KripkeCollection.swift */,
+				OBJ_93 /* KripkePropertiesRecordable.swift */,
+				OBJ_94 /* KripkePropertiesRecorder.swift */,
+				OBJ_95 /* KripkePropertiesRecorderDelegator.swift */,
+				OBJ_96 /* KripkeStatePropertySpinnerConverter.swift */,
+				OBJ_97 /* KripkeStatePropertySpinnerConverterType.swift */,
+				OBJ_98 /* KripkeStructureGenerator.swift */,
+				OBJ_99 /* KripkeVariablesModifier.swift */,
+				OBJ_100 /* MirrorKripkePropertiesRecorder.swift */,
+				OBJ_101 /* SpinnerRunner.swift */,
+				OBJ_102 /* SpinnerRunnerType.swift */,
+				OBJ_103 /* Spinners.swift */,
+				OBJ_104 /* TeleportingTurtleCycleDetector.swift */,
+				OBJ_105 /* Updateable.swift */,
+				OBJ_106 /* World.swift */,
+			);
+			name = ModelChecking;
+			path = Sources/ModelChecking;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_282 /* Build configuration list for PBXNativeTarget "GUSimpleWhiteboard" */;
+			buildPhases = (
+				OBJ_285 /* Sources */,
+				OBJ_288 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GUSimpleWhiteboard;
+			productName = GUSimpleWhiteboard;
+			productReference = "GUSimpleWhiteboard::GUSimpleWhiteboard::Product" /* GUSimpleWhiteboard.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"GUSimpleWhiteboard::SwiftPMPackageDescription" /* GUSimpleWhiteboardPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_290 /* Build configuration list for PBXNativeTarget "GUSimpleWhiteboardPackageDescription" */;
+			buildPhases = (
+				OBJ_293 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GUSimpleWhiteboardPackageDescription;
+			productName = GUSimpleWhiteboardPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::FSM" /* FSM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_148 /* Build configuration list for PBXNativeTarget "FSM" */;
+			buildPhases = (
+				OBJ_151 /* Sources */,
+				OBJ_203 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_209 /* PBXTargetDependency */,
+				OBJ_211 /* PBXTargetDependency */,
+				OBJ_213 /* PBXTargetDependency */,
+				OBJ_215 /* PBXTargetDependency */,
+				OBJ_217 /* PBXTargetDependency */,
+			);
+			name = FSM;
+			productName = FSM;
+			productReference = "libs::FSM::Product" /* FSM.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::FSMTests" /* FSMTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_220 /* Build configuration list for PBXNativeTarget "FSMTests" */;
+			buildPhases = (
+				OBJ_223 /* Sources */,
+				OBJ_228 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_236 /* PBXTargetDependency */,
+				OBJ_238 /* PBXTargetDependency */,
+				OBJ_239 /* PBXTargetDependency */,
+				OBJ_240 /* PBXTargetDependency */,
+				OBJ_241 /* PBXTargetDependency */,
+				OBJ_242 /* PBXTargetDependency */,
+				OBJ_243 /* PBXTargetDependency */,
+			);
+			name = FSMTests;
+			productName = FSMTests;
+			productReference = "libs::FSMTests::Product" /* FSMTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		"libs::FSMVerification" /* FSMVerification */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_245 /* Build configuration list for PBXNativeTarget "FSMVerification" */;
+			buildPhases = (
+				OBJ_248 /* Sources */,
+				OBJ_260 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_267 /* PBXTargetDependency */,
+				OBJ_268 /* PBXTargetDependency */,
+				OBJ_269 /* PBXTargetDependency */,
+				OBJ_270 /* PBXTargetDependency */,
+				OBJ_271 /* PBXTargetDependency */,
+				OBJ_272 /* PBXTargetDependency */,
+			);
+			name = FSMVerification;
+			productName = FSMVerification;
+			productReference = "libs::FSMVerification::Product" /* FSMVerification.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::Functional" /* Functional */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_273 /* Build configuration list for PBXNativeTarget "Functional" */;
+			buildPhases = (
+				OBJ_276 /* Sources */,
+				OBJ_281 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Functional;
+			productName = Functional;
+			productReference = "libs::Functional::Product" /* Functional.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::KripkeStructure" /* KripkeStructure */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_295 /* Build configuration list for PBXNativeTarget "KripkeStructure" */;
+			buildPhases = (
+				OBJ_298 /* Sources */,
+				OBJ_305 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_308 /* PBXTargetDependency */,
+				OBJ_309 /* PBXTargetDependency */,
+			);
+			name = KripkeStructure;
+			productName = KripkeStructure;
+			productReference = "libs::KripkeStructure::Product" /* KripkeStructure.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::ModelChecking" /* ModelChecking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_310 /* Build configuration list for PBXNativeTarget "ModelChecking" */;
+			buildPhases = (
+				OBJ_313 /* Sources */,
+				OBJ_332 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_337 /* PBXTargetDependency */,
+				OBJ_338 /* PBXTargetDependency */,
+				OBJ_339 /* PBXTargetDependency */,
+				OBJ_340 /* PBXTargetDependency */,
+			);
+			name = ModelChecking;
+			productName = ModelChecking;
+			productReference = "libs::ModelChecking::Product" /* ModelChecking.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::SwiftPMPackageDescription" /* libsPackageDescription */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_348 /* Build configuration list for PBXNativeTarget "libsPackageDescription" */;
+			buildPhases = (
+				OBJ_351 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libsPackageDescription;
+			productName = libsPackageDescription;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::Utilities" /* Utilities */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_341 /* Build configuration list for PBXNativeTarget "Utilities" */;
+			buildPhases = (
+				OBJ_344 /* Sources */,
+				OBJ_346 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Utilities;
+			productName = Utilities;
+			productReference = "libs::Utilities::Product" /* Utilities.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"libs::swiftfsm" /* swiftfsm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_358 /* Build configuration list for PBXNativeTarget "swiftfsm" */;
+			buildPhases = (
+				OBJ_361 /* Sources */,
+				OBJ_382 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_389 /* PBXTargetDependency */,
+				OBJ_390 /* PBXTargetDependency */,
+				OBJ_391 /* PBXTargetDependency */,
+				OBJ_392 /* PBXTargetDependency */,
+				OBJ_393 /* PBXTargetDependency */,
+				OBJ_394 /* PBXTargetDependency */,
+			);
+			name = swiftfsm;
+			productName = swiftfsm;
+			productReference = "libs::swiftfsm::Product" /* swiftfsm.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "libs" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5 /*  */;
+			productRefGroup = OBJ_137 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"libs::FSM" /* FSM */,
+				"libs::FSMTests" /* FSMTests */,
+				"libs::FSMVerification" /* FSMVerification */,
+				"libs::Functional" /* Functional */,
+				"GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */,
+				"GUSimpleWhiteboard::SwiftPMPackageDescription" /* GUSimpleWhiteboardPackageDescription */,
+				"libs::KripkeStructure" /* KripkeStructure */,
+				"libs::ModelChecking" /* ModelChecking */,
+				"libs::Utilities" /* Utilities */,
+				"libs::SwiftPMPackageDescription" /* libsPackageDescription */,
+				"libs::libsPackageTests::ProductTarget" /* libsPackageTests */,
+				"libs::swiftfsm" /* swiftfsm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_151 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_152 /* AnySnapshotController.swift in Sources */,
+				OBJ_153 /* AnyState.swift in Sources */,
+				OBJ_155 /* CloneableState.swift in Sources */,
+				OBJ_157 /* EmptyExternalVariablesContainer.swift in Sources */,
+				OBJ_158 /* EmptySnapshotable.swift in Sources */,
+				OBJ_159 /* EmptyVariables.swift in Sources */,
+				OBJ_160 /* Exitable.swift in Sources */,
+				OBJ_161 /* ExitableStateExecuter.swift in Sources */,
+				OBJ_162 /* ExternalVariables.swift in Sources */,
+				OBJ_163 /* ExternalVariablesCollection.swift in Sources */,
+				OBJ_164 /* ExternalVariablesContainer.swift in Sources */,
+				OBJ_165 /* ExternalVariablesContainerHolder.swift in Sources */,
+				OBJ_166 /* FSMVariablesContainerHolder.swift in Sources */,
+				OBJ_167 /* Finishable.swift in Sources */,
+				OBJ_168 /* FiniteStateMachineType.swift in Sources */,
+				OBJ_169 /* GenericWhiteboard.swift in Sources */,
+				OBJ_170 /* Identifiable.swift in Sources */,
+				OBJ_171 /* IncrementalExecuter.swift in Sources */,
+				OBJ_172 /* MutableSnapshotable.swift in Sources */,
+				OBJ_173 /* MutableSubmachinesContainer.swift in Sources */,
+				OBJ_174 /* OptimizedStateExecuter.swift in Sources */,
+				OBJ_175 /* PreviousStateContainer.swift in Sources */,
+				OBJ_176 /* Restartable.swift in Sources */,
+				OBJ_177 /* ResultContainer.swift in Sources */,
+				OBJ_178 /* Resumeable.swift in Sources */,
+				OBJ_179 /* ResumeableStateExecuter.swift in Sources */,
+				OBJ_180 /* Ringlet.swift in Sources */,
+				OBJ_181 /* SimpleVariablesContainer.swift in Sources */,
+				OBJ_182 /* SnapshotCollectionController.swift in Sources */,
+				OBJ_183 /* SnapshotContainer.swift in Sources */,
+				OBJ_184 /* SnapshotControllerContainer.swift in Sources */,
+				OBJ_185 /* SnapshotTimerController.swift in Sources */,
+				OBJ_186 /* Snapshotable.swift in Sources */,
+				OBJ_188 /* StateContainer.swift in Sources */,
+				OBJ_189 /* StateExecuter.swift in Sources */,
+				OBJ_190 /* StateExecuterDelegator.swift in Sources */,
+				OBJ_191 /* StateType.swift in Sources */,
+				OBJ_192 /* StdoutContainer.swift in Sources */,
+				OBJ_193 /* StdoutExternalVariables.swift in Sources */,
+				OBJ_194 /* SubmachinesContainer.swift in Sources */,
+				OBJ_195 /* Suspendable.swift in Sources */,
+				OBJ_196 /* SuspendableStateExecuter.swift in Sources */,
+				OBJ_197 /* TimerProtocol.swift in Sources */,
+				OBJ_198 /* Transition.swift in Sources */,
+				OBJ_199 /* TransitionType.swift in Sources */,
+				OBJ_200 /* Transitionable.swift in Sources */,
+				OBJ_201 /* Variables.swift in Sources */,
+				OBJ_202 /* VariablesContainer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_223 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_224 /* CArrayTests.swift in Sources */,
+				OBJ_225 /* FactoriesTests.swift in Sources */,
+				OBJ_226 /* HashTableCycleDetectorTests.swift in Sources */,
+				OBJ_227 /* SpinnerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_248 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_249 /* ExternalsPropertyExtractor.swift in Sources */,
+				OBJ_250 /* ExternalsSpinnerConstructor.swift in Sources */,
+				OBJ_251 /* ExternalsSpinnerConstructorFactory.swift in Sources */,
+				OBJ_252 /* ExternalsSpinnerConstructorFactoryType.swift in Sources */,
+				OBJ_253 /* ExternalsSpinnerConstructorType.swift in Sources */,
+				OBJ_254 /* ExternalsSpinnerDataExtractor.swift in Sources */,
+				OBJ_255 /* ExternalsSpinnerDataExtractorType.swift in Sources */,
+				OBJ_256 /* MirrorKripkePropertiesRecorder.swift in Sources */,
+				OBJ_257 /* MultipleExternalsSpinnerConstructor.swift in Sources */,
+				OBJ_258 /* MultipleExternalsSpinnerConstructorType.swift in Sources */,
+				OBJ_259 /* PropertiesExtractor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_276 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_277 /* FunctionalArray.swift in Sources */,
+				OBJ_278 /* FunctionalOperators.swift in Sources */,
+				OBJ_279 /* FunctionalOptional.swift in Sources */,
+				OBJ_280 /* FunctionalSequence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_285 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_286 /* GenericWhiteboard.swift in Sources */,
+				OBJ_287 /* Whiteboard.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_293 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_294 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_298 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_299 /* KripkeState.swift in Sources */,
+				OBJ_300 /* KripkeStateProperty.swift in Sources */,
+				OBJ_301 /* KripkeStatePropertyList.swift in Sources */,
+				OBJ_302 /* KripkeStatePropertyTypes.swift in Sources */,
+				OBJ_303 /* KripkeStateType.swift in Sources */,
+				OBJ_304 /* KripkeStructureType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_313 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_314 /* Cloneable.swift in Sources */,
+				OBJ_315 /* CycleDetector.swift in Sources */,
+				OBJ_316 /* HashTableCycleDetector.swift in Sources */,
+				OBJ_317 /* KripkeCollection.swift in Sources */,
+				OBJ_318 /* KripkePropertiesRecordable.swift in Sources */,
+				OBJ_319 /* KripkePropertiesRecorder.swift in Sources */,
+				OBJ_320 /* KripkePropertiesRecorderDelegator.swift in Sources */,
+				OBJ_321 /* KripkeStatePropertySpinnerConverter.swift in Sources */,
+				OBJ_322 /* KripkeStatePropertySpinnerConverterType.swift in Sources */,
+				OBJ_323 /* KripkeStructureGenerator.swift in Sources */,
+				OBJ_324 /* KripkeVariablesModifier.swift in Sources */,
+				OBJ_325 /* MirrorKripkePropertiesRecorder.swift in Sources */,
+				OBJ_326 /* SpinnerRunner.swift in Sources */,
+				OBJ_327 /* SpinnerRunnerType.swift in Sources */,
+				OBJ_328 /* Spinners.swift in Sources */,
+				OBJ_329 /* TeleportingTurtleCycleDetector.swift in Sources */,
+				OBJ_330 /* Updateable.swift in Sources */,
+				OBJ_331 /* World.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				F2657F3C212CDDAD00FBB77E /* ConvertibleCArray.swift in Sources */,
+				F2657F3D212CDDAD00FBB77E /* CArray.swift in Sources */,
+				F2657F3B212CDD6A00FBB77E /* Stack.swift in Sources */,
+				OBJ_345 /* Ref.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_351 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_352 /* Package.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_361 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_362 /* AnyControllableFiniteStateMachine.swift in Sources */,
+				OBJ_363 /* AnyParameterisedFiniteStateMachine.swift in Sources */,
+				OBJ_364 /* AnyScheduleableFiniteStateMachine.swift in Sources */,
+				OBJ_365 /* CallbackMiPalState.swift in Sources */,
+				OBJ_366 /* ConvertibleToScheduleableFiniteStateMachine.swift in Sources */,
+				OBJ_367 /* Dependency.swift in Sources */,
+				OBJ_368 /* EmptyMiPalState.swift in Sources */,
+				OBJ_369 /* FSM.swift in Sources */,
+				OBJ_370 /* Factories.swift in Sources */,
+				OBJ_371 /* FiniteStateMachine.swift in Sources */,
+				OBJ_372 /* Invoker.swift in Sources */,
+				OBJ_373 /* InvokerDelegate.swift in Sources */,
+				OBJ_374 /* MiPalActions.swift in Sources */,
+				OBJ_375 /* MiPalRinglet.swift in Sources */,
+				OBJ_376 /* MiPalRingletFactory.swift in Sources */,
+				OBJ_377 /* MiPalState.swift in Sources */,
+				OBJ_378 /* ParameterisedFiniteStateMachine.swift in Sources */,
+				OBJ_379 /* Promise.swift in Sources */,
+				OBJ_380 /* aliases.swift in Sources */,
+				OBJ_381 /* globals.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_209 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::ModelChecking" /* ModelChecking */;
+			targetProxy = F2657F1D212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_211 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */;
+			targetProxy = F2657F24212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_213 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::KripkeStructure" /* KripkeStructure */;
+			targetProxy = F2657F25212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_215 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Utilities" /* Utilities */;
+			targetProxy = F2657F26212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_217 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Functional" /* Functional */;
+			targetProxy = F2657F27212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_236 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::swiftfsm" /* swiftfsm */;
+			targetProxy = F2657F33212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_238 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::FSM" /* FSM */;
+			targetProxy = F2657F34212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_239 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::ModelChecking" /* ModelChecking */;
+			targetProxy = F2657F35212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_240 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */;
+			targetProxy = F2657F36212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_241 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::KripkeStructure" /* KripkeStructure */;
+			targetProxy = F2657F37212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_242 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Utilities" /* Utilities */;
+			targetProxy = F2657F38212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_243 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Functional" /* Functional */;
+			targetProxy = F2657F39212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_267 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::FSM" /* FSM */;
+			targetProxy = F2657F2D212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_268 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::ModelChecking" /* ModelChecking */;
+			targetProxy = F2657F2E212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_269 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */;
+			targetProxy = F2657F2F212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_270 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::KripkeStructure" /* KripkeStructure */;
+			targetProxy = F2657F30212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_271 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Utilities" /* Utilities */;
+			targetProxy = F2657F31212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_272 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Functional" /* Functional */;
+			targetProxy = F2657F32212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_308 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Utilities" /* Utilities */;
+			targetProxy = F2657F20212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_309 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Functional" /* Functional */;
+			targetProxy = F2657F21212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_337 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */;
+			targetProxy = F2657F1E212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_338 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::KripkeStructure" /* KripkeStructure */;
+			targetProxy = F2657F1F212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_339 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Utilities" /* Utilities */;
+			targetProxy = F2657F22212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_340 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Functional" /* Functional */;
+			targetProxy = F2657F23212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_357 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::FSMTests" /* FSMTests */;
+			targetProxy = F2657F3A212CD9BE00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_389 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::FSM" /* FSM */;
+			targetProxy = F2657F1C212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_390 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::ModelChecking" /* ModelChecking */;
+			targetProxy = F2657F28212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_391 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "GUSimpleWhiteboard::GUSimpleWhiteboard" /* GUSimpleWhiteboard */;
+			targetProxy = F2657F29212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_392 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::KripkeStructure" /* KripkeStructure */;
+			targetProxy = F2657F2A212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_393 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Utilities" /* Utilities */;
+			targetProxy = F2657F2B212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+		OBJ_394 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "libs::Functional" /* Functional */;
+			targetProxy = F2657F2C212CD9BD00FBB77E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_149 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/FSM_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = FSM;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FSM;
+			};
+			name = Debug;
+		};
+		OBJ_150 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/FSM_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = FSM;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FSM;
+			};
+			name = Release;
+		};
+		OBJ_221 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/FSMTests_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FSMTests;
+			};
+			name = Debug;
+		};
+		OBJ_222 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/FSMTests_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/../Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FSMTests;
+			};
+			name = Release;
+		};
+		OBJ_246 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/FSMVerification_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = FSMVerification;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FSMVerification;
+			};
+			name = Debug;
+		};
+		OBJ_247 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/FSMVerification_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = FSMVerification;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FSMVerification;
+			};
+			name = Release;
+		};
+		OBJ_274 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = libs.xcodeproj/Functional_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Functional;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = Functional;
+			};
+			name = Debug;
+		};
+		OBJ_275 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = libs.xcodeproj/Functional_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Functional;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = Functional;
+			};
+			name = Release;
+		};
+		OBJ_283 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/GUSimpleWhiteboard_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = GUSimpleWhiteboard;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGET_NAME = GUSimpleWhiteboard;
+			};
+			name = Debug;
+		};
+		OBJ_284 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/GUSimpleWhiteboard_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = GUSimpleWhiteboard;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGET_NAME = GUSimpleWhiteboard;
+			};
+			name = Release;
+		};
+		OBJ_291 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 3 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		OBJ_292 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 3 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/3 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		OBJ_296 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = libs.xcodeproj/KripkeStructure_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = KripkeStructure;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = KripkeStructure;
+			};
+			name = Debug;
+		};
+		OBJ_297 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = libs.xcodeproj/KripkeStructure_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = KripkeStructure;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = KripkeStructure;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_311 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/ModelChecking_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = ModelChecking;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = ModelChecking;
+			};
+			name = Debug;
+		};
+		OBJ_312 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/ModelChecking_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = ModelChecking;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = ModelChecking;
+			};
+			name = Release;
+		};
+		OBJ_342 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = libs.xcodeproj/Utilities_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Utilities;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = Utilities;
+			};
+			name = Debug;
+		};
+		OBJ_343 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = libs.xcodeproj/Utilities_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = Utilities;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = Utilities;
+			};
+			name = Release;
+		};
+		OBJ_349 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		OBJ_350 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				LD = /usr/bin/true;
+				OTHER_SWIFT_FLAGS = "-swift-version 4 -I $(TOOLCHAIN_DIR)/usr/lib/swift/pm/4 -target x86_64-apple-macosx10.10 -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		OBJ_355 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		OBJ_356 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		OBJ_359 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/swiftfsm_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = swiftfsm;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = swiftfsm;
+			};
+			name = Debug;
+		};
+		OBJ_360 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/.build/checkouts/CGUSimpleWhiteboard-8630106751830309086",
+				);
+				INFOPLIST_FILE = libs.xcodeproj/swiftfsm_Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-I/usr/local/include/gusimplewhiteboard",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-L/usr/local/lib",
+					"-lgusimplewhiteboard",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -I/usr/local/include/gusimplewhiteboard";
+				PRODUCT_BUNDLE_IDENTIFIER = swiftfsm;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = swiftfsm;
+			};
+			name = Release;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_148 /* Build configuration list for PBXNativeTarget "FSM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_149 /* Debug */,
+				OBJ_150 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_2 /* Build configuration list for PBXProject "libs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_220 /* Build configuration list for PBXNativeTarget "FSMTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_221 /* Debug */,
+				OBJ_222 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_245 /* Build configuration list for PBXNativeTarget "FSMVerification" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_246 /* Debug */,
+				OBJ_247 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_273 /* Build configuration list for PBXNativeTarget "Functional" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_274 /* Debug */,
+				OBJ_275 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_282 /* Build configuration list for PBXNativeTarget "GUSimpleWhiteboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_283 /* Debug */,
+				OBJ_284 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_290 /* Build configuration list for PBXNativeTarget "GUSimpleWhiteboardPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_291 /* Debug */,
+				OBJ_292 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_295 /* Build configuration list for PBXNativeTarget "KripkeStructure" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_296 /* Debug */,
+				OBJ_297 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_310 /* Build configuration list for PBXNativeTarget "ModelChecking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_311 /* Debug */,
+				OBJ_312 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_341 /* Build configuration list for PBXNativeTarget "Utilities" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_342 /* Debug */,
+				OBJ_343 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_348 /* Build configuration list for PBXNativeTarget "libsPackageDescription" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_349 /* Debug */,
+				OBJ_350 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_354 /* Build configuration list for PBXAggregateTarget "libsPackageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_355 /* Debug */,
+				OBJ_356 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_358 /* Build configuration list for PBXNativeTarget "swiftfsm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_359 /* Debug */,
+				OBJ_360 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}
