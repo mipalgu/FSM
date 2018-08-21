@@ -56,7 +56,7 @@
  *
  */
 
-import KripkeStructure
+import ModelChecking
 
 /**
  *  An empty set of variables.

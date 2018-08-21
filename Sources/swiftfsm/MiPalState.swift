@@ -57,7 +57,7 @@
  */
 
 import FSM
-import KripkeStructure
+import ModelChecking
 
 /**
  *  The base class for all states that conform to `MiPalAction`s.

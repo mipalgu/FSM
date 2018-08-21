@@ -1,9 +1,9 @@
 /*
- * MultipleExternalsSpinnerConstructorType.swift 
- * FSM 
+ * ExternalsPropertyExtractor.swift 
+ * swiftfsm 
  *
- * Created by Callum McColl on 10/06/2017.
- * Copyright © 2017 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 22/01/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,15 +56,27 @@
  *
  */
 
+import FSM
 import KripkeStructure
 
-public protocol MultipleExternalsSpinnerConstructorType {
+/**
+ *  Conforming types are able to extract the values of the variables for 
+ *  `ExternalVariables`.
+ */
+public protocol ExternalsPropertyExtractor {
 
-    // swiftlint:disable large_tuple
-    func makeSpinner(forExternals: [(
-        externalVariables: AnySnapshotController,
-        defaultValues: KripkeStatePropertyList,
-        spinners: [String: (Any) -> Any?]
-    )]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]?
+    /**
+     *  Extract the values from the `ExternalVariables`.
+     *
+     *  - Parameter globals: The `ExternalVariables`.
+     *
+     *  - Returns: A Dictionary where represents the key represents the 
+     *  variables label, and the value is a `KripkeStateProperty`.
+     *
+     *  - SeeAlso: `KripkeStateProperty`
+     */
+    func extract(
+        externalVariables: AnySnapshotController
+    ) -> KripkeStatePropertyList
 
 }

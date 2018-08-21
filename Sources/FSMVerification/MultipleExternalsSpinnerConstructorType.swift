@@ -1,8 +1,8 @@
 /*
- * KripkePropertiesRecordable.swift 
- * KripkeStructure 
+ * MultipleExternalsSpinnerConstructorType.swift 
+ * FSM 
  *
- * Created by Callum McColl on 08/06/2017.
+ * Created by Callum McColl on 10/06/2017.
  * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,16 +56,16 @@
  *
  */
 
-public protocol KripkePropertiesRecordable {
+import FSM
+import KripkeStructure
 
-    var currentRecord: KripkeStatePropertyList { get }
+public protocol MultipleExternalsSpinnerConstructorType {
 
-}
-
-extension KripkePropertiesRecordable where Self: KripkePropertiesRecorderDelegator {
-
-    var currentRecord: KripkeStatePropertyList {
-        return self.recorder.takeRecord(of: self)
-    }
+    // swiftlint:disable large_tuple
+    func makeSpinner(forExternals: [(
+        externalVariables: AnySnapshotController,
+        defaultValues: KripkeStatePropertyList,
+        spinners: [String: (Any) -> Any?]
+    )]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]?
 
 }

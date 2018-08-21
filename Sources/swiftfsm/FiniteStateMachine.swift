@@ -56,6 +56,10 @@
  *
  */
 
+import FSM
+import KripkeStructure
+import ModelChecking
+
 /**
  *  A Finite State Machine.
  *
@@ -88,27 +92,6 @@
  *  all the states of an FSM.  The FSM therefore stores these variables in
  *  `vars`.
  *  
- */
-
-import FSM
-import KripkeStructure
-
-/**
- *  A `FiniteStateMachineType` that incorporates the default implementations, 
- *  without Kripke Structure generation capabilities.
- *
- *  This type satisfies all requirements to be scheduleable as it can be used
- *  as an `AnyScheduleableFiniteStateMachine`.
- *
- *  This type uses a `Ringlet` in order to perform state execution.  Therefore
- *  `FiniteStateMachine_StateType` should be equal to the `Ringlet._StateType`.
- *
- *  - Warning: Using this type ensures that no `KripkeStructure` generation is
- *  possible.  If you would like to be able to generate a `KripkeStructure` then
- *  you should use `KripkeFiniteStateMachine`.
- *
- *  - SeeAlso: `FiniteStateMachineType`
- *  - SeeAlso: `KripkeFiniteStateMachine`
  */
 // swiftlint:disable:next line_length
 public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,

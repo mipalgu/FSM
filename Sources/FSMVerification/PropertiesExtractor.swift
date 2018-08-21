@@ -1,8 +1,8 @@
 /*
- * ExternalsSpinnerDataExtractorType.swift 
- * FSM 
+ * PropertiesExtractor.swift 
+ * swiftfsm 
  *
- * Created by Callum McColl on 27/09/2016.
+ * Created by Callum McColl on 29/07/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,30 +56,34 @@
  *
  */
 
+import FSM
 import KripkeStructure
+import ModelChecking
 
 /**
- *  Conforming types are responsible for creating `Spinners.Spinner`s for a
- *  specific instance of `ExternalVariables`.
+ *  Conforming types are responsible for extracting the values of
+ *  `ExternalVariables`, Finite State Machine `Variables` and the variables
+ *  within `StateType`s.
  */
-public protocol ExternalsSpinnerDataExtractorType {
+public protocol PropertiesExtractor {
 
     /**
-     *  Create `Spinners.Spinner`s for the `ExternalVariables`.
+     *  Creates a `KripkeStatePropertyList` by extract the values of all the
+     *  different variables.
      *
-     *  - Parameter externalVariables: The `ExternalVariables`.
+     *  - Parameter externalVariables: The `ExternalVariables`, within an 
+     *  `AnySnapshotController`.
      *
-     *  - Returns: A tuple where the first element is a dictionary where the
-     *  keys represents the label of each variable within the
-     *  `ExternalVariables` and the value represents the starting value for each
-     *  variables `Spinners.Spinner`.  The second element is a dictionary where
-     *  the keys represent the label of each variable within the
-     *  `ExternalVariables` and the values are the `Spinners.Spinner` for each
-     *  variable.
+     *  - Parameter fsmVars: The Finite State Machine `Variables`.
+     *
+     *  - Parameter state: A `StateType`.
+     *
+     *  - Returns: The newly created `KripkeStatePropertyList`.
      */
-    func extract(externalVariables: AnySnapshotController) -> (
-        KripkeStatePropertyList,
-        [String: (Any) -> Any?]
-    )
+    func extract<F: Variables, S: StateType>(
+        externalVariables: [AnySnapshotController],
+        fsmVars: F,
+        state: S
+    ) -> KripkeStatePropertyList where S: KripkeVariablesModifier
 
 }

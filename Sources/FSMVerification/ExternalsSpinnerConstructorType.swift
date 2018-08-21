@@ -1,8 +1,8 @@
 /*
- * HashTableCycleDetector.swift 
+ * ExternalsSpinnerConstructorType.swift 
  * FSM 
  *
- * Created by Callum McColl on 23/10/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,52 +56,33 @@
  *
  */
 
+import KripkeStructure
+import FSM
+
 /**
- *  Detects cycles using a hash table.
+ *  Conforming types are responsible for creating `Spinners.Spinner`s for
+ *  `ExternalVariables`.
  */
-public class HashTableCycleDetector<E: Hashable>: CycleDetector {
+public protocol ExternalsSpinnerConstructorType {
 
     /**
-     *  A dictionary where `Element` is the key and a `Bool` is the value.
+     *  Convert `Spinners.Spinner`s for an instance of `ExternalVariables` to a
+     *  `ExternalVariables` `Spinners.Spinner`.
      *
-     *  The `Bool` is used just to give the hash a value.
+     *  - Parameter defaultValues: A dictionary where the key represents the
+     *  label of the variables within the `ExternalVariables` and the value
+     *  represents the starting value for that variable.
+     *
+     *  - Parameter spinners: A dictionary where the key represents the label
+     *  of the variables within the `ExternalVariables` and the value represents
+     *  the `Spinners.Spinner` for the variable.
+     *
+     *  - Returns: A `Spinners.Spinner` for the `ExternalVariables`.
      */
-    public typealias Data = Ref<[Element: Bool]>
-
-    /**
-     *  The elements of the cycle.
-     *
-     *  - Attention: This must be `Hashable`.
-     */
-    public typealias Element = E
-
-    /**
-     *  An empty hash table.
-     */
-    public var initialData: Data {
-        let d = [Element: Bool](minimumCapacity: 500000)
-        return Ref(value: d)
-    }
-
-    public init() {}
-
-    /**
-     *  Is this element in the hash table?
-     *
-     *  - Parameter data: The current hash table.
-     *
-     *  - Parameter element: The current element in the series.
-     *
-     *  - Returns: A tuple where the first element is a Bool indicating whether
-     *  a cycle was detected.  The second element is the new hash table.
-     */
-    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
-        //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
-        if data.value[element] != nil {
-            return (true, data)
-        }
-        data.value[element] = true
-        return (false, data)
-    }
+    func makeSpinner(
+        fromExternalVariables: AnySnapshotController,
+        defaultValues: KripkeStatePropertyList,
+        spinners: [String: (Any) -> Any?]
+    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)?
 
 }

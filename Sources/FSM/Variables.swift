@@ -56,7 +56,7 @@
  *
  */
 
-import KripkeStructure
+import ModelChecking
 
 /**
  *  Provides a common interface for types that hold variables.

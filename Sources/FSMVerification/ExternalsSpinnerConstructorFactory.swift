@@ -1,5 +1,5 @@
 /*
- * ExternalsSpinnerDataExtractor.swift 
+ * ExternalsSpinnerConstructorFactory.swift 
  * FSM 
  *
  * Created by Callum McColl on 27/09/2016.
@@ -56,61 +56,60 @@
  *
  */
 
+import FSM
 import KripkeStructure
 
 /**
- *  Provides a way to extract the variables from a `ExternalVariables` and create
- *  `Spinners.Spinner`s for each variables.
+ *  Creates instances of `ExternalsSpinnerConstructorType`.
  */
-public class ExternalsSpinnerDataExtractor<
-    E: ExternalsPropertyExtractor,
-    KSPC: KripkeStatePropertySpinnerConverterType
->: ExternalsSpinnerDataExtractorType {
+public class ExternalsSpinnerConstructorFactory<
+    ESC: ExternalsSpinnerConstructorType,
+    ESE: ExternalsSpinnerDataExtractorType
+>: ExternalsSpinnerConstructorFactoryType {
 
-    private let converter: KSPC
+    private let constructor: ESC
 
-    private let extractor: E
+    private let extractor: ESE
 
     /**
-     *  Create a new `ExternalsSpinnerDataExtractor`.
+     *  Create a new `ExternalsSpinnerConstructorFactory`.
      *
-     *  - Parameter converter: Used to convert a `KripkeStateProperty` to a
-     *  `Spinners.Spinner`.
+     *  - Parameter constructor: This is used to convert a dictionary of
+     *  `Spinners.Spinner`s to a `ExternalVariables` `Spinners.Spinner`.
      *
-     *  - Parameter extractor: Used to extract the values for the
-     *  `ExternalVariables`.
+     *  - Parameter extractor: This is used to extract the `Spinners.Spinner`s
+     *  from the `ExternalVariables`.
+     *
+     *  - SeeAlso: `ExternalsSpinnerConstructorType`
+     *  - SeeAlso: `ExternalsSpinnerDataExtractorType`
      */
-    public init(converter: KSPC, extractor: E) {
-        self.converter = converter
+    public init(constructor: ESC, extractor: ESE) {
+        self.constructor = constructor
         self.extractor = extractor
     }
 
     /**
-     *  Create `Spinners.Spinner`s for the `ExternalVariables`.
+     *  Create a function that, when called, creates a `Spinners.Spinner` for
+     *  a the `ExternalVariables`.
      *
-     *  - Parameter externalVariables: The `ExternalVariables`.
+     *  - Parameter externalVariables: The `ExternalVariables` that will be
+     *  used to create the `Spinners.Spinner`.
      *
-     *  - Returns: A tuple where the first element is a dictionary where the
-     *  keys represents the label of each variables within the
-     *  `ExternalVariables` and the value represents the starting value for each
-     *  variables `Spinners.Spinner`.  The second element is a dictionary where
-     *  the keys represent the label of each variable within the
-     *  `ExternalVariables` and the values are the `Spinners.Spinner` for each
-     *  variable.
+     *  - Returns: A function that creates the `ExternalVariables`
+     *  `Spinners.Spinner`.
      */
-    public func extract(
+    public func make(
         externalVariables: AnySnapshotController
-    ) -> (
-        KripkeStatePropertyList,
-        [String: (Any) -> Any?]
-    ) {
-        // Get Global Properties Info
-        let list = self.extractor.extract(externalVariables: externalVariables)
-        var spinners: [String: (Any) -> Any?] = [:]
-        list.forEach {
-            spinners[$0] = self.converter.convert(from: $1).1
+    ) -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
+    {
+        let spinnerData = self.extractor.extract(externalVariables: externalVariables)
+        return { () -> () -> (AnySnapshotController, KripkeStatePropertyList)? in
+            return self.constructor.makeSpinner(
+                fromExternalVariables: externalVariables,
+                defaultValues: spinnerData.0,
+                spinners: spinnerData.1
+            )
         }
-        return (list, spinners)
     }
 
 }

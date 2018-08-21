@@ -59,6 +59,8 @@
 import FSM
 import Functional
 import KripkeStructure
+import ModelChecking
+import Utilities
 
 /**
  *  A type-erased Finite State Machine that can be controlled.

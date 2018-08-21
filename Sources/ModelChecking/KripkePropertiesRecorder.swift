@@ -1,9 +1,9 @@
 /*
- * ExternalsSpinnerConstructor.swift 
- * FSM 
+ * KripkePropertiesRecorder.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 27/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -58,63 +58,8 @@
 
 import KripkeStructure
 
-/**
- *  Provides a way to create a `ExternalVariables` `Spinners.Spinner`.
- */
-public class ExternalsSpinnerConstructor<
-    SR: SpinnerRunnerType
->: ExternalsSpinnerConstructorType {
+public protocol KripkePropertiesRecorder {
 
-    private let runner: SR
-
-    /**
-     *  Create a new `ExternalsSpinnerConstructor`.
-     *
-     *  - Parameter runner: Will be used when executing the `Spinners.Spinner`. 
-     */
-    public init(runner: SR) {
-        self.runner = runner
-    }
-
-    /**
-     *  Create a `Spinners.Spinner` for an instance of `ExternalVariables`.
-     *
-     *  - Parameter defaultValues: The starting values of each spinner.
-     *
-     *  - Parameter spinners: A dictionary where the key represents a variables
-     *  label and the value is a `Spinners.Spinner` for that variable.
-     *
-     *  - Returns a `Spinners.Spinner` that return the `ExternalVariables`.
-     */
-    public func makeSpinner(
-        fromExternalVariables externalVariables: AnySnapshotController,
-        defaultValues: KripkeStatePropertyList,
-        spinners: [String: (Any) -> Any?]
-    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)? {
-        var latest: KripkeStatePropertyList? = defaultValues
-        return { () -> (AnySnapshotController, KripkeStatePropertyList)? in
-            guard let temp = latest else {
-                return nil
-            }
-            if let vs = self.runner.spin(
-                      index: temp.startIndex,
-                      vars: temp,
-                      defaultValues: defaultValues,
-                      spinners: spinners
-                  )
-            {
-                latest = vs
-            } else {
-                latest = nil
-            }
-            var new = externalVariables
-            var d: [String: Any] = [:]
-            temp.forEach {
-                d[$0] = $1.value
-            }
-            new.val = externalVariables.create(fromDictionary: d)
-            return (new, temp)
-        }
-    }
+    func takeRecord(of: Any) -> KripkeStatePropertyList
 
 }

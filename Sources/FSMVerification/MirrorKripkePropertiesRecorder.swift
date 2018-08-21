@@ -1,9 +1,9 @@
 /*
- * KripkeStructureGenerator.swift
- * swiftfsm
+ * MirrorKripkePropertiesRecorder.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 11/11/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,18 +56,16 @@
  *
  */
 
-/**
- *  Conforming types are responsible for generating `KripkeStructure`s.
- */
-public protocol KripkeStructureGenerator {
+import FSM
+import KripkeStructure
+import ModelChecking
 
-    associatedtype KripkeStructure: KripkeStructureType
+//swiftlint:disable force_cast
+
+extension MirrorKripkePropertiesRecorder: ExternalsPropertyExtractor {
     
-    /**
-     *  Generate the `KripkeStructure`.
-     *
-     *  - Returns: The newly created `KripkeStructure`.
-     */
-    func generate() -> KripkeStructure
+    public func extract(externalVariables: AnySnapshotController) -> KripkeStatePropertyList {
+        return self.takeRecord(of: externalVariables.val)
+    }
     
 }

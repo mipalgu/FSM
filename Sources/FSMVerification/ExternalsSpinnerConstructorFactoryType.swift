@@ -1,8 +1,8 @@
 /*
- * ExternalsPropertyExtractor.swift 
- * swiftfsm 
+ * ExternalsSpinnerConstructorFactoryType.swift 
+ * FSM 
  *
- * Created by Callum McColl on 22/01/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,25 +57,25 @@
  */
 
 import KripkeStructure
+import FSM
 
 /**
- *  Conforming types are able to extract the values of the variables for 
- *  `ExternalVariables`.
+ *  Conforming types are responsible for creating functions that return a
+ *  `Spinners.Spinner` for a specific instance of `ExternalVariables`.
  */
-public protocol ExternalsPropertyExtractor {
+public protocol ExternalsSpinnerConstructorFactoryType {
 
     /**
-     *  Extract the values from the `ExternalVariables`.
+     *  Create a function that, when called, creates a `Spinners.Spinner` for
+     *  a the `ExternalVariables`.
      *
-     *  - Parameter globals: The `ExternalVariables`.
+     *  - Parameter externalVariables: The `ExternalVariables` that will be used
+     *  to create the `Spinners.Spinner`.
      *
-     *  - Returns: A Dictionary where represents the key represents the 
-     *  variables label, and the value is a `KripkeStateProperty`.
-     *
-     *  - SeeAlso: `KripkeStateProperty`
+     *  - Returns: A function that creates the `ExternalVariables`
+     *  `Spinners.Spinner`.
      */
-    func extract(
-        externalVariables: AnySnapshotController
-    ) -> KripkeStatePropertyList
+    func make(externalVariables: AnySnapshotController)
+        -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
 
 }

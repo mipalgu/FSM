@@ -15,10 +15,13 @@ let package = Package(
         .package(url: "ssh://git.mipal.net/git/swift_wb.git", .branch("master"))
     ],
     targets: [
+        .target(name: "Utilities", dependencies: []),
         .target(name: "Functional", dependencies: []),
-        .target(name: "KripkeStructure", dependencies: ["Functional"]),
-        .target(name: "FSM", dependencies: ["GUSimpleWhiteboard", "Functional", "KripkeStructure"]),
-        .target(name: "swiftfsm", dependencies: ["GUSimpleWhiteboard", "Functional", "KripkeStructure", "FSM"]),
+        .target(name: "KripkeStructure", dependencies: ["Functional", "Utilities"]),
+        .target(name: "ModelChecking", dependencies: ["GUSimpleWhiteboard", "Functional", "Utilities", "KripkeStructure"]),
+        .target(name: "FSM", dependencies: ["GUSimpleWhiteboard", "Functional", "Utilities", "KripkeStructure", "ModelChecking"]),
+        .target(name: "FSMVerification", dependencies: ["GUSimpleWhiteboard", "Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
+        .target(name: "swiftfsm", dependencies: ["GUSimpleWhiteboard", "Functional", "Utilities", "KripkeStructure", "FSM", "ModelChecking"]),
         .testTarget(name: "FSMTests", dependencies: [.target(name: "FSM"), .target(name: "swiftfsm")])
     ]
 )

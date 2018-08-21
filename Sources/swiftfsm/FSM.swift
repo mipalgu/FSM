@@ -57,7 +57,7 @@
  */
 
 import FSM
-import KripkeStructure
+import ModelChecking
 
 // swiftlint:disable function_parameter_count
 // swiftlint:disable file_length

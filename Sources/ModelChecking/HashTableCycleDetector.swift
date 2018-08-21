@@ -1,9 +1,9 @@
 /*
- * MirrorKripkePropertiesRecorder.swift 
+ * HashTableCycleDetector.swift 
  * FSM 
  *
- * Created by Callum McColl on 12/06/2017.
- * Copyright © 2017 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 23/10/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,12 +56,54 @@
  *
  */
 
-import KripkeStructure
+import Utilities
 
-extension MirrorKripkePropertiesRecorder: ExternalsPropertyExtractor {
+/**
+ *  Detects cycles using a hash table.
+ */
+public class HashTableCycleDetector<E: Hashable>: CycleDetector {
 
-    public func extract(externalVariables: AnySnapshotController) -> KripkeStatePropertyList {
-        return self.takeRecord(of: externalVariables.val)
+    /**
+     *  A dictionary where `Element` is the key and a `Bool` is the value.
+     *
+     *  The `Bool` is used just to give the hash a value.
+     */
+    public typealias Data = Ref<[Element: Bool]>
+
+    /**
+     *  The elements of the cycle.
+     *
+     *  - Attention: This must be `Hashable`.
+     */
+    public typealias Element = E
+
+    /**
+     *  An empty hash table.
+     */
+    public var initialData: Data {
+        let d = [Element: Bool](minimumCapacity: 500000)
+        return Ref(value: d)
+    }
+
+    public init() {}
+
+    /**
+     *  Is this element in the hash table?
+     *
+     *  - Parameter data: The current hash table.
+     *
+     *  - Parameter element: The current element in the series.
+     *
+     *  - Returns: A tuple where the first element is a Bool indicating whether
+     *  a cycle was detected.  The second element is the new hash table.
+     */
+    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
+        //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
+        if data.value[element] != nil {
+            return (true, data)
+        }
+        data.value[element] = true
+        return (false, data)
     }
 
 }

@@ -56,6 +56,7 @@
  *
  */
 
+import FSM
 import KripkeStructure
 
 public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpinnerConstructorType>:

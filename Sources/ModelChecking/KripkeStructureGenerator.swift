@@ -1,9 +1,9 @@
 /*
- * ExternalsSpinnerConstructorFactoryType.swift 
- * FSM 
+ * KripkeStructureGenerator.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 27/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/11/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -59,22 +59,17 @@
 import KripkeStructure
 
 /**
- *  Conforming types are responsible for creating functions that return a
- *  `Spinners.Spinner` for a specific instance of `ExternalVariables`.
+ *  Conforming types are responsible for generating `KripkeStructure`s.
  */
-public protocol ExternalsSpinnerConstructorFactoryType {
+public protocol KripkeStructureGenerator {
 
+    associatedtype KripkeStructure: KripkeStructureType
+    
     /**
-     *  Create a function that, when called, creates a `Spinners.Spinner` for
-     *  a the `ExternalVariables`.
+     *  Generate the `KripkeStructure`.
      *
-     *  - Parameter externalVariables: The `ExternalVariables` that will be used
-     *  to create the `Spinners.Spinner`.
-     *
-     *  - Returns: A function that creates the `ExternalVariables`
-     *  `Spinners.Spinner`.
+     *  - Returns: The newly created `KripkeStructure`.
      */
-    func make(externalVariables: AnySnapshotController)
-        -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
-
+    func generate() -> KripkeStructure
+    
 }

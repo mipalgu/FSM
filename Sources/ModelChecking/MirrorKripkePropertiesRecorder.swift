@@ -56,6 +56,8 @@
  *
  */
 
+import KripkeStructure
+
 //swiftlint:disable force_cast
 
 public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {

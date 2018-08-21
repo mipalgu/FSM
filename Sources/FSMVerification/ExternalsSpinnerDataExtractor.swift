@@ -1,9 +1,9 @@
 /*
- * KripkePropertiesRecorder.swift 
- * KripkeStructure 
+ * ExternalsSpinnerDataExtractor.swift 
+ * FSM 
  *
- * Created by Callum McColl on 08/06/2017.
- * Copyright © 2017 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 27/09/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,8 +56,63 @@
  *
  */
 
-public protocol KripkePropertiesRecorder {
+import FSM
+import KripkeStructure
+import ModelChecking
 
-    func takeRecord(of: Any) -> KripkeStatePropertyList
+/**
+ *  Provides a way to extract the variables from a `ExternalVariables` and create
+ *  `Spinners.Spinner`s for each variables.
+ */
+public class ExternalsSpinnerDataExtractor<
+    E: ExternalsPropertyExtractor,
+    KSPC: KripkeStatePropertySpinnerConverterType
+>: ExternalsSpinnerDataExtractorType {
+
+    private let converter: KSPC
+
+    private let extractor: E
+
+    /**
+     *  Create a new `ExternalsSpinnerDataExtractor`.
+     *
+     *  - Parameter converter: Used to convert a `KripkeStateProperty` to a
+     *  `Spinners.Spinner`.
+     *
+     *  - Parameter extractor: Used to extract the values for the
+     *  `ExternalVariables`.
+     */
+    public init(converter: KSPC, extractor: E) {
+        self.converter = converter
+        self.extractor = extractor
+    }
+
+    /**
+     *  Create `Spinners.Spinner`s for the `ExternalVariables`.
+     *
+     *  - Parameter externalVariables: The `ExternalVariables`.
+     *
+     *  - Returns: A tuple where the first element is a dictionary where the
+     *  keys represents the label of each variables within the
+     *  `ExternalVariables` and the value represents the starting value for each
+     *  variables `Spinners.Spinner`.  The second element is a dictionary where
+     *  the keys represent the label of each variable within the
+     *  `ExternalVariables` and the values are the `Spinners.Spinner` for each
+     *  variable.
+     */
+    public func extract(
+        externalVariables: AnySnapshotController
+    ) -> (
+        KripkeStatePropertyList,
+        [String: (Any) -> Any?]
+    ) {
+        // Get Global Properties Info
+        let list = self.extractor.extract(externalVariables: externalVariables)
+        var spinners: [String: (Any) -> Any?] = [:]
+        list.forEach {
+            spinners[$0] = self.converter.convert(from: $1).1
+        }
+        return (list, spinners)
+    }
 
 }

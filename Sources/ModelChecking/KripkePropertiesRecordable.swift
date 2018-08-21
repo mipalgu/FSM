@@ -1,9 +1,9 @@
 /*
- * ExternalsSpinnerConstructorFactory.swift 
- * FSM 
+ * KripkePropertiesRecordable.swift 
+ * KripkeStructure 
  *
- * Created by Callum McColl on 27/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 08/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -58,57 +58,16 @@
 
 import KripkeStructure
 
-/**
- *  Creates instances of `ExternalsSpinnerConstructorType`.
- */
-public class ExternalsSpinnerConstructorFactory<
-    ESC: ExternalsSpinnerConstructorType,
-    ESE: ExternalsSpinnerDataExtractorType
->: ExternalsSpinnerConstructorFactoryType {
+public protocol KripkePropertiesRecordable {
 
-    private let constructor: ESC
+    var currentRecord: KripkeStatePropertyList { get }
 
-    private let extractor: ESE
+}
 
-    /**
-     *  Create a new `ExternalsSpinnerConstructorFactory`.
-     *
-     *  - Parameter constructor: This is used to convert a dictionary of
-     *  `Spinners.Spinner`s to a `ExternalVariables` `Spinners.Spinner`.
-     *
-     *  - Parameter extractor: This is used to extract the `Spinners.Spinner`s
-     *  from the `ExternalVariables`.
-     *
-     *  - SeeAlso: `ExternalsSpinnerConstructorType`
-     *  - SeeAlso: `ExternalsSpinnerDataExtractorType`
-     */
-    public init(constructor: ESC, extractor: ESE) {
-        self.constructor = constructor
-        self.extractor = extractor
-    }
+extension KripkePropertiesRecordable where Self: KripkePropertiesRecorderDelegator {
 
-    /**
-     *  Create a function that, when called, creates a `Spinners.Spinner` for
-     *  a the `ExternalVariables`.
-     *
-     *  - Parameter externalVariables: The `ExternalVariables` that will be
-     *  used to create the `Spinners.Spinner`.
-     *
-     *  - Returns: A function that creates the `ExternalVariables`
-     *  `Spinners.Spinner`.
-     */
-    public func make(
-        externalVariables: AnySnapshotController
-    ) -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
-    {
-        let spinnerData = self.extractor.extract(externalVariables: externalVariables)
-        return { () -> () -> (AnySnapshotController, KripkeStatePropertyList)? in
-            return self.constructor.makeSpinner(
-                fromExternalVariables: externalVariables,
-                defaultValues: spinnerData.0,
-                spinners: spinnerData.1
-            )
-        }
+    var currentRecord: KripkeStatePropertyList {
+        return self.recorder.takeRecord(of: self)
     }
 
 }

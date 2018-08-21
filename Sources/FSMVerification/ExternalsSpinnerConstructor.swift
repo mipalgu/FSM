@@ -1,5 +1,5 @@
 /*
- * ExternalsSpinnerConstructorType.swift 
+ * ExternalsSpinnerConstructor.swift 
  * FSM 
  *
  * Created by Callum McColl on 27/09/2016.
@@ -56,32 +56,67 @@
  *
  */
 
+import FSM
 import KripkeStructure
+import ModelChecking
 
 /**
- *  Conforming types are responsible for creating `Spinners.Spinner`s for
- *  `ExternalVariables`.
+ *  Provides a way to create a `ExternalVariables` `Spinners.Spinner`.
  */
-public protocol ExternalsSpinnerConstructorType {
+public class ExternalsSpinnerConstructor<
+    SR: SpinnerRunnerType
+>: ExternalsSpinnerConstructorType {
+
+    private let runner: SR
 
     /**
-     *  Convert `Spinners.Spinner`s for an instance of `ExternalVariables` to a
-     *  `ExternalVariables` `Spinners.Spinner`.
+     *  Create a new `ExternalsSpinnerConstructor`.
      *
-     *  - Parameter defaultValues: A dictionary where the key represents the
-     *  label of the variables within the `ExternalVariables` and the value
-     *  represents the starting value for that variable.
-     *
-     *  - Parameter spinners: A dictionary where the key represents the label
-     *  of the variables within the `ExternalVariables` and the value represents
-     *  the `Spinners.Spinner` for the variable.
-     *
-     *  - Returns: A `Spinners.Spinner` for the `ExternalVariables`.
+     *  - Parameter runner: Will be used when executing the `Spinners.Spinner`. 
      */
-    func makeSpinner(
-        fromExternalVariables: AnySnapshotController,
+    public init(runner: SR) {
+        self.runner = runner
+    }
+
+    /**
+     *  Create a `Spinners.Spinner` for an instance of `ExternalVariables`.
+     *
+     *  - Parameter defaultValues: The starting values of each spinner.
+     *
+     *  - Parameter spinners: A dictionary where the key represents a variables
+     *  label and the value is a `Spinners.Spinner` for that variable.
+     *
+     *  - Returns a `Spinners.Spinner` that return the `ExternalVariables`.
+     */
+    public func makeSpinner(
+        fromExternalVariables externalVariables: AnySnapshotController,
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
-    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)?
+    ) -> () -> (AnySnapshotController, KripkeStatePropertyList)? {
+        var latest: KripkeStatePropertyList? = defaultValues
+        return { () -> (AnySnapshotController, KripkeStatePropertyList)? in
+            guard let temp = latest else {
+                return nil
+            }
+            if let vs = self.runner.spin(
+                      index: temp.startIndex,
+                      vars: temp,
+                      defaultValues: defaultValues,
+                      spinners: spinners
+                  )
+            {
+                latest = vs
+            } else {
+                latest = nil
+            }
+            var new = externalVariables
+            var d: [String: Any] = [:]
+            temp.forEach {
+                d[$0] = $1.value
+            }
+            new.val = externalVariables.create(fromDictionary: d)
+            return (new, temp)
+        }
+    }
 
 }
