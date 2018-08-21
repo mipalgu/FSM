@@ -86,8 +86,8 @@ class FactoriesTests: XCTestCase {
     func test_count() {
         var f: Factories = Factories()
         XCTAssertEqual(f.count, 0)
-        f.push({self.fsm})
-        f.push({self.fsm})
+        f.push({(self.fsm, [])})
+        f.push({(self.fsm, [])})
         XCTAssertEqual(f.count, 2)
     }
 
@@ -98,7 +98,7 @@ class FactoriesTests: XCTestCase {
 
     func test_isEmptyWhenNotEmpty() {
         var f: Factories = Factories()
-        f.push({self.fsm})
+        f.push({(self.fsm, [])})
         XCTAssertFalse(f.isEmpty)
     }
 
@@ -107,27 +107,27 @@ class FactoriesTests: XCTestCase {
         let f2: Factories = Factories()
         let count: Int = f1.count
         XCTAssertEqual(f1.count, f2.count)
-        f1.push({ self.fsm })
+        f1.push({ (self.fsm, []) })
         XCTAssertEqual(f1.count, f2.count)
         XCTAssertEqual(f1.count, count + 1)
     }
 
     func test_peek() {
         var f: Factories = Factories()
-        let fact: () -> AnyScheduleableFiniteStateMachine = {
-            FSM("test", initialState: EmptyMiPalState("initial")).asScheduleableFiniteStateMachine
+        let fact: () -> (AnyScheduleableFiniteStateMachine, [Dependency]) = {
+            (FSM("test", initialState: EmptyMiPalState("initial")).asScheduleableFiniteStateMachine, [])
         }
-        f.push({self.fsm})
+        f.push({(self.fsm, [])})
         f.push(fact)
         XCTAssertEqual(f.count, 2)
-        XCTAssertEqual(fact().name, f.peek()!().name)
+        XCTAssertEqual(fact().0.name, f.peek()!().0.name)
         XCTAssertEqual(f.count, 2)
     }
 
     func test_pop() {
         var f: Factories = Factories()
-        f.push({self.fsm})
-        f.push({self.fsm})
+        f.push({(self.fsm, [])})
+        f.push({(self.fsm, [])})
         XCTAssertEqual(f.count, 2)
         let _ = f.pop()
         XCTAssertEqual(f.count, 1)

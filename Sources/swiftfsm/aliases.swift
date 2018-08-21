@@ -57,4 +57,4 @@
  */
 
 /// A function that creates an array of `FiniteStateMachine`s.
-public typealias FSMArrayFactory = () -> AnyScheduleableFiniteStateMachine
+public typealias FSMArrayFactory = () -> (AnyScheduleableFiniteStateMachine, [Dependency])
