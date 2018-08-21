@@ -56,6 +56,8 @@
  *
  */
 
+import FSM
+
 public final class Promise<T>: ResultContainer {
     
     fileprivate var _hasFinished: () -> Bool
@@ -73,6 +75,11 @@ public final class Promise<T>: ResultContainer {
     public init<Container: ResultContainer>(_ container: Container) where Container.ResultType == T {
         self._hasFinished = { container.hasFinished }
         self._result = { container.result }
+    }
+
+    public init(hasFinished: @escaping () -> Bool, result: @escaping () -> T) {
+        self._hasFinished = hasFinished
+        self._result = result
     }
 
 }
