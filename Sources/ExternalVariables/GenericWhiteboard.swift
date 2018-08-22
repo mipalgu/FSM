@@ -57,5 +57,6 @@
  */
 
 import GUSimpleWhiteboard
+import FSM
 
 extension GenericWhiteboard: ExternalVariablesCollection {}

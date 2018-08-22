@@ -1,8 +1,8 @@
 /*
- * SnapshotTimerController.swift 
+ * StdoutExternalVariables.swift 
  * FSM 
  *
- * Created by Callum McColl on 28/02/2018.
+ * Created by Callum McColl on 08/07/2018.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,28 +56,25 @@
  *
  */
 
-#if os(OSX)
-import Darwin
-#elseif os(Linux)
-import Glibc
-#endif
+import FSM
 
-public final class SnapshotTimerController<T: TimerProtocol>: Snapshotable, ExternalVariablesContainer {
+public final class StdoutExternalVariables: ExternalVariablesContainer, Identifiable, Snapshotable {
 
-    public var val: T
+    public let name: String = "stdout"
+    
+    public var val: StdoutContainer = StdoutContainer()
 
-    public let name: String
-
-    public init(_ name: String, _ val: T = T(startTime: UInt(time(nil)))) {
-        self.name = name
-        self.val = val
-    }
+    public init() {}
 
     public func saveSnapshot() {
+        guard let str = val.str else {
+            return
+        }
+        print(str)
     }
 
     public func takeSnapshot() {
-        self.val = T(startTime: UInt(time(nil)))
+        self.val.stdout = []
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * TimerProtocol.swift 
+ * SnapshotTimerController.swift 
  * FSM 
  *
  * Created by Callum McColl on 28/02/2018.
@@ -56,12 +56,30 @@
  *
  */
 
-public protocol TimerProtocol: ExternalVariables {
+#if os(OSX)
+import Darwin
+#elseif os(Linux)
+import Glibc
+#endif
 
-    var startTime: UInt { get set }
+import FSM
 
-    var runningTime: UInt { get }
+public final class SnapshotTimerController<T: TimerProtocol>: Snapshotable, ExternalVariablesContainer {
 
-    init(startTime: UInt)
+    public var val: T
+
+    public let name: String
+
+    public init(_ name: String, _ val: T = T(startTime: UInt(time(nil)))) {
+        self.name = name
+        self.val = val
+    }
+
+    public func saveSnapshot() {
+    }
+
+    public func takeSnapshot() {
+        self.val = T(startTime: UInt(time(nil)))
+    }
 
 }

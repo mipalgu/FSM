@@ -1,8 +1,8 @@
 /*
- * StdoutContainer.swift 
+ * TimerProtocol.swift 
  * FSM 
  *
- * Created by Callum McColl on 08/07/2018.
+ * Created by Callum McColl on 28/02/2018.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,37 +56,14 @@
  *
  */
 
-public final class StdoutContainer: ExternalVariables {
+import FSM
 
-    internal var stdout: [String] = []
+public protocol TimerProtocol: ExternalVariables {
 
-    public var str: String? {
-        get {
-            guard let first = self.stdout.first else {
-                return nil
-            }
-            return self.stdout.dropFirst().reduce(first) { $0 + "\n" + $1 }
-        } set {
-            guard let str = newValue else {
-                return
-            }
-            self.stdout.append(str)
-        }
-    }
+    var startTime: UInt { get set }
 
-    public init() {}
+    var runningTime: UInt { get }
 
-    public init(fromDictionary dictionary: [String: Any]) {
-        guard let stdout = dictionary["stdout"] as? [String] else {
-            fatalError("Unable to initialise StdoutContainer from dictionary.")
-        }
-        self.stdout = stdout
-    }
+    init(startTime: UInt)
 
-}
-
-extension StdoutContainer: Equatable {}
-
-public func == (lhs: StdoutContainer, rhs: StdoutContainer) -> Bool {
-    return lhs.stdout == rhs.stdout
 }

@@ -1,5 +1,5 @@
 /*
- * StdoutExternalVariables.swift 
+ * StdoutContainer.swift 
  * FSM 
  *
  * Created by Callum McColl on 08/07/2018.
@@ -56,23 +56,39 @@
  *
  */
 
-public final class StdoutExternalVariables: ExternalVariablesContainer, Identifiable, Snapshotable {
+import FSM
 
-    public let name: String = "stdout"
-    
-    public var val: StdoutContainer = StdoutContainer()
+public final class StdoutContainer: ExternalVariables {
+
+    internal var stdout: [String] = []
+
+    public var str: String? {
+        get {
+            guard let first = self.stdout.first else {
+                return nil
+            }
+            return self.stdout.dropFirst().reduce(first) { $0 + "\n" + $1 }
+        } set {
+            guard let str = newValue else {
+                return
+            }
+            self.stdout.append(str)
+        }
+    }
 
     public init() {}
 
-    public func saveSnapshot() {
-        guard let str = val.str else {
-            return
+    public init(fromDictionary dictionary: [String: Any]) {
+        guard let stdout = dictionary["stdout"] as? [String] else {
+            fatalError("Unable to initialise StdoutContainer from dictionary.")
         }
-        print(str)
+        self.stdout = stdout
     }
 
-    public func takeSnapshot() {
-        self.val.stdout = []
-    }
+}
 
+extension StdoutContainer: Equatable {}
+
+public func == (lhs: StdoutContainer, rhs: StdoutContainer) -> Bool {
+    return lhs.stdout == rhs.stdout
 }
