@@ -58,7 +58,7 @@
 
 public enum Dependency {
 
-    indirect case parameterisedMachine(AnyScheduleableFiniteStateMachine, [Dependency])
+    indirect case parameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
 
     indirect case submachine(AnyScheduleableFiniteStateMachine, [Dependency])
 
