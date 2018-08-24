@@ -1,8 +1,8 @@
 /*
- * EmptyVariables.swift 
+ * HashTableCycleDetector.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
+ * Created by Callum McColl on 23/10/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,46 +56,54 @@
  *
  */
 
-import ModelChecking
+import Utilities
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  Detects cycles using a hash table.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public class HashTableCycleDetector<E: Hashable>: CycleDetector {
 
     /**
-     * Just initialize the class with no properties.
+     *  A dictionary where `Element` is the key and a `Bool` is the value.
+     *
+     *  The `Bool` is used just to give the hash a value.
      */
+    public typealias Data = Ref<[Element: Bool]>
+
+    /**
+     *  The elements of the cycle.
+     *
+     *  - Attention: This must be `Hashable`.
+     */
+    public typealias Element = E
+
+    /**
+     *  An empty hash table.
+     */
+    public var initialData: Data {
+        let d = [Element: Bool](minimumCapacity: 500000)
+        return Ref(value: d)
+    }
+
     public init() {}
 
     /**
-     *  Initialize the class from a dictionary.
+     *  Is this element in the hash table?
      *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  - Parameter data: The current hash table.
+     *
+     *  - Parameter element: The current element in the series.
+     *
+     *  - Returns: A tuple where the first element is a Bool indicating whether
+     *  a cycle was detected.  The second element is the new hash table.
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
-
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
+        //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
+        if data.value[element] != nil {
+            return (true, data)
+        }
+        data.value[element] = true
+        return (false, data)
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
-
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

@@ -1,8 +1,8 @@
 /*
- * EmptyVariables.swift 
+ * ExternalsSpinnerDataExtractor.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,46 +56,63 @@
  *
  */
 
+import FSM
+import KripkeStructure
 import ModelChecking
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  Provides a way to extract the variables from a `ExternalVariables` and create
+ *  `Spinners.Spinner`s for each variables.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public class ExternalsSpinnerDataExtractor<
+    E: ExternalsPropertyExtractor,
+    KSPC: KripkeStatePropertySpinnerConverterType
+>: ExternalsSpinnerDataExtractorType {
+
+    private let converter: KSPC
+
+    private let extractor: E
 
     /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
-
-    /**
-     *  Initialize the class from a dictionary.
+     *  Create a new `ExternalsSpinnerDataExtractor`.
      *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  - Parameter converter: Used to convert a `KripkeStateProperty` to a
+     *  `Spinners.Spinner`.
+     *
+     *  - Parameter extractor: Used to extract the values for the
+     *  `ExternalVariables`.
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
-
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public init(converter: KSPC, extractor: E) {
+        self.converter = converter
+        self.extractor = extractor
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
+    /**
+     *  Create `Spinners.Spinner`s for the `ExternalVariables`.
+     *
+     *  - Parameter externalVariables: The `ExternalVariables`.
+     *
+     *  - Returns: A tuple where the first element is a dictionary where the
+     *  keys represents the label of each variables within the
+     *  `ExternalVariables` and the value represents the starting value for each
+     *  variables `Spinners.Spinner`.  The second element is a dictionary where
+     *  the keys represent the label of each variable within the
+     *  `ExternalVariables` and the values are the `Spinners.Spinner` for each
+     *  variable.
+     */
+    public func extract(
+        externalVariables: AnySnapshotController
+    ) -> (
+        KripkeStatePropertyList,
+        [String: (Any) -> Any?]
+    ) {
+        // Get Global Properties Info
+        let list = self.extractor.extract(externalVariables: externalVariables)
+        var spinners: [String: (Any) -> Any?] = [:]
+        list.forEach {
+            spinners[$0] = self.converter.convert(from: $1).1
+        }
+        return (list, spinners)
+    }
 
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

@@ -1,8 +1,8 @@
 /*
- * EmptyVariables.swift 
- * FSM 
+ * ExternalsPropertyExtractor.swift 
+ * swiftfsm 
  *
- * Created by Callum McColl on 15/01/2016.
+ * Created by Callum McColl on 22/01/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,46 +56,27 @@
  *
  */
 
-import ModelChecking
+import FSM
+import KripkeStructure
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  Conforming types are able to extract the values of the variables for 
+ *  `ExternalVariables`.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public protocol ExternalsPropertyExtractor {
 
     /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
-
-    /**
-     *  Initialize the class from a dictionary.
+     *  Extract the values from the `ExternalVariables`.
      *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  - Parameter globals: The `ExternalVariables`.
+     *
+     *  - Returns: A Dictionary where represents the key represents the 
+     *  variables label, and the value is a `KripkeStateProperty`.
+     *
+     *  - SeeAlso: `KripkeStateProperty`
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
+    func extract(
+        externalVariables: AnySnapshotController
+    ) -> KripkeStatePropertyList
 
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
-    }
-
-    public final func update(fromDictionary dictionary: [String: Any]) {}
-
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

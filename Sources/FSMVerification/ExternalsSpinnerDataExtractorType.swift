@@ -1,8 +1,8 @@
 /*
- * EmptyVariables.swift 
+ * ExternalsSpinnerDataExtractorType.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,46 +56,31 @@
  *
  */
 
-import ModelChecking
+import FSM
+import KripkeStructure
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  Conforming types are responsible for creating `Spinners.Spinner`s for a
+ *  specific instance of `ExternalVariables`.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public protocol ExternalsSpinnerDataExtractorType {
 
     /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
-
-    /**
-     *  Initialize the class from a dictionary.
+     *  Create `Spinners.Spinner`s for the `ExternalVariables`.
      *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  - Parameter externalVariables: The `ExternalVariables`.
+     *
+     *  - Returns: A tuple where the first element is a dictionary where the
+     *  keys represents the label of each variable within the
+     *  `ExternalVariables` and the value represents the starting value for each
+     *  variables `Spinners.Spinner`.  The second element is a dictionary where
+     *  the keys represent the label of each variable within the
+     *  `ExternalVariables` and the values are the `Spinners.Spinner` for each
+     *  variable.
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
+    func extract(externalVariables: AnySnapshotController) -> (
+        KripkeStatePropertyList,
+        [String: (Any) -> Any?]
+    )
 
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
-    }
-
-    public final func update(fromDictionary dictionary: [String: Any]) {}
-
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

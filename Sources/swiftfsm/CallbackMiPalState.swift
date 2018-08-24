@@ -1,9 +1,9 @@
 /*
- * EmptyVariables.swift 
- * FSM 
+ * CallbackMiPalState.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 23/08/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,100 @@
  *
  */
 
-import ModelChecking
-
 /**
- *  An empty set of variables.
+ *  Provides a way for developers to pass in the onEntry, main and onExit
+ *  methods when initializing a `MiPalState` so that they can more easily create
+ *  simple states.
  *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
+ *  - Warning: It is important that when creating the `_onEntry`, `_main` and
+ *  `_onExit` functions, you do not refer to variables that are outside the
+ *  scope of the functions.  If you do so, you will possibly introduce
+ *  side-effects that cannot be detected by the Kripke Structure generation and
+ *  will therefore throw off the formal verification.
  *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  - SeeAlso: `MiPalState`
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
 
-    /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
+import FSM
 
-    /**
-     *  Initialize the class from a dictionary.
-     *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
-     */
-    public init(fromDictionary dictionary: [String: Any]) {}
+public final class CallbackMiPalState: MiPalState {
 
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public override var validVars: [String: [Any]] {
+        return [
+            "name": [],
+            "transitions": [],
+            "_onEntry": [],
+            "_main": [],
+            "_onExit": []
+        ]
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
+    /**
+     *  The actual onEntry implementation.
+     */
+    public let _onEntry: () -> Void
 
-}
+    /**
+     *  The actual main implementation.
+     */
+    public let _main: () -> Void
 
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
+    /**
+     *  The actual onExit implementation.
+     */
+    public let _onExit: () -> Void
+
+    /**
+     *  Create a new `CallbackMiPalState`.
+     */
+    public init(
+        _ name: String,
+        transitions: [Transition<CallbackMiPalState, MiPalState>] = [],
+        onEntry: @escaping () -> Void = {},
+        main: @escaping () -> Void = {},
+        onExit: @escaping () -> Void = {}
+    ) {
+        self._onEntry = onEntry
+        self._main = main
+        self._onExit = onExit
+        super.init(
+            name,
+            transitions: cast(transitions: transitions)
+        )
+    }
+
+    /**
+     *  This method delegates to `_onEntry`.
+     */
+    public override final func onEntry() {
+        self._onEntry()
+    }
+
+    /**
+     *  This method delegates to `_main`.
+     */
+    public override final func main() {
+        self._main()
+    }
+
+    /**
+     *  This method delegates to `_onExit`.
+     */
+    public override final func onExit() {
+        self._onExit()
+    }
+
+    /**
+     *  Create a new `CallbackMiPalState` that is an exact copy of `self`.
+     */
+    public override final func clone() -> CallbackMiPalState {
+        return CallbackMiPalState(
+            self.name,
+            transitions: cast(transitions: self.transitions),
+            onEntry: self._onEntry,
+            main: self._main,
+            onExit: self._onExit
+        )
+    }
+
 }

@@ -1,8 +1,8 @@
 /*
- * EmptyVariables.swift 
+ * ExternalsSpinnerConstructorFactory.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,46 +56,60 @@
  *
  */
 
-import ModelChecking
+import FSM
+import KripkeStructure
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  Creates instances of `ExternalsSpinnerConstructorType`.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public class ExternalsSpinnerConstructorFactory<
+    ESC: ExternalsSpinnerConstructorType,
+    ESE: ExternalsSpinnerDataExtractorType
+>: ExternalsSpinnerConstructorFactoryType {
+
+    private let constructor: ESC
+
+    private let extractor: ESE
 
     /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
-
-    /**
-     *  Initialize the class from a dictionary.
+     *  Create a new `ExternalsSpinnerConstructorFactory`.
      *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  - Parameter constructor: This is used to convert a dictionary of
+     *  `Spinners.Spinner`s to a `ExternalVariables` `Spinners.Spinner`.
+     *
+     *  - Parameter extractor: This is used to extract the `Spinners.Spinner`s
+     *  from the `ExternalVariables`.
+     *
+     *  - SeeAlso: `ExternalsSpinnerConstructorType`
+     *  - SeeAlso: `ExternalsSpinnerDataExtractorType`
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
-
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public init(constructor: ESC, extractor: ESE) {
+        self.constructor = constructor
+        self.extractor = extractor
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
+    /**
+     *  Create a function that, when called, creates a `Spinners.Spinner` for
+     *  a the `ExternalVariables`.
+     *
+     *  - Parameter externalVariables: The `ExternalVariables` that will be
+     *  used to create the `Spinners.Spinner`.
+     *
+     *  - Returns: A function that creates the `ExternalVariables`
+     *  `Spinners.Spinner`.
+     */
+    public func make(
+        externalVariables: AnySnapshotController
+    ) -> (() -> () -> (AnySnapshotController, KripkeStatePropertyList)?)
+    {
+        let spinnerData = self.extractor.extract(externalVariables: externalVariables)
+        return { () -> () -> (AnySnapshotController, KripkeStatePropertyList)? in
+            return self.constructor.makeSpinner(
+                fromExternalVariables: externalVariables,
+                defaultValues: spinnerData.0,
+                spinners: spinnerData.1
+            )
+        }
+    }
 
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

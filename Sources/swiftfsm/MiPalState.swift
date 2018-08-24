@@ -1,9 +1,9 @@
 /*
- * EmptyVariables.swift 
- * FSM 
+ * MiPalState.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/08/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,92 @@
  *
  */
 
+import FSM
 import ModelChecking
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  The base class for all states that conform to `MiPalAction`s.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+open class MiPalState:
+    StateType,
+    CloneableState,
+    CustomStringConvertible,
+    CustomDebugStringConvertible,
+    MiPalActions,
+    Transitionable,
+    KripkeVariablesModifier
+{
 
     /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
-
-    /**
-     *  Initialize the class from a dictionary.
+     *  The name of the state.
      *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  - Requires: Must be unique for each state.
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
+    public let name: String
 
     /**
-     *  Create a new isntance of `EmptyVariables`.
+     *  An array of transitions that this state may use to move to another
+     *  state.
      */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public var transitions: [Transition<MiPalState, MiPalState>]
+
+    open var validVars: [String: [Any]] {
+        return [
+            "name": [],
+            "transitions": []
+        ]
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
+    /**
+     *  Create a new `MiPalState`.
+     *
+     *  - Parameter name: The name of the state.
+     *
+     *  - transitions: All transitions to other states that this state can use.
+     */
+    public init(_ name: String, transitions: [Transition<MiPalState, MiPalState>] = []) {
+        self.name = name
+        self.transitions = transitions
+    }
 
-}
+    /**
+     *  Does nothing.
+     */
+    open func onEntry() {}
 
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
+    /**
+     *  Does nothing.
+     */
+    open func main() {}
+
+    /**
+     *  Does nothing.
+     */
+    open func onExit() {}
+
+    /**
+     *  Create a copy of `self`.
+     *
+     *  - Warning: Child classes should override this method.  If they do not
+     *  then the application will crash when trying to generate
+     *  `KripkeStructures`.
+     */
+    open func clone() -> Self {
+        fatalError("Please implement your own clone")
+    }
+
+    /**
+     *  Update `self` from a dictionary.
+     *
+     *  Since `MiPalState` contains no mutable properties, it does not bother
+     *  to update itself based on anything in the dictionary. 
+     *
+     *  - Parameter fromDictionary: The dictionary of properties where the keys
+     *  represents the properties labels and the values are the values of the
+     *  properties.
+     *
+     *  - Attention: Child classes should override this method when they add
+     *  mutable properties.
+     */
+    open func update(fromDictionary dictionary: [String: Any]) {}
 }

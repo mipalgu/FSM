@@ -1,9 +1,9 @@
 /*
- * EmptyVariables.swift 
- * FSM 
+ * EmptyMiPalState.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/08/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,35 @@
  *
  */
 
-import ModelChecking
+import FSM
 
 /**
- *  An empty set of variables.
+ *  A `MiPalState` that does nothing.
  *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
+ *  Useful if you need an accepting state that does nothing but symbolize the
+ *  end of the FSM.
  *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  - SeeAlso: `MiPalState`
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public final class EmptyMiPalState: MiPalState {
 
     /**
-     * Just initialize the class with no properties.
+     *  Does nothing.
      */
-    public init() {}
+    public override final func onEntry() {}
 
     /**
-     *  Initialize the class from a dictionary.
-     *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
+     *  Does nothing.
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
+    public override final func main() {}
 
     /**
-     *  Create a new isntance of `EmptyVariables`.
+     *  Does nothing.
      */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public override final func onExit() {}
+
+    public override final func clone() -> EmptyMiPalState {
+        return EmptyMiPalState(self.name, transitions: self.transitions)
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
-
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

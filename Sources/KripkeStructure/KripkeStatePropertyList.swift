@@ -100,7 +100,7 @@ extension KripkeStatePropertyList: Equatable {
 extension KripkeStatePropertyList: Hashable, CustomStringConvertible {
 
     public var description: String {
-        return self.properties.description
+        return self.properties.sorted { $0.key < $1.key }.description
     }
 
     public var hashValue: Int {

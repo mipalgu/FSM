@@ -1,9 +1,9 @@
 /*
- * EmptyVariables.swift 
- * FSM 
+ * globals.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 8/09/2015.
+ * Copyright © 2015 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,117 @@
  *
  */
 
-import ModelChecking
+import FSM
+import Functional
+import KripkeStructure
 
 /**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
+ *  Set to true when debugging is turned on.
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public var DEBUG: Bool = false
 
-    /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
+/**
+ *  Set to true when generate `KripkeStructure`s.
+ */
+public var KRIPKE: Bool = false
 
-    /**
-     *  Initialize the class from a dictionary.
-     *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
-     */
-    public init(fromDictionary dictionary: [String: Any]) {}
+/**
+ *  Set to true when all Finite State Machines should be stopped.
+ */
+public var STOP: Bool = false
 
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+private var factories = Factories()
+
+/**
+ *  Add an `FSMArrayFactory` onto the `Factories` `Stack`.
+ *
+ *  - Parameter _: The `FSMArrayFactory`.
+ */
+public func addFactory(_ f: @escaping FSMArrayFactory) {
+    factories.push(f)
+}
+
+public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2, T>] {
+    return transitions.map(cast)
+}
+
+public func cast<S1, S2, T>(_ transition: Transition<S1, T>) -> Transition<S2, T> {
+    return Transition<S2, T>(transition.target) {
+        guard let state = $0 as? S1 else {
+            fatalError("Unable to cast \($0) to \(S1.self)")
+        }
+        return transition.canTransition(state)
     }
-
-    public final func update(fromDictionary dictionary: [String: Any]) {}
-
 }
 
 /**
- *  All instances of `EmptyVariables` are equal.
+ *  A convenience function which only prints when `DEBUG` is true.
  */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
+public func dprint(
+    _ items: Any ...,
+    separator: String = " ",
+    terminator: String = "\n"
+) {
+    if false == DEBUG {
+        return
+    }
+    _ = items.map {
+        print($0, separator: separator, terminator: terminator)
+    }
+}
+
+/**
+ *  A convenience function which only prints when `DEBUG` is true.
+ */
+public func dprint<Target: TextOutputStream>(
+    _ items: Any ...,
+    separator: String = " ",
+    terminator: String = "\n",
+    toStream output: inout Target
+) {
+    if false == DEBUG {
+        return
+    }
+    _ = items.map {
+        print(
+            $0,
+            separator: separator,
+            terminator: terminator,
+            to: &output
+        )
+    }
+}
+
+/**
+ *  Retrieve the number of `FSMArrayFactory`s that are on the `Factories`
+ *  `Stack`.
+ *  
+ *  - Returns: The number of `FSMArrayFactory`s that are on the `Factories`
+ *  `Stack`.
+ */
+public func getFactoryCount() -> Int {
+    return factories.count
+}
+
+/**
+ *  Retrieve the top most `FSMArrayFactory` from the `Factories` `Stack`.
+ *
+ *  - Postcondition: The top most `FSMArrayFactory` is removed from the
+ *  `Factories` `Stack`.
+ *
+ *  - Returns: The retrieved `FSMArrayFactory` or nil if the `Factories` `Stack`
+ *  was empty.
+ */
+public func getLastFactory() -> FSMArrayFactory? {
+    if true == factories.isEmpty {
+        return nil
+    }
+    return factories.pop()
+}
+
+/**
+ *  Sets `STOP` to true.
+ */
+public func stopAll() {
+    STOP = true
 }

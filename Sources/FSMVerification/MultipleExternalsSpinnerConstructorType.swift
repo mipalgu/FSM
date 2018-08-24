@@ -1,9 +1,9 @@
 /*
- * EmptyVariables.swift 
+ * MultipleExternalsSpinnerConstructorType.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 10/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,16 @@
  *
  */
 
-import ModelChecking
+import FSM
+import KripkeStructure
 
-/**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
- */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public protocol MultipleExternalsSpinnerConstructorType {
 
-    /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
+    // swiftlint:disable large_tuple
+    func makeSpinner(forExternals: [(
+        externalVariables: AnySnapshotController,
+        defaultValues: KripkeStatePropertyList,
+        spinners: [String: (Any) -> Any?]
+    )]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]?
 
-    /**
-     *  Initialize the class from a dictionary.
-     *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
-     */
-    public init(fromDictionary dictionary: [String: Any]) {}
-
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
-    }
-
-    public final func update(fromDictionary dictionary: [String: Any]) {}
-
-}
-
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }

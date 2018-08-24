@@ -1,9 +1,9 @@
 /*
- * EmptyVariables.swift 
+ * SnapshotTimerController.swift 
  * FSM 
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 28/02/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,46 +56,30 @@
  *
  */
 
-import ModelChecking
+#if os(OSX)
+import Darwin
+#elseif os(Linux)
+import Glibc
+#endif
 
-/**
- *  An empty set of variables.
- *
- *  This class is useful for when there are no variables and classes such as
- *  are asking for some.
- *
- *  - SeeAlso: `Variables`
- *  - SeeAlso: `ExternalVariables`
- */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+import FSM
 
-    /**
-     * Just initialize the class with no properties.
-     */
-    public init() {}
+public final class SnapshotTimerController<T: TimerProtocol>: Snapshotable, ExternalVariablesContainer {
 
-    /**
-     *  Initialize the class from a dictionary.
-     *
-     *  Since this class contains no properties, nothing is every taken from the
-     *  dictionary.
-     */
-    public init(fromDictionary dictionary: [String: Any]) {}
+    public var val: T
 
-    /**
-     *  Create a new isntance of `EmptyVariables`.
-     */
-    public final func clone() -> EmptyVariables {
-        return EmptyVariables()
+    public let name: String
+
+    public init(_ name: String, _ val: T = T(startTime: UInt(time(nil)))) {
+        self.name = name
+        self.val = val
     }
 
-    public final func update(fromDictionary dictionary: [String: Any]) {}
+    public func saveSnapshot() {
+    }
 
-}
+    public func takeSnapshot() {
+        self.val = T(startTime: UInt(time(nil)))
+    }
 
-/**
- *  All instances of `EmptyVariables` are equal.
- */
-public func ==<T: EmptyVariables, U: EmptyVariables>(lhs: T, rhs: U) -> Bool {
-    return true
 }
