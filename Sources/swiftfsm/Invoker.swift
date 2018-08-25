@@ -61,6 +61,6 @@ import Utilities
 
 public protocol Invoker {
 
-    func invoke<FSM: ConvertibleToScheduleableFiniteStateMachine>(_: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
+    func invoke<FSM: Identifiable>(_: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
 
 }
