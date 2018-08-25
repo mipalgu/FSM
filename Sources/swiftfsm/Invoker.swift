@@ -61,6 +61,6 @@ import Utilities
 
 public protocol Invoker {
 
-    func invoke<FSM: Identifiable>(_: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
+    func invoke<T: ResultContainer>(_: T) -> Promise<T.ResultType> where T: Identifiable
 
 }
