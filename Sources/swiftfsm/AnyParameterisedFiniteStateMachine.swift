@@ -68,6 +68,7 @@ public struct AnyParameterisedFiniteStateMachine:
     StateExecuter,
     Finishable,
     KripkePropertiesRecordable,
+    Restartable,
     Snapshotable,
     SnapshotControllerContainer,
     Suspendable,
@@ -103,6 +104,8 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _name: () -> String
 
     private let _next: () -> Void
+    
+    private let _restart: () -> Void
 
     private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
 
@@ -176,7 +179,7 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) {
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
         self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
@@ -189,6 +192,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._isSuspended = { ref.value.isSuspended }
         self._name = { ref.value.name }
         self._next = { ref.value.next() }
+        self._restart = { ref.value.restart() }
         self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }
@@ -200,7 +204,7 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable {
         let ref = Ref(value: base)
         self.init(ref)
     }
@@ -214,6 +218,10 @@ public struct AnyParameterisedFiniteStateMachine:
      */
     public func next() {
         self._next()
+    }
+    
+    public func restart() {
+        self._restart()
     }
 
     /**
