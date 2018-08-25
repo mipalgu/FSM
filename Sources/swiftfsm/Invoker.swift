@@ -61,6 +61,6 @@ import Utilities
 
 public protocol Invoker {
 
-    weak var delegate: Ref<InvokerDelegate>? { get set }
+    func invoke<FSM: ConvertibleToScheduleableFiniteStateMachine>(_: FSM) -> Promise<FSM.ResultType> where FSM: ResultContainer
 
 }
