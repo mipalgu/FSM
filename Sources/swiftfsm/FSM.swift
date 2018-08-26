@@ -407,7 +407,8 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: KripkeVariablesModifier,
-    R._StateType: Updateable
+    R._StateType: Updateable,
+    RS.Vars: ResultContainer
 {
     return AnyParameterisedFiniteStateMachine(
         ParameterisedFiniteStateMachine(
