@@ -106,6 +106,8 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _next: () -> Void
     
     private let _restart: () -> Void
+    
+    private let _resultContainer: () -> AnyResultContainer<Any>
 
     private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
 
@@ -174,12 +176,16 @@ public struct AnyParameterisedFiniteStateMachine:
     public var name: String {
         return self._name()
     }
+    
+    public var resultContainer: AnyResultContainer<Any> {
+        return self._resultContainer()
+    }
 
     public var submachines: [AnyScheduleableFiniteStateMachine] {
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable {
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
         self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
@@ -193,6 +199,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._name = { ref.value.name }
         self._next = { ref.value.next() }
         self._restart = { ref.value.restart() }
+        self._resultContainer = { AnyResultContainer<Any>({ ref.value.hasFinished }, { ref.value.results.vars.result as Any! }) }
         self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }
@@ -204,7 +211,7 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder {
         let ref = Ref(value: base)
         self.init(ref)
     }
