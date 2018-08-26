@@ -61,6 +61,6 @@ import Utilities
 
 public protocol Invoker {
 
-    func invoke<P: VariablesContainer, RS: VariablesContainer>(_: String, with: P, withResults: RS) -> Promise<RS.Vars.ResultType> where RS.Vars: ResultContainer
+    func invoke<P: Variables, RS: ResultContainer>(_: String, with: P, withResults: RS) -> Promise<RS.ResultType>
 
 }
