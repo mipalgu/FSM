@@ -109,6 +109,7 @@ public struct ParameterisedFiniteStateMachine<
     KripkePropertiesRecorderDelegator,
     MutableSubmachinesContainer,
     OptimizedStateExecuter,
+    ParametersContainerHolder,
     Restartable,
     ResumeableStateExecuter,
     ResultContainerHolder,

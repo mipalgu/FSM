@@ -108,6 +108,8 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _restart: () -> Void
     
     private let _resultContainer: () -> AnyResultContainer<Any>
+    
+    private let _setParameters: (Any) -> Void
 
     private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
 
@@ -185,7 +187,7 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder {
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
         self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
@@ -198,6 +200,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._isSuspended = { ref.value.isSuspended }
         self._name = { ref.value.name }
         self._next = { ref.value.next() }
+        self._setParameters = { ref.value.parameters.vars = $0 as! FSM.ParametersContainerType.Vars }
         self._restart = { ref.value.restart() }
         self._resultContainer = { AnyResultContainer<Any>({ ref.value.results.vars.result as Any! }) }
         self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
@@ -211,7 +214,7 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder {
         let ref = Ref(value: base)
         self.init(ref)
     }
@@ -229,6 +232,10 @@ public struct AnyParameterisedFiniteStateMachine:
     
     public func restart() {
         self._restart()
+    }
+    
+    public func parameters<P: Variables>(_ newParameters: P) {
+        self._setParameters(newParameters)
     }
 
     /**
