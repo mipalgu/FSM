@@ -1,8 +1,8 @@
 /*
- * ResultContainer.swift 
+ * AnyResultContainer.swift 
  * FSM 
  *
- * Created by Callum McColl on 09/08/2018.
+ * Created by Callum McColl on 26/08/2018.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,10 +56,27 @@
  *
  */
 
-public protocol ResultContainer: class, Finishable {
+public final class AnyResultContainer<T>: ResultContainer {
 
-    associatedtype ResultType
+    fileprivate let _hasFinished: () -> Bool
 
-    var result: ResultType! { get }
+    fileprivate let _result: () -> T!
 
+    public var hasFinished: Bool {
+        return self._hasFinished()
+    }
+
+    public var result: T! {
+        return self._result()
+    }
+
+    public init<RC: ResultContainer>(_ base: RC) where RC.ResultType == T {
+        self._hasFinished = { base.hasFinished }
+        self._result = { base.result }
+    }
+
+    public init(_ hasFinished: @escaping () -> Bool, _ result: @escaping () -> T!) {
+        self._hasFinished = hasFinished
+        self._result = result
+    }
 }
