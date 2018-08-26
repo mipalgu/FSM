@@ -387,13 +387,13 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     )
 }
 
-public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesContainer, ResultType>(
+public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesContainer, RS: VariablesContainer>(
     _ name: String,
     initialState: R._StateType,
     externalVariables: [AnySnapshotController],
     fsmVars: V,
     parameters: P,
-    result: ResultType? = nil,
+    results: RS,
     ringlet: R,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
@@ -417,7 +417,7 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
             fsmVars: fsmVars,
             parameters: parameters,
             recorder: MirrorKripkePropertiesRecorder(),
-            result: result,
+            results: results,
             ringlet: ringlet,
             initialPreviousState: initialPreviousState,
             suspendedState: suspendedState,

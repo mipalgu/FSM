@@ -99,7 +99,7 @@ public struct ParameterisedFiniteStateMachine<
     KR: KripkePropertiesRecorder,
     V: VariablesContainer,
     P: VariablesContainer,
-    ResultType,
+    RS: VariablesContainer,
     SM: FiniteStateMachineType
 >: FiniteStateMachineType,
     Cloneable,
@@ -116,6 +116,7 @@ public struct ParameterisedFiniteStateMachine<
     SnapshotControllerContainer,
     Updateable where
     P.Vars: Updateable,
+    RS.Vars: Updateable,
     R: Cloneable,
     R: Updateable,
     R._StateType: Transitionable,
@@ -149,8 +150,12 @@ public struct ParameterisedFiniteStateMachine<
                 value: self.fsmVars.vars
             ),
             "parameters": KripkeStateProperty(type:
-                .Compound(self.recorder.takeRecord(of: self.fsmVars.vars)),
+                .Compound(self.recorder.takeRecord(of: self.parameters.vars)),
                 value: self.parameters.vars
+            ),
+            "results": KripkeStateProperty(type:
+                .Compound(self.recorder.takeRecord(of: self.results.vars)),
+                value: self.results.vars
             ),
             "ringlet": KripkeStateProperty(type: .Compound(
                 self.recorder.takeRecord(of: self.ringlet)),
@@ -211,7 +216,7 @@ public struct ParameterisedFiniteStateMachine<
      */
     public let recorder: Recorder
 
-    public var result: ResultType!
+    public var results: RS
 
     /**
      *  An instance of `Ringlet` that is used to execute the states.
@@ -258,7 +263,7 @@ public struct ParameterisedFiniteStateMachine<
         fsmVars: V,
         parameters: P,
         recorder: KR,
-        result: ResultType? = nil,
+        results: RS,
         ringlet: R,
         initialPreviousState: R._StateType,
         suspendedState: R._StateType?,
@@ -276,7 +281,7 @@ public struct ParameterisedFiniteStateMachine<
         self.parameters = parameters
         self.previousState = initialPreviousState
         self.recorder = recorder
-        self.result = result
+        self.results = results
         self.ringlet = ringlet
         self.submachines = submachines
         self.suspendedState = suspendedState
@@ -284,7 +289,7 @@ public struct ParameterisedFiniteStateMachine<
     }
 
     //swiftlint:disable:next function_body_length
-    public func clone() -> ParameterisedFiniteStateMachine<R, KR, V, P, ResultType, SM>{
+    public func clone() -> ParameterisedFiniteStateMachine<R, KR, V, P, RS, SM>{
         var stateCache: [String: R._StateType] = [:]
         let allStates = self.allStates
         func apply(_ state: R._StateType) -> R._StateType {
@@ -306,6 +311,7 @@ public struct ParameterisedFiniteStateMachine<
         }
         self.fsmVars.vars = self.fsmVars.vars.clone()
         self.parameters.vars = self.parameters.vars.clone()
+        self.results.vars = self.results.vars.clone()
         var fsm = ParameterisedFiniteStateMachine(
             self.name,
             initialState: apply(self.initialState.clone()),
@@ -313,7 +319,7 @@ public struct ParameterisedFiniteStateMachine<
             fsmVars: self.fsmVars,
             parameters: self.parameters,
             recorder: self.recorder,
-            result: self.result,
+            results: self.results,
             ringlet: self.ringlet.clone(),
             initialPreviousState: apply(self.initialPreviousState.clone()),
             suspendedState: self.suspendedState.map { apply($0.clone()) },
@@ -351,14 +357,15 @@ public struct ParameterisedFiniteStateMachine<
         guard
             let ringlet = dictionary["ringlet"] as? [String: Any],
             let fsmVars = dictionary["fsmVars"] as? [String: Any],
-            let parameters = dictionary["parameters"] as? [String: Any]
+            let parameters = dictionary["parameters"] as? [String: Any],
+        let results = dictionary["results"] as? [String: Any]
         else {
             fatalError("Unable to fetch all variables from dictionary")
         }
         self.ringlet.update(fromDictionary: ringlet)
         self.fsmVars.vars.update(fromDictionary: fsmVars)
         self.parameters.vars.update(fromDictionary: parameters)
-        self.result = dictionary["result"] as? ResultType
+        self.results.vars.update(fromDictionary: results)
     }
 
     fileprivate var allStates: [String: R._StateType] {
