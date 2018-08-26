@@ -393,7 +393,7 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
     externalVariables: [AnySnapshotController],
     fsmVars: V,
     parameters: P,
-    result: ResultType,
+    result: ResultType? = nil,
     ringlet: R,
     initialPreviousState: R._StateType,
     suspendedState: R._StateType? = nil,
