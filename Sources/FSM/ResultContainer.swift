@@ -56,7 +56,7 @@
  *
  */
 
-public protocol ResultContainer: class, Finishable {
+public protocol ResultContainer: class {
 
     associatedtype ResultType
 

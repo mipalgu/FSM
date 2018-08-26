@@ -58,25 +58,17 @@
 
 public final class AnyResultContainer<T>: ResultContainer {
 
-    fileprivate let _hasFinished: () -> Bool
-
     fileprivate let _result: () -> T!
-
-    public var hasFinished: Bool {
-        return self._hasFinished()
-    }
 
     public var result: T! {
         return self._result()
     }
 
     public init<RC: ResultContainer>(_ base: RC) where RC.ResultType == T {
-        self._hasFinished = { base.hasFinished }
         self._result = { base.result }
     }
 
-    public init(_ hasFinished: @escaping () -> Bool, _ result: @escaping () -> T!) {
-        self._hasFinished = hasFinished
+    public init(_ result: @escaping () -> T!) {
         self._result = result
     }
 }
