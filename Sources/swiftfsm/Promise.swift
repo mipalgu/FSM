@@ -58,7 +58,7 @@
 
 import FSM
 
-public final class Promise<T>: Finishable, ResultContainer {
+public final class Promise<T>: Finishable {
     
     fileprivate var _hasFinished: () -> Bool
 
@@ -68,7 +68,7 @@ public final class Promise<T>: Finishable, ResultContainer {
         return self._hasFinished()
     }
 
-    public var result: T! {
+    public var result: T {
         return self._result()
     }
 
