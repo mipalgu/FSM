@@ -200,7 +200,13 @@ public struct AnyParameterisedFiniteStateMachine:
         self._isSuspended = { ref.value.isSuspended }
         self._name = { ref.value.name }
         self._next = { ref.value.next() }
-        self._setParameters = { ref.value.parameters.vars = $0 as! FSM.ParametersContainerType.Vars }
+        self._setParameters = {
+            guard let parameters = $0 as? FSM.ParametersContainerType.Vars else {
+                fatalError("Attempting to set parameters of \(ref.value.name) with an incorrect parameter type.")
+            }
+            ref.value.parameters.vars = parameters
+            
+        }
         self._restart = { ref.value.restart() }
         self._resultContainer = { AnyResultContainer<Any>({ ref.value.results.vars.result as Any! }) }
         self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
