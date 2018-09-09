@@ -1,9 +1,9 @@
 /*
- * MultipleExternalsSpinnerConstructorType.swift 
- * FSM 
+ * ExternalVariablesData.swift
+ * FSMVerification
  *
- * Created by Callum McColl on 10/06/2017.
- * Copyright © 2017 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 10/9/18.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,12 +56,15 @@
  *
  */
 
-import FSM
 import KripkeStructure
+import FSM
 
-public protocol MultipleExternalsSpinnerConstructorType {
-
-    // swiftlint:disable large_tuple
-    func makeSpinner(forExternals: [ExternalVariablesVerificationData]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]?
-
+public struct ExternalVariablesVerificationData {
+    
+    public let externalVariables: AnySnapshotController
+    
+    public let defaultValues: KripkeStatePropertyList
+    
+    public let spinners: [String: (Any) -> Any?]
+    
 }
