@@ -12,7 +12,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "ssh://git.mipal.net/git/swift_wb.git", .branch("master"))
+        .package(url: "ssh://git.mipal.net/git/swift_wb.git", .branch("swift-4.2"))
     ],
     targets: [
         .target(name: "Utilities", dependencies: []),
