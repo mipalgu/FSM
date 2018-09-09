@@ -67,4 +67,14 @@ public struct ExternalVariablesVerificationData {
     
     public let spinners: [String: (Any) -> Any?]
     
+    public init(
+        externalVariables: AnySnapshotController,
+        defaultValues: KripkeStatePropertyList,
+        spinners: [String: (Any) -> Any?]
+    ) {
+        self.externalVariables = externalVariables
+        self.defaultValues = defaultValues
+        self.spinners = spinners
+    }
+    
 }
