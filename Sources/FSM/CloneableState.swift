@@ -64,4 +64,4 @@ import ModelChecking
  *  - SeeAlso: `Cloneable`
  *  - SeeAlso: `StateType`
  */
-public protocol CloneableState: Cloneable, StateType, Transitionable, Updateable {}
+public protocol CloneableState: Cloneable, StateType, Transitionable {}

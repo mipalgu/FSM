@@ -60,7 +60,7 @@
  *  Allows conforming types to manipulate the values of variables that are used
  *  in `KripkeStructures`.
  */
-public protocol KripkeVariablesModifier: Updateable {
+public protocol KripkeVariablesModifier {
 
     /**
      * Allows conforming types to create computed variables that are only seen

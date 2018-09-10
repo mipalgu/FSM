@@ -370,7 +370,7 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     suspendedState: MiPalState? = nil,
     suspendState: MiPalState = EmptyMiPalState("_suspend"),
     exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyControllableFiniteStateMachine where R: Cloneable, R: Updateable, R._StateType == MiPalState {
+) -> AnyControllableFiniteStateMachine where R: Cloneable, R._StateType == MiPalState {
     return AnyControllableFiniteStateMachine(
         FiniteStateMachine<R, MirrorKripkePropertiesRecorder, V, AnyControllableFiniteStateMachine>(
             name,
@@ -402,12 +402,10 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
     submachines: [AnyControllableFiniteStateMachine] = []
 ) -> AnyParameterisedFiniteStateMachine where
     R: Cloneable,
-    R: Updateable,
     R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: KripkeVariablesModifier,
-    R._StateType: Updateable,
     RS.Vars: ResultContainer
 {
     return AnyParameterisedFiniteStateMachine(
@@ -442,12 +440,10 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     submachines: [AnyControllableFiniteStateMachine] = []
 ) -> AnyControllableFiniteStateMachine where
     R: Cloneable,
-    R: Updateable,
     R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
-    R._StateType: KripkeVariablesModifier,
-    R._StateType: Updateable
+    R._StateType: KripkeVariablesModifier
 {
     return AnyControllableFiniteStateMachine(
         FiniteStateMachine(
@@ -493,8 +489,7 @@ public func FSM<FSM: FiniteStateMachineType>(
     FSM: Restartable,
     FSM: Resumeable,
     FSM: Snapshotable,
-    FSM: SnapshotControllerContainer,
-    FSM: Updateable
+    FSM: SnapshotControllerContainer
 {
     return AnyControllableFiniteStateMachine(fsm)
 }
@@ -526,8 +521,7 @@ public func FSMS<FSM: FiniteStateMachineType>(
     FSM: Restartable,
     FSM: Resumeable,
     FSM: Snapshotable,
-    FSM: SnapshotControllerContainer,
-    FSM: Updateable
+    FSM: SnapshotControllerContainer
 {
     return fsms.map { AnyControllableFiniteStateMachine($0) }
 }
