@@ -27,7 +27,9 @@ let package = Package(
             .target(name: "FSM"),
             .target(name: "swiftfsm"),
             .target(name: "ModelChecking"),
-            .target(name: "FSMVerification")
+            .target(name: "FSMVerification"),
+            .target(name: "ExternalVariables"),
+            .target(name: "KripkeStructure")
         ])
     ]
 )

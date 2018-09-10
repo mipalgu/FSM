@@ -61,6 +61,9 @@ import FSM
 import swiftfsm
 import ModelChecking
 import ExternalVariables
+import KripkeStructure
+import CGUSimpleWhiteboard
+import GUSimpleWhiteboard
 
 import XCTest
 
@@ -88,7 +91,37 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     }
     
     func test_canSpinMicrowaveVariables() {
-        
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+            "kMicrowaveStatus_v",
+            collection: GenericWhiteboard<wb_microwave_status>(
+                msgType: kMicrowaveStatus_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let spinner = self.makeSpinner([microwave_status])
+        let expected: [[String: KripkeStateProperty]] = [
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)],
+            ["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]
+        ]
+    }
+    
+    fileprivate func makeSpinner(_ externalVariables: [AnySnapshotController]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
+        let externals = externalVariables.map { (externals: AnySnapshotController) -> ExternalVariablesVerificationData in
+            let (defaultValues, spinners) = self.extractor.extract(externalVariables: externals)
+            return ExternalVariablesVerificationData(
+                externalVariables: externals,
+                defaultValues: defaultValues,
+                spinners: spinners
+            )
+        }
+        return self.constructor.makeSpinner(forExternals: externals)
     }
     
 }
