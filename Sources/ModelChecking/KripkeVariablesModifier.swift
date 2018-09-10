@@ -91,14 +91,6 @@ public protocol KripkeVariablesModifier {
      */
     var validVars: [String: [Any]] { get }
 
-    /**
-     * A dictionary where the keys represent the labels of each variable and
-     * the values represent an array of values which should be treated like
-     * external variables.  This way the conforming type will be updated with
-     * the each value in the array.
-     */
-    var spinVars: [String: [Any]] { get }
-
 }
 
 extension KripkeVariablesModifier {
