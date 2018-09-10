@@ -61,4 +61,4 @@ import ModelChecking
 /**
  *  Provides a common interface for types that hold variables.
  */
-public protocol Variables: class, Cloneable, Updateable {}
+public protocol Variables: class, Cloneable {}

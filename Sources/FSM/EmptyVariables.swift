@@ -67,7 +67,7 @@ import ModelChecking
  *  - SeeAlso: `Variables`
  *  - SeeAlso: `ExternalVariables`
  */
-public final class EmptyVariables: Variables, ExternalVariables, Updateable {
+public final class EmptyVariables: Variables, ExternalVariables {
 
     /**
      * Just initialize the class with no properties.
@@ -88,8 +88,6 @@ public final class EmptyVariables: Variables, ExternalVariables, Updateable {
     public final func clone() -> EmptyVariables {
         return EmptyVariables()
     }
-
-    public final func update(fromDictionary dictionary: [String: Any]) {}
 
 }
 
