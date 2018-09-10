@@ -67,7 +67,7 @@ import ModelChecking
  *  state is returned.  If no transitions are possible then the main method is
  *  called and the state is returned.
  */
-public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Updateable {
+public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier {
 
     internal var previousState: MiPalState
 
@@ -133,22 +133,6 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier, Up
         r.shouldExecuteOnEntry = self.shouldExecuteOnEntry
         r.currentState = self.currentState?.clone()
         return r
-    }
-
-    public func update(fromDictionary dictionary: [String: Any]) {
-        guard let shouldExecuteOnEntry = dictionary["shouldExecuteOnEntry"] as? Bool else {
-            return
-        }
-        self.shouldExecuteOnEntry = shouldExecuteOnEntry
-        if true == self.shouldExecuteOnEntry {
-            if self.currentState?.name == "_previous" {
-                self.previousState = EmptyMiPalState("__previous")
-                return
-            }
-            self.previousState = EmptyMiPalState("_previous")
-            return
-        }
-        self.currentState = self.previousState
     }
 
 }

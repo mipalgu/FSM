@@ -71,11 +71,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
 
     // swiftlint:disable large_tuple
     public func makeSpinner(
-        forExternals data: [(
-            externalVariables: AnySnapshotController,
-            defaultValues: KripkeStatePropertyList,
-            spinners: [String: (Any) -> Any?]
-        )]
+        forExternals data: [ExternalVariablesVerificationData]
     ) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
         if true == data.isEmpty {
             var generated = false

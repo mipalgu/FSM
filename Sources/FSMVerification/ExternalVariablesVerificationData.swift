@@ -1,9 +1,9 @@
 /*
- * Variables.swift 
- * FSM 
+ * ExternalVariablesData.swift
+ * FSMVerification
  *
- * Created by Callum McColl on 15/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 10/9/18.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,9 +56,25 @@
  *
  */
 
-import ModelChecking
+import KripkeStructure
+import FSM
 
-/**
- *  Provides a common interface for types that hold variables.
- */
-public protocol Variables: class, Cloneable {}
+public struct ExternalVariablesVerificationData {
+    
+    public let externalVariables: AnySnapshotController
+    
+    public let defaultValues: KripkeStatePropertyList
+    
+    public let spinners: [String: (Any) -> Any?]
+    
+    public init(
+        externalVariables: AnySnapshotController,
+        defaultValues: KripkeStatePropertyList,
+        spinners: [String: (Any) -> Any?]
+    ) {
+        self.externalVariables = externalVariables
+        self.defaultValues = defaultValues
+        self.spinners = spinners
+    }
+    
+}

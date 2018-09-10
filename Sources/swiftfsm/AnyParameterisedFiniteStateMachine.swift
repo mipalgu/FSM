@@ -71,8 +71,7 @@ public struct AnyParameterisedFiniteStateMachine:
     Restartable,
     Snapshotable,
     SnapshotControllerContainer,
-    Suspendable,
-    Updateable
+    Suspendable
 {
 
     public typealias _StateType = AnyState
@@ -119,7 +118,7 @@ public struct AnyParameterisedFiniteStateMachine:
 
     private let _takeSnapshot: () -> Void
 
-    private let _update: ([String: Any]) -> Void
+    //private let _update: ([String: Any]) -> Void
 
     public var currentRecord: KripkeStatePropertyList {
         return self._currentRecord()
@@ -213,7 +212,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }
         self._takeSnapshot = { ref.value.takeSnapshot() }
-        self._update = { ref.value.update(fromDictionary: $0) }
+        //self._update = { ref.value.update(fromDictionary: $0) }
     }
 
     /**
@@ -259,8 +258,8 @@ public struct AnyParameterisedFiniteStateMachine:
         self._takeSnapshot()
     }
 
-    public func update(fromDictionary dictionary: [String: Any]) {
+    /*public func update(fromDictionary dictionary: [String: Any]) {
         self._update(dictionary)
-    }
+    }*/
 
 }

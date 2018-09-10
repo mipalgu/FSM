@@ -115,23 +115,17 @@ public struct ParameterisedFiniteStateMachine<
     ResultContainerHolder,
     StateExecuterDelegator,
     Snapshotable,
-    SnapshotControllerContainer,
-    Updateable where
-    P.Vars: Updateable,
-    RS.Vars: Updateable,
+    SnapshotControllerContainer where
     RS.Vars: ResultContainer,
     R: Cloneable,
-    R: Updateable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable,
-    R._StateType: Updateable,
     SM: Cloneable,
     SM: ConvertibleToScheduleableFiniteStateMachine,
     SM: Suspendable,
     SM: Resumeable,
-    SM: Restartable,
-    V.Vars: Updateable
+    SM: Restartable
 {
 
     /**
@@ -336,39 +330,6 @@ public struct ParameterisedFiniteStateMachine<
             apply($1)
         }
         return fsm
-    }
-
-    public mutating func update(fromDictionary dictionary: [String: Any]) {
-        //let previousState = dictionary["previousState"] as! String
-        //let suspendedState = dictionary["suspendedState"] as! String
-        guard let states = dictionary["states"] as? [String: Any] else {
-            fatalError("Unable to fetch states from dictionary")
-        }
-        self.allStates.forEach { (key: String, state: R._StateType) in
-            var s = state
-            guard let d = states[key] as? [String: Any] else {
-                fatalError("Unable to fetch \(key) from dictionary")
-            }
-            s.update(fromDictionary: d)
-            /*if previousState == s.name {
-                self.previousState = s
-            }
-            if suspendedState == s.name {
-                self.suspendedState = s
-            }*/
-        }
-        guard
-            let ringlet = dictionary["ringlet"] as? [String: Any],
-            let fsmVars = dictionary["fsmVars"] as? [String: Any],
-            let parameters = dictionary["parameters"] as? [String: Any],
-        let results = dictionary["results"] as? [String: Any]
-        else {
-            fatalError("Unable to fetch all variables from dictionary")
-        }
-        self.ringlet.update(fromDictionary: ringlet)
-        self.fsmVars.vars.update(fromDictionary: fsmVars)
-        self.parameters.vars.update(fromDictionary: parameters)
-        self.results.vars.update(fromDictionary: results)
     }
 
     fileprivate var allStates: [String: R._StateType] {

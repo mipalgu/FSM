@@ -86,9 +86,7 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
     }
 
     public var hashValue: Int {
-        return self.effects.reduce(self.description) {
-            $0 + $1.description
-        }.hashValue
+        return self.properties.hashValue
     }
 
 }

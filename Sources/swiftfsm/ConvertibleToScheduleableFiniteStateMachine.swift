@@ -68,7 +68,6 @@ public protocol ConvertibleToScheduleableFiniteStateMachine:
     Snapshotable,
     SnapshotControllerContainer,
     SubmachinesContainer,
-    Suspendable,
-    Updateable where
+    Suspendable where
     Self.Submachine: ConvertibleToScheduleableFiniteStateMachine
 {}

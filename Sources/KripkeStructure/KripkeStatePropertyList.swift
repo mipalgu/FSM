@@ -92,7 +92,10 @@ extension KripkeStatePropertyList: ExpressibleByDictionaryLiteral {
 extension KripkeStatePropertyList: Equatable {
 
     public static func == (lhs: KripkeStatePropertyList, rhs: KripkeStatePropertyList) -> Bool {
-        return lhs.description == rhs.description
+        if lhs.properties.count < rhs.properties.count {
+            return false
+        }
+        return nil == zip(lhs.properties.sorted { $0.key < $1.key}, rhs.properties.sorted { $0.key < $1.key }).first { $0 != $1 }
     }
 
 }
@@ -104,7 +107,7 @@ extension KripkeStatePropertyList: Hashable, CustomStringConvertible {
     }
 
     public var hashValue: Int {
-        return self.description.hashValue
+        return self.properties.sorted { $0.key < $1.key }.description.hashValue
     }
 
 }

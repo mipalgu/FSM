@@ -60,7 +60,7 @@
  *  Allows conforming types to manipulate the values of variables that are used
  *  in `KripkeStructures`.
  */
-public protocol KripkeVariablesModifier: Updateable {
+public protocol KripkeVariablesModifier {
 
     /**
      * Allows conforming types to create computed variables that are only seen
@@ -90,14 +90,6 @@ public protocol KripkeVariablesModifier: Updateable {
      *  the values represent all possible valid values of the variables.
      */
     var validVars: [String: [Any]] { get }
-
-    /**
-     * A dictionary where the keys represent the labels of each variable and
-     * the values represent an array of values which should be treated like
-     * external variables.  This way the conforming type will be updated with
-     * the each value in the array.
-     */
-    var spinVars: [String: [Any]] { get }
 
 }
 
