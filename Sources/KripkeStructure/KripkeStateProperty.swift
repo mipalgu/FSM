@@ -130,6 +130,8 @@ public struct KripkeStateProperty: Equatable {
         }
         // Cast the values to the correct type and perform the equality check.
         switch (self.value) {
+        case is Bool:
+            return self.value as? Bool == other.value as? Bool
         case is UInt:
             return self.value as? UInt == other.value as? UInt
         case is UInt8:
@@ -213,7 +215,44 @@ extension KripkeStateProperty: CustomStringConvertible {
 extension KripkeStateProperty: Hashable {
 
     public var hashValue: Int {
-        return String("\(self.value)").hashValue
+        switch (self.type) {
+        case .Bool:
+            return (self.value as! Bool).hashValue
+        case .UInt:
+            return (self.value as! UInt).hashValue
+        case .UInt8:
+            return (self.value as! UInt8).hashValue
+        case .UInt16:
+            return (self.value as! UInt16).hashValue
+        case .UInt32:
+            return (self.value as! UInt32).hashValue
+        case .UInt64:
+            return (self.value as! UInt64).hashValue
+        case .Int:
+            return (self.value as! Int).hashValue
+        case .Int8:
+            return (self.value as! Int8).hashValue
+        case .Int16:
+            return (self.value as! Int16).hashValue
+        case .Int32:
+            return (self.value as! Int32).hashValue
+        case .Int64:
+            return (self.value as! Int64).hashValue
+        case .Float80:
+            return (self.value as! Float80).hashValue
+        case .Float:
+            return (self.value as! Float).hashValue
+        case .Double:
+            return (self.value as! Double).hashValue
+        case .String:
+            return (self.value as! String).hashValue
+        case .Collection(let ps):
+            return ps.description.hashValue
+        case .Compound(let list):
+            return list.hashValue
+        default:
+            return "\(self.value)".hashValue
+        }
     }
 
 }
