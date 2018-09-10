@@ -60,6 +60,7 @@
 import FSM
 import swiftfsm
 import ModelChecking
+import ExternalVariables
 
 import XCTest
 
@@ -67,10 +68,12 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     
     static var allTests: [(String, (MultipleExternalsSpinnerConstructorTests) -> () throws -> Void)] {
         return [
+            ("test_canSpinMicrowaveVariables", test_canSpinMicrowaveVariables)
         ]
     }
     
     fileprivate var constructor: MultipleExternalsSpinnerConstructor<ExternalsSpinnerConstructor<SpinnerRunner>>!
+    fileprivate var extractor: ExternalsSpinnerDataExtractor<MirrorKripkePropertiesRecorder, KripkeStatePropertySpinnerConverter>!
     
     override func setUp() {
         self.constructor = MultipleExternalsSpinnerConstructor(
@@ -78,6 +81,14 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
                 runner: SpinnerRunner()
             )
         )
+        self.extractor = ExternalsSpinnerDataExtractor(
+            converter: KripkeStatePropertySpinnerConverter(),
+            extractor: MirrorKripkePropertiesRecorder()
+        )
+    }
+    
+    func test_canSpinMicrowaveVariables() {
+        
     }
     
 }
