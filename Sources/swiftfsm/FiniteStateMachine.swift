@@ -147,6 +147,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             states[$0] = KripkeStateProperty(type: .Compound(self.recorder.takeRecord(of: $1)), value: $1)
             values[$0] = $1
         }
+        d["currentState"] = KripkeStateProperty(type: .String, value: self.currentState.name)
         d["states"] = KripkeStateProperty(type: .Compound(states), value: values)
         return d
     }
