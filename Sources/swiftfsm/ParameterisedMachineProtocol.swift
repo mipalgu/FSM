@@ -61,5 +61,5 @@ import FSM
 public protocol ParameterisedMachineProtocol:
     MachineProtocol,
     ParametersContainerHolder,
-    ResumeableStateExecuter
+    ResultContainerHolder
 {}
