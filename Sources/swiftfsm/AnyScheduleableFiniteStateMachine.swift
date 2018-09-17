@@ -79,7 +79,6 @@ public struct AnyScheduleableFiniteStateMachine:
     ConvertibleToScheduleableFiniteStateMachine,
     StateExecuter,
     Finishable,
-    KripkePropertiesRecordable,
     Snapshotable,
     SnapshotControllerContainer,
     SubmachinesContainer,
@@ -95,8 +94,6 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _base: () -> Any
 
     private let _clone: () -> AnyScheduleableFiniteStateMachine
-
-    private let _currentRecord: () -> KripkeStatePropertyList
 
     private let _currentState: () -> AnyState
 
@@ -123,10 +120,6 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _takeSnapshot: () -> Void
 
     //private let _update: ([String: Any]) -> Void
-
-    public var currentRecord: KripkeStatePropertyList {
-        return self._currentRecord()
-    }
 
     /**
      *  The next state to execute.
@@ -185,7 +178,6 @@ public struct AnyScheduleableFiniteStateMachine:
     internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) {
         self._base = { ref.value as Any }
         self._clone = { AnyScheduleableFiniteStateMachine(ref.value.clone()) }
-        self._currentRecord = { ref.value.currentRecord }
         self._currentState = { AnyState(ref.value.currentState) }
         self._setExternalVariables = { ref.value.externalVariables = $0 }
         self._externalVariables = { ref.value.externalVariables }

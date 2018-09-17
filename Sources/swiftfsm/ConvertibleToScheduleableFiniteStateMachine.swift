@@ -64,7 +64,6 @@ public protocol ConvertibleToScheduleableFiniteStateMachine:
     Cloneable,
     StateExecuter,
     Finishable,
-    KripkePropertiesRecordable,
     Snapshotable,
     SnapshotControllerContainer,
     SubmachinesContainer,

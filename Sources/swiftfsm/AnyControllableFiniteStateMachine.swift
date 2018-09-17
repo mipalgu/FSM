@@ -79,7 +79,6 @@ public struct AnyControllableFiniteStateMachine:
     StateExecuter,
     Exitable,
     Finishable,
-    KripkePropertiesRecordable,
     Resumeable,
     Restartable,
     Snapshotable,
@@ -98,8 +97,6 @@ public struct AnyControllableFiniteStateMachine:
     private let _base: () -> Any
 
     private let _clone: () -> AnyControllableFiniteStateMachine
-
-    private let _currentRecord: () -> KripkeStatePropertyList
 
     private let _currentState: () -> AnyState
 
@@ -132,10 +129,6 @@ public struct AnyControllableFiniteStateMachine:
     private let _takeSnapshot: () -> Void
 
     //private let _update: ([String: Any]) -> Void
-
-    public var currentRecord: KripkeStatePropertyList {
-        return self._currentRecord()
-    }
 
     public var asScheduleableFiniteStateMachine: AnyScheduleableFiniteStateMachine {
         return self._asScheduleableFiniteStateMachine()
@@ -203,7 +196,6 @@ public struct AnyControllableFiniteStateMachine:
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
         self._clone = { AnyControllableFiniteStateMachine(ref.value.clone()) }
-        self._currentRecord = { ref.value.currentRecord }
         self._currentState = { AnyState(ref.value.currentState) }
         self._exit = { ref.value.exit() }
         self._setExternalVariables = { ref.value.externalVariables = $0 }
