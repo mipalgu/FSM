@@ -62,7 +62,7 @@ public final class Promise<T>: Finishable {
     
     fileprivate var _hasFinished: () -> Bool
 
-    fileprivate var _result: () -> T!
+    fileprivate var _result: () -> T
 
     public var hasFinished: Bool {
         return self._hasFinished()

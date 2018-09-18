@@ -1,8 +1,8 @@
 /*
- * ConvertibleToScheduleableFiniteStateMachine.swift 
- * FSM 
+ * ParameterisedMachineProtocol.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 08/07/2018.
+ * Created by Callum McColl on 17/9/18.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,16 +57,9 @@
  */
 
 import FSM
-import ModelChecking
 
-public protocol ConvertibleToScheduleableFiniteStateMachine:
-    FiniteStateMachineType,
-    Cloneable,
-    StateExecuter,
-    Finishable,
-    Snapshotable,
-    SnapshotControllerContainer,
-    SubmachinesContainer,
-    Suspendable where
-    Self.Submachine: ConvertibleToScheduleableFiniteStateMachine
+public protocol ParameterisedMachineProtocol:
+    MachineProtocol,
+    ParametersContainerHolder,
+    ResultContainerHolder
 {}
