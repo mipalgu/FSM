@@ -255,8 +255,9 @@ public extension FiniteStateMachineType where
      *  execute.
      */
     public mutating func next() {
-        self.previousState = self.currentState
+        let previous = self.currentState
         self.currentState = self.ringlet.execute(state: self.currentState)
+        self.previousState = previous
     }
 
 }
