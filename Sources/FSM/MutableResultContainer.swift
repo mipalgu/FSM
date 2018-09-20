@@ -1,8 +1,8 @@
 /*
- * ParameterisedMachineProtocol.swift
- * swiftfsm
+ * MutableResultContainer.swift
+ * FSM
  *
- * Created by Callum McColl on 17/9/18.
+ * Created by Callum McColl on 20/9/18.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,11 +56,8 @@
  *
  */
 
-import FSM
-
-public protocol ParameterisedMachineProtocol:
-    MachineProtocol,
-    ParametersContainerHolder,
-    ResultContainerHolder,
-    ResultResettable
-{}
+public protocol MutableResultContainer: ResultContainer {
+    
+    var result: ResultType! { get set }
+    
+}

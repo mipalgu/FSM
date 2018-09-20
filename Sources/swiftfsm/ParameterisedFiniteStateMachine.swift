@@ -113,10 +113,11 @@ public struct ParameterisedFiniteStateMachine<
     Restartable,
     ResumeableStateExecuter,
     ResultContainerHolder,
+    ResultResettable,
     StateExecuterDelegator,
     Snapshotable,
     SnapshotControllerContainer where
-    RS.Vars: ResultContainer,
+    RS.Vars: MutableResultContainer,
     R: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
@@ -330,6 +331,10 @@ public struct ParameterisedFiniteStateMachine<
             apply($1)
         }
         return fsm
+    }
+    
+    public func resetResult() {
+        self.results.vars.result = nil
     }
 
     fileprivate var allStates: [String: R._StateType] {

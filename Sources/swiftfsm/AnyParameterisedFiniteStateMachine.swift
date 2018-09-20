@@ -70,7 +70,8 @@ public struct AnyParameterisedFiniteStateMachine:
     Restartable,
     Snapshotable,
     SnapshotControllerContainer,
-    Suspendable
+    Suspendable,
+    ResultResettable
 {
 
     public typealias _StateType = AnyState
@@ -102,6 +103,8 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _next: () -> Void
     
     private let _restart: () -> Void
+    
+    private let _resetResult: () -> Void
     
     private let _resultContainer: () -> AnyResultContainer<Any>
     
@@ -179,7 +182,7 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder {
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
         self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
@@ -198,6 +201,7 @@ public struct AnyParameterisedFiniteStateMachine:
             ref.value.parameters.vars = parameters
             
         }
+        self._resetResult = { ref.value.resetResult() }
         self._restart = { ref.value.restart() }
         self._resultContainer = { AnyResultContainer<Any>({ ref.value.results.vars.result as Any! }) }
         self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
@@ -211,7 +215,7 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable {
         let ref = Ref(value: base)
         self.init(ref)
     }
@@ -225,6 +229,10 @@ public struct AnyParameterisedFiniteStateMachine:
      */
     public func next() {
         self._next()
+    }
+    
+    public func resetResult() {
+        self._resetResult()
     }
     
     public func restart() {
