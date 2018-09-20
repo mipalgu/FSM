@@ -56,9 +56,9 @@
  *
  */
 
-public final class AnyResultContainer<T>: ResultContainer {
+public final class AnyResultContainer<T> {
 
-    fileprivate let _result: () -> T!
+    fileprivate let _result: () -> T?
 
     public var result: T! {
         return self._result()
@@ -68,7 +68,7 @@ public final class AnyResultContainer<T>: ResultContainer {
         self._result = { base.result }
     }
 
-    public init(_ result: @escaping () -> T!) {
+    public init(_ result: @escaping () -> T?) {
         self._result = result
     }
 }

@@ -74,7 +74,7 @@ public final class Promise<T>: Finishable {
 
     public init<Container: ResultContainer>(_ container: Container) where Container: Finishable, Container.ResultType == T {
         self._hasFinished = { container.hasFinished }
-        self._result = { container.result }
+        self._result = { container.result! }
     }
 
     public init(hasFinished: @escaping () -> Bool, result: @escaping () -> T) {

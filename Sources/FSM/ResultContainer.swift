@@ -60,6 +60,6 @@ public protocol ResultContainer: class {
 
     associatedtype ResultType
 
-    var result: ResultType! { get }
+    var result: ResultType? { get }
 
 }

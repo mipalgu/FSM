@@ -58,6 +58,6 @@
 
 public protocol MutableResultContainer: ResultContainer {
     
-    var result: ResultType! { get set }
+    var result: ResultType? { get set }
     
 }
