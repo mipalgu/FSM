@@ -113,6 +113,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         while let data = spinner() {
             XCTAssertEqual(data.count, 1)
             if data.count != 1 {
+                XCTFail("spinner did not return any data.")
                 return
             }
             guard let (index, expectedItem) = expected.enumerated().first(where: { $1 == data[0].1 }) else {
