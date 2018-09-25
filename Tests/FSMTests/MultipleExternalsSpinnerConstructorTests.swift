@@ -71,7 +71,8 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     
     static var allTests: [(String, (MultipleExternalsSpinnerConstructorTests) -> () throws -> Void)] {
         return [
-            ("test_canSpinMicrowaveVariables", test_canSpinMicrowaveVariables)
+            ("test_canSpinMicrowaveVariables", test_canSpinMicrowaveVariables),
+            ("test_canSpinMutlipleMicrowaveVariables", test_canSpinMutlipleMicrowaveVariables)
         ]
     }
     
@@ -99,8 +100,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
                 shouldNotifySubscribers: true
             )
         ))
-        let spinner = self.makeSpinner([microwave_status])
-        var expected: [KripkeStatePropertyList] = [
+        let expected: [KripkeStatePropertyList] = [
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
@@ -110,19 +110,65 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)])
         ]
-        while let data = spinner() {
-            XCTAssertEqual(data.count, 1)
-            if data.count != 1 {
-                XCTFail("spinner did not return any data.")
-                return
-            }
-            guard let (index, expectedItem) = expected.enumerated().first(where: { $1 == data[0].1 }) else {
-                XCTFail("spinner returns unexpected result: \(data[0].1)")
-                return
-            }
-            XCTAssertEqual(expectedItem, data[0].1)
-            expected.remove(at: index)
+        self.check(externals: [microwave_status], against: [expected])
+    }
+
+    func test_canSpinMutlipleMicrowaveVariables() {
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+            "kMicrowaveStatus_v",
+            collection: GenericWhiteboard<wb_microwave_status>(
+                msgType: kMicrowaveStatus_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let expected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [microwave_status, microwave_status], against: [expected, expected])
+    }
+
+    fileprivate func check(externals: [AnySnapshotController], against expected: [[KripkeStatePropertyList]]) {
+        if externals.count != expected.count {
+            XCTFail("externals.count != expected.count")
+            return
         }
+        let spinner = self.makeSpinner(externals)
+        var seen: Set<KripkeStatePropertyList> = []
+        while let data = spinner() {
+            XCTAssertEqual(data.count, expected.count)
+            if data.count != expected.count {
+                return
+            }
+            let combined = self.combine(properties: data.map { $1 })
+            if true == seen.contains(combined) {
+                XCTFail("spinner returns a duplicate configuration: \(combined)")
+                return
+            }
+            seen.insert(combined)
+            for (d, es) in zip(data, expected) {
+                guard let (index, expectedItem) = es.enumerated().first(where: { $1 == d.1 }) else {
+                    XCTFail("spinner returns unexpected result: \(d.1)")
+                    return
+                }
+                XCTAssertEqual(expectedItem, d.1)
+            }
+        }
+    }
+
+    fileprivate func combine(properties: [KripkeStatePropertyList]) -> KripkeStatePropertyList {
+        var d: [String: KripkeStateProperty] = [:]
+        for (index, p) in properties.enumerated() {
+            d["\(index)"] = KripkeStateProperty(type: .Compound(p), value: [:])
+        }
+        return KripkeStatePropertyList(d)
     }
     
     fileprivate func makeSpinner(_ externalVariables: [AnySnapshotController]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
