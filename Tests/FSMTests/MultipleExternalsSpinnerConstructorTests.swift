@@ -100,7 +100,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             )
         ))
         let spinner = self.makeSpinner([microwave_status])
-        let expected: [KripkeStatePropertyList] = [
+        var expected: [KripkeStatePropertyList] = [
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
@@ -110,18 +110,17 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
             KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)])
         ]
-        var i: Int = 0
         while let data = spinner() {
             XCTAssertEqual(data.count, 1)
             if data.count != 1 {
                 return
             }
-            if i >= expected.count {
-                XCTFail("Created more data than expected")
+            guard let (index, expectedItem) = expected.enumerated().first(where: { $1 == data[0].1 }) else {
+                XCTFail("spinner returns unexpected result: \(data[0].1)")
                 return
             }
-            XCTAssertEqual(expected[i], data[0].1)
-            i += 1
+            XCTAssertEqual(expectedItem, data[0].1)
+            expected.remove(at: index)
         }
     }
     
