@@ -70,7 +70,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
 
     private func _takeRecord(
         of object: Any,
-        withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
+        withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStatePropertyList {
         let computedVars: [String: Any]
         let manipulators: [String: (Any) -> Any]
@@ -105,7 +105,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         computedVars: [String: Any] = [:],
         manipulators: [String: (Any) -> Any] = [:],
         validValues: [String: [Any]] = [:],
-        withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
+        withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStatePropertyList {
         var p = KripkeStatePropertyList()
         let parent: Mirror? = mirror.superclassMirror
@@ -164,7 +164,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     private func convertValue(
         value: Any,
         validValues: [Any]?,
-        withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
+        withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStateProperty {
         let t = self.getKripkeStatePropertyType(
             value,
@@ -184,7 +184,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     private func getKripkeStatePropertyType(
         _ val: Any,
         validValues values: [Any],
-        withMemoryCache memoryCache: Set<UnsafePointer<AnyClass>>
+        withMemoryCache memoryCache: [AnyObject]
     ) -> (KripkeStatePropertyTypes, Any) {
         switch val {
         case is Bool:
@@ -277,12 +277,11 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             )
         default:
             var memoryCache = memoryCache
-            if var temp = val as? AnyClass {
-                let p = withUnsafePointer(to: &temp) { $0 }
-                if true == memoryCache.contains(p) {
+            if var temp = val as? AnyObject {
+                if nil != memoryCache.first(where: { $0 === temp }) {
                     return (.Compound(KripkeStatePropertyList()), val)
                 }
-                memoryCache.insert(p)
+                memoryCache.append(temp)
             }
             if values.count == 1 {
                 return (.Compound(self._takeRecord(of: values[0], withMemoryCache: memoryCache)), values[0])
