@@ -72,7 +72,10 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     static var allTests: [(String, (MultipleExternalsSpinnerConstructorTests) -> () throws -> Void)] {
         return [
             ("test_canSpinMicrowaveVariables", test_canSpinMicrowaveVariables),
-            ("test_canSpinMutlipleMicrowaveVariables", test_canSpinMutlipleMicrowaveVariables)
+            ("test_canSpinMutlipleMicrowaveVariables", test_canSpinMutlipleMicrowaveVariables),
+            ("test_canSpinButtonExternalVariables", test_canSpinButtonExternalVariables),
+            ("test_canSpinNoVariables", test_canSpinNoVariables),
+            ("test_canSpinMicrowaveStatusAndButton", test_canSpinMicrowaveStatusAndButton),
         ]
     }
     
@@ -134,6 +137,46 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         ]
         self.check(externals: [microwave_status, microwave_status], against: [expected, expected])
     }
+    
+    func test_canSpinButtonExternalVariables() {
+        let button = AnySnapshotController(ButtonSnapshotController())
+        let expected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [button], against: [expected])
+    }
+
+    func test_canSpinMicrowaveStatusAndButton() {
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+            "kMicrowaveStatus_v",
+            collection: GenericWhiteboard<wb_microwave_status>(
+                msgType: kMicrowaveStatus_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let microwaveExpected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        let button = AnySnapshotController(ButtonSnapshotController())
+        let buttonExpected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [microwave_status, button], against: [microwaveExpected, buttonExpected])
+    }
+
+    func test_canSpinNoVariables() {
+        self.check(externals: [], against: [])
+    }
 
     fileprivate func check(externals: [AnySnapshotController], against expected: [[KripkeStatePropertyList]]) {
         if externals.count != expected.count {
@@ -141,6 +184,15 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             return
         }
         let spinner = self.makeSpinner(externals)
+        if true == expected.isEmpty {
+            guard let data = spinner() else {
+                XCTFail("First spinner value is nil.")
+                return
+            }
+            XCTAssertTrue(data.isEmpty)
+            XCTAssertNil(spinner())
+            return
+        }
         var seen: Set<KripkeStatePropertyList> = []
         while let data = spinner() {
             XCTAssertEqual(data.count, expected.count)
@@ -154,7 +206,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             }
             seen.insert(combined)
             for (d, es) in zip(data, expected) {
-                guard let (index, expectedItem) = es.enumerated().first(where: { $1 == d.1 }) else {
+                guard let expectedItem = es.first(where: { $0 == d.1 }) else {
                     XCTFail("spinner returns unexpected result: \(d.1)")
                     return
                 }
@@ -183,4 +235,40 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         return self.constructor.makeSpinner(forExternals: externals)
     }
     
+}
+
+fileprivate struct ButtonExternalVariables: ExternalVariables {
+
+    var button: Bool
+
+    init(button: Bool = false) {
+        self.button = button
+    }
+
+    init(fromDictionary dictionary: [String: Any]) {
+        guard let button = dictionary["button"] as? Bool else {
+            fatalError("Unable to convert dictioanry to ButtonExternalVariables")
+        }
+        self.button = button
+    }
+
+}
+
+fileprivate class ButtonSnapshotController: Identifiable, ExternalVariablesContainer, Snapshotable {
+
+    let name: String = "ButtonSnapshotController"
+
+    var val: ButtonExternalVariables = ButtonExternalVariables()
+
+    func takeSnapshot() {}
+
+    func saveSnapshot() {}
+
+
+}
+
+extension ButtonExternalVariables: Equatable {}
+
+fileprivate func == (lhs: ButtonExternalVariables, rhs: ButtonExternalVariables) -> Bool {
+    return lhs.button == rhs.button
 }
