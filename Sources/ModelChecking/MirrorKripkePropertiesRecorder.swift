@@ -147,6 +147,14 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             if nil != p[key] {
                 continue
             }
+            if let dict = val as? [String: Any] {
+                var out: [String: KripkeStateProperty] = [:]
+                for (k, v) in dict {
+                    out[k] = KripkeStateProperty(type: .Compound(self._takeRecord(of: v, withMemoryCache: memoryCache)), value: v)
+                }
+                p[key] = KripkeStateProperty(type: .Compound(KripkeStatePropertyList(out)), value: dict)
+                continue
+            }
             p[key] = self.convertValue(
                 value: val,
                 validValues: [val],
