@@ -199,6 +199,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             if data.count != expected.count {
                 return
             }
+            // Check to see if spinner spits out the same configuration more than once.
             let combined = self.combine(properties: data.map { $1 })
             if true == seen.contains(combined) {
                 XCTFail("spinner returns a duplicate configuration: \(combined)")
@@ -213,6 +214,8 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
                 XCTAssertEqual(expectedItem, d.1)
             }
         }
+        let expectedCount = expected.reduce(1) { $0 * $1.count }
+        XCTAssertEqual(seen.count, expectedCount, "spinner did not generate all possible expected configurations")
     }
 
     fileprivate func combine(properties: [KripkeStatePropertyList]) -> KripkeStatePropertyList {
