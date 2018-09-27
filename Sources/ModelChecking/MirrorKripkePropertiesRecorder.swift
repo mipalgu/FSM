@@ -149,6 +149,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             }
             if let dict = val as? [String: Any] {
                 var out: [String: KripkeStateProperty] = [:]
+                out.reserveCapacity(dict.count)
                 for (k, v) in dict {
                     out[k] = self.convertValue(value: v, validValues: [v], withMemoryCache: memoryCache)
                 }
