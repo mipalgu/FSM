@@ -116,10 +116,8 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                 withMemoryCache: memoryCache
             )
         }
-        for child: Mirror.Child in mirror.children {
-            guard let label = child.label else {
-                continue
-            }
+        for (index, child) in mirror.children.enumerated() {
+            let label = child.label ?? "\(index)"
             if let computedVal = computedVars[label] {
                 p[label] = self.convertValue(
                     value: computedVal,
