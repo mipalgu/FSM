@@ -98,7 +98,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
         }
         return { () -> [(AnySnapshotController, KripkeStatePropertyList)]? in
             var reset = false
-            while i < data.count - 1 {
+            while i < data.count {
                 guard let (val, ps) = externalSpinners[i]() else {
                     externalSpinners[i] = self.constructor.makeSpinner(
                         fromExternalVariables: data[i].externalVariables,
