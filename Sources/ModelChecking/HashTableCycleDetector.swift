@@ -68,7 +68,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *
      *  The `Bool` is used just to give the hash a value.
      */
-    public typealias Data = Ref<[Element: Bool]>
+    public typealias Data = Ref<[Element: Void]>
 
     /**
      *  The elements of the cycle.
@@ -81,7 +81,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  An empty hash table.
      */
     public var initialData: Data {
-        let d = [Element: Bool](minimumCapacity: 500000)
+        let d = [Element: Void](minimumCapacity: 500000)
         return Ref(value: d)
     }
 
@@ -102,7 +102,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
         if data.value[element] != nil {
             return (true, data)
         }
-        data.value[element] = true
+        data.value[element] = ()
         return (false, data)
     }
 
