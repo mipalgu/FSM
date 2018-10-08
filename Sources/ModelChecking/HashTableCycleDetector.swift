@@ -64,11 +64,10 @@ import Utilities
 public class HashTableCycleDetector<E: Hashable>: CycleDetector {
 
     /**
-     *  A dictionary where `Element` is the key and a `Bool` is the value.
+     *  A Reference to a Set of `Element`s.
      *
-     *  The `Bool` is used just to give the hash a value.
      */
-    public typealias Data = Ref<[Element: Void]>
+    public typealias Data = Ref<Set<Element>>
 
     /**
      *  The elements of the cycle.
@@ -81,8 +80,8 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  An empty hash table.
      */
     public var initialData: Data {
-        let d = [Element: Void](minimumCapacity: 500000)
-        return Ref(value: d)
+        let set = Set<Element>(minimumCapacity: 500000)
+        return Ref(value: set)
     }
 
     public init() {}
@@ -99,10 +98,10 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      */
     public func inCycle(data: Data, element: Element) -> (Bool, Data) {
         //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
-        if data.value[element] != nil {
+        if true == data.value.contains(element) {
             return (true, data)
         }
-        data.value[element] = ()
+        data.value.insert(element)
         return (false, data)
     }
 
