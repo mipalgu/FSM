@@ -56,6 +56,7 @@
  *
  */
 
+import Hashing
 import Utilities
 
 /**
@@ -67,7 +68,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  A Reference to a Set of `Element`s.
      *
      */
-    public typealias Data = Ref<Set<Element>>
+    public typealias Data = Ref<HashSink<Element>>
 
     /**
      *  The elements of the cycle.
@@ -80,8 +81,8 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  An empty hash table.
      */
     public var initialData: Data {
-        let set = Set<Element>(minimumCapacity: 500000)
-        return Ref(value: set)
+        let sink = HashSink<Element>(minimumCapacity: 500000)
+        return Ref(value: sink)
     }
 
     public init() {}
