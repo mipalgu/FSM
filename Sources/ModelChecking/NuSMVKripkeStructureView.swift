@@ -56,12 +56,34 @@
  *
  */
 
+import IO
 import KripkeStructure
 
 public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
     
+    fileprivate let extractor: PropertyExtractor<NuSMVPropertyFormatter>
+    
+    fileprivate let outputStreamFactory: OutputStreamFactory
+    
+    fileprivate var stream: TextOutputStream!
+    
+    public init(
+        extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+    ) {
+        self.extractor = extractor
+        self.outputStreamFactory = outputStreamFactory
+    }
+    
+    public func start() {
+        self.stream = self.outputStreamFactory.make(id: "main.transitions.smv")
+    }
+    
     public func commit(state: State) {}
     
-    public func finish() {}
+    public func finish() {
+        self.stream = nil
+        let combinedFile = self.outputStreamFactory.make(id: "main.smv")
+    }
     
 }
