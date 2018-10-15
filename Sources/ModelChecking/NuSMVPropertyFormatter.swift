@@ -72,29 +72,9 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
         }
         var str = ""
         if (first < "a" || first > "z") && (first < "A" || first > "Z") {
-            str += "$#"
+            str += "_"
         }
-        str += label.utf16.lazy.map {
-            guard let scalar = UnicodeScalar($0) else {
-                return "$\($0)"
-            }
-            let char = Character(scalar)
-            if (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") || (char >= "0" && char <= "9") {
-                return "\(char)"
-            }
-            switch char {
-            case ".":
-                return "\(self.delimiter)"
-            case "$":
-                return "$$"
-            case self.delimiter:
-                return "$\(self.delimiter)"
-            case "#", "_", "-":
-                return "\(char)"
-            default:
-                return "$\($0)"
-            }
-        }.reduce("", +)
+        str += self.formatString(label)
         return str
     }
     
@@ -102,12 +82,30 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
         let val: String = "\(property.value)"
         switch property.type {
         case .String:
-            return "\"" + self.format(label: val) + "\""
+            return "\"" + self.formatString(val) + "\""
         case .Double, .Float, .Float80:
             return "F" + String(val.characters.map({ $0 == "." ? "_" : $0 }))
         default:
-            return self.format(label: val)
+            return self.formatString(val)
         }
+    }
+    
+    fileprivate func formatString(_ str: String) -> String {
+        return str.lazy.map {
+            if $0 == "." {
+                return String(self.delimiter)
+            }
+            if ($0 < "a" || $0 > "z")
+                && ($0 < "A" || $0 > "Z")
+                && ($0 < "0" || $0 > "9")
+                && $0 != "#"
+                && $0 != "_"
+                && $0 != "$"
+                && $0 != "-" {
+                return ""
+            }
+            return "\($0)"
+        }.reduce("", +)
     }
     
 }
