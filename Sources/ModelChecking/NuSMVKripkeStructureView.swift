@@ -75,7 +75,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     
     fileprivate var firstState: State?
     
-    fileprivate var initials: Set<KripkeStatePropertyList> = []
+    fileprivate var initials: Set<[String: String]> = []
     
     public init(
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
@@ -100,11 +100,12 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         if sink.contains(state.properties) {
             return
         }
-        if true == isInitial {
-            self.initials.insert(state.properties)
-        }
         sink.insert(state.properties)
-        for (key, value) in self.extractor.extract(from: state.properties) {
+        let props = self.extractor.extract(from: state.properties)
+        if true == isInitial {
+            self.initials.insert(props)
+        }
+        for (key, value) in props {
             guard let list = self.properties[key] else {
                 self.properties[key] = Ref<Set<String>>(value: [value])
                 continue
@@ -119,11 +120,12 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.stream = nil
         var combinedStream = self.outputStreamFactory.make(id: "main.smv")
         combinedStream.write("MODULE main\n\n")
-        self.createPropertiesList(usingStream: combinedStream)
+        self.createPropertiesList(usingStream: &combinedStream)
+        self.createInitial(usingStream: &combinedStream)
+        self.createTransitions(readingFrom: self.stream, writingTo: &combinedStream)
     }
     
-    fileprivate func createPropertiesList(usingStream stream: TextOutputStream) {
-        var stream = stream
+    fileprivate func createPropertiesList(usingStream stream: inout TextOutputStream) {
         stream.write("VAR\n\n")
         self.properties.forEach {
             guard let first = $1.value.first else {
@@ -139,30 +141,31 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
     }
     
-    fileprivate func createInitial(from initialStates: [KripkeState], usingStream stream: TextOutputStream) {
-        var stream = stream
-        guard let firstState = initialStates.first else {
+    fileprivate func createInitial(usingStream stream: inout TextOutputStream) {
+        guard let firstProperties = self.initials.first else {
             stream.write("INIT()\n")
             return
         }
         stream.write("INIT\n")
         stream.write("(")
-        stream.write(self.createConditions(of: self.extractor.extract(from: firstState.properties)))
+        stream.write(self.createConditions(of: firstProperties))
         stream.write(")")
-        initialStates.dropFirst().forEach {
+        self.initials.dropFirst().forEach {
             stream.write(" | (")
-            stream.write(self.createConditions(of: self.extractor.extract(from: $0.properties)))
+            stream.write(self.createConditions(of: $0))
             stream.write(")")
         }
         stream.write("\n")
     }
     
-    /*fileprivate func createTransitions(from states: [KripkeStatePropertyList: KripkeState], usingStream stream: TextOutputStream) {
-        var stream = stream
+    fileprivate func createTransitions(readingFrom _: TextOutputStream, writingTo outputStream: inout TextOutputStream) {
+        guard let first = self.firstState else {
+            fatalError("Unable to create empty transitions list.")
+        }
         let trans = "TRANS\ncase\n"
         let endTrans = "esac"
-        stream.write(trans)
-        let states = states.lazy.filter { false == $1.effects.isEmpty }
+        outputStream.write(trans)
+        /*let states = states.lazy.filter { false == $1.effects.isEmpty }
         guard let firstState = states.first?.1 else {
             stream.write(endTrans)
             return
@@ -170,11 +173,11 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         states.forEach {
             stream.write(self.createCase(of: $0.1))
             stream.write("\n")
-        }
-        stream.write(self.createTrueCase(with: firstState))
+        }*/
+        stream.write(self.createTrueCase(with: first))
         stream.write("\n")
         stream.write(endTrans)
-    }*/
+    }
     
     fileprivate func createTrueCase(with state: State) -> String {
         let props = self.extractor.extract(from: state.properties)
