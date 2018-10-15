@@ -116,7 +116,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
             list.value.insert(value)
         }
-        self.stream.write(self.createCase(of: state))
+        guard let content = self.createCase(of: state) else {
+            return
+        }
+        self.stream.write(content)
         self.stream.write("\n")
     }
     
@@ -190,14 +193,14 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         return "TRUE:" + effects + ";"
     }
     
-    fileprivate func createCase(of state: State) -> String {
+    fileprivate func createCase(of state: State) -> String? {
         let props = self.extractor.extract(from: state.properties)
         let effects = state.effects.map {
             self.extractor.extract(from: $0)
         }
         let conditions = self.createConditions(of: props)
         guard let firstEffect = effects.first else {
-            return ""
+            return nil
         }
         let firstEffects = "    (" + self.createEffect(from: firstEffect) + ")"
         let effectsList = effects.dropFirst().reduce(firstEffects) { (last: String, props: [String: String]) -> String in
