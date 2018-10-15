@@ -76,7 +76,7 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
         }
         str += label.utf16.lazy.map {
             guard let scalar = UnicodeScalar($0) else {
-                return "$_"
+                return "$\($0)"
             }
             let char = Character(scalar)
             if (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") || (char >= "0" && char <= "9") {
