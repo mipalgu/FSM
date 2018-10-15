@@ -65,9 +65,11 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     
     fileprivate let extractor: PropertyExtractor<NuSMVPropertyFormatter>
     
+    fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
+    
     fileprivate let outputStreamFactory: OutputStreamFactory
     
-    fileprivate var stream: TextOutputStream!
+    fileprivate var stream: InputOutputStream!
     
     fileprivate var properties: [String: Ref<Set<String>>] = [:]
     
@@ -79,15 +81,17 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     
     public init(
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
+        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
         outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
     ) {
         self.extractor = extractor
+        self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
     }
     
     public func start() {
         self.sink = HashSink(minimumCapacity: 500000)
-        self.stream = self.outputStreamFactory.make(id: "main.transitions.smv")
+        self.stream = self.inputOutputStreamFactory.make(id: "main.transitions.smv")
         self.properties = [:]
         self.firstState = nil
         self.initials = []
@@ -117,12 +121,14 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
     
     public func finish() {
-        self.stream = nil
         var combinedStream = self.outputStreamFactory.make(id: "main.smv")
+        defer { combinedStream.close() }
+        var outputStream: TextOutputStream = combinedStream
         combinedStream.write("MODULE main\n\n")
-        self.createPropertiesList(usingStream: &combinedStream)
-        self.createInitial(usingStream: &combinedStream)
-        self.createTransitions(readingFrom: self.stream, writingTo: &combinedStream)
+        self.createPropertiesList(usingStream: &outputStream)
+        self.createInitial(usingStream: &outputStream)
+        self.createTransitions(readingFrom: self.stream, writingTo: &outputStream)
+        self.stream.close()
     }
     
     fileprivate func createPropertiesList(usingStream stream: inout TextOutputStream) {
@@ -158,25 +164,21 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         stream.write("\n")
     }
     
-    fileprivate func createTransitions(readingFrom _: TextOutputStream, writingTo outputStream: inout TextOutputStream) {
-        guard let first = self.firstState else {
-            fatalError("Unable to create empty transitions list.")
-        }
+    fileprivate func createTransitions(readingFrom inputStream: TextInputStream, writingTo outputStream: inout TextOutputStream) {
         let trans = "TRANS\ncase\n"
         let endTrans = "esac"
         outputStream.write(trans)
-        /*let states = states.lazy.filter { false == $1.effects.isEmpty }
-        guard let firstState = states.first?.1 else {
-            stream.write(endTrans)
+        guard let first = self.firstState else {
+            outputStream.write(endTrans)
             return
         }
-        states.forEach {
-            stream.write(self.createCase(of: $0.1))
-            stream.write("\n")
-        }*/
-        stream.write(self.createTrueCase(with: first))
-        stream.write("\n")
-        stream.write(endTrans)
+        while let line = inputStream.readLine() {
+            outputStream.write(line)
+            outputStream.write("\n")
+        }
+        outputStream.write(self.createTrueCase(with: first))
+        outputStream.write("\n")
+        outputStream.write(endTrans)
     }
     
     fileprivate func createTrueCase(with state: State) -> String {
