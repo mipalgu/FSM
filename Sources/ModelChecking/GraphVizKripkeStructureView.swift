@@ -75,8 +75,6 @@ public final class GraphVizKripkeStructureView<State: KripkeStateType>: KripkeSt
     fileprivate var ids: [Int: Int] = [:]
     
     fileprivate var processList: HashSink<KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
-
-    fileprivate var cache: [KripkeStatePropertyList: Int] = [:]
     
     fileprivate var initials: Set<Int> = []
 
