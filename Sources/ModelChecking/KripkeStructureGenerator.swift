@@ -62,14 +62,10 @@ import KripkeStructure
  *  Conforming types are responsible for generating `KripkeStructure`s.
  */
 public protocol KripkeStructureGenerator {
-
-    associatedtype KripkeStructure: KripkeStructureType
     
     /**
      *  Generate the `KripkeStructure`.
-     *
-     *  - Returns: The newly created `KripkeStructure`.
      */
-    func generate() -> KripkeStructure
+    func generate()
     
 }
