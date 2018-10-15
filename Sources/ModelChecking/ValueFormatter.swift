@@ -56,8 +56,10 @@
  *
  */
 
+import KripkeStructure
+
 public protocol ValueFormatter {
     
-    func format(value: String) -> String
+    func formatValue(from: KripkeStateProperty) -> String
     
 }
