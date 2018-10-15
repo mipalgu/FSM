@@ -1,6 +1,6 @@
 /*
- * PropertyFormatter.swift
- * ModelChecking
+ * PropertyExtractor.swift
+ * ExternalVariables
  *
  * Created by Callum McColl on 15/10/18.
  * Copyright © 2018 Callum McColl. All rights reserved.
@@ -56,8 +56,48 @@
  *
  */
 
-public protocol PropertyFormatter: LabelFormatter, ValueFormatter {
+import KripkeStructure
+import Utilities
+
+public final class PropertyExtractor<Formatter: PropertyFormatter> {
+ 
+    fileprivate let formatter: Formatter
     
-    var delimiter: Character { get }
+    public init(formatter: Formatter) {
+        self.formatter = formatter
+    }
+    
+    public func extract(from list: KripkeStatePropertyList) -> [String: String] {
+        var dict: Ref<[String: String]> = Ref(value: [:])
+        self.convert(list, properties: dict)
+        return dict.value
+    }
+    
+    fileprivate func convert(
+        _ list: KripkeStatePropertyList,
+        properties: Ref<[String: String]>,
+        prepend: String? = nil
+    ) {
+        let preLabel = prepend.map { $0 + "\(self.formatter.delimiter)" } ?? ""
+        list.forEach { (key, property) in
+            let label = self.formatter.format(label: preLabel + key)
+            self.convert(property, properties: properties, label: label)
+        }
+    }
+    
+    fileprivate func convert(_ property: KripkeStateProperty, properties: Ref<[String: String]>, label: String) {
+        switch property.type {
+        case .EmptyCollection:
+            return
+        case .Collection(let props):
+            for (index, property) in props.enumerated() {
+                self.convert(property, properties: properties, label: label + "\(self.formatter.delimiter)" + self.formatter.format(label: "\(index)"))
+            }
+        case .Compound(let list):
+            self.convert(list, properties: properties, prepend: label)
+        default:
+            properties.value[label] = self.formatter.formatValue(from: property)
+        }
+    }
     
 }

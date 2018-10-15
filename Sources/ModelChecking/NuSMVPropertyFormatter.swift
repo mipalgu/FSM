@@ -60,7 +60,7 @@ import KripkeStructure
 
 public final class NuSMVPropertyFormatter: PropertyFormatter {
     
-    fileprivate let delimiter: Character
+    public let delimiter: Character
     
     public init(delimiter: Character = "-") {
         self.delimiter = delimiter
