@@ -56,23 +56,29 @@
  *
  */
 
-/*
-
-import FSM
+import Hashing
 import IO
+import swift_helpers
 import KripkeStructure
 import Utilities
 
-public final class GraphVizKripkeStructureView: KripkeStructureView {
+public final class GraphVizKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
 
-    /*
-     *  Used to create the printer that will output the kripke structures.
-     */
-    private var factory: PrinterFactory
+    fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
+    
+    fileprivate let outputStreamFactory: OutputStreamFactory
+    
+    fileprivate var edgeStream: InputOutputStream!
+    
+    fileprivate var combinedStream: OutputStream!
+    
+    fileprivate var ids: [Int: Int] = [:]
+    
+    fileprivate var processList: HashSink<KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
 
     fileprivate var cache: [KripkeStatePropertyList: Int] = [:]
     
-    fileprivate var initials: [Int] = []
+    fileprivate var initials: Set<Int> = []
 
     fileprivate var latest: Int = 0
 
@@ -87,71 +93,82 @@ public final class GraphVizKripkeStructureView: KripkeStructureView {
      *  <machine_name>-<fsm_name>-<state_name>-<snapshot_count> where "-" is the
      *  delimiter.
      */
-    public init(factory: PrinterFactory) {
-        self.factory = factory
+    public init(
+        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+    ) {
+        self.inputOutputStreamFactory = inputOutputStreamFactory
+        self.outputStreamFactory = outputStreamFactory
     }
-
-    /**
-     *  Print the specified kripke structure.
-     *
-     *  - Parameter structure: The `KripkeStructure` that will be converted to
-     *  the NuSMV representation.
-     */
-    public func make(structure: KripkeStructure) {
-        self.cache = [:]
-        self.initials = []
+    
+    public func reset() {
+        self.edgeStream = self.inputOutputStreamFactory.make(id: "edges.gv")
+        self.combinedStream = self.outputStreamFactory.make(id: "kripke_structure.gv")
+        self.ids = [:]
         self.latest = 0
-        var content: Ref<String> = Ref(value: "digraph finite_state_machine {\n")
-        structure.states.lazy.map { $1 }.forEach { state in
-            self.handleState(
-                state: state,
-                content: content,
-                isInitial: nil != structure.initialStates.first(where: { $0.properties == state.properties })
-            )
-        }
-        self.handleInitials(content: content)
-        structure.states.lazy.map { $1 }.forEach { state in
-            self.handleEffects(state: state, content: content)
-        }
-        content.value += "}"
-        let printer: Printer = factory.make(id: "kripke_structure.gv")
-        printer.message(str: content.value)
+        self.initials = []
+        self.processList = HashSink(minimumCapacity: 500000)
+        self.combinedStream.write("digraph finite_state_machine {\n")
     }
-
-    fileprivate func handleState(state: KripkeState, content: Ref<String>, isInitial: Bool) {
-        if nil != self.cache[state.properties] {
+    
+    public func commit(state: State, isInitial: Bool) {
+        if true == self.processList.contains(state.properties) {
             return
         }
-        let id = self.latest
-        self.latest += 1
-        self.cache[state.properties] = id
+        let id = self.fetchId(of: state.properties)
+        self.handleState(state: state, withId: id, isInitial: isInitial, usingStream: &self.combinedStream)
+        self.handleEffects(state: state, withId: id, usingStream: &self.edgeStream)
+    }
+    
+    public func finish() {
+        self.handleInitials(usingStream: &self.combinedStream)
+        self.edgeStream.flush()
+        self.combinedStream.flush()
+        self.edgeStream.rewind()
+        while let line = self.edgeStream.readLine() {
+            self.combinedStream.write(line)
+            self.combinedStream.write("\n")
+        }
+        self.combinedStream.write("}")
+        self.combinedStream.flush()
+        self.edgeStream.close()
+        self.combinedStream.close()
+    }
+    
+    fileprivate func fetchId(of props: KripkeStatePropertyList) -> Int {
+        let hashValue = Hashing.hashValue(of: props)
+        let id: Int
+        if let found = self.ids[hashValue] {
+            id = found
+        } else {
+            id = latest
+            latest += 1
+        }
+        return id
+    }
+
+    fileprivate func handleState(state: State, withId id: Int, isInitial: Bool, usingStream stream: inout OutputStream) {
         let shape = state.effects.isEmpty ? "doublecircle" : "circle"
         guard let label = self.formatProperties(list: state.properties, indent: 1, includeBraces: false) else {
             return
         }
         if true == isInitial {
-            content.value += "node [shape=point] si\(id);"
-            self.initials.append(id)
+            stream.write("node [shape=point] si\(id);")
+            self.initials.insert(id)
         }
-        content.value += "node [shape=\(shape), label=\"\(label)\"]; s\(id);\n"
+        stream.write("node [shape=\(shape), label=\"\(label)\"]; s\(id);\n")
     }
     
-    fileprivate func handleInitials(content: Ref<String>) {
+    fileprivate func handleInitials(usingStream stream: inout OutputStream) {
         self.initials.forEach {
-            content.value += "si\($0) -> s\($0);\n"
+            stream.write("si\($0) -> s\($0);\n")
         }
     }
     
-    fileprivate func handleEffects(state: KripkeState, content: Ref<String>) {
-        guard let id = self.cache[state.properties] else {
-            fatalError("Unable to fetch state id when handling effect.")
-        }
+    fileprivate func handleEffects(state: State, withId id: Int, usingStream stream: inout InputOutputStream) {
         state.effects.forEach {
-            let effect = $0
-            guard let effectId = self.cache[effect] else {
-                fatalError("Unable to handle effect")
-            }
-            content.value += "s\(id) -> s\(effectId);\n"
+            let effectId = self.fetchId(of: $0)
+            stream.write("s\(id) -> s\(effectId);\n")
         }
     }
 
@@ -200,4 +217,3 @@ public final class GraphVizKripkeStructureView: KripkeStructureView {
     }
 
 }
-*/
