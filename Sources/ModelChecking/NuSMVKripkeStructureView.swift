@@ -121,13 +121,16 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
     
     public func finish() {
+        self.stream.flush()
+        self.stream.rewind()
         var combinedStream = self.outputStreamFactory.make(id: "main.smv")
         defer { combinedStream.close() }
-        var outputStream: TextOutputStream = combinedStream
         combinedStream.write("MODULE main\n\n")
+        var outputStream: TextOutputStream = combinedStream
         self.createPropertiesList(usingStream: &outputStream)
         self.createInitial(usingStream: &outputStream)
         self.createTransitions(readingFrom: self.stream, writingTo: &outputStream)
+        combinedStream.flush()
         self.stream.close()
     }
     
@@ -197,7 +200,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             return ""
         }
         let firstEffects = "    (" + self.createEffect(from: firstEffect) + ")"
-        let effectsList = effects.reduce(firstEffects) { (last: String, props: [String: String]) -> String in
+        let effectsList = effects.dropFirst().reduce(firstEffects) { (last: String, props: [String: String]) -> String in
             last + " |\n    (" + self.createEffect(from: props) + ")"
         }
         return conditions + ":\n" + effectsList + ";"
