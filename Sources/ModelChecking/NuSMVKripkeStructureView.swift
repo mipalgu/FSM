@@ -105,6 +105,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
             list.value.insert(value)
         }
+        self.stream.write(self.createCase(of: state))
+        self.stream.write("\n")
     }
     
     public func finish() {
@@ -149,7 +151,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         stream.write("\n")
     }
     
-    fileprivate func createTransitions(from states: [KripkeStatePropertyList: KripkeState], usingStream stream: TextOutputStream) {
+    /*fileprivate func createTransitions(from states: [KripkeStatePropertyList: KripkeState], usingStream stream: TextOutputStream) {
         var stream = stream
         let trans = "TRANS\ncase\n"
         let endTrans = "esac"
@@ -166,15 +168,15 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         stream.write(self.createTrueCase(with: firstState))
         stream.write("\n")
         stream.write(endTrans)
-    }
+    }*/
     
-    fileprivate func createTrueCase(with state: KripkeState) -> String {
+    fileprivate func createTrueCase(with state: State) -> String {
         let props = self.extractor.extract(from: state.properties)
         let effects = self.createEffect(from: props)
         return "TRUE:" + effects + ";"
     }
     
-    fileprivate func createCase(of state: KripkeState) -> String {
+    fileprivate func createCase(of state: State) -> String {
         let props = self.extractor.extract(from: state.properties)
         let effects = state.effects.map {
             self.extractor.extract(from: $0)
