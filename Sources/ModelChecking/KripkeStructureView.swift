@@ -62,7 +62,7 @@ public protocol KripkeStructureView: class {
     
     associatedtype State: KripkeStateType
     
-    func commit(state: State)
+    func commit(state: State, isInitial: Bool)
     
     func finish()
     

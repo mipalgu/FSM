@@ -75,6 +75,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     
     fileprivate var firstState: State?
     
+    fileprivate var initials: Set<KripkeStatePropertyList> = []
+    
     public init(
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
         outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
@@ -88,14 +90,18 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.stream = self.outputStreamFactory.make(id: "main.transitions.smv")
         self.properties = [:]
         self.firstState = nil
+        self.initials = []
     }
     
-    public func commit(state: State) {
+    public func commit(state: State, isInitial: Bool) {
         if nil == self.firstState {
             self.firstState = state
         }
         if sink.contains(state.properties) {
             return
+        }
+        if true == isInitial {
+            self.initials.insert(state.properties)
         }
         sink.insert(state.properties)
         for (key, value) in self.extractor.extract(from: state.properties) {

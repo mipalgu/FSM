@@ -63,18 +63,18 @@ public final class AnyKripkeStructureView<State: KripkeStateType>: KripkeStructu
     
     public let base: Any
     
-    fileprivate let _commit: (State) -> Void
+    fileprivate let _commit: (State, Bool) -> Void
     
     fileprivate let _finish: () -> Void
     
     public init<View: KripkeStructureView>(_ base: View) where View.State == State {
         self.base = base
-        self._commit = { base.commit(state: $0) }
+        self._commit = { base.commit(state: $0, isInitial: $1) }
         self._finish = { base.finish() }
     }
     
-    public func commit(state: State) {
-        self._commit(state)
+    public func commit(state: State, isInitial: Bool) {
+        self._commit(state, isInitial)
     }
     
     public func finish() {
