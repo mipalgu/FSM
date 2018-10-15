@@ -66,4 +66,6 @@ public protocol KripkeStructureView: class {
     
     func finish()
     
+    func reset()
+    
 }

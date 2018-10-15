@@ -89,7 +89,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.outputStreamFactory = outputStreamFactory
     }
     
-    public func start() {
+    public func reset() {
         self.sink = HashSink(minimumCapacity: 500000)
         self.stream = self.inputOutputStreamFactory.make(id: "main.transitions.smv")
         self.properties = [:]
