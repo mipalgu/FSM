@@ -214,44 +214,44 @@ extension KripkeStateProperty: CustomStringConvertible {
 
 extension KripkeStateProperty: Hashable {
 
-    public var hashValue: Int {
+    public func hash(into hasher: inout Hasher) {
         switch (self.type) {
         case .Bool:
-            return (self.value as! Bool).hashValue
+            hasher.combine((self.value as! Bool))
         case .UInt:
-            return (self.value as! UInt).hashValue
+            hasher.combine((self.value as! UInt))
         case .UInt8:
-            return (self.value as! UInt8).hashValue
+            hasher.combine((self.value as! UInt8))
         case .UInt16:
-            return (self.value as! UInt16).hashValue
+            hasher.combine((self.value as! UInt16))
         case .UInt32:
-            return (self.value as! UInt32).hashValue
+            hasher.combine((self.value as! UInt32))
         case .UInt64:
-            return (self.value as! UInt64).hashValue
+            hasher.combine((self.value as! UInt64))
         case .Int:
-            return (self.value as! Int).hashValue
+            hasher.combine((self.value as! Int))
         case .Int8:
-            return (self.value as! Int8).hashValue
+            hasher.combine((self.value as! Int8))
         case .Int16:
-            return (self.value as! Int16).hashValue
+            hasher.combine((self.value as! Int16))
         case .Int32:
-            return (self.value as! Int32).hashValue
+            hasher.combine((self.value as! Int32))
         case .Int64:
-            return (self.value as! Int64).hashValue
+            hasher.combine((self.value as! Int64))
         case .Float80:
-            return (self.value as! Float80).hashValue
+            hasher.combine((self.value as! Float80))
         case .Float:
-            return (self.value as! Float).hashValue
+            hasher.combine((self.value as! Float))
         case .Double:
-            return (self.value as! Double).hashValue
+            hasher.combine((self.value as! Double))
         case .String:
-            return (self.value as! String).hashValue
+            hasher.combine((self.value as! String))
         case .Collection(let ps):
-            return ps.description.hashValue
+            hasher.combine(ps)
         case .Compound(let list):
-            return list.hashValue
+            hasher.combine(list)
         default:
-            return "\(self.value)".hashValue
+            hasher.combine("\(self.value)")
         }
     }
 

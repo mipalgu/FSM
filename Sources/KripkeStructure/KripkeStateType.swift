@@ -84,9 +84,10 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
         str += "\n}"
         return str
     }
-
-    public var hashValue: Int {
-        return self.properties.hashValue
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(properties)
+        hasher.combine(effects)
     }
 
 }

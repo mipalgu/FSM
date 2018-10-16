@@ -106,8 +106,11 @@ extension KripkeStatePropertyList: Hashable, CustomStringConvertible {
         return self.properties.sorted { $0.key < $1.key }.description
     }
 
-    public var hashValue: Int {
-        return self.properties.sorted { $0.key < $1.key }.description.hashValue
+    public func hash(into hasher: inout Hasher) {
+        self.properties.sorted { $0.key < $1.key }.forEach {
+            hasher.combine($0)
+            hasher.combine($1)
+        }
     }
 
 }
