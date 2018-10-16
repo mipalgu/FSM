@@ -59,3 +59,5 @@
 import KripkeStructure
 
 public typealias GexfKripkeStructureView<State: KripkeStateType> = GenericKripkeStructureView<GexfKripkeStructureViewHandler<State>, State>
+
+public typealias GraphVizKripkeStructureView<State: KripkeStateType> = GenericKripkeStructureView<GraphVizKripkeStructureViewHandler<State>, State>

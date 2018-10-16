@@ -58,6 +58,7 @@
 
 import IO
 import KripkeStructure
+import swift_helpers
 
 public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
     
