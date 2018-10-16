@@ -102,9 +102,7 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
     }
     
     public func handleState(_ data: GenericKripkeStructureViewData, state: State, withId id: Int, isInitial: Bool, usingStream stream: inout OutputStream) {
-        let shape = state.effects.isEmpty ? "doublecircle" : "circle"
         let label = self.formatProperties(list: state.properties, includeBraces: false) ?? "\(id)"
-        let id = data.fetchId(of: state.properties)
         if true == isInitial {
             let initialId = data.nextId()
             stream.write("            <node id=\"\(initialId)\"><viz:color r=\"0\" g=\"0\" b=\"0\" /><viz:size value=\"0.25\" /></node>\n")
