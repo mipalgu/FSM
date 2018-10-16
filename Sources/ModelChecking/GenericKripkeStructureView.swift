@@ -62,6 +62,8 @@ import KripkeStructure
 
 public final class GenericKripkeStructureView<Handler: GenericKripkeStructureViewHandler, State: KripkeStateType>: KripkeStructureView where Handler.State == State {
     
+    fileprivate var data: GenericKripkeStructureViewData = GenericKripkeStructureViewData()
+    
     fileprivate let handler: Handler
     
     fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
@@ -71,14 +73,6 @@ public final class GenericKripkeStructureView<Handler: GenericKripkeStructureVie
     fileprivate var edgeStream: InputOutputStream!
     
     fileprivate var combinedStream: OutputStream!
-    
-    fileprivate var ids: [Int: Int] = [:]
-    
-    fileprivate var processList: HashSink<KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
-    
-    fileprivate var initials: Set<Int> = []
-    
-    fileprivate var latest: Int = 0
     
     public init(
         handler: Handler,
@@ -93,25 +87,24 @@ public final class GenericKripkeStructureView<Handler: GenericKripkeStructureVie
     public func reset() {
         self.edgeStream = self.inputOutputStreamFactory.make(id: "edges.gv")
         self.combinedStream = self.outputStreamFactory.make(id: "kripke_structure.gv")
-        self.ids = [:]
-        self.latest = 0
-        self.initials = []
-        self.processList = HashSink(minimumCapacity: 500000)
+        data = GenericKripkeStructureViewData()
         self.combinedStream.write("digraph finite_state_machine {\n")
     }
     
     public func commit(state: State, isInitial: Bool) {
-        if true == self.processList.contains(state.properties) {
+        if true == self.data.alreadyProcessed(state.properties) {
             return
         }
-        self.processList.insert(state.properties)
-        let id = self.fetchId(of: state.properties)
-        self.handler.handleState(self, state: state, withId: id, isInitial: isInitial, usingStream: &self.combinedStream)
-        self.handler.handleEffects(self, state: state, withId: id, usingStream: &self.edgeStream)
+        self.data.markProcessed(state.properties)
+        let id = self.data.fetchId(of: state.properties)
+        self.handler.handleState(self.data, state: state, withId: id, isInitial: isInitial, usingStream: &self.combinedStream)
+        var edgeOutputStream: OutputStream = self.edgeStream
+        self.handler.handleEffects(self.data, state: state, withId: id, usingStream: &edgeOutputStream)
+        self.edgeStream = edgeOutputStream as! InputOutputStream
     }
     
     public func finish() {
-        self.handler.handleInitials(self, usingStream: &self.combinedStream)
+        self.handler.handleInitials(self.data, initials: self.data.initials, usingStream: &self.combinedStream)
         self.edgeStream.flush()
         self.edgeStream.rewind()
         while let line = self.edgeStream.readLine() {
@@ -122,17 +115,6 @@ public final class GenericKripkeStructureView<Handler: GenericKripkeStructureVie
         self.combinedStream.flush()
         self.edgeStream.close()
         self.combinedStream.close()
-    }
-    
-    public func fetchId(of props: KripkeStatePropertyList) -> Int {
-        let hashValue = Hashing.hashValue(of: props)
-        if let found = self.ids[hashValue] {
-            return found
-        }
-        let id = self.latest
-        self.latest += 1
-        self.ids[hashValue] = id
-        return id
     }
     
 }
