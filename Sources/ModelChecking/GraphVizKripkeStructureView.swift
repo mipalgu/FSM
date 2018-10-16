@@ -113,6 +113,7 @@ public final class GraphVizKripkeStructureView<State: KripkeStateType>: KripkeSt
         if true == self.processList.contains(state.properties) {
             return
         }
+        self.processList.insert(state.properties)
         let id = self.fetchId(of: state.properties)
         self.handleState(state: state, withId: id, isInitial: isInitial, usingStream: &self.combinedStream)
         self.handleEffects(state: state, withId: id, usingStream: &self.edgeStream)
@@ -121,7 +122,6 @@ public final class GraphVizKripkeStructureView<State: KripkeStateType>: KripkeSt
     public func finish() {
         self.handleInitials(usingStream: &self.combinedStream)
         self.edgeStream.flush()
-        self.combinedStream.flush()
         self.edgeStream.rewind()
         while let line = self.edgeStream.readLine() {
             self.combinedStream.write(line)
@@ -135,13 +135,12 @@ public final class GraphVizKripkeStructureView<State: KripkeStateType>: KripkeSt
     
     fileprivate func fetchId(of props: KripkeStatePropertyList) -> Int {
         let hashValue = Hashing.hashValue(of: props)
-        let id: Int
         if let found = self.ids[hashValue] {
-            id = found
-        } else {
-            id = latest
-            latest += 1
+            return found
         }
+        let id = self.latest
+        self.latest += 1
+        self.ids[hashValue] = id
         return id
     }
 
