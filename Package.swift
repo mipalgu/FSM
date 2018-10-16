@@ -8,7 +8,7 @@ let package = Package(
         .library(
             name: "FSM",
             type: .dynamic,
-            targets: ["Utilities", "KripkeStructure", "ModelChecking", "FSM", "ExternalVariables", "FSMVerification", "swiftfsm"]
+            targets: ["Utilities", "KripkeStructure", "KripkeStructureViews", "ModelChecking", "FSM", "ExternalVariables", "FSMVerification", "swiftfsm"]
         )
     ],
     dependencies: [
