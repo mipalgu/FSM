@@ -62,6 +62,8 @@ import swift_helpers
 
 public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
     
+    public init() {}
+    
     public func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         stream.write("digraph finite_state_machine {\n")
     }

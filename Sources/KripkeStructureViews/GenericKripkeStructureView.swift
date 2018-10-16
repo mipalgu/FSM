@@ -130,3 +130,15 @@ extension GenericKripkeStructureView where Handler == GexfKripkeStructureViewHan
     }
     
 }
+
+extension GenericKripkeStructureView where Handler == GraphVizKripkeStructureViewHandler<State> {
+    
+    public convenience init(
+        handler: GraphVizKripkeStructureViewHandler<State> = GraphVizKripkeStructureViewHandler<State>(),
+        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+    ) {
+        self.init(handler: handler, inputOutputStreamFactory: inputOutputStreamFactory, outputStreamFactory: outputStreamFactory)
+    }
+    
+}
