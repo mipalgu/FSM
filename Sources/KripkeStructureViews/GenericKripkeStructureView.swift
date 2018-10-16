@@ -74,21 +74,30 @@ public final class GenericKripkeStructureView<Handler: GenericKripkeStructureVie
     
     fileprivate var combinedStream: OutputStream!
     
+    fileprivate let edgeFilename: String
+    
+    fileprivate let filename: String
+    
     public init(
         handler: Handler,
         inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
-        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory(),
+        edgeFilename: String,
+        filename: String
     ) {
         self.handler = handler
         self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
+        self.edgeFilename = edgeFilename
+        self.filename = filename
     }
     
     public func reset() {
-        self.edgeStream = self.inputOutputStreamFactory.make(id: "edges.gv")
-        self.combinedStream = self.outputStreamFactory.make(id: "kripke_structure.gv")
-        data = GenericKripkeStructureViewData()
-        self.combinedStream.write("digraph finite_state_machine {\n")
+        print("reset")
+        self.edgeStream = self.inputOutputStreamFactory.make(id: self.edgeFilename)
+        self.combinedStream = self.outputStreamFactory.make(id: self.filename)
+        self.data = GenericKripkeStructureViewData()
+        self.handler.handleStart(data, usingStream: &self.combinedStream)
     }
     
     public func commit(state: State, isInitial: Bool) {
@@ -111,7 +120,7 @@ public final class GenericKripkeStructureView<Handler: GenericKripkeStructureVie
             self.combinedStream.write(line)
             self.combinedStream.write("\n")
         }
-        self.combinedStream.write("}")
+        self.handler.handleEnd(self.data, usingStream: &self.combinedStream)
         self.combinedStream.flush()
         self.edgeStream.close()
         self.combinedStream.close()
@@ -124,9 +133,11 @@ extension GenericKripkeStructureView where Handler == GexfKripkeStructureViewHan
     public convenience init(
         handler: GexfKripkeStructureViewHandler<State> = GexfKripkeStructureViewHandler<State>(),
         inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
-        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory(),
+        edgeFilename: String = "kripke_structure.edges.gexf",
+        filename: String = "kripke_structure.gexf"
     ) {
-        self.init(handler: handler, inputOutputStreamFactory: inputOutputStreamFactory, outputStreamFactory: outputStreamFactory)
+        self.init(handler: handler, inputOutputStreamFactory: inputOutputStreamFactory, outputStreamFactory: outputStreamFactory, edgeFilename: edgeFilename, filename: filename)
     }
     
 }
@@ -136,9 +147,11 @@ extension GenericKripkeStructureView where Handler == GraphVizKripkeStructureVie
     public convenience init(
         handler: GraphVizKripkeStructureViewHandler<State> = GraphVizKripkeStructureViewHandler<State>(),
         inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
-        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory(),
+        edgeFilename: String = "kripke_structure.edges.gv",
+        filename: String = "kripke_structure.gv"
     ) {
-        self.init(handler: handler, inputOutputStreamFactory: inputOutputStreamFactory, outputStreamFactory: outputStreamFactory)
+        self.init(handler: handler, inputOutputStreamFactory: inputOutputStreamFactory, outputStreamFactory: outputStreamFactory, edgeFilename: edgeFilename, filename: filename)
     }
     
 }
