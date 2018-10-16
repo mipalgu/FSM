@@ -1,8 +1,8 @@
 /*
- * KripkeStructureView.swift
+ * GenericKripkeStructureViewDelegate.swift
  * ModelChecking
  *
- * Created by Callum McColl on 15/10/18.
+ * Created by Callum McColl on 17/10/18.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,14 +56,14 @@
  *
  */
 
-import KripkeStructure
+import IO
 
-public protocol KripkeStructureView: class, KripkeStateContainer {
+public protocol GenericKripkeStructureViewDelegate: KripkeStateContainer {
     
-    func commit(state: State, isInitial: Bool)
+    func handleEffects(_: GenericKripkeStructureView<Self, State>, state: State, withId id: Int, usingStream stream: inout InputOutputStream)
     
-    func finish()
+    func handleInitials(_: GenericKripkeStructureView<Self, State>, usingStream stream: inout OutputStream)
     
-    func reset()
-    
+    func handleState(_: GenericKripkeStructureView<Self, State>, state: State, withId id: Int, isInitial: Bool, usingStream stream: inout OutputStream)
+
 }

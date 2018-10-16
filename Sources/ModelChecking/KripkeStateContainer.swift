@@ -1,8 +1,8 @@
 /*
- * KripkeStructureView.swift
+ * KripkeStateContainer.swift
  * ModelChecking
  *
- * Created by Callum McColl on 15/10/18.
+ * Created by Callum McColl on 17/10/18.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,12 +58,8 @@
 
 import KripkeStructure
 
-public protocol KripkeStructureView: class, KripkeStateContainer {
+public protocol KripkeStateContainer {
     
-    func commit(state: State, isInitial: Bool)
-    
-    func finish()
-    
-    func reset()
+    associatedtype State: KripkeStateType
     
 }
