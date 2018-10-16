@@ -57,6 +57,7 @@
  */
 
 import IO
+import KripkeStructure
 
 public protocol GenericKripkeStructureViewHandler: KripkeStateContainer {
     
