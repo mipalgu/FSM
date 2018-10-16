@@ -60,9 +60,9 @@ import Hashing
 import IO
 import KripkeStructure
 
-public final class GenericKripkeStructureView<Delegate: GenericKripkeStructureViewDelegate, State: KripkeStateType>: KripkeStructureView where Delegate.State == State {
+public final class GenericKripkeStructureView<Handler: GenericKripkeStructureViewHandler, State: KripkeStateType>: KripkeStructureView where Handler.State == State {
     
-    fileprivate let delegate: Delegate
+    fileprivate let handler: Handler
     
     fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
     
@@ -81,11 +81,11 @@ public final class GenericKripkeStructureView<Delegate: GenericKripkeStructureVi
     fileprivate var latest: Int = 0
     
     public init(
-        delegate: Delegate,
+        handler: Handler,
         inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
         outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
     ) {
-        self.delegate = delegate
+        self.handler = handler
         self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
     }
@@ -106,12 +106,12 @@ public final class GenericKripkeStructureView<Delegate: GenericKripkeStructureVi
         }
         self.processList.insert(state.properties)
         let id = self.fetchId(of: state.properties)
-        self.delegate.handleState(self, state: state, withId: id, isInitial: isInitial, usingStream: &self.combinedStream)
-        self.delegate.handleEffects(self, state: state, withId: id, usingStream: &self.edgeStream)
+        self.handler.handleState(self, state: state, withId: id, isInitial: isInitial, usingStream: &self.combinedStream)
+        self.handler.handleEffects(self, state: state, withId: id, usingStream: &self.edgeStream)
     }
     
     public func finish() {
-        self.delegate.handleInitials(self, usingStream: &self.combinedStream)
+        self.handler.handleInitials(self, usingStream: &self.combinedStream)
         self.edgeStream.flush()
         self.edgeStream.rewind()
         while let line = self.edgeStream.readLine() {

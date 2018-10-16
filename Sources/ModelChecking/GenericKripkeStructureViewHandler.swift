@@ -1,5 +1,5 @@
 /*
- * GenericKripkeStructureViewDelegate.swift
+ * GenericKripkeStructureViewHandler.swift
  * ModelChecking
  *
  * Created by Callum McColl on 17/10/18.
@@ -58,7 +58,7 @@
 
 import IO
 
-public protocol GenericKripkeStructureViewDelegate: KripkeStateContainer {
+public protocol GenericKripkeStructureViewHandler: KripkeStateContainer {
     
     func handleEffects(_: GenericKripkeStructureView<Self, State>, state: State, withId id: Int, usingStream stream: inout InputOutputStream)
     
