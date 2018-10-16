@@ -118,3 +118,15 @@ public final class GenericKripkeStructureView<Handler: GenericKripkeStructureVie
     }
     
 }
+
+extension GenericKripkeStructureView where Handler == GexfKripkeStructureViewHandler<State> {
+    
+    public convenience init(
+        handler: GexfKripkeStructureViewHandler<State> = GexfKripkeStructureViewHandler<State>(),
+        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+    ) {
+        self.init(handler: handler, inputOutputStreamFactory: inputOutputStreamFactory, outputStreamFactory: outputStreamFactory)
+    }
+    
+}

@@ -61,6 +61,8 @@ import KripkeStructure
 
 public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
     
+    public init() {}
+    
     public func handleEffects(_ data: GenericKripkeStructureViewData, state: State, withId id: Int, usingStream stream: inout OutputStream) {
         let source = data.fetchId(of: state.properties)
         state.effects.forEach {
