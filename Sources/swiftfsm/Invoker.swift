@@ -61,8 +61,8 @@ import Utilities
 
 public protocol Invoker {
 
-    func invoke<P: Variables, R>(_: String, with: P, withResults: AnyResultContainer<R>) -> Promise<R>
+    func invoke<P: Variables, R>(_: String, with: P) -> Promise<R>
     
-    func invokeSelf<P: Variables, R>(_: String, with: P, withResults: AnyResultContainer<R>) -> Promise<R>
+    func invokeSelf<P: Variables, R>(_: String, with: P) -> Promise<R>
 
 }
