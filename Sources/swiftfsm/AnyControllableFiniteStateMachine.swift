@@ -92,7 +92,7 @@ public struct AnyControllableFiniteStateMachine:
         return self._base()
     }
 
-    private let _asScheduleableFiniteStateMachine: () -> AnyScheduleableFiniteStateMachine
+    private let _asScheduleableFiniteStateMachine: (AnyControllableFiniteStateMachine) -> AnyScheduleableFiniteStateMachine
 
     private let _base: () -> Any
 
@@ -131,7 +131,7 @@ public struct AnyControllableFiniteStateMachine:
     //private let _update: ([String: Any]) -> Void
 
     public var asScheduleableFiniteStateMachine: AnyScheduleableFiniteStateMachine {
-        return self._asScheduleableFiniteStateMachine()
+        return self._asScheduleableFiniteStateMachine(self)
     }
 
     /**
@@ -193,7 +193,10 @@ public struct AnyControllableFiniteStateMachine:
         FSM: Resumeable,
         FSM: Restartable
     {
-        self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
+        self._asScheduleableFiniteStateMachine = {
+            let me = $0
+            return AnyScheduleableFiniteStateMachine(ref, toControllableFSM: { me })
+        }
         self._base = { ref.value as Any }
         self._clone = { AnyControllableFiniteStateMachine(ref.value.clone()) }
         self._currentState = { AnyState(ref.value.currentState) }
