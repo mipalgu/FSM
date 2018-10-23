@@ -109,6 +109,8 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _resultContainer: () -> AnyResultContainer<Any>
     
     private let _setParameters: (Any) -> Void
+    
+    private let _setParametersFromDictionary: ([String: String]) -> Bool
 
     private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
 
@@ -182,7 +184,7 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable {
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable, FSM.ParametersContainerType.Vars: DictionaryConvertible {
         self._asScheduleableFiniteStateMachine = {
             let me = $0
             return AnyScheduleableFiniteStateMachine(ref, toParameterisedFSM: { me })
@@ -197,6 +199,13 @@ public struct AnyParameterisedFiniteStateMachine:
         self._isSuspended = { ref.value.isSuspended }
         self._name = { ref.value.name }
         self._next = { ref.value.next() }
+        self._setParametersFromDictionary = {
+            guard let params = FSM.ParametersContainerType.Vars($0) else {
+                return false
+            }
+            ref.value.parameters.vars = params
+            return true
+        }
         self._setParameters = {
             guard let parameters = $0 as? FSM.ParametersContainerType.Vars else {
                 fatalError("Attempting to set parameters of \(ref.value.name) with an incorrect parameter type.")
@@ -218,7 +227,7 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable, FSM.ParametersContainerType.Vars: DictionaryConvertible {
         let ref = Ref(value: base)
         self.init(ref)
     }
@@ -244,6 +253,10 @@ public struct AnyParameterisedFiniteStateMachine:
     
     public func parameters<P: Variables>(_ newParameters: P) {
         self._setParameters(newParameters)
+    }
+    
+    public func parametersFromDictionary(_ dictionary: [String: String]) -> Bool {
+        return self._setParametersFromDictionary(dictionary)
     }
 
     /**
