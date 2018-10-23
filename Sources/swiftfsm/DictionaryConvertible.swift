@@ -1,8 +1,8 @@
 /*
- * ParameterisedMachineProtocol.swift
+ * DictionaryConvertible.swift
  * swiftfsm
  *
- * Created by Callum McColl on 17/9/18.
+ * Created by Callum McColl on 23/10/18.
  * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,11 +56,8 @@
  *
  */
 
-import FSM
-
-public protocol ParameterisedMachineProtocol:
-    MachineProtocol,
-    ParametersContainerHolder,
-    ResultContainerHolder,
-    ResultResettable where ParametersContainerType.Vars: DictionaryConvertible
-{}
+public protocol DictionaryConvertible {
+    
+    init?(_ dictionary: [String: String])
+    
+}
