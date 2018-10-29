@@ -64,6 +64,24 @@ import Utilities
 
 public enum FSMType {
     
+    public var asParameterisedFiniteStateMachine: AnyParameterisedFiniteStateMachine? {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm
+        case .scheduleableFSM(let fsm):
+            return fsm.asParameterisedFiniteStateMachine
+        }
+    }
+    
+    public var asScheduleableFiniteStateMachine: AnyScheduleableFiniteStateMachine {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.asScheduleableFiniteStateMachine
+        case .scheduleableFSM(let fsm):
+            return fsm
+        }
+    }
+    
     case parameterisedFSM(AnyParameterisedFiniteStateMachine)
     
     case scheduleableFSM(AnyScheduleableFiniteStateMachine)
