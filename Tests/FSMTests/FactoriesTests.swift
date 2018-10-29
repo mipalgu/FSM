@@ -73,10 +73,10 @@ class FactoriesTests: XCTestCase {
         ]
     }
     
-    let fsm: AnyScheduleableFiniteStateMachine = FSM(
+    let fsm: FSMType = .scheduleableFSM(FSM(
         "temp",
         initialState: EmptyMiPalState("_initial")
-    ).asScheduleableFiniteStateMachine
+    ).asScheduleableFiniteStateMachine)
 
     override func setUp() {
         var f: Factories = Factories()
@@ -114,8 +114,8 @@ class FactoriesTests: XCTestCase {
 
     func test_peek() {
         var f: Factories = Factories()
-        let fact: (String, Invoker, swiftfsm.Timer) -> (AnyScheduleableFiniteStateMachine, [Dependency]) = { _,_,_ in
-            (FSM("test", initialState: EmptyMiPalState("initial")).asScheduleableFiniteStateMachine, [])
+        let fact: (String, Invoker, swiftfsm.Timer) -> (FSMType, [Dependency]) = { _,_,_ in
+            (.scheduleableFSM(FSM("test", initialState: EmptyMiPalState("initial")).asScheduleableFiniteStateMachine), [])
         }
         f.push({ _,_,_ in (self.fsm, [])})
         f.push(fact)
