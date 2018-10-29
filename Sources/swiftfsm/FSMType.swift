@@ -56,6 +56,12 @@
  *
  */
 
+import FSM
+import Functional
+import KripkeStructure
+import ModelChecking
+import Utilities
+
 public enum FSMType {
     
     case parameterisedFSM(AnyParameterisedFiniteStateMachine)
@@ -83,4 +89,131 @@ public func == (lhs: FSMType, rhs: FSMType) -> Bool {
             return false
         }
     }
+}
+
+extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
+    
+    public typealias _StateType = AnyState
+    
+    public var currentState: AnyState {
+        get {
+            switch self {
+            case .parameterisedFSM(let fsm):
+                return fsm.currentState
+            case .scheduleableFSM(let fsm):
+                return fsm.currentState
+            }
+        } set {}
+    }
+    
+    public var externalVariables: [AnySnapshotController] {
+        get {
+            switch self {
+            case .parameterisedFSM(let fsm):
+                return fsm.externalVariables
+            case .scheduleableFSM(let fsm):
+                return fsm.externalVariables
+            }
+        } set {
+            switch self {
+            case .parameterisedFSM(var fsm):
+                fsm.externalVariables = newValue
+                self = .parameterisedFSM(fsm)
+            case .scheduleableFSM(var fsm):
+                fsm.externalVariables = newValue
+                self = .scheduleableFSM(fsm)
+            }
+        }
+    }
+    
+    public var hasFinished: Bool {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.hasFinished
+        case .scheduleableFSM(let fsm):
+            return fsm.hasFinished
+        }
+    }
+    
+    public var initialState: AnyState {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.initialState
+        case .scheduleableFSM(let fsm):
+            return fsm.initialState
+        }
+    }
+    
+    public var isSuspended: Bool {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.isSuspended
+        case .scheduleableFSM(let fsm):
+            return fsm.isSuspended
+        }
+    }
+    
+    public var name: String {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.name
+        case .scheduleableFSM(let fsm):
+            return fsm.name
+        }
+    }
+    
+    public var submachines: [AnyScheduleableFiniteStateMachine] {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.submachines
+        case .scheduleableFSM(let fsm):
+            return fsm.submachines
+        }
+    }
+    
+    public func clone() -> FSMType {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return .parameterisedFSM(fsm.clone())
+        case .scheduleableFSM(let fsm):
+            return .scheduleableFSM(fsm.clone())
+        }
+    }
+    
+    public mutating func next() {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            fsm.next()
+        case .scheduleableFSM(let fsm):
+            fsm.next()
+        }
+    }
+    
+    public mutating func suspend() {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            fsm.suspend()
+        case .scheduleableFSM(let fsm):
+            fsm.suspend()
+        }
+    }
+    
+    public mutating func saveSnapshot() {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            fsm.saveSnapshot()
+        case .scheduleableFSM(let fsm):
+            fsm.saveSnapshot()
+        }
+    }
+    
+    public mutating func takeSnapshot() {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            fsm.takeSnapshot()
+        case .scheduleableFSM(let fsm):
+            fsm.takeSnapshot()
+        }
+    }
+    
 }
