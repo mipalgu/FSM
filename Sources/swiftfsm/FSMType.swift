@@ -63,3 +63,24 @@ public enum FSMType {
     case scheduleableFSM(AnyScheduleableFiniteStateMachine)
     
 }
+
+extension FSMType: Equatable {}
+
+public func == (lhs: FSMType, rhs: FSMType) -> Bool {
+    switch lhs {
+    case .parameterisedFSM(let lfsm):
+        switch rhs {
+        case .parameterisedFSM(let rfsm):
+            return lfsm == rfsm
+        default:
+            return false
+        }
+    case .scheduleableFSM(let lfsm):
+        switch rhs {
+        case .scheduleableFSM(let rfsm):
+            return lfsm == rfsm
+        default:
+            return false
+        }
+    }
+}
