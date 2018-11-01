@@ -68,7 +68,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  A Reference to a Set of `Element`s.
      *
      */
-    public typealias Data = Ref<HashSink<Element>>
+    public typealias Data = Ref<HashSink<Element, Element>>
 
     /**
      *  The elements of the cycle.
@@ -81,7 +81,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  An empty hash table.
      */
     public var initialData: Data {
-        let sink = HashSink<Element>(minimumCapacity: 500000)
+        let sink = HashSink<Element, Element>(minimumCapacity: 500000)
         return Ref(value: sink)
     }
 

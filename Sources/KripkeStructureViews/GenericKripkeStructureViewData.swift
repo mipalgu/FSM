@@ -63,7 +63,7 @@ public final class GenericKripkeStructureViewData {
     
     fileprivate var ids: [Int: Int] = [:]
     
-    fileprivate var processList: HashSink<KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
+    fileprivate var processList: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
     
     fileprivate var initialsDict: [Int: Int] = [:]
     

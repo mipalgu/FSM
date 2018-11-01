@@ -73,7 +73,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     
     fileprivate var properties: [String: Ref<Set<String>>] = [:]
     
-    fileprivate var sink: HashSink<KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
+    fileprivate var sink: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
     
     fileprivate var firstState: State?
     
