@@ -61,6 +61,14 @@ import Functional
 public struct KripkeStatePropertyList {
 
     public fileprivate(set) var properties: [String: KripkeStateProperty]
+    
+    public var propertiesDictionary: [String: Any] {
+        var d: [String: Any] = [String: Any](minimumCapacity: self.properties.count)
+        self.properties.forEach {
+            d[$0] = $1.value
+        }
+        return d
+    }
 
     public init(_ properties: [String: KripkeStateProperty] = [:]) {
         self.properties = properties
