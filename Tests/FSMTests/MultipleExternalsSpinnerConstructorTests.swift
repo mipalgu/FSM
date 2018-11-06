@@ -74,7 +74,9 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             ("test_canSpinMicrowaveVariables", test_canSpinMicrowaveVariables),
             ("test_canSpinMutlipleMicrowaveVariables", test_canSpinMutlipleMicrowaveVariables),
             ("test_canSpinButtonExternalVariables", test_canSpinButtonExternalVariables),
+            ("test_canSpinMultupleButtonExternalVariables", test_canSpinMultupleButtonExternalVariables),
             ("test_canSpinNoVariables", test_canSpinNoVariables),
+            ("test_canSpinMultipleMicrowaveStatusAndButton", test_canSpinMultipleMicrowaveStatusAndButton),
             ("test_canSpinMicrowaveStatusAndButton", test_canSpinMicrowaveStatusAndButton),
         ]
     }
@@ -146,6 +148,15 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         ]
         self.check(externals: [button], against: [expected])
     }
+    
+    func test_canSpinMultupleButtonExternalVariables() {
+        let button = AnySnapshotController(ButtonSnapshotController())
+        let expected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [button, button], against: [expected, expected])
+    }
 
     func test_canSpinMicrowaveStatusAndButton() {
         let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
@@ -172,6 +183,33 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: true)])
         ]
         self.check(externals: [microwave_status, button], against: [microwaveExpected, buttonExpected])
+    }
+    
+    func test_canSpinMultipleMicrowaveStatusAndButton() {
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+            "kMicrowaveStatus_v",
+            collection: GenericWhiteboard<wb_microwave_status>(
+                msgType: kMicrowaveStatus_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let microwaveExpected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: false), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: false), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)]),
+            KripkeStatePropertyList(["buttonPushed": KripkeStateProperty(type: .Bool, value: true), "doorOpen": KripkeStateProperty(type: .Bool, value: true), "timeLeft": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        let button = AnySnapshotController(ButtonSnapshotController())
+        let buttonExpected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["button": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [microwave_status, button, microwave_status, microwave_status, button, button, button], against: [microwaveExpected, buttonExpected, microwaveExpected, microwaveExpected, buttonExpected, buttonExpected, buttonExpected])
     }
 
     func test_canSpinNoVariables() {

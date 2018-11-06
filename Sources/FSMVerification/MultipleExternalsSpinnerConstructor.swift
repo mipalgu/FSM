@@ -91,19 +91,18 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
             for (newItem, ps, index) in newItems {
                 items[index] = (newItem, ps)
             }
-            print(items.map { $0.1 })
             return items
         }
     }
     
     fileprivate func createItems(fromData data: [ExternalVariablesVerificationData], andSpinners spinners: inout [() -> (AnySnapshotController, KripkeStatePropertyList)?]) -> [(AnySnapshotController, KripkeStatePropertyList)] {
-        let lastData = data.last!
+        let firstData = data.first!
         var items: [(AnySnapshotController, KripkeStatePropertyList)] = []
         items.reserveCapacity(data.count)
-        spinners.dropLast().forEach { items.append($0()!) }
-        var lastItem = lastData.externalVariables
-        lastItem.val = lastData.externalVariables.create(fromDictionary: self.convert(from: lastData.defaultValues))
-        items.append((lastItem, lastData.defaultValues))
+        spinners.dropFirst().forEach { items.append($0()!) }
+        var lastItem = firstData.externalVariables
+        lastItem.val = firstData.externalVariables.create(fromDictionary: self.convert(from: firstData.defaultValues))
+        items.insert((lastItem, firstData.defaultValues), at: 0)
         return items
     }
     
