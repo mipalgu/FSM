@@ -83,20 +83,28 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
                 spinners: $0.spinners
             )
         }
-        var latest: [(AnySnapshotController, KripkeStatePropertyList)] = data.map {
-            var new = $0.externalVariables
-            new.val = $0.externalVariables.create(fromDictionary: self.convert(from: $0.defaultValues))
-            return (new, $0.defaultValues)
-        }
+        var items = self.createItems(fromData: data, andSpinners: &externalSpinners)
         return { () -> [(AnySnapshotController, KripkeStatePropertyList)]? in
             guard let newItems = self.nextItem(inSpinners: &externalSpinners, usingData: data) else {
                 return nil
             }
             for (newItem, ps, index) in newItems {
-                latest[index] = (newItem, ps)
+                items[index] = (newItem, ps)
             }
-            return latest
+            print(items.map { $0.1 })
+            return items
         }
+    }
+    
+    fileprivate func createItems(fromData data: [ExternalVariablesVerificationData], andSpinners spinners: inout [() -> (AnySnapshotController, KripkeStatePropertyList)?]) -> [(AnySnapshotController, KripkeStatePropertyList)] {
+        let lastData = data.last!
+        var items: [(AnySnapshotController, KripkeStatePropertyList)] = []
+        items.reserveCapacity(data.count)
+        spinners.dropLast().forEach { items.append($0()!) }
+        var lastItem = lastData.externalVariables
+        lastItem.val = lastData.externalVariables.create(fromDictionary: self.convert(from: lastData.defaultValues))
+        items.append((lastItem, lastData.defaultValues))
+        return items
     }
     
     fileprivate func makeEmptySpinner() -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
@@ -137,15 +145,13 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
             spinners: data[index].spinners
         )
         // Fetch the a value for the spinner before the current spinner.
-        guard let newItems = self.nextItem(inSpinners: &spinners, atIndex: index + 1, usingData: data) else {
+        guard
+            let newItems = self.nextItem(inSpinners: &spinners, atIndex: index + 1, usingData: data),
+            let (newItem, ps) = spinners[index]()
+        else {
             return nil
         }
-        // Use the starting default values as the value for this spinner.
-        var new = data[index].externalVariables
-        new.val = data[index].externalVariables.create(
-            fromDictionary: self.convert(from: data[index].defaultValues)
-        )
-        return [(new, data[index].defaultValues, index)] + newItems
+        return [(newItem, ps, index)] + newItems
     }
 
 }
