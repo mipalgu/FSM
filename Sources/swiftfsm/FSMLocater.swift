@@ -81,14 +81,18 @@ public protocol FSMLocator {
      *
      *  - Complexity: O(1)
      */
-    func fsm(fromID id: Int) -> AnyScheduleableFiniteStateMachine
+    func fsm(fromID id: FSM_ID) -> AnyScheduleableFiniteStateMachine
     
     /**
      *  Fetch the unique identifer associated with an FSM.
      *
      *  - Parameter name: The name of the FSM.
      *
-     *  - Returns: The id if able, otherwise .none.
+     *  - Returns: The id of the FSM.
+     *
+     *  - Attention: Attempting to fetch the id using an invalid name will
+     *  result in a fatal error; `name` must be associated with an FSM in the
+     *  callers scope.
      *
      *  - Attention: This function mandates that FSM's may only fetch id's
      *  of other FSM's which they depend on. This means that they are unable to
@@ -97,6 +101,6 @@ public protocol FSMLocator {
      *
      *  - Complexity: O(n)
      */
-    func id(of name: String) -> Int?
+    func id(of name: String) -> FSM_ID
 
 }

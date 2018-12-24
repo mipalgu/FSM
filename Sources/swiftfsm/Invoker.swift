@@ -61,8 +61,8 @@ import Utilities
 
 public protocol Invoker {
 
-    func invoke<P: Variables, R>(_: String, with: P) -> Promise<R>
+    func invoke<P: Variables, R>(_: FSM_ID, with: P) -> Promise<R>
     
-    func invokeSelf<P: Variables, R>(_: String, with: P) -> Promise<R>
+    func invokeSelf<P: Variables, R>(_: FSM_ID, with: P) -> Promise<R>
 
 }
