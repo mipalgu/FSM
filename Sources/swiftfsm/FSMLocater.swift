@@ -81,7 +81,7 @@ public protocol FSMLocator {
      *
      *  - Complexity: O(1)
      */
-    func fsm(fromID id: FSM_ID) -> AnyScheduleableFiniteStateMachine
+    func fsm(fromID id: FSM_ID) -> AnyControllableFiniteStateMachine
     
     /**
      *  Fetch the unique identifer associated with an FSM.
