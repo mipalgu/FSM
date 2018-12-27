@@ -63,7 +63,7 @@
  *  An example is machines that depend on other submachines.
  *
  */
-public protocol FSMLocator {
+public protocol FSMLocator: class {
 
     /**
      *  Fetch an FSM from its associated unique identifier.
