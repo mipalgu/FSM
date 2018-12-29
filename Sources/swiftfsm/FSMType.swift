@@ -70,8 +70,6 @@ public enum FSMType {
             return fsm
         case .parameterisedFSM(let fsm):
             return nil
-        case .scheduleableFSM(let fsm):
-            return nil
         }
     }
     
@@ -81,8 +79,6 @@ public enum FSMType {
             return nil
         case .parameterisedFSM(let fsm):
             return fsm
-        case .scheduleableFSM(let fsm):
-            return nil
         }
     }
     
@@ -92,16 +88,12 @@ public enum FSMType {
             return fsm.asScheduleableFiniteStateMachine
         case .parameterisedFSM(let fsm):
             return fsm.asScheduleableFiniteStateMachine
-        case .scheduleableFSM(let fsm):
-            return fsm
         }
     }
     
     case parameterisedFSM(AnyParameterisedFiniteStateMachine)
     
     case controllableFSM(AnyControllableFiniteStateMachine)
-    
-    case scheduleableFSM(AnyScheduleableFiniteStateMachine)
     
 }
 
@@ -123,13 +115,6 @@ public func == (lhs: FSMType, rhs: FSMType) -> Bool {
         default:
             return false
         }
-    case .scheduleableFSM(let lfsm):
-        switch rhs {
-        case .scheduleableFSM(let rfsm):
-            return lfsm == rfsm
-        default:
-            return false
-        }
     }
 }
 
@@ -144,8 +129,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
                 return fsm.currentState
             case .parameterisedFSM(let fsm):
                 return fsm.currentState
-            case .scheduleableFSM(let fsm):
-                return fsm.currentState
             }
         } set {}
     }
@@ -157,8 +140,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
                 return fsm.externalVariables
             case .parameterisedFSM(let fsm):
                 return fsm.externalVariables
-            case .scheduleableFSM(let fsm):
-                return fsm.externalVariables
             }
         } set {
             switch self {
@@ -167,9 +148,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             case .parameterisedFSM(var fsm):
                 fsm.externalVariables = newValue
                 self = .parameterisedFSM(fsm)
-            case .scheduleableFSM(var fsm):
-                fsm.externalVariables = newValue
-                self = .scheduleableFSM(fsm)
             }
         }
     }
@@ -180,8 +158,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.hasFinished
         case .parameterisedFSM(let fsm):
             return fsm.hasFinished
-        case .scheduleableFSM(let fsm):
-            return fsm.hasFinished
         }
     }
     
@@ -190,8 +166,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
         case .controllableFSM(let fsm):
             return fsm.initialState
         case .parameterisedFSM(let fsm):
-            return fsm.initialState
-        case .scheduleableFSM(let fsm):
             return fsm.initialState
         }
     }
@@ -202,8 +176,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.isSuspended
         case .parameterisedFSM(let fsm):
             return fsm.isSuspended
-        case .scheduleableFSM(let fsm):
-            return fsm.isSuspended
         }
     }
     
@@ -212,8 +184,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
         case .controllableFSM(let fsm):
             return fsm.name
         case .parameterisedFSM(let fsm):
-            return fsm.name
-        case .scheduleableFSM(let fsm):
             return fsm.name
         }
     }
@@ -224,8 +194,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.submachines
         case .parameterisedFSM(let fsm):
             return fsm.submachines
-        case .scheduleableFSM(let fsm):
-            return fsm.submachines
         }
     }
     
@@ -235,8 +203,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return .controllableFSM(fsm.clone())
         case .parameterisedFSM(let fsm):
             return .parameterisedFSM(fsm.clone())
-        case .scheduleableFSM(let fsm):
-            return .scheduleableFSM(fsm.clone())
         }
     }
     
@@ -245,8 +211,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
         case .controllableFSM(let fsm):
             fsm.next()
         case .parameterisedFSM(let fsm):
-            fsm.next()
-        case .scheduleableFSM(let fsm):
             fsm.next()
         }
     }
@@ -257,8 +221,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             fsm.suspend()
         case .parameterisedFSM(let fsm):
             fsm.suspend()
-        case .scheduleableFSM(let fsm):
-            fsm.suspend()
         }
     }
     
@@ -268,8 +230,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             fsm.saveSnapshot()
         case .parameterisedFSM(let fsm):
             fsm.saveSnapshot()
-        case .scheduleableFSM(let fsm):
-            fsm.saveSnapshot()
         }
     }
     
@@ -278,8 +238,6 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
         case .controllableFSM(let fsm):
             fsm.takeSnapshot()
         case .parameterisedFSM(let fsm):
-            fsm.takeSnapshot()
-        case .scheduleableFSM(let fsm):
             fsm.takeSnapshot()
         }
     }
