@@ -62,5 +62,5 @@ public protocol ParameterisedMachineProtocol:
     MachineProtocol,
     ParametersContainerHolder,
     ResultContainerHolder,
-    ResultResettable where ParametersContainerType.Vars: DictionaryConvertible
+    ResultResettable where ParametersContainerType.Vars: DictionaryConvertible, ParametersContainerType.Vars: ConvertibleFromDictionary
 {}

@@ -1,9 +1,9 @@
 /*
- * ExternalVariables.swift 
- * FSM 
+ * ConvertibleFromDictionary.swift
+ * FSM
  *
- * Created by Callum McColl on 16/01/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 30/12/18.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,14 +56,14 @@
  *
  */
 
-/**
- *  Conforming types represent all possible variables that are external to the
- *  application.
- *
- *  This is generally used when developer create their machines as a way to
- *  share external variables from the environment.  Types conforming to this
- *  protocol are used extensively with `KripkeStructure` generation.
- *
- *  - SeeAlso: `KripkeRingletKripkeStructureGenerator`
- */
-public protocol ExternalVariables: Equatable, ConvertibleFromDictionary {}
+public protocol ConvertibleFromDictionary {
+    
+    /**
+     *  Create a new instance from a dictionary where the key represents the
+     *  variables label and the value represents the value of the variable.
+     *
+     *  - Parameter fromDictionary: The variables in a dictionary.
+     */
+    init(fromDictionary: [String: Any])
+    
+}
