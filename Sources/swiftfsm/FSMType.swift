@@ -71,7 +71,7 @@ public enum FSMType {
         case .parameterisedFSM(let fsm):
             return nil
         case .scheduleableFSM(let fsm):
-            return fsm.asControllableFiniteStateMachine
+            return nil
         }
     }
     
@@ -82,7 +82,7 @@ public enum FSMType {
         case .parameterisedFSM(let fsm):
             return fsm
         case .scheduleableFSM(let fsm):
-            return fsm.asParameterisedFiniteStateMachine
+            return nil
         }
     }
     

@@ -118,20 +118,8 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _saveSnapshot: () -> Void
 
     private let _takeSnapshot: () -> Void
-    
-    private let _toControllableFSM: (() -> AnyControllableFiniteStateMachine)?
-    
-    private let _toParameterisedFSM: (() -> AnyParameterisedFiniteStateMachine)?
 
     //private let _update: ([String: Any]) -> Void
-    
-    public var asControllableFiniteStateMachine: AnyControllableFiniteStateMachine? {
-        return self._toControllableFSM.map { $0() }
-    }
-    
-    public var asParameterisedFiniteStateMachine: AnyParameterisedFiniteStateMachine? {
-        return self._toParameterisedFSM.map { $0() }
-    }
 
     /**
      *  The next state to execute.
@@ -188,9 +176,7 @@ public struct AnyScheduleableFiniteStateMachine:
     }
     
     internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(
-        _ ref: Ref<FSM>,
-        toControllableFSM: (() -> AnyControllableFiniteStateMachine)?,
-        toParameterisedFSM: (() -> AnyParameterisedFiniteStateMachine)?
+        _ ref: Ref<FSM>
     ) {
         self._base = { ref.value as Any }
         self._clone = { AnyScheduleableFiniteStateMachine(ref.value.clone()) }
@@ -206,17 +192,7 @@ public struct AnyScheduleableFiniteStateMachine:
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }
         self._takeSnapshot = { ref.value.takeSnapshot() }
-        self._toControllableFSM = toControllableFSM
-        self._toParameterisedFSM = toParameterisedFSM
         //self._update = { ref.value.update(fromDictionary: $0) }
-    }
-    
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>, toControllableFSM: @escaping (() -> AnyControllableFiniteStateMachine)) {
-        self.init(ref, toControllableFSM: toControllableFSM, toParameterisedFSM: nil)
-    }
-
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>, toParameterisedFSM: @escaping (() -> AnyParameterisedFiniteStateMachine)) {
-        self.init(ref, toControllableFSM: nil, toParameterisedFSM: toParameterisedFSM)
     }
 
     /**
@@ -225,7 +201,7 @@ public struct AnyScheduleableFiniteStateMachine:
      */
     public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) {
         let ref = Ref(value: base)
-        self.init(ref, toControllableFSM: nil, toParameterisedFSM: nil)
+        self.init(ref)
     }
 
     public func clone() -> AnyScheduleableFiniteStateMachine {
