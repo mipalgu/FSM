@@ -56,8 +56,5 @@
  *
  */
 
-/// A function that creates an array of `FiniteStateMachine`s.
-public typealias FSMArrayFactory = (String, Invoker, Timer) -> (FSMType, [Dependency])
-
 /// The type of unique identifiers associated with fsms.
 public typealias FSM_ID = Int

@@ -75,17 +75,6 @@ public var KRIPKE: Bool = false
  */
 public var STOP: Bool = false
 
-private var factories = Factories()
-
-/**
- *  Add an `FSMArrayFactory` onto the `Factories` `Stack`.
- *
- *  - Parameter _: The `FSMArrayFactory`.
- */
-public func addFactory(_ f: @escaping FSMArrayFactory) {
-    factories.push(f)
-}
-
 public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2, T>] {
     return transitions.map(cast)
 }
@@ -135,33 +124,6 @@ public func dprint<Target: TextOutputStream>(
             to: &output
         )
     }
-}
-
-/**
- *  Retrieve the number of `FSMArrayFactory`s that are on the `Factories`
- *  `Stack`.
- *  
- *  - Returns: The number of `FSMArrayFactory`s that are on the `Factories`
- *  `Stack`.
- */
-public func getFactoryCount() -> Int {
-    return factories.count
-}
-
-/**
- *  Retrieve the top most `FSMArrayFactory` from the `Factories` `Stack`.
- *
- *  - Postcondition: The top most `FSMArrayFactory` is removed from the
- *  `Factories` `Stack`.
- *
- *  - Returns: The retrieved `FSMArrayFactory` or nil if the `Factories` `Stack`
- *  was empty.
- */
-public func getLastFactory() -> FSMArrayFactory? {
-    if true == factories.isEmpty {
-        return nil
-    }
-    return factories.pop()
 }
 
 /**
