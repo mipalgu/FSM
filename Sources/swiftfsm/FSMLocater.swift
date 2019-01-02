@@ -60,7 +60,11 @@
  *  This protocol provides a common interface for machines to be able to
  *  interact with instances of other machines which they depend on.
  *
- *  An example is machines that depend on other submachines.
+ *  An example is machines that depend on other submachines. Through the use of
+ *  this protocol, machines are able to fetch instances of other machine which
+ *  can be used to perform some of the general operations provided by swiftfsm.
+ *  These include suspension, resumption, restarting fsms and forcing fsms
+ *  to finish.
  *
  */
 public protocol FSMLocator: class {
@@ -72,7 +76,7 @@ public protocol FSMLocator: class {
      *  `AnyScheduleableFiniteStateMachine`. How this id is fetched or assigned
      *  is beyond the scope of this protocol.
      *
-     *  - Returns: The `AnyScheduleableFiniteStateMachine` associated with the
+     *  - Returns: The `AnyControllableFiniteStateMachine` associated with the
      *  provided identifier.
      *
      *  - Attention: This function assumes that the id specified is already
@@ -91,15 +95,16 @@ public protocol FSMLocator: class {
      *  - Returns: The id of the FSM.
      *
      *  - Attention: Attempting to fetch the id using an invalid name will
-     *  result in a fatal error; `name` must be associated with an FSM in the
-     *  callers scope.
+     *  result in a new id being associated with `name`. Any further call to
+     *  this function with the same value for `name` will therefore return
+     *  this newly generated unique identifier.
      *
      *  - Attention: This function mandates that FSM's may only fetch id's
      *  of other FSM's which they depend on. This means that they are unable to
      *  fetch id's of arbitrary machines which do not exist within their
      *  hierarchy.
      *
-     *  - Complexity: O(n)
+     *  - Complexity: O(length(name))
      */
     func id(of name: String) -> FSM_ID
 
