@@ -60,13 +60,67 @@ import FSM
 import Utilities
 
 public protocol Invoker {
-
-    func invoke<R>(_: String, withParameters: [String: Any]) -> Promise<R>
     
-    func invokeSelf<R>(_: String, withParameters: [String: Any]) -> Promise<R>
+    /**
+     *  'Call' a parameterised machine.
+     *
+     *  This function has the same semantics has normal function calling in
+     *  programming languages. The execution passes to the invokee where the
+     *  invoker does not execute until the invokee has finished and has returned
+     *  from the call.
+     *
+     *  - Parameter id: The unique identifier of the parameterised FSM which
+     *  we are calling.
+     *
+     *  - Parameter parameters: A list of key-value pairs which represent the
+     *  parameters of the call. The key represents the label of the parameter
+     *  and the value is the actual value that will be assigned to that
+     *  parameter.
+     *
+     *  - Parameter caller: The id of the caller FSM.
+     *
+     *  - Returns: A `Promise` representing the status of the invocation;
+     *  containing the returned value once the invocation has been complete.
+     */
+    func call<R>(_ id: FSM_ID, withParameters parameters: [String: Any], caller: FSM_ID) -> Promise<R>
     
+    /**
+     *  'Call' yourself recursively.
+     *
+     *  This function has the equivalent to calling
+     *  `call(_:withParameters:caller:)` where `id` and `caller` have the same
+     *  value.
+     *
+     *  - Parameter id: The unique identifier of the parameterised FSM which
+     *  is being recursively invoked.
+     *
+     *  - Parameter parameters: A list of key-value pairs which represent the
+     *  parameters of the call. The key represents the label of the parameter
+     *  and the value is the actual value that will be assigned to that
+     *  parameter.
+     *
+     *  - Returns: A `Promise` representing the status of the invocation;
+     *  containing the returned value once the invocation has been complete.
+     */
+    func callSelf<R>(_: FSM_ID, withParameters: [String: Any]) -> Promise<R>
+    
+    /**
+     *  'Invoke' a parameterised machine.
+     *
+     *  This function has the semantics of a parallel process. In this way,
+     *  the invoker keeps running while the invokee is executing.
+     *
+     *  - Parameter id: The unique identifier of the parameterised FSM which
+     *  we are calling.
+     *
+     *  - Parameter parameters: A list of key-value pairs which represent the
+     *  parameters of the call. The key represents the label of the parameter
+     *  and the value is the actual value that will be assigned to that
+     *  parameter.
+     *
+     *  - Returns: A `Promise` representing the status of the invocation;
+     *  containing the returned value once the invocation has been complete.
+     */
     func invoke<R>(_: FSM_ID, withParameters: [String: Any]) -> Promise<R>
-    
-    func invokeSelf<R>(_: FSM_ID, withParameters: [String: Any]) -> Promise<R>
 
 }
