@@ -1,9 +1,9 @@
 /*
- * globals.swift
+ * FSMGateway.swift
  * swiftfsm
  *
- * Created by Callum McColl on 8/09/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 25/12/18.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,79 +56,4 @@
  *
  */
 
-import FSM
-import Functional
-import KripkeStructure
-
-/**
- *  Set to true when debugging is turned on.
- */
-public var DEBUG: Bool = false
-
-/**
- *  Set to true when generate `KripkeStructure`s.
- */
-public var KRIPKE: Bool = false
-
-/**
- *  Set to true when all Finite State Machines should be stopped.
- */
-public var STOP: Bool = false
-
-public func cast<S1, S2, T>(transitions: [Transition<S1, T>]) -> [Transition<S2, T>] {
-    return transitions.map(cast)
-}
-
-public func cast<S1, S2, T>(_ transition: Transition<S1, T>) -> Transition<S2, T> {
-    return Transition<S2, T>(transition.target) {
-        guard let state = $0 as? S1 else {
-            fatalError("Unable to cast \($0) to \(S1.self)")
-        }
-        return transition.canTransition(state)
-    }
-}
-
-/**
- *  A convenience function which only prints when `DEBUG` is true.
- */
-public func dprint(
-    _ items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n"
-) {
-    if false == DEBUG {
-        return
-    }
-    _ = items.map {
-        print($0, separator: separator, terminator: terminator)
-    }
-}
-
-/**
- *  A convenience function which only prints when `DEBUG` is true.
- */
-public func dprint<Target: TextOutputStream>(
-    _ items: Any ...,
-    separator: String = " ",
-    terminator: String = "\n",
-    toStream output: inout Target
-) {
-    if false == DEBUG {
-        return
-    }
-    _ = items.map {
-        print(
-            $0,
-            separator: separator,
-            terminator: terminator,
-            to: &output
-        )
-    }
-}
-
-/**
- *  Sets `STOP` to true.
- */
-public func stopAll() {
-    STOP = true
-}
+public protocol FSMGateway: Invoker, FSMLocator {}

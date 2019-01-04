@@ -66,14 +66,4 @@
  *
  *  - SeeAlso: `KripkeRingletKripkeStructureGenerator`
  */
-public protocol ExternalVariables: Equatable {
-
-    /**
-     *  Create a new instance from a dictionary where the key represents the
-     *  variables label and the value represents the value of the variable.
-     *
-     *  - Parameter fromDictionary: The variables in a dictionary.
-     */
-    init(fromDictionary: [String: Any])
-
-}
+public protocol ExternalVariables: Equatable, ConvertibleFromDictionary {}

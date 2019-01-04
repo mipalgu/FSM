@@ -1,9 +1,9 @@
 /*
- * KripkeStructureGenerator.swift
- * swiftfsm
+ * ConvertibleFromDictionary.swift
+ * FSM
  *
- * Created by Callum McColl on 11/11/2015.
- * Copyright © 2015 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 30/12/18.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,16 +56,14 @@
  *
  */
 
-import KripkeStructure
-
-/**
- *  Conforming types are responsible for generating `KripkeStructure`s.
- */
-public protocol KripkeStructureGenerator {
+public protocol ConvertibleFromDictionary {
     
     /**
-     *  Generate the `KripkeStructure`.
+     *  Create a new instance from a dictionary where the key represents the
+     *  variables label and the value represents the value of the variable.
+     *
+     *  - Parameter fromDictionary: The variables in a dictionary.
      */
-    func generate()
+    init(fromDictionary: [String: Any])
     
 }

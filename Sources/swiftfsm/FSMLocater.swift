@@ -1,9 +1,9 @@
 /*
- * FactoriesTest.swift 
- * tests 
+ * FSMLocater.swift 
+ * swiftfsm 
  *
- * Created by Callum McColl on 16/04/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 22/12/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,83 +56,56 @@
  *
  */
 
-import XCTest
-@testable import FSM
-@testable import swiftfsm
+/**
+ *  This protocol provides a common interface for machines to be able to
+ *  interact with instances of other machines which they depend on.
+ *
+ *  An example is machines that depend on other submachines. Through the use of
+ *  this protocol, machines are able to fetch instances of other machine which
+ *  can be used to perform some of the general operations provided by swiftfsm.
+ *  These include suspension, resumption, restarting fsms and forcing fsms
+ *  to finish.
+ *
+ */
+public protocol FSMLocator: class {
 
-class FactoriesTests: XCTestCase {
-
-    static var allTests: [(String, (FactoriesTests) -> () throws -> Void)] {
-        return [
-            ("test_count", test_count),
-            ("test_isEmptyWhenEmpty", test_isEmptyWhenEmpty),
-            ("test_isEmptyWhenNotEmpty", test_isEmptyWhenNotEmpty),
-            ("test_isMonostate", test_isMonostate),
-            ("test_peek", test_peek),
-            ("test_pop", test_pop)
-        ]
-    }
+    /**
+     *  Fetch an FSM from its associated unique identifier.
+     *
+     *  - Parameter id: The id associated with an instance of
+     *  `AnyScheduleableFiniteStateMachine`. How this id is fetched or assigned
+     *  is beyond the scope of this protocol.
+     *
+     *  - Returns: The `AnyControllableFiniteStateMachine` associated with the
+     *  provided identifier.
+     *
+     *  - Attention: This function assumes that the id specified is already
+     *  associated with an FSM. If this is not the case then this function
+     *  will cause a fatal error.
+     *
+     *  - Complexity: O(1)
+     */
+    func fsm(fromID id: FSM_ID) -> AnyControllableFiniteStateMachine
     
-    let fsm: FSMType = .scheduleableFSM(FSM(
-        "temp",
-        initialState: EmptyMiPalState("_initial")
-    ).asScheduleableFiniteStateMachine)
-
-    override func setUp() {
-        var f: Factories = Factories()
-        f.clear()
-    }
-
-    func test_count() {
-        var f: Factories = Factories()
-        XCTAssertEqual(f.count, 0)
-        f.push({ _,_,_ in (self.fsm, [])})
-        f.push({ _,_,_ in (self.fsm, [])})
-        XCTAssertEqual(f.count, 2)
-    }
-
-    func test_isEmptyWhenEmpty() {
-        let f: Factories = Factories()
-        XCTAssert(f.isEmpty)
-    }
-
-    func test_isEmptyWhenNotEmpty() {
-        var f: Factories = Factories()
-        f.push({ _,_,_ in (self.fsm, [])})
-        XCTAssertFalse(f.isEmpty)
-    }
-
-    func test_isMonostate() {
-        var f1: Factories = Factories()
-        let f2: Factories = Factories()
-        let count: Int = f1.count
-        XCTAssertEqual(f1.count, f2.count)
-        f1.push({ _,_,_ in (self.fsm, []) })
-        XCTAssertEqual(f1.count, f2.count)
-        XCTAssertEqual(f1.count, count + 1)
-    }
-
-    func test_peek() {
-        var f: Factories = Factories()
-        let fact: (String, Invoker, swiftfsm.Timer) -> (FSMType, [Dependency]) = { _,_,_ in
-            (.scheduleableFSM(FSM("test", initialState: EmptyMiPalState("initial")).asScheduleableFiniteStateMachine), [])
-        }
-        f.push({ _,_,_ in (self.fsm, [])})
-        f.push(fact)
-        XCTAssertEqual(f.count, 2)
-        _ = f.peek()
-        XCTAssertEqual(f.count, 2)
-    }
-
-    func test_pop() {
-        var f: Factories = Factories()
-        f.push({ _,_,_ in (self.fsm, [])})
-        f.push({ _,_,_ in (self.fsm, [])})
-        XCTAssertEqual(f.count, 2)
-        let _ = f.pop()
-        XCTAssertEqual(f.count, 1)
-        let _ = f.pop()
-        XCTAssertEqual(f.count, 0)
-    }
+    /**
+     *  Fetch the unique identifer associated with an FSM.
+     *
+     *  - Parameter name: The name of the FSM.
+     *
+     *  - Returns: The id of the FSM.
+     *
+     *  - Attention: Attempting to fetch the id using an invalid name will
+     *  result in a new id being associated with `name`. Any further call to
+     *  this function with the same value for `name` will therefore return
+     *  this newly generated unique identifier.
+     *
+     *  - Attention: This function mandates that FSM's may only fetch id's
+     *  of other FSM's which they depend on. This means that they are unable to
+     *  fetch id's of arbitrary machines which do not exist within their
+     *  hierarchy.
+     *
+     *  - Complexity: O(length(name))
+     */
+    func id(of name: String) -> FSM_ID
 
 }

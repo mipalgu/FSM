@@ -48,10 +48,10 @@ generate-xcodeproj:
 
 CFLAGS=-I${ROOT}/include -I${ROOT}/usr/local/include -I${GUNAO_DIR}/posix/CLReflect -I${GUNAO_DIR}/Common
 CXXFLAGS=-I${ROOT}/include -I${ROOT}/usr/local/include -I${GUNAO_DIR}/posix/CLReflect
-LDFLAGS=-L${ROOT}/lib -L${ROOT}/usr/local/lib -L${ROOT}/lib/swift/linux -lgusimplewhiteboard
+LDFLAGS=-L${ROOT}/usr/local/lib -lgusimplewhiteboard
 
 .ifdef SYSROOT
-LDFLAGS+=-fuse-ld=/home/user/src/swift-tc/ctc-linux64-atom-2.5.2.74/bin/i686-aldebaran-linux-gnu-ld 
+LDFLAGS+=-L${ROOT} -L${ROOT}/lib/swift/linux -fuse-ld=/home/user/src/swift-tc/ctc-linux64-atom-2.5.2.74/bin/i686-aldebaran-linux-gnu-ld 
 .endif
 
 .if ${OS} == Darwin
