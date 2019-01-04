@@ -57,8 +57,10 @@
  */
 
 public enum Dependency {
-
-    indirect case parameterisedMachine(AnyParameterisedFiniteStateMachine, String, [Dependency])
+    
+    indirect case callableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
+    
+    indirect case invokableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
 
     indirect case submachine(AnyControllableFiniteStateMachine, [Dependency])
 
