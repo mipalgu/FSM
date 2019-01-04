@@ -17,5 +17,5 @@ BUILD_DIR=`pwd`/.build
 BUILD_BIN=${BUILD_DIR}/debug
 BUILT_PRODUCTS_DIR=${BUILD_DIR}/app
 CCFLAGS="-Xcc -I/include -Xcc -I/usr/local/include -Xcc -I/Users/callum/src/MiPal/GUNao/posix/CLReflect -Xcc -I/Users/callum/src/MiPal/GUNao/Common"
-LINKFLAGS="-Xlinker -L/lib -Xlinker -L/usr/local/lib -Xlinker -L/lib/swift/linux -Xlinker -lgusimplewhiteboard -Xlinker -lc++"
+LINKFLAGS="-Xlinker -L/usr/local/lib -Xlinker -lgusimplewhiteboard -Xlinker -lc++"
 SWIFTCFLAGS="-Xswiftc -L/usr/local/lib -Xswiftc -I/usr/local/include -Xswiftc -I/Users/callum/src/MiPal/GUNao/posix/CLReflect -Xswiftc -Xfrontend -Xswiftc -color-diagnostics"
