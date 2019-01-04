@@ -56,9 +56,16 @@
  *
  */
 
+#if os(macOS)
+import Darwin
+#else
+import Glibc
+#endif
+
 import FSM
 import Functional
 import KripkeStructure
+import IO
 
 /**
  *  Set to true when debugging is turned on.
@@ -131,4 +138,23 @@ public func dprint<Target: TextOutputStream>(
  */
 public func stopAll() {
     STOP = true
+}
+
+fileprivate let printer = CommandLinePrinter(
+    errorStream: StderrOutputStream(),
+    messageStream: StdoutOutputStream(),
+    warningStream: StdoutOutputStream()
+)
+
+public func swiftfsmError(_ errorMessage: String) -> Never {
+    printer.error(str: errorMessage)
+    exit(EXIT_FAILURE)
+}
+
+public func swiftfsmMessage(_ message: String) {
+    printer.message(str: message)
+}
+
+public func swiftfsmWarning(_ warningMessage: String) {
+    printer.warning(str: warningMessage)
 }
