@@ -66,6 +66,10 @@ public final class AnyKripkeStructureViewFactory<State: KripkeStateType> {
         self._make = { AnyKripkeStructureView(make($0)) }
     }
     
+    public convenience init<ViewFactory: KripkeStructureViewFactory>(_ factory: ViewFactory) where ViewFactory.View.State == State {
+        self.init(factory.make)
+    }
+    
     public func make(identifier: String) -> AnyKripkeStructureView<State> {
         return self._make(identifier)
     }
