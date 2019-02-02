@@ -67,6 +67,10 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     public func takeRecord(of object: Any) -> KripkeStatePropertyList {
         return self._takeRecord(of: object, withMemoryCache: [])
     }
+    
+    public func getKripkeStatePropertyType(_ val: Any) -> (KripkeStatePropertyTypes, Any) {
+        return self.getKripkeStatePropertyType(val, validValues: [], withMemoryCache: [])
+    }
 
     private func _takeRecord(
         of object: Any,
