@@ -67,6 +67,9 @@ public class KripkeStatePropertySpinnerConverter:
 {
 
     private let spinners: Spinners
+    
+    fileprivate let recorder = MirrorKripkePropertiesRecorder()
+    fileprivate let runner = SpinnerRunner()
 
     /**
      *  Create a new `KripkeStatePropertySpinnerConverter`.
@@ -122,31 +125,55 @@ public class KripkeStatePropertySpinnerConverter:
         }
     }
     
-    public func convert<T>(value: T) -> (T, (T) -> T?)? {
-        let recorder = MirrorKripkePropertiesRecorder()
-        let (type, kripkeValue) = recorder.getKripkeStatePropertyType(value)
-        switch type {
-        case .Compound(let props):
-            guard let ConvertibleType = T.self as? ConvertibleFromDictionary.Type else {
+    fileprivate func convertCompound<T>(_ props: KripkeStatePropertyList, type: T.Type) -> (T, (T) -> T?)? {
+        guard let ConvertibleType = T.self as? ConvertibleFromDictionary.Type else {
+            return nil
+        }
+        var defaultProps: KripkeStatePropertyList = [:]
+        var defaultValues: [String: Any] = [:]
+        var spinners: [String: (Any) -> Any?] = [:]
+        defaultValues.reserveCapacity(props.count)
+        spinners.reserveCapacity(props.count)
+        props.forEach {
+            let (defaults, spinner) = self.convert(from: $1)
+            let (type, value) = self.recorder.getKripkeStatePropertyType($1)
+            defaultProps[$0] = KripkeStateProperty(type: type, value: value)
+            defaultValues[$0] = defaults
+            spinners[$0] = spinner
+        }
+        guard let defaultValue: T = ConvertibleType.init(fromDictionary: defaultValues) as? T else {
+            return nil
+        }
+        return (defaultValue, {
+            let latestProps = self.recorder.takeRecord(of: $0)
+            guard let vs = self.runner.spin(
+                index: latestProps.startIndex,
+                vars: latestProps,
+                defaultValues: defaultProps,
+                spinners: spinners
+            ) else {
                 return nil
             }
-            var defaultValues: [String: Any] = [:]
-            defaultValues.reserveCapacity(props.count)
-            var spinners: [String: (Any) -> Any?] = [:]
-            spinners.reserveCapacity(props.count)
-            props.forEach {
-                let (defaults, spinner) = self.convert(from: $1)
-                defaultValues[$0] = defaults
-                spinners[$0] = spinner
-            }
-            let defaultValue: T = ConvertibleType.init(fromDictionary: defaultValues) as! T
-            return (defaultValue, { _ in nil })
+            return ConvertibleType.init(fromDictionary: vs.propertiesDictionary) as? T
+        })
+    }
+    
+    public func convert<T>(value: T) -> (T, (T) -> T?)? {
+        let (type, kripkeValue) = self.recorder.getKripkeStatePropertyType(value)
+        switch type {
+        case .Compound(let props):
+            return self.convertCompound(props, type: T.self)
         default:
             let (defaults, spinner) = self.convert(from: KripkeStateProperty(type: type, value: kripkeValue))
             guard let castDefaults = defaults as? T else {
                 return nil
             }
-            return (castDefaults, { spinner($0) as? T })
+            return (castDefaults, {
+                guard let val = spinner($0) as? T else {
+                    return nil
+                }
+                return val
+            })
         }
     }
     
