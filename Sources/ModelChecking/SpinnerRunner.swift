@@ -57,6 +57,7 @@
  */
 
 import KripkeStructure
+import swift_helpers
 
 /**
  *  Provides a way to retrieve the next values within a `Spinners.Spinner`.
@@ -85,8 +86,8 @@ public class SpinnerRunner: SpinnerRunnerType {
      *  - Returns: The next set of values on the series.
      */
     public func spin(
-        index: DictionaryIndex<String, KripkeStateProperty>,
-        vars: KripkeStatePropertyList,
+        index: Array<(key: String, value: KripkeStateProperty)>.Index,
+        vars: Array<(key: String, value: KripkeStateProperty)>,
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
     ) -> KripkeStatePropertyList? {
@@ -94,10 +95,12 @@ public class SpinnerRunner: SpinnerRunnerType {
             return nil
         }
         var vars = vars
+        var props: KripkeStatePropertyList = KripkeStatePropertyList(Dictionary(uniqueKeysWithValues: vars))
         let name: String = vars[index].key
         let currentValue = vars[index].value
         guard let newValue = spinners[name]?(currentValue.value) else {
-            vars[vars[index].key] = defaultValues[name]!
+            props[vars[index].key] = defaultValues[name]!
+            vars[index] = (vars[index].key, defaultValues[name]!)
             return self.spin(
                 index: vars.index(after: index),
                 vars: vars,
@@ -105,11 +108,11 @@ public class SpinnerRunner: SpinnerRunnerType {
                 spinners: spinners
             )
         }
-        vars[vars[index].key] = KripkeStateProperty(
+        props[vars[index].key] = KripkeStateProperty(
             type: vars[index].value.type,
             value: newValue
         )
-        return vars
+        return props
     }
 
 }

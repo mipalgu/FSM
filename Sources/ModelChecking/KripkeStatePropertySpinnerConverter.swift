@@ -145,7 +145,7 @@ public class KripkeStatePropertySpinnerConverter:
             return nil
         }
         return (defaultValue, {
-            let latestProps = self.recorder.takeRecord(of: $0)
+            let latestProps = self.recorder.takeRecord(of: $0).sorted { $0.key < $1.key }
             guard let vs = self.runner.spin(
                 index: latestProps.startIndex,
                 vars: latestProps,
