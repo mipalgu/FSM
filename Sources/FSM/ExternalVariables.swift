@@ -56,6 +56,8 @@
  *
  */
 
+import Utilities
+
 /**
  *  Conforming types represent all possible variables that are external to the
  *  application.

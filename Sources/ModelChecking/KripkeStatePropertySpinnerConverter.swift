@@ -57,6 +57,7 @@
  */
 
 import KripkeStructure
+import Utilities
 
 /**
  *  Provides a way to convert a `KripkeStateProperty` to a `Spinners.Spinner`.
@@ -120,4 +121,33 @@ public class KripkeStatePropertySpinnerConverter:
             return (ksp.value, self.spinners.nilSpinner)
         }
     }
+    
+    public func convert<T>(value: T) -> (T, (T) -> T?)? {
+        let recorder = MirrorKripkePropertiesRecorder()
+        let (type, kripkeValue) = recorder.getKripkeStatePropertyType(value)
+        switch type {
+        case .Compound(let props):
+            guard let ConvertibleType = T.self as? ConvertibleFromDictionary.Type else {
+                return nil
+            }
+            var defaultValues: [String: Any] = [:]
+            defaultValues.reserveCapacity(props.count)
+            var spinners: [String: (Any) -> Any?] = [:]
+            spinners.reserveCapacity(props.count)
+            props.forEach {
+                let (defaults, spinner) = self.convert(from: $1)
+                defaultValues[$0] = defaults
+                spinners[$0] = spinner
+            }
+            let defaultValue: T = ConvertibleType.init(fromDictionary: defaultValues) as! T
+            return (defaultValue, { _ in nil })
+        default:
+            let (defaults, spinner) = self.convert(from: KripkeStateProperty(type: type, value: kripkeValue))
+            guard let castDefaults = defaults as? T else {
+                return nil
+            }
+            return (castDefaults, { spinner($0) as? T })
+        }
+    }
+    
 }
