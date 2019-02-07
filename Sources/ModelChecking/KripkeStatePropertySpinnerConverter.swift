@@ -208,7 +208,11 @@ public class KripkeStatePropertySpinnerConverter:
         case .EmptyCollection:
             return (value, { _ in nil })
         case .Collection(let arr):
-            fatalError("Unable to convert value which is a collection.")
+            guard let collection = arr as? KripkeCollection else {
+                return nil
+            }
+            return nil
+            //return self.convert(collection.toArray())
         case .Compound(let props):
             return self.convertCompound(props, type: T.self)
         default:
