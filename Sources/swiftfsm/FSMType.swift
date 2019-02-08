@@ -246,7 +246,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
 
 extension FSMType {
     
-    var resultContainer: AnyResultContainer<Any>? {
+    public var resultContainer: AnyResultContainer<Any>? {
         switch self {
         case .controllableFSM:
             return nil
