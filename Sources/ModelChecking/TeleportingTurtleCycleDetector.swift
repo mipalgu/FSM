@@ -87,16 +87,16 @@ public class TeleportingTurtleCycleDetector<E: Equatable>: CycleDetector {
      *
      *  - Parameter element: The current element in the series.
      *
-     *  - Returns: A tuple where the first element is a Bool indicating whether
-     *  a cycle was found and the second element is a tuple containing the new
-     *  turtle, new power and new cycle length.
+     *  - Returns: A Bool indicating whether a cycle has been found.
      */
-    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
+    public func inCycle(data: inout Data, element: Element) -> Bool {
         let inCycle = nil == data.turtle ? false : data.turtle! == element
         if data.length >= data.power {
-            return (inCycle, (element, data.power * 2, 1))
+            data = (element, data.power * 2, 1)
+            return inCycle
         }
-        return (inCycle, (data.turtle, data.power, data.length + 1))
+        data = (data.turtle, data.power, data.length + 1)
+        return inCycle
     }
 
 }

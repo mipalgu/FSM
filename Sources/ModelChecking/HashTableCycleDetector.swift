@@ -57,7 +57,6 @@
  */
 
 import Hashing
-import Utilities
 
 /**
  *  Detects cycles using a hash table.
@@ -65,10 +64,10 @@ import Utilities
 public class HashTableCycleDetector<E: Hashable>: CycleDetector {
 
     /**
-     *  A Reference to a Set of `Element`s.
+     *  A Set of `Element`s.
      *
      */
-    public typealias Data = Ref<HashSink<Element, Element>>
+    public typealias Data = HashSink<Element, Element>
 
     /**
      *  The elements of the cycle.
@@ -81,8 +80,7 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  An empty hash table.
      */
     public var initialData: Data {
-        let sink = HashSink<Element, Element>(minimumCapacity: 500000)
-        return Ref(value: sink)
+        return HashSink<Element, Element>(minimumCapacity: 500000)
     }
 
     public init() {}
@@ -94,16 +92,15 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *
      *  - Parameter element: The current element in the series.
      *
-     *  - Returns: A tuple where the first element is a Bool indicating whether
-     *  a cycle was detected.  The second element is the new hash table.
+     *  - Returns: A Bool indicating whether a cycle has been found.
      */
-    public func inCycle(data: Data, element: Element) -> (Bool, Data) {
+    public func inCycle(data: inout Data, element: Element) -> Bool {
         //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
-        if true == data.value.contains(element) {
-            return (true, data)
+        if true == data.contains(element) {
+            return true
         }
-        data.value.insert(element)
-        return (false, data)
+        data.insert(element)
+        return false
     }
 
 }
