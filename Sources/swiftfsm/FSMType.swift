@@ -246,6 +246,15 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
 
 extension FSMType {
     
+    public var parameters: Any? {
+        switch self {
+        case .parameterisedFSM(let fsm):
+            return fsm.parameters
+        default:
+            return nil
+        }
+    }
+    
     public var resultContainer: AnyResultContainer<Any>? {
         switch self {
         case .controllableFSM:
