@@ -206,6 +206,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         withMemoryCache memoryCache: [AnyObject]
     ) -> (KripkeStatePropertyTypes, Any) {
         let mirror = Mirror(reflecting: val)
+        // Check for collections.
         if  mirror.displayStyle == Mirror.DisplayStyle.collection ||
             mirror.displayStyle == Mirror.DisplayStyle.dictionary ||
             mirror.displayStyle == Mirror.DisplayStyle.set
@@ -219,6 +220,16 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                     self.convertValue(value: $0, validValues: values, withMemoryCache: memoryCache)
                 }),
                 arr
+            )
+        }
+        // Check for optionals.
+        if mirror.displayStyle == Mirror.DisplayStyle.optional {
+            guard let (_, value) = mirror.children.first else {
+                return (.Optional(nil), Optional<Any>.none as Any)
+            }
+            return (
+                .Optional(self.convertValue(value: value, validValues: values, withMemoryCache: memoryCache)),
+                Optional<Any>.some(self.getKripkeStatePropertyType(value, validValues: values, withMemoryCache: memoryCache).1) as Any
             )
         }
         switch val {
