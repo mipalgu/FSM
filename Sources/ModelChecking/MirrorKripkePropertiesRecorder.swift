@@ -205,6 +205,22 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         validValues values: [Any],
         withMemoryCache memoryCache: [AnyObject]
     ) -> (KripkeStatePropertyTypes, Any) {
+        let mirror = Mirror(reflecting: val)
+        if  mirror.displayStyle == Mirror.DisplayStyle.collection ||
+            mirror.displayStyle == Mirror.DisplayStyle.dictionary ||
+            mirror.displayStyle == Mirror.DisplayStyle.set
+        {
+            var arr: [Any] = []
+            mirror.children.forEach {
+                arr.append(self.getKripkeStatePropertyType($0, validValues: values, withMemoryCache: memoryCache).1)
+            }
+            return (
+                .Collection(mirror.children.map {
+                    self.convertValue(value: $0, validValues: values, withMemoryCache: memoryCache)
+                }),
+                arr
+            )
+        }
         switch val {
         case is Bool:
             let val: Bool = val as! Bool
@@ -282,18 +298,6 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                 return (.String, values[0])
             }
             return (.String, val)
-        case is KripkeCollection:
-            let collection = (val as! KripkeCollection).toArray()
-            var arr: [Any] = []
-            collection.forEach {
-                arr.append(self.getKripkeStatePropertyType($0, validValues: values, withMemoryCache: memoryCache).1)
-            }
-            return (
-                .Collection(collection.map {
-                    self.convertValue(value: $0, validValues: values, withMemoryCache: memoryCache)
-                }),
-                arr
-            )
         default:
             var memoryCache = memoryCache
             if var temp = val as? AnyObject {
