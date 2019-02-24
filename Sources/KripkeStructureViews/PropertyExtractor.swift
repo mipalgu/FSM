@@ -87,6 +87,13 @@ public final class PropertyExtractor<Formatter: PropertyFormatter> {
     
     fileprivate func convert(_ property: KripkeStateProperty, properties: Ref<[String: String]>, label: String) {
         switch property.type {
+        case .Optional(let property):
+            switch property {
+            case .none:
+                properties.value[label] = self.formatter.formatString("Nothing")
+            case .some(let prop):
+                self.convert(prop, properties: properties, label: label)
+            }
         case .EmptyCollection:
             return
         case .Collection(let props):

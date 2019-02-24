@@ -90,7 +90,7 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
         }
     }
     
-    fileprivate func formatString(_ str: String) -> String {
+    public func formatString(_ str: String) -> String {
         return str.lazy.map {
             if $0 == "." {
                 return String(self.delimiter)
