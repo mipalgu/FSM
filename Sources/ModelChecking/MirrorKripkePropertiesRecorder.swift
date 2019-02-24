@@ -76,6 +76,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         of object: Any,
         withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStatePropertyList {
+        print("taking record")
         let computedVars: [String: Any]
         let manipulators: [String: (Any) -> Any]
         let validValues: [String: [Any]]
@@ -88,6 +89,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             manipulators = [:]
             validValues = [:]
         }
+        print("object: \(object)")
         return self.getPropertiesFromMirror(
             mirror: Mirror(reflecting: object),
             computedVars: computedVars,
@@ -111,8 +113,10 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         validValues: [String: [Any]] = [:],
         withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStatePropertyList {
+        print("getPropertiesFromMirror")
         var p = KripkeStatePropertyList()
         let parent: Mirror? = mirror.superclassMirror
+        print("check parent")
         if nil != parent {
             p = self.getPropertiesFromMirror(
                 mirror: parent!,
@@ -120,8 +124,12 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                 withMemoryCache: memoryCache
             )
         }
+        print("finish parent")
+        print("computedVars: \(computedVars)")
+        print("children: \(mirror.children)")
         for (index, child) in mirror.children.enumerated() {
             let label = child.label ?? "\(index)"
+            print("Handle \(label)")
             if let computedVal = computedVars[label] {
                 p[label] = self.convertValue(
                     value: computedVal,

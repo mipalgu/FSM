@@ -56,6 +56,12 @@
  *
  */
 
+#if os(macOS)
+import Darwin
+#else
+import Glibc
+#endif
+
 import Functional
 
 public struct KripkeStatePropertyList {
@@ -116,6 +122,8 @@ extension KripkeStatePropertyList: Hashable, CustomStringConvertible {
 
     public func hash(into hasher: inout Hasher) {
         self.properties.sorted { $0.key < $1.key }.forEach {
+            print("add \($0) into hasher")
+            fflush(stdout)
             hasher.combine($0)
             hasher.combine($1)
         }
