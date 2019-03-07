@@ -121,6 +121,6 @@ public protocol Invoker {
      *  - Returns: A `Promise` representing the status of the invocation;
      *  containing the returned value once the invocation has been complete.
      */
-    func invoke<R>(_: FSM_ID, withParameters: [String: Any]) -> Promise<R>
+    func invoke<R>(_: FSM_ID, withParameters: [String: Any], caller: FSM_ID) -> Promise<R>
 
 }
