@@ -61,9 +61,17 @@ import IO
 import KripkeStructure
 import Utilities
 
+#if os(macOS)
+import Darwin
+#else
+import Glibc
+#endif
+
 public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
     
     fileprivate let extractor: PropertyExtractor<NuSMVPropertyFormatter>
+    
+    fileprivate let identifier: String
     
     fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
     
@@ -80,10 +88,12 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate var initials: Set<[String: String]> = []
     
     public init(
+        identifier: String,
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
         inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
         outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
     ) {
+        self.identifier = identifier
         self.extractor = extractor
         self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
@@ -91,20 +101,30 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     
     public func reset() {
         self.sink = HashSink(minimumCapacity: 500000)
-        self.stream = self.inputOutputStreamFactory.make(id: "main.transitions.smv")
+        self.stream = self.inputOutputStreamFactory.make(id: self.identifier + ".transitions.smv")
         self.properties = [:]
         self.firstState = nil
         self.initials = []
     }
     
     public func commit(state: State, isInitial: Bool) {
+        print("view.commit")
+        fflush(stdout)
         if nil == self.firstState {
             self.firstState = state
         }
+        print("2")
+        fflush(stdout)
         if sink.contains(state.properties) {
             return
         }
+        print("3")
+        fflush(stdout)
+        print("state.properties: \(state.properties)")
+        fflush(stdout)
         sink.insert(state.properties)
+        print("view.extract")
+        fflush(stdout)
         let props = self.extractor.extract(from: state.properties)
         if true == isInitial {
             self.initials.insert(props)
@@ -116,6 +136,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
             list.value.insert(value)
         }
+        print("view.createCase")
+        fflush(stdout)
         guard let content = self.createCase(of: state) else {
             return
         }

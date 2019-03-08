@@ -76,13 +76,15 @@ public class HashTableCycleDetectorTests: XCTestCase {
     }
 
     func test_doesNotDetectCycleWithEmptyData() {
-        let (exists, _) = self.detector.inCycle(data: self.detector.initialData, element: 2)
+        var data = self.detector.initialData
+        let exists = self.detector.inCycle(data: &data, element: 2)
         XCTAssertFalse(exists)
     }
 
     func test_detectsCycle() {
-        let (_, newData) = self.detector.inCycle(data: self.detector.initialData, element: 2)
-        let (exists, _) = self.detector.inCycle(data: newData, element: 2)
+        var data = self.detector.initialData
+        _ = self.detector.inCycle(data: &data, element: 2)
+        let exists = self.detector.inCycle(data: &data, element: 2)
         XCTAssertTrue(exists)
     }
 

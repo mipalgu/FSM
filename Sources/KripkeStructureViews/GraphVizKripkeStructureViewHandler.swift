@@ -116,6 +116,11 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
     
     fileprivate func formatProperty(_ prop: KripkeStateProperty, _ indent: Int) -> String? {
         switch prop.type {
+        case .Optional(let property):
+            guard let property = property else {
+                return "Nothing"
+            }
+            return self.formatProperty(property, indent)
         case .EmptyCollection:
             return "[]"
         case .Collection(let collection):

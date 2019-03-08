@@ -67,11 +67,16 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     public func takeRecord(of object: Any) -> KripkeStatePropertyList {
         return self._takeRecord(of: object, withMemoryCache: [])
     }
+    
+    public func getKripkeStatePropertyType(_ val: Any) -> (KripkeStatePropertyTypes, Any) {
+        return self.getKripkeStatePropertyType(val, validValues: [val], withMemoryCache: [])
+    }
 
     private func _takeRecord(
         of object: Any,
         withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStatePropertyList {
+        print("taking record")
         let computedVars: [String: Any]
         let manipulators: [String: (Any) -> Any]
         let validValues: [String: [Any]]
@@ -84,6 +89,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             manipulators = [:]
             validValues = [:]
         }
+        print("object: \(object)")
         return self.getPropertiesFromMirror(
             mirror: Mirror(reflecting: object),
             computedVars: computedVars,
@@ -107,8 +113,10 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         validValues: [String: [Any]] = [:],
         withMemoryCache memoryCache: [AnyObject]
     ) -> KripkeStatePropertyList {
+        print("getPropertiesFromMirror")
         var p = KripkeStatePropertyList()
         let parent: Mirror? = mirror.superclassMirror
+        print("check parent")
         if nil != parent {
             p = self.getPropertiesFromMirror(
                 mirror: parent!,
@@ -116,8 +124,12 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                 withMemoryCache: memoryCache
             )
         }
+        print("finish parent")
+        print("computedVars: \(computedVars)")
+        print("children: \(mirror.children)")
         for (index, child) in mirror.children.enumerated() {
             let label = child.label ?? "\(index)"
+            print("Handle \(label)")
             if let computedVal = computedVars[label] {
                 p[label] = self.convertValue(
                     value: computedVal,
@@ -193,6 +205,33 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
         validValues values: [Any],
         withMemoryCache memoryCache: [AnyObject]
     ) -> (KripkeStatePropertyTypes, Any) {
+        let mirror = Mirror(reflecting: val)
+        // Check for collections.
+        if  mirror.displayStyle == Mirror.DisplayStyle.collection ||
+            mirror.displayStyle == Mirror.DisplayStyle.dictionary ||
+            mirror.displayStyle == Mirror.DisplayStyle.set
+        {
+            var arr: [Any] = []
+            mirror.children.forEach {
+                arr.append(self.getKripkeStatePropertyType($0, validValues: values, withMemoryCache: memoryCache).1)
+            }
+            return (
+                .Collection(mirror.children.map {
+                    self.convertValue(value: $0, validValues: values, withMemoryCache: memoryCache)
+                }),
+                arr
+            )
+        }
+        // Check for optionals.
+        if mirror.displayStyle == Mirror.DisplayStyle.optional {
+            guard let (_, value) = mirror.children.first else {
+                return (.Optional(nil), Optional<Any>.none as Any)
+            }
+            return (
+                .Optional(self.convertValue(value: value, validValues: values, withMemoryCache: memoryCache)),
+                Optional<Any>.some(self.getKripkeStatePropertyType(value, validValues: values, withMemoryCache: memoryCache).1) as Any
+            )
+        }
         switch val {
         case is Bool:
             let val: Bool = val as! Bool
@@ -270,18 +309,6 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                 return (.String, values[0])
             }
             return (.String, val)
-        case is KripkeCollection:
-            let collection = (val as! KripkeCollection).toArray()
-            var arr: [Any] = []
-            collection.forEach {
-                arr.append(self.getKripkeStatePropertyType($0, validValues: values, withMemoryCache: memoryCache).1)
-            }
-            return (
-                .Collection(collection.map {
-                    self.convertValue(value: $0, validValues: values, withMemoryCache: memoryCache)
-                }),
-                arr
-            )
         default:
             var memoryCache = memoryCache
             if var temp = val as? AnyObject {

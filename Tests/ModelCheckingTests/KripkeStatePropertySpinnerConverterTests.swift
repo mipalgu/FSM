@@ -1,9 +1,9 @@
 /*
- * Dependency.swift 
- * swiftfsm 
+ * KripkeStatePropertySpinnerConverterTests.swift 
+ * ModelCheckingTests 
  *
- * Created by Callum McColl on 21/08/2018.
- * Copyright © 2018 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 06/02/2019.
+ * Copyright © 2019 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,30 +56,57 @@
  *
  */
 
-public enum Dependency {
-    
-    indirect case callableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
-    
-    indirect case invokableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
+import XCTest
+@testable import ModelChecking
 
-    indirect case submachine(AnyControllableFiniteStateMachine, [Dependency])
+public class KripkeStatePropertySpinnerConverterTests: XCTestCase {
     
-    public var dependencies: [Dependency] {
-        switch self {
-        case .callableParameterisedMachine(_, let dependencies), .invokableParameterisedMachine(_, let dependencies):
-            return dependencies
-        case .submachine(_, let dependencies):
-            return dependencies
+    public static var allTests: [(String, (KripkeStatePropertySpinnerConverterTests) -> () throws -> Void)] {
+        return [
+        ]
+    }
+    
+    fileprivate var converter: KripkeStatePropertySpinnerConverter!
+    
+    public override func setUp() {
+        self.converter = KripkeStatePropertySpinnerConverter()
+    }
+    
+    public func test_canConvertSequence() {
+        let arr = [[1, 2], [3, 4, 5]]
+        guard let (defaultValue, spinner) = self.converter.convert(arr) else {
+            XCTFail("Unable to create spinner.")
+            return
+        }
+        var result = defaultValue
+        print(result)
+        while let temp = spinner(result) {
+            result = temp
+            print(result)
+        }
+    }
+
+    public func test_canConvertCompoundObject() {
+        let a = A(bool: false, dependencies: [A(bool: true, dependencies: [])])
+        guard let (defaultValue, spinner) = self.converter.convert(a) else {
+            XCTFail("Unable to create spinner.")
+            return
+        }
+        var result = defaultValue
+        print(result)
+        while let temp = spinner(result) {
+            result = temp
+            print(result)
         }
     }
     
-    public var fsm: FSMType {
-        switch self {
-        case .callableParameterisedMachine(let fsm, _), .invokableParameterisedMachine(let fsm, _):
-            return .parameterisedFSM(fsm)
-        case .submachine(let fsm, _):
-            return .controllableFSM(fsm)
-        }
+    fileprivate struct A: Equatable {
+        
+        var bool: Bool
+        
+        var dependencies: [A]
+        
     }
-
+    
+    
 }

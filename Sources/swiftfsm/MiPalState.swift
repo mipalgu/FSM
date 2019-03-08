@@ -65,8 +65,6 @@ import ModelChecking
 open class MiPalState:
     StateType,
     CloneableState,
-    CustomStringConvertible,
-    CustomDebugStringConvertible,
     MiPalActions,
     Transitionable,
     KripkeVariablesModifier

@@ -24,6 +24,9 @@ let package = Package(
         .target(name: "ExternalVariables", dependencies: ["GUSimpleWhiteboard", "Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
         .target(name: "FSMVerification", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
         .target(name: "swiftfsm", dependencies: ["Functional", "Utilities", "KripkeStructure", "FSM", "ModelChecking"]),
+        .testTarget(name: "ModelCheckingTests", dependencies: [
+            .target(name: "ModelChecking")
+        ]),
         .testTarget(name: "FSMTests", dependencies: [
             .target(name: "FSM"),
             .target(name: "swiftfsm"),

@@ -135,6 +135,11 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
     
     fileprivate func formatProperty(_ prop: KripkeStateProperty) -> String? {
         switch prop.type {
+        case .Optional(let property):
+            guard let property = property else {
+                return "Nothing"
+            }
+            return self.formatProperty(property)
         case .EmptyCollection:
             return "[]"
         case .Collection(let collection):

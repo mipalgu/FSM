@@ -57,6 +57,7 @@
  */
 
 import KripkeStructure
+import Utilities
 
 /**
  *  Provides a way to convert a `KripkeStateProperty` to a `Spinners.Spinner`.
@@ -66,6 +67,9 @@ public class KripkeStatePropertySpinnerConverter:
 {
 
     private let spinners: Spinners
+    
+    fileprivate let recorder = MirrorKripkePropertiesRecorder()
+    fileprivate let runner = SpinnerRunner()
 
     /**
      *  Create a new `KripkeStatePropertySpinnerConverter`.
@@ -120,4 +124,109 @@ public class KripkeStatePropertySpinnerConverter:
             return (ksp.value, self.spinners.nilSpinner)
         }
     }
+    
+    fileprivate func convertCompound<T>(_ props: KripkeStatePropertyList, type: T.Type) -> (T, (T) -> T?)? {
+        guard let ConvertibleType = T.self as? ConvertibleFromDictionary.Type else {
+            return nil
+        }
+        var defaultProps: KripkeStatePropertyList = [:]
+        var defaultValues: [String: Any] = [:]
+        var spinners: [String: (Any) -> Any?] = [:]
+        defaultValues.reserveCapacity(props.count)
+        spinners.reserveCapacity(props.count)
+        props.forEach {
+            let (defaults, spinner) = self.convert(from: $1)
+            let (type, value) = self.recorder.getKripkeStatePropertyType($1)
+            defaultProps[$0] = KripkeStateProperty(type: type, value: value)
+            defaultValues[$0] = defaults
+            spinners[$0] = spinner
+        }
+        guard let defaultValue: T = ConvertibleType.init(fromDictionary: defaultValues) as? T else {
+            return nil
+        }
+        return (defaultValue, {
+            let latestProps = self.recorder.takeRecord(of: $0).sorted { $0.key < $1.key }
+            guard let vs = self.runner.spin(
+                index: latestProps.startIndex,
+                vars: latestProps,
+                defaultValues: defaultProps,
+                spinners: spinners
+            ) else {
+                return nil
+            }
+            return ConvertibleType.init(fromDictionary: vs.propertiesDictionary) as? T
+        })
+    }
+    
+    public func convert<S: Sequence>(_ sequence: S) -> (AnySequence<S.Iterator.Element>, (AnySequence<S.Iterator.Element>) -> AnySequence<S.Iterator.Element>?)? {
+        guard let data: [(String, S.Iterator.Element, (S.Iterator.Element) -> S.Iterator.Element?)] = sequence.enumerated().failMap({
+            guard let (defaultValue, spinner) = self.convert($1) else {
+                return nil
+            }
+            return ("\($0)", defaultValue, spinner)
+        }) else {
+            return nil
+        }
+        let defaultValues = KripkeStatePropertyList(Dictionary(uniqueKeysWithValues: data.lazy.map { (index, defaultValue, _) in
+            let (type, value) = self.recorder.getKripkeStatePropertyType(defaultValue)
+            return (index, KripkeStateProperty(type: type, value: value))
+        }))
+        let spinners: [String: (Any) -> Any?] = Dictionary(uniqueKeysWithValues: data.lazy.map { (index, _, spinner) in
+            return (index, { ($0 as? S.Iterator.Element).flatMap(spinner) })
+        })
+        return (AnySequence(data.map { (_, value, _) in value }), { (sequence: AnySequence<S.Iterator.Element>) -> AnySequence<S.Iterator.Element>? in
+            let (type, _) = self.recorder.getKripkeStatePropertyType(sequence)
+            switch type {
+            case .EmptyCollection:
+                return nil
+            case .Collection(let arr):
+                let vars: Array<(key: String, value: KripkeStateProperty)> = Array(arr.enumerated().map { (offset, element) in
+                    let (type, value) = self.recorder.getKripkeStatePropertyType(element)
+                    return ("\(offset)", KripkeStateProperty(type: type, value: value))
+                })
+                guard
+                    let props = self.runner.spin(
+                        index: vars.startIndex,
+                        vars: vars,
+                        defaultValues: defaultValues,
+                        spinners: spinners
+                    ),
+                    let newSequence = props.sorted(by: { $0.key < $1.key }).failMap({ $1.value as? S.Iterator.Element })
+                else {
+                    return nil
+                }
+                return AnySequence(newSequence)
+            default:
+                return nil
+            }
+        })
+    }
+    
+    public func convert<T>(_ value: T) -> (T, (T) -> T?)? {
+        let (type, kripkeValue) = self.recorder.getKripkeStatePropertyType(value)
+        switch type {
+        case .EmptyCollection:
+            return (value, { _ in nil })
+        case .Collection(let arr):
+            guard let collection = arr as? KripkeCollection else {
+                return nil
+            }
+            return nil
+            //return self.convert(collection.toArray())
+        case .Compound(let props):
+            return self.convertCompound(props, type: T.self)
+        default:
+            let (defaults, spinner) = self.convert(from: KripkeStateProperty(type: type, value: kripkeValue))
+            guard let castDefaults = defaults as? T else {
+                return nil
+            }
+            return (castDefaults, {
+                guard let val = spinner($0) as? T else {
+                    return nil
+                }
+                return val
+            })
+        }
+    }
+    
 }

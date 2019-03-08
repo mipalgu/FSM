@@ -60,4 +60,6 @@ public protocol PropertyFormatter: LabelFormatter, ValueFormatter {
     
     var delimiter: Character { get }
     
+    func formatString(_ str: String) -> String
+    
 }

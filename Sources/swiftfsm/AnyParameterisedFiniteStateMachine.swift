@@ -91,6 +91,8 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _externalVariables: () -> [AnySnapshotController]
 
     private let _setExternalVariables: ([AnySnapshotController]) -> Void
+    
+    private let _getParameters: () -> Any
 
     private let _hasFinished: () -> Bool
 
@@ -178,6 +180,10 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._name()
     }
     
+    public var parameters: Any {
+        return self._getParameters()
+    }
+    
     public var resultContainer: AnyResultContainer<Any> {
         return self._resultContainer()
     }
@@ -193,6 +199,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._currentState = { AnyState(ref.value.currentState) }
         self._setExternalVariables = { ref.value.externalVariables = $0 }
         self._externalVariables = { ref.value.externalVariables }
+        self._getParameters = { ref.value.parameters.vars }
         self._hasFinished = { ref.value.hasFinished }
         self._initialState = { AnyState(ref.value.initialState) }
         self._isSuspended = { ref.value.isSuspended }
@@ -255,7 +262,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._restart()
     }
     
-    public func parameters<P: Variables>(_ newParameters: P) {
+    public func setParameters<P: Variables>(_ newParameters: P) {
         self._setParameters(newParameters)
     }
     

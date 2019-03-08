@@ -61,5 +61,7 @@ import KripkeStructure
 public protocol KripkePropertiesRecorder {
 
     func takeRecord(of: Any) -> KripkeStatePropertyList
+    
+    func getKripkeStatePropertyType(_: Any) -> (KripkeStatePropertyTypes, Any)
 
 }

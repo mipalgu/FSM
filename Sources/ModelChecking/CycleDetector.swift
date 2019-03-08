@@ -103,9 +103,8 @@ public protocol CycleDetector {
      *
      *  - Parameter element: The current `Element` within the sequence.
      *
-     *  - Returns: Whether a cycle has been found and the current `Data` for the
-     *  sequence.
+     *  - Returns: Whether a cycle has been found.
      */
-    func inCycle(data: Data, element: Element) -> (Bool, Data)
+    func inCycle(data: inout Data, element: Element) -> Bool
 
 }

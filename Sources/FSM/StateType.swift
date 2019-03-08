@@ -80,21 +80,6 @@ extension StateType where Self: Transitionable {
 
 }
 
-/**
- *  Make states printable and debug printable by default.
- */
-extension StateType where Self: CustomStringConvertible, Self: CustomDebugStringConvertible {
-
-    public var description: String {
-        return name
-    }
-
-    public var debugDescription: String {
-        return description
-    }
-
-}
-
 public extension StateType where Self: KripkeVariablesModifier {
 
     public var computedVars: [String: Any] {

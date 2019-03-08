@@ -1,9 +1,9 @@
 /*
- * Dependency.swift 
- * swiftfsm 
+ * NuSMVKripkeStructureViewFactory.swift
+ * KripkeStructureViews
  *
- * Created by Callum McColl on 21/08/2018.
- * Copyright © 2018 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 17/1/19.
+ * Copyright © 2019 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,30 +56,34 @@
  *
  */
 
-public enum Dependency {
-    
-    indirect case callableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
-    
-    indirect case invokableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
+import IO
+import KripkeStructure
 
-    indirect case submachine(AnyControllableFiniteStateMachine, [Dependency])
+public final class NuSMVKripkeStructureViewFactory<State: KripkeStateType>: KripkeStructureViewFactory {
     
-    public var dependencies: [Dependency] {
-        switch self {
-        case .callableParameterisedMachine(_, let dependencies), .invokableParameterisedMachine(_, let dependencies):
-            return dependencies
-        case .submachine(_, let dependencies):
-            return dependencies
-        }
+    fileprivate let extractor: PropertyExtractor<NuSMVPropertyFormatter>
+    
+    fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
+    
+    fileprivate let outputStreamFactory: OutputStreamFactory
+    
+    public init(
+        extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
+        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
+        outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
+    ) {
+        self.extractor = extractor
+        self.inputOutputStreamFactory = inputOutputStreamFactory
+        self.outputStreamFactory = outputStreamFactory
     }
     
-    public var fsm: FSMType {
-        switch self {
-        case .callableParameterisedMachine(let fsm, _), .invokableParameterisedMachine(let fsm, _):
-            return .parameterisedFSM(fsm)
-        case .submachine(let fsm, _):
-            return .controllableFSM(fsm)
-        }
+    public func make(identifier: String) -> NuSMVKripkeStructureView<State> {
+        return NuSMVKripkeStructureView(
+            identifier: identifier,
+            extractor: extractor,
+            inputOutputStreamFactory: inputOutputStreamFactory,
+            outputStreamFactory: outputStreamFactory
+        )
     }
-
+    
 }
