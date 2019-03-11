@@ -95,7 +95,6 @@ public class HashTableCycleDetector<E: Hashable>: CycleDetector {
      *  - Returns: A Bool indicating whether a cycle has been found.
      */
     public func inCycle(data: inout Data, element: Element) -> Bool {
-        //dprint(data.s.reduce("\n-------------\n") { $0 + "\($1)\n\n" })
         if true == data.contains(element) {
             return true
         }

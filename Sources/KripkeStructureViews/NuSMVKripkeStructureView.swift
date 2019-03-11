@@ -108,23 +108,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
     
     public func commit(state: State, isInitial: Bool) {
-        print("view.commit")
-        fflush(stdout)
         if nil == self.firstState {
             self.firstState = state
         }
-        print("2")
-        fflush(stdout)
         if sink.contains(state.properties) {
             return
         }
-        print("3")
-        fflush(stdout)
-        print("state.properties: \(state.properties)")
-        fflush(stdout)
         sink.insert(state.properties)
-        print("view.extract")
-        fflush(stdout)
         let props = self.extractor.extract(from: state.properties)
         if true == isInitial {
             self.initials.insert(props)
@@ -136,8 +126,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
             list.value.insert(value)
         }
-        print("view.createCase")
-        fflush(stdout)
         guard let content = self.createCase(of: state) else {
             return
         }
