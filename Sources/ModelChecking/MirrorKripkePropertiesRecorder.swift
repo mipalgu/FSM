@@ -199,8 +199,21 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     ) -> (KripkeStatePropertyTypes, Any) {
         let mirror = Mirror(reflecting: val)
         // Check for collections.
+        if mirror.displayStyle == Mirror.DisplayStyle.dictionary {
+            var dict: [String: KripkeStateProperty] = Dictionary(minimumCapacity: mirror.children.count)
+            var elements: [(Any, Any)] = []
+            elements.reserveCapacity(mirror.children.count)
+            mirror.children.forEach {
+                guard let (key, value) = $0.value as? (Any, Any) else {
+                    fatalError("Unable to convert dictionary elements to tuple.")
+                }
+                let keyStr = "\(key)"
+                dict[keyStr] = KripkeStateProperty(type: .Compound(self._takeRecord(of: val, withMemoryCache: memoryCache)), value: value)
+                elements.append((key, value))
+            }
+            return (.Compound(KripkeStatePropertyList(dict)), elements)
+        }
         if  mirror.displayStyle == Mirror.DisplayStyle.collection ||
-            mirror.displayStyle == Mirror.DisplayStyle.dictionary ||
             mirror.displayStyle == Mirror.DisplayStyle.set
         {
             var arr: [Any] = []
