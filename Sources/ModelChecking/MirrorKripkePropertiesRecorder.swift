@@ -208,7 +208,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
                     fatalError("Unable to convert dictionary elements to tuple.")
                 }
                 let keyStr = "\(key)"
-                dict[keyStr] = KripkeStateProperty(type: .Compound(self._takeRecord(of: val, withMemoryCache: memoryCache)), value: value)
+                dict[keyStr] = KripkeStateProperty(type: self.getKripkeStatePropertyType(value, validValues: [value], withMemoryCache: memoryCache).0, value: value)
                 elements.append((key, value))
             }
             return (.Compound(KripkeStatePropertyList(dict)), elements)
