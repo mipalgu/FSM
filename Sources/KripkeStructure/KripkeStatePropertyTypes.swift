@@ -115,6 +115,8 @@ public func ==(
             return p1 == p2
         case (let .Compound(c1), let .Compound(c2)):
             return c1 == c2
+        case (.Optional(let lo), .Optional(let ro)):
+            return lo == ro
         default:
             return false
     }
