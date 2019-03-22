@@ -118,9 +118,9 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         switch prop.type {
         case .Optional(let property):
             guard let property = property else {
-                return "Nothing"
+                return "nil"
             }
-            return self.formatProperty(property, indent)
+            return self.formatProperty(property, indent) ?? "{}"
         case .EmptyCollection:
             return "[]"
         case .Collection(let collection):
@@ -129,11 +129,8 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             }
             let indentStr = Array(repeating: " ", count: indent * 2).reduce("", +)
             let indentStr2 = Array(repeating: " ", count: (indent + 1) * 2).reduce("", +)
-            let props = collection.compactMap { (val: KripkeStateProperty) -> String? in
-                self.formatProperty(val, indent + 1)
-            }
-            if props.isEmpty {
-                return nil
+            let props = collection.map { (val: KripkeStateProperty) -> String in
+                self.formatProperty(val, indent + 1) ?? "{}"
             }
             return "[\\l" + indentStr2 + props.combine("") { $0 + ",\\l" + indentStr2 + $1 } + "\\l" + indentStr + "]"
         case .Compound(let list):
