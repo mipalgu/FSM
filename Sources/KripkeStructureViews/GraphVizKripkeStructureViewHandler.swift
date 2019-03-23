@@ -94,11 +94,11 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         }
     }
     
-    public func formatProperties(list: KripkeStatePropertyList, indent: Int, includeBraces: Bool = true) -> String? {
+    public func formatProperties(list: KripkeStatePropertyList, indent: Int, includeBraces: Bool = true, ignoreDictionaryInternals: Bool = false) -> String? {
         let indentStr = Array(repeating: " ", count: (indent + 1) * 2).reduce("", +)
         let list = list.sorted { $0.0 < $1.0 }
         let props = list.compactMap { (key: String, val: KripkeStateProperty) -> String? in
-            if key == "__optionalValue" {
+            if ignoreDictionaryInternals && key == "__optionalValue" {
                 return nil
             }
             guard let prop = self.formatProperty(val, indent + 1) else {
@@ -137,7 +137,7 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             }
             return "[\\l" + indentStr2 + props.combine("") { $0 + ",\\l" + indentStr2 + $1 } + "\\l" + indentStr + "]"
         case .Compound(let list):
-            return self.formatProperties(list: list, indent: indent + 1)
+            return self.formatProperties(list: list, indent: indent + 1, ignoreDictionaryInternals: true)
         default:
             return "\(prop.value)"
         }
