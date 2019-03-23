@@ -98,6 +98,9 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         let indentStr = Array(repeating: " ", count: (indent + 1) * 2).reduce("", +)
         let list = list.sorted { $0.0 < $1.0 }
         let props = list.compactMap { (key: String, val: KripkeStateProperty) -> String? in
+            if key == "__optionalValue" {
+                return nil
+            }
             guard let prop = self.formatProperty(val, indent + 1) else {
                 return nil
             }
