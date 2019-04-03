@@ -44,6 +44,8 @@ generate-xcodeproj:
 	$Eecho "SWIFTCFLAGS=\"${SWIFTCFLAGS:C,(.*),-Xswiftc \1,g}\"" >> config.sh
 	$E./xcodegen.sh
 
+xc-clean:
+
 .include "../../../mk/mipal.mk"		# comes last!
 
 CFLAGS=-I${ROOT}/include -I${ROOT}/usr/local/include -I${GUNAO_DIR}/posix/CLReflect -I${GUNAO_DIR}/Common
