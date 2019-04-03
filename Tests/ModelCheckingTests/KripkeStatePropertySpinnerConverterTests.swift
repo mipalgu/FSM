@@ -73,7 +73,7 @@ public class KripkeStatePropertySpinnerConverterTests: XCTestCase {
     }
     
     public func test_canConvertSequence() {
-        let arr = [[1, 2], [3, 4, 5]]
+        /*let arr = [[1, 2], [3, 4, 5]]
         guard let (defaultValue, spinner) = self.converter.convert(arr) else {
             XCTFail("Unable to create spinner.")
             return
@@ -83,11 +83,11 @@ public class KripkeStatePropertySpinnerConverterTests: XCTestCase {
         while let temp = spinner(result) {
             result = temp
             print(result)
-        }
+        }*/
     }
 
     public func test_canConvertCompoundObject() {
-        let a = A(bool: false, dependencies: [A(bool: true, dependencies: [])])
+        /*let a = A(bool: false, dependencies: [A(bool: true, dependencies: [])])
         guard let (defaultValue, spinner) = self.converter.convert(a) else {
             XCTFail("Unable to create spinner.")
             return
@@ -97,7 +97,7 @@ public class KripkeStatePropertySpinnerConverterTests: XCTestCase {
         while let temp = spinner(result) {
             result = temp
             print(result)
-        }
+        }*/
     }
     
     fileprivate struct A: Equatable {
