@@ -61,7 +61,7 @@ import KripkeStructure
 
 public protocol MultipleExternalsSpinnerConstructorType {
 
-    // swiftlint:disable large_tuple
+    // swiftlint:disable:next line_length
     func makeSpinner(forExternals: [ExternalVariablesVerificationData]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]?
 
 }

@@ -93,7 +93,7 @@ public class ExternalsSpinnerConstructor<
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
     ) -> () -> (AnySnapshotController, KripkeStatePropertyList)? {
-        var latest: Array<(key: String, value: KripkeStateProperty)>? = defaultValues.sorted { $0.key < $1.key }
+        var latest: [(key: String, value: KripkeStateProperty)]? = defaultValues.sorted { $0.key < $1.key }
         return { () -> (AnySnapshotController, KripkeStatePropertyList)? in
             guard let temp = latest else {
                 return nil

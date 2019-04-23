@@ -60,13 +60,13 @@ import KripkeStructure
 import FSM
 
 public struct ExternalVariablesVerificationData {
-    
+
     public let externalVariables: AnySnapshotController
-    
+
     public let defaultValues: KripkeStatePropertyList
-    
+
     public let spinners: [String: (Any) -> Any?]
-    
+
     public init(
         externalVariables: AnySnapshotController,
         defaultValues: KripkeStatePropertyList,
@@ -76,5 +76,5 @@ public struct ExternalVariablesVerificationData {
         self.defaultValues = defaultValues
         self.spinners = spinners
     }
-    
+
 }

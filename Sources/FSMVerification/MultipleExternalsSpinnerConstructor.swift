@@ -94,8 +94,11 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
             return items
         }
     }
-    
-    fileprivate func createItems(fromData data: [ExternalVariablesVerificationData], andSpinners spinners: inout [() -> (AnySnapshotController, KripkeStatePropertyList)?]) -> [(AnySnapshotController, KripkeStatePropertyList)] {
+
+    fileprivate func createItems(
+        fromData data: [ExternalVariablesVerificationData],
+        andSpinners spinners: inout [() -> (AnySnapshotController, KripkeStatePropertyList)?]
+    ) -> [(AnySnapshotController, KripkeStatePropertyList)] {
         let firstData = data.first!
         var items: [(AnySnapshotController, KripkeStatePropertyList)] = []
         items.reserveCapacity(data.count)
@@ -105,7 +108,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
         items.insert((lastItem, firstData.defaultValues), at: 0)
         return items
     }
-    
+
     fileprivate func makeEmptySpinner() -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
         var generated = false
         return {
@@ -124,7 +127,7 @@ public final class MultipleExternalsSpinnerConstructor<Constructor: ExternalsSpi
         }
         return d
     }
-    
+
     fileprivate func nextItem(
         inSpinners spinners: inout [() -> (AnySnapshotController, KripkeStatePropertyList)?],
         atIndex index: Int = 0,
