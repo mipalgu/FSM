@@ -61,7 +61,7 @@ import FSM
 public final class StdoutExternalVariables: ExternalVariablesContainer, Identifiable, Snapshotable {
 
     public let name: String = "stdout"
-    
+
     public var val: StdoutContainer = StdoutContainer()
 
     public init() {}

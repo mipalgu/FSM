@@ -58,6 +58,5 @@
 
 import FSM
 import CGUSimpleWhiteboard
-import CGUSimpleWhiteboard
 
 extension wb_count: ExternalVariables {}
