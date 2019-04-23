@@ -140,7 +140,7 @@ public func stopAll() {
     STOP = true
 }
 
-fileprivate let printer = CommandLinePrinter(
+private let printer = CommandLinePrinter(
     errorStream: StderrOutputStream(),
     messageStream: StdoutOutputStream(),
     warningStream: StdoutOutputStream()
