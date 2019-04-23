@@ -1,5 +1,7 @@
 // swift-tools-version:4.0
 
+//swiftlint:disable line_length
+
 import PackageDescription
 
 let package = Package(
@@ -8,7 +10,16 @@ let package = Package(
         .library(
             name: "FSM",
             type: .dynamic,
-            targets: ["Utilities", "KripkeStructure", "KripkeStructureViews", "ModelChecking", "FSM", "ExternalVariables", "FSMVerification", "swiftfsm"]
+            targets: [
+                "Utilities",
+                "KripkeStructure",
+                "KripkeStructureViews",
+                "ModelChecking",
+                "FSM",
+                "ExternalVariables",
+                "FSMVerification",
+                "swiftfsm"
+            ]
         )
     ],
     dependencies: [
