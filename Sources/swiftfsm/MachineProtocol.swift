@@ -59,8 +59,8 @@
 import FSM
 import ModelChecking
 
-public protocol MachineProtocol: FiniteStateMachineType,
-    Cloneable,
+//swiftlint:disable:next colon
+public protocol MachineProtocol:
     ConvertibleToScheduleableFiniteStateMachine,
     ExitableStateExecuter,
     KripkeVariablesModifier,
@@ -68,7 +68,5 @@ public protocol MachineProtocol: FiniteStateMachineType,
     OptimizedStateExecuter,
     Restartable,
     ResumeableStateExecuter,
-    StateExecuterDelegator,
-    Snapshotable,
-    SnapshotControllerContainer
+    StateExecuterDelegator
 {}

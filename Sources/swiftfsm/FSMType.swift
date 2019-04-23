@@ -70,14 +70,14 @@ public enum FSMType {
         switch self {
         case .controllableFSM(let fsm):
             return fsm
-        case .parameterisedFSM(let fsm):
+        case .parameterisedFSM:
             return nil
         }
     }
 
     public var asParameterisedFiniteStateMachine: AnyParameterisedFiniteStateMachine? {
         switch self {
-        case .controllableFSM(let fsm):
+        case .controllableFSM:
             return nil
         case .parameterisedFSM(let fsm):
             return fsm
@@ -226,7 +226,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
         }
     }
 
-    public mutating func saveSnapshot() {
+    public func saveSnapshot() {
         switch self {
         case .controllableFSM(let fsm):
             fsm.saveSnapshot()

@@ -56,8 +56,6 @@
  *
  */
 
-import KripkeStructureViews
-
 public protocol KripkeStructureViewFactory {
 
     associatedtype View: KripkeStructureView

@@ -90,11 +90,11 @@ extension Optional: KripkeVariablesModifier {
         switch self {
         case .none:
             return [
-                "__optionalValue": Any?.some(Any?.none)
+                "__optionalValue": Any?.some(Any?.none as Any) as Any
             ]
         case .some(let value):
             return [
-                "__optionalValue": Any?.some(Any?.some(value as Any))
+                "__optionalValue": Any?.some(Any?.some(value as Any) as Any) as Any
             ]
         }
     }

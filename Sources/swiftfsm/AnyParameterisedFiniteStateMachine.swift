@@ -235,7 +235,7 @@ public struct AnyParameterisedFiniteStateMachine:
         }
         self._resetResult = { ref.value.resetResult() }
         self._restart = { ref.value.restart() }
-        self._resultContainer = { AnyResultContainer<Any>({ ref.value.results.vars.result as Any! }) }
+        self._resultContainer = { AnyResultContainer<Any>({ ref.value.results.vars.result as Any? }) }
         self._submachines = { ref.value.submachines.map { AnyScheduleableFiniteStateMachine($0) } }
         self._suspend = { ref.value.suspend() }
         self._saveSnapshot = { ref.value.saveSnapshot() }

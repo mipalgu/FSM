@@ -82,7 +82,7 @@ public struct AnySnapshotController: Snapshotable {
         }
     }
 
-    public init<S: Snapshotable>(_ base: S) where S: Identifiable, S: ExternalVariablesContainer {
+    public init<S: Snapshotable>(_ base: S) where S: ExternalVariablesContainer {
         var base = base
         self._create = { S.Class(fromDictionary: $0) }
         self._name = { base.name }

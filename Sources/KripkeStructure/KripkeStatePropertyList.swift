@@ -142,7 +142,6 @@ extension KripkeStatePropertyList: Sequence {
 extension KripkeStatePropertyList: Collection {
 
     public typealias Index = Dictionary<String, KripkeStateProperty>.Index
-    public typealias IndexDistance = Dictionary<String, KripkeStateProperty>.IndexDistance
 
     public var startIndex: Index {
         return self.properties.startIndex
@@ -156,11 +155,11 @@ extension KripkeStatePropertyList: Collection {
         return self.properties[index]
     }
 
-    public func index(_ i: Index, offsetBy n: IndexDistance) -> Index {
+    public func index(_ i: Index, offsetBy n: Int) -> Index {
         return self.properties.index(i, offsetBy: n)
     }
 
-    public func index(_ i: Index, offsetBy n: IndexDistance, limitedBy limit: Index) -> Index? {
+    public func index(_ i: Index, offsetBy n: Int, limitedBy limit: Index) -> Index? {
         return self.properties.index(i, offsetBy: n, limitedBy: limit)
     }
 
@@ -176,7 +175,7 @@ extension KripkeStatePropertyList: Collection {
 
 public extension KripkeStatePropertyList {
 
-    public func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
+    func merged(_ other: KripkeStatePropertyList) -> KripkeStatePropertyList {
         return KripkeStatePropertyList(self.properties <| other.properties)
     }
 
@@ -221,7 +220,7 @@ public extension Dictionary where Key == String, Value == KripkeStateProperty {
      *
      *  - Attention: If there are conflicting keys, `other` has priority.
      */
-    public func merged(_ other: [String: KripkeStateProperty]) -> [String: KripkeStateProperty] {
+    func merged(_ other: [String: KripkeStateProperty]) -> [String: KripkeStateProperty] {
         var d = [String: KripkeStateProperty](minimumCapacity: self.count + other.count)
         func add(key: String, val: KripkeStateProperty) {
             switch val.type {

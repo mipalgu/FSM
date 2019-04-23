@@ -480,19 +480,14 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
  *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  */
-public func FSM<FSM: FiniteStateMachineType>(
+public func FSM<FSM>(
     _ fsm: FSM
 ) -> AnyControllableFiniteStateMachine where
-    FSM: Cloneable,
     FSM: ConvertibleToScheduleableFiniteStateMachine,
-    FSM: StateExecuter,
     FSM: Exitable,
-    FSM: Finishable,
     FSM: KripkePropertiesRecordable,
     FSM: Restartable,
-    FSM: Resumeable,
-    FSM: Snapshotable,
-    FSM: SnapshotControllerContainer
+    FSM: Resumeable
 {
     return AnyControllableFiniteStateMachine(fsm)
 }
@@ -512,19 +507,14 @@ public func FSM<FSM: FiniteStateMachineType>(
  *  - SeeAlso: `AnyControllableFiniteStateMachine`
  *  - SeeAlso: `FiniteStateMachineType`
  */
-public func FSMS<FSM: FiniteStateMachineType>(
+public func FSMS<FSM>(
     _ fsms: FSM ...
 ) -> [AnyControllableFiniteStateMachine] where
-    FSM: Cloneable,
     FSM: ConvertibleToScheduleableFiniteStateMachine,
-    FSM: StateExecuter,
     FSM: Exitable,
-    FSM: Finishable,
     FSM: KripkePropertiesRecordable,
     FSM: Restartable,
-    FSM: Resumeable,
-    FSM: Snapshotable,
-    FSM: SnapshotControllerContainer
+    FSM: Resumeable
 {
     return fsms.map { AnyControllableFiniteStateMachine($0) }
 }

@@ -99,10 +99,8 @@ public struct ParameterisedFiniteStateMachine<
     V: VariablesContainer,
     P: VariablesContainer,
     RS: VariablesContainer,
-    SM: FiniteStateMachineType
->: FiniteStateMachineType,
-    Cloneable,
-    ConvertibleToScheduleableFiniteStateMachine,
+    SM: ConvertibleToScheduleableFiniteStateMachine
+>: ConvertibleToScheduleableFiniteStateMachine,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
     KripkePropertiesRecorderDelegator,
@@ -113,17 +111,12 @@ public struct ParameterisedFiniteStateMachine<
     ResumeableStateExecuter,
     ResultContainerHolder,
     ResultResettable,
-    StateExecuterDelegator,
-    Snapshotable,
-    SnapshotControllerContainer where
+    StateExecuterDelegator where
     RS.Vars: MutableResultContainer,
     R: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable,
-    SM: Cloneable,
-    SM: ConvertibleToScheduleableFiniteStateMachine,
-    SM: Suspendable,
     SM: Resumeable,
     SM: Restartable
 {
@@ -326,7 +319,7 @@ public struct ParameterisedFiniteStateMachine<
         fsm.currentState = apply(self.currentState.clone())
         fsm.previousState = apply(self.previousState.clone())
         fsm.allStates.forEach {
-            apply($1)
+            _ = apply($1)
         }
         return fsm
     }

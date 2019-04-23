@@ -93,9 +93,8 @@ import ModelChecking
  *  `vars`.
  *  
  */
-// swiftlint:disable:next line_length
-public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM: FiniteStateMachineType>: FiniteStateMachineType,
-    Cloneable,
+
+public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: VariablesContainer, SM>:
     ConvertibleToScheduleableFiniteStateMachine,
     ExitableStateExecuter,
     KripkePropertiesRecordable,
@@ -104,16 +103,12 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     OptimizedStateExecuter,
     Restartable,
     ResumeableStateExecuter,
-    StateExecuterDelegator,
-    Snapshotable,
-    SnapshotControllerContainer where
+    StateExecuterDelegator where
     R: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable,
-    SM: Cloneable,
     SM: ConvertibleToScheduleableFiniteStateMachine,
-    SM: Suspendable,
     SM: Resumeable,
     SM: Restartable
 {
@@ -294,7 +289,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         fsm.currentState = apply(self.currentState.clone())
         fsm.previousState = apply(self.previousState.clone())
         fsm.allStates.forEach {
-            apply($1)
+            _ = apply($1)
         }
         return fsm
     }

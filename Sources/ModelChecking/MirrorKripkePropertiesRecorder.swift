@@ -318,7 +318,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             return (.String, val)
         default:
             var memoryCache = memoryCache
-            if var temp = val as? AnyObject {
+            if let temp = val as? AnyClass {
                 if nil != memoryCache.first(where: { $0 === temp }) {
                     return (.Compound(KripkeStatePropertyList()), val)
                 }

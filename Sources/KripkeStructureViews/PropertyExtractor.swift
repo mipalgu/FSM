@@ -68,7 +68,7 @@ public final class PropertyExtractor<Formatter: PropertyFormatter> {
     }
 
     public func extract(from list: KripkeStatePropertyList) -> [String: String] {
-        var dict: Ref<[String: String]> = Ref(value: [:])
+        let dict: Ref<[String: String]> = Ref(value: [:])
         self.convert(list, properties: dict)
         return dict.value
     }

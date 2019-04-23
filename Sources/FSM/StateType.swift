@@ -82,15 +82,15 @@ extension StateType where Self: Transitionable {
 
 public extension StateType where Self: KripkeVariablesModifier {
 
-    public var computedVars: [String: Any] {
+    var computedVars: [String: Any] {
         return [:]
     }
 
-    public var manipulators: [String: (Any) -> Any] {
+    var manipulators: [String: (Any) -> Any] {
         return [:]
     }
 
-    public var validVars: [String: [Any]] {
+    var validVars: [String: [Any]] {
         return [:]
     }
 

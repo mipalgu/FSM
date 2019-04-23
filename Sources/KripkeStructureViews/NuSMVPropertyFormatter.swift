@@ -67,7 +67,7 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
     }
 
     public func format(label: String) -> String {
-        guard let first = label.characters.first else {
+        guard let first = label.first else {
             return ""
         }
         var str = ""
@@ -84,7 +84,7 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
         case .String:
             return "\"" + self.formatString(val) + "\""
         case .Double, .Float, .Float80:
-            return "F" + String(val.characters.map({ $0 == "." ? "_" : $0 }))
+            return "F" + String(val.map({ $0 == "." ? "_" : $0 }))
         default:
             return self.formatString(val)
         }

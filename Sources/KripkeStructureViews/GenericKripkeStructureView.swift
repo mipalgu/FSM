@@ -62,7 +62,7 @@ import KripkeStructure
 
 public final class GenericKripkeStructureView<
     Handler: GenericKripkeStructureViewHandler,
-    State: KripkeStateType
+    State
 >: KripkeStructureView where Handler.State == State {
 
     fileprivate var data: GenericKripkeStructureViewData = GenericKripkeStructureViewData()

@@ -89,7 +89,7 @@ public extension FiniteStateMachineType where
      *
      *  - Postcondition: `hasFinished` is true.
      */
-    public mutating func exit() {
+    mutating func exit() {
         self.resume()
         self.currentState = self.exitState
         self.previousState = self.currentState
@@ -142,7 +142,7 @@ public extension FiniteStateMachineType where
      *
      *  - Precondition: The Finite State Machine must be suspended.
      */
-    public mutating func resume() {
+    mutating func resume() {
         if nil == self.suspendedState {
             return
         }
@@ -185,7 +185,7 @@ public extension FiniteStateMachineType where
      *
      *  - Precondition: The Finite State Machine must not be suspended.
      */
-    public mutating func suspend() {
+    mutating func suspend() {
         if true == self.isSuspended {
             return
         }
@@ -220,7 +220,7 @@ public extension FiniteStateMachineType where
      *  If the Finite State Machine was suspended before `restart()` is called
      *  then the Finite State Machine is resumed.
      */
-    public mutating func restart() {
+    mutating func restart() {
         self.resume()
         self.previousState = self.initialPreviousState
         self.currentState = self.initialState
@@ -254,7 +254,7 @@ public extension FiniteStateMachineType where
      *  that is returned from `Ringlet.execute(state:)` is the next state to
      *  execute.
      */
-    public mutating func next() {
+    mutating func next() {
         let previous = self.currentState
         self.currentState = self.ringlet.execute(state: self.currentState)
         self.previousState = previous

@@ -207,10 +207,7 @@ public class KripkeStatePropertySpinnerConverter: KripkeStatePropertySpinnerConv
         switch type {
         case .EmptyCollection:
             return (value, { _ in nil })
-        case .Collection(let arr):
-            guard let collection = arr as? KripkeCollection else {
-                return nil
-            }
+        case .Collection:
             return nil
             //return self.convert(collection.toArray())
         case .Compound(let props):
