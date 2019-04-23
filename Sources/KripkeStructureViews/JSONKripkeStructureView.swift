@@ -82,7 +82,6 @@ public final class JSONKripkeStructureView: KripkeStructureView {
         }
         guard
             let tempData = try? JSONSerialization.data(withJSONObject: statesProps, options: []),
-            //swiftlint:disable:next unused_optional_binding
             let _ = try? tempData.write(to: file)
         else {
             fatalError("Unable to write file.")

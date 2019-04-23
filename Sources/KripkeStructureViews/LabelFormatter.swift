@@ -57,7 +57,7 @@
  */
 
 public protocol LabelFormatter {
-    
+
     func format(label: String) -> String
-    
+
 }

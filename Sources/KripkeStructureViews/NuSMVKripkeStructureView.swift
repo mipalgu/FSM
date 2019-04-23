@@ -68,25 +68,25 @@ import Glibc
 #endif
 
 public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
-    
+
     fileprivate let extractor: PropertyExtractor<NuSMVPropertyFormatter>
-    
+
     fileprivate let identifier: String
-    
+
     fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
-    
+
     fileprivate let outputStreamFactory: OutputStreamFactory
-    
+
     fileprivate var stream: InputOutputStream!
-    
+
     fileprivate var properties: [String: Ref<Set<String>>] = [:]
-    
+
     fileprivate var sink: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
-    
+
     fileprivate var firstState: State?
-    
+
     fileprivate var initials: Set<[String: String]> = []
-    
+
     public init(
         identifier: String,
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
@@ -98,7 +98,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
     }
-    
+
     public func reset() {
         self.sink = HashSink(minimumCapacity: 500000)
         self.stream = self.inputOutputStreamFactory.make(id: self.identifier + ".transitions.smv")
@@ -106,7 +106,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.firstState = nil
         self.initials = []
     }
-    
+
     public func commit(state: State, isInitial: Bool) {
         if nil == self.firstState {
             self.firstState = state
@@ -132,7 +132,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.stream.write(content)
         self.stream.write("\n")
     }
-    
+
     public func finish() {
         self.stream.flush()
         self.stream.rewind()
@@ -146,7 +146,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         combinedStream.flush()
         self.stream.close()
     }
-    
+
     fileprivate func createPropertiesList(usingStream stream: inout TextOutputStream) {
         stream.write("VAR\n\n")
         self.properties.forEach {
@@ -162,7 +162,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             stream.write("\n};\n\n")
         }
     }
-    
+
     fileprivate func createInitial(usingStream stream: inout TextOutputStream) {
         guard let firstProperties = self.initials.first else {
             stream.write("INIT()\n")
@@ -179,8 +179,11 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
         stream.write("\n")
     }
-    
-    fileprivate func createTransitions(readingFrom inputStream: TextInputStream, writingTo outputStream: inout TextOutputStream) {
+
+    fileprivate func createTransitions(
+        readingFrom inputStream: TextInputStream,
+        writingTo outputStream: inout TextOutputStream
+    ) {
         let trans = "TRANS\ncase\n"
         let endTrans = "esac"
         outputStream.write(trans)
@@ -196,13 +199,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         outputStream.write("\n")
         outputStream.write(endTrans)
     }
-    
+
     fileprivate func createTrueCase(with state: State) -> String {
         let props = self.extractor.extract(from: state.properties)
         let effects = self.createEffect(from: props)
         return "TRUE:" + effects + ";"
     }
-    
+
     fileprivate func createCase(of state: State) -> String? {
         let props = self.extractor.extract(from: state.properties)
         let effects = state.effects.map {
@@ -213,12 +216,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             return nil
         }
         let firstEffects = "    (" + self.createEffect(from: firstEffect) + ")"
+        //swiftlint:disable:next line_length
         let effectsList = effects.dropFirst().reduce(firstEffects) { (last: String, props: [String: String]) -> String in
             last + " |\n    (" + self.createEffect(from: props) + ")"
         }
         return conditions + ":\n" + effectsList + ";"
     }
-    
+
     fileprivate func createConditions(of props: [String: String]) -> String {
         guard let firstProp = props.first else {
             return ""
@@ -228,7 +232,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             $0 + " & " + $1.0 + "=" + $1.1
         }
     }
-    
+
     fileprivate func createEffect(from props: [String: String]) -> String {
         guard let firstProp = props.first else {
             return ""
@@ -239,5 +243,5 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
         return effects
     }
-    
+
 }

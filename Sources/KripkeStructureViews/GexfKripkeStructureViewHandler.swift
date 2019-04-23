@@ -60,17 +60,24 @@ import IO
 import KripkeStructure
 import swift_helpers
 
+//swiftlint:disable line_length
+
 public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
-    
+
     public init() {}
-    
-    public func handleEffects(_ data: GenericKripkeStructureViewData, state: State, withId id: Int, usingStream stream: inout OutputStream) {
+
+    public func handleEffects(
+        _ data: GenericKripkeStructureViewData,
+        state: State,
+        withId id: Int,
+        usingStream stream: inout OutputStream
+    ) {
         let source = data.fetchId(of: state.properties)
         state.effects.forEach {
             stream.write(self.createEdge(id: data.nextId(), source: source, target: data.fetchId(of: $0)))
         }
     }
-    
+
     public func handleEnd(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         let end = """
                     </edges>
@@ -79,8 +86,12 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
             """
         stream.write(end)
     }
-    
-    public func handleInitials(_ data: GenericKripkeStructureViewData, initials: [(Int, Int)], usingStream stream: inout OutputStream) {
+
+    public func handleInitials(
+        _ data: GenericKripkeStructureViewData,
+        initials: [(Int, Int)],
+        usingStream stream: inout OutputStream
+    ) {
         let mid = """
                     </nodes>
                     <edges>\n
@@ -90,7 +101,7 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
             stream.write(self.createEdge(id: data.nextId(), source: $0, target: $1))
         }
     }
-    
+
     public func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         let start = """
             <?xml version="1.0" encoding="UTF-8"?>
@@ -100,8 +111,14 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
             """
         stream.write(start)
     }
-    
-    public func handleState(_ data: GenericKripkeStructureViewData, state: State, withId id: Int, isInitial: Bool, usingStream stream: inout OutputStream) {
+
+    public func handleState(
+        _ data: GenericKripkeStructureViewData,
+        state: State,
+        withId id: Int,
+        isInitial: Bool,
+        usingStream stream: inout OutputStream
+    ) {
         let label = self.formatProperties(list: state.properties, includeBraces: false) ?? "\(id)"
         if true == isInitial {
             let initialId = data.nextId()
@@ -110,11 +127,11 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
         }
         stream.write("            <node id=\"\(id)\" label=\"\(label)\"><viz:color r=\"255\" g=\"255\" b=\"255\" /><viz:size value=\"1.0\" /></node>\n")
     }
-    
+
     fileprivate func createEdge(id: Int, source: Int, target: Int) -> String {
         return "            <edge id=\"\(id)\" source=\"\(source)\" target=\"\(target)\"><viz:color r=\"0\" g=\"0\" b=\"0\" /><viz:shape value=\"solid\" /></edge>\n"
     }
-    
+
     fileprivate func formatProperties(list: KripkeStatePropertyList, includeBraces: Bool = true) -> String? {
         let list = list.sorted { $0.0 < $1.0 }
         let props = list.compactMap { (key: String, val: KripkeStateProperty) -> String? in
@@ -132,7 +149,7 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
         }
         return content
     }
-    
+
     fileprivate func formatProperty(_ prop: KripkeStateProperty) -> String? {
         switch prop.type {
         case .Optional(let property):
@@ -159,5 +176,5 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
             return "\(prop.value)"
         }
     }
-    
+
 }

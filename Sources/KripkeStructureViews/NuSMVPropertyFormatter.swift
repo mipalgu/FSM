@@ -59,13 +59,13 @@
 import KripkeStructure
 
 public final class NuSMVPropertyFormatter: PropertyFormatter {
-    
+
     public let delimiter: Character
-    
+
     public init(delimiter: Character = "-") {
         self.delimiter = delimiter
     }
-    
+
     public func format(label: String) -> String {
         guard let first = label.characters.first else {
             return ""
@@ -77,7 +77,7 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
         str += self.formatString(label)
         return str
     }
-    
+
     public func formatValue(from property: KripkeStateProperty) -> String {
         let val: String = "\(property.value)"
         switch property.type {
@@ -89,7 +89,7 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
             return self.formatString(val)
         }
     }
-    
+
     public func formatString(_ str: String) -> String {
         return str.lazy.map {
             if $0 == "." {
@@ -107,5 +107,5 @@ public final class NuSMVPropertyFormatter: PropertyFormatter {
             return "\($0)"
         }.reduce("", +)
     }
-    
+
 }

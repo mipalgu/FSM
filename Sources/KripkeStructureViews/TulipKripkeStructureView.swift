@@ -145,10 +145,14 @@ public final class TulipKripkeStructureView: KripkeStructureView {
         return "(edge \(id) \(source) \(target))"
     }
     
-    fileprivate func createPropertyList(forStates states: [KripkeState], inStructure structure: KripkeStructure) -> String {
+    fileprivate func createPropertyList(
+        forStates states: [KripkeState],
+        inStructure structure: KripkeStructure
+    ) -> String {
         let start = "(property 0 string \"viewLabel\"\n  (default \"\" \"\")\n"
         let end = ")"
         let mapped = states.enumerated().lazy.map { (offset, state) -> String in
+            //swiftlint:disable:next line_length
             return "(node \(offset + structure.initialStates.count) \"\(self.formatProperties(list: state.properties, indent: 1, includeBraces: false) ?? "")\")"
         }
         return start + mapped.combine("") { $0 + "\n" + $1 } + "\n" + end
@@ -162,7 +166,11 @@ public final class TulipKripkeStructureView: KripkeStructureView {
         return start + mapped.combine("") { $0 + "\n" + $1 } + "\n" + end
     }
     
-    fileprivate func formatProperties(list: KripkeStatePropertyList, indent: Int, includeBraces: Bool = true) -> String? {
+    fileprivate func formatProperties(
+        list: KripkeStatePropertyList,
+        indent: Int,
+        includeBraces: Bool = true
+    ) -> String? {
         let indentStr = Array(repeating: " ", count: (indent + 1) * 2).reduce("", +)
         let list = list.sorted { $0.0 < $1.0 }
         let props = list.compactMap { (key: String, val: KripkeStateProperty) -> String? in

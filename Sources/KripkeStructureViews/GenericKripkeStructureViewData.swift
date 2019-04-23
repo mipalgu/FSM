@@ -60,29 +60,30 @@ import Hashing
 import KripkeStructure
 
 public final class GenericKripkeStructureViewData {
-    
+
     fileprivate var ids: [Int: Int] = [:]
-    
+
+    //swiftlint:disable:next line_length
     fileprivate var processList: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
-    
+
     fileprivate var initialsDict: [Int: Int] = [:]
-    
+
     fileprivate var latest: Int = 0
-    
+
     public init() {}
-    
+
     public var initials: [(Int, Int)] {
         return self.initialsDict.map { ($0, $1) }
     }
-    
+
     public func addInitial(_ source: Int, transitioningTo target: Int) {
         self.initialsDict[source] = target
     }
-    
+
     public func alreadyProcessed(_ props: KripkeStatePropertyList) -> Bool {
         return self.processList.contains(props)
     }
-    
+
     public func fetchId(of props: KripkeStatePropertyList) -> Int {
         let hashValue = Hashing.hashValue(of: props)
         if let found = self.ids[hashValue] {
@@ -93,14 +94,14 @@ public final class GenericKripkeStructureViewData {
         self.ids[hashValue] = id
         return id
     }
-    
+
     public func markProcessed(_ props: KripkeStatePropertyList) {
         self.processList.insert(props)
     }
-    
+
     public func nextId() -> Int {
         defer { self.latest += 1 }
         return self.latest
     }
-    
+
 }

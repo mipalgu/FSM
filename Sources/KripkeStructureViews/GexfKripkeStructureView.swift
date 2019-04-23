@@ -145,12 +145,14 @@ public final class GexfKripkeStructureView: KripkeStructureView {
         if true == isInitial {
             let initialId = self.latest
             self.latest += 1
+            //swiftlint:disable:next line_length
             content.value += "            <node id=\"\(initialId)\"><viz:color r=\"0\" g=\"0\" b=\"0\" /><viz:size value=\"0.25\" /></node>\n"
             self.initials.append((self.latest, initialId))
         }
         let id = self.latest
         self.latest += 1
         self.cache[state.properties] = id
+        //swiftlint:disable:next line_length
         content.value += "            <node id=\"\(id)\" label=\"\(label)\"><viz:color r=\"255\" g=\"255\" b=\"255\" /><viz:size value=\"1.0\" /></node>\n"
     }
     
@@ -177,6 +179,7 @@ public final class GexfKripkeStructureView: KripkeStructureView {
     }
     
     fileprivate func createEdge(id: Int, source: Int, target: Int) -> String {
+        //swiftlint:disable:next line_length
         return "            <edge id=\"\(id)\" source=\"\(source)\" target=\"\(target)\"><viz:color r=\"0\" g=\"0\" b=\"0\" /><viz:shape value=\"solid\" /></edge>\n"
     }
     

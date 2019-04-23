@@ -59,23 +59,23 @@
 import KripkeStructure
 
 public final class AggregateKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
-    
+
     fileprivate let views: [AnyKripkeStructureView<State>]
-    
+
     public init(views: [AnyKripkeStructureView<State>]) {
         self.views = views
     }
-    
+
     public func commit(state: State, isInitial: Bool) {
         self.views.forEach { $0.commit(state: state, isInitial: isInitial) }
     }
-    
+
     public func finish() {
         self.views.forEach { $0.finish() }
     }
-    
+
     public func reset() {
         self.views.forEach { $0.reset() }
     }
-    
+
 }

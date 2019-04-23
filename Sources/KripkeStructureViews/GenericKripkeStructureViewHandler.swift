@@ -60,15 +60,30 @@ import IO
 import KripkeStructure
 
 public protocol GenericKripkeStructureViewHandler: KripkeStateContainer {
-    
-    func handleEffects(_: GenericKripkeStructureViewData, state: State, withId id: Int, usingStream stream: inout OutputStream)
-    
-    func handleInitials(_: GenericKripkeStructureViewData, initials: [(Int, Int)], usingStream stream: inout OutputStream)
-    
-    func handleState(_: GenericKripkeStructureViewData, state: State, withId id: Int, isInitial: Bool, usingStream stream: inout OutputStream)
-    
+
+    func handleEffects(
+        _: GenericKripkeStructureViewData,
+        state: State,
+        withId id: Int,
+        usingStream stream: inout OutputStream
+    )
+
+    func handleInitials(
+        _: GenericKripkeStructureViewData,
+        initials: [(Int, Int)],
+        usingStream stream: inout OutputStream
+    )
+
+    func handleState(
+        _: GenericKripkeStructureViewData,
+        state: State,
+        withId id: Int,
+        isInitial: Bool,
+        usingStream stream: inout OutputStream
+    )
+
     func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream)
-    
+
     func handleEnd(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream)
 
 }

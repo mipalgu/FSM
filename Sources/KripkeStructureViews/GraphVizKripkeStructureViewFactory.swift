@@ -59,14 +59,14 @@
 import KripkeStructure
 
 public final class GraphVizKripkeStructureViewFactory<State: KripkeStateType>: KripkeStructureViewFactory {
-    
+
     public init() {}
-    
+
     public func make(identifier: String) -> GraphVizKripkeStructureView<State> {
         return GraphVizKripkeStructureView(
             edgeFilename: identifier + ".edges.gv",
             filename: identifier + ".gv"
         )
     }
-    
+
 }

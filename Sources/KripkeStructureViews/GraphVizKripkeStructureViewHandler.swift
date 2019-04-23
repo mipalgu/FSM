@@ -61,18 +61,24 @@ import KripkeStructure
 import swift_helpers
 
 public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
-    
+
     public init() {}
-    
+
     public func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         stream.write("digraph finite_state_machine {\n")
     }
-    
+
     public func handleEnd(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         stream.write("}")
     }
-    
-    public func handleState(_ data: GenericKripkeStructureViewData, state: State, withId id: Int, isInitial: Bool, usingStream stream: inout OutputStream) {
+
+    public func handleState(
+        _ data: GenericKripkeStructureViewData,
+        state: State,
+        withId id: Int,
+        isInitial: Bool,
+        usingStream stream: inout OutputStream
+    ) {
         let shape = state.effects.isEmpty ? "doublecircle" : "circle"
         let label = self.formatProperties(list: state.properties, indent: 1, includeBraces: false) ?? "\(id)"
         if true == isInitial {
@@ -81,20 +87,34 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         }
         stream.write("node [shape=\(shape), label=\"\(label)\"]; s\(id);\n")
     }
-    
-    public func handleInitials(_ data: GenericKripkeStructureViewData, initials: [(Int, Int)], usingStream stream: inout OutputStream) {
+
+    public func handleInitials(
+        _ data: GenericKripkeStructureViewData,
+        initials: [(Int, Int)],
+        usingStream stream: inout OutputStream
+    ) {
         initials.forEach {
             stream.write("si\($0) -> s\($1);\n")
         }
     }
-    
-    public func handleEffects(_ data: GenericKripkeStructureViewData, state: State, withId id: Int, usingStream stream: inout OutputStream) {
+
+    public func handleEffects(
+        _ data: GenericKripkeStructureViewData,
+        state: State,
+        withId id: Int,
+        usingStream stream: inout OutputStream
+    ) {
         state.effects.forEach {
             stream.write("s\(id) -> s\(data.fetchId(of: $0));\n")
         }
     }
-    
-    public func formatProperties(list: KripkeStatePropertyList, indent: Int, includeBraces: Bool = true, ignoreDictionaryInternals: Bool = false) -> String? {
+
+    public func formatProperties(
+        list: KripkeStatePropertyList,
+        indent: Int,
+        includeBraces: Bool = true,
+        ignoreDictionaryInternals: Bool = false
+    ) -> String? {
         let indentStr = Array(repeating: " ", count: (indent + 1) * 2).reduce("", +)
         let list = list.sorted { $0.0 < $1.0 }
         let props = list.compactMap { (key: String, val: KripkeStateProperty) -> String? in
@@ -116,7 +136,7 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         }
         return content + "\\l" + indentStr2
     }
-    
+
     fileprivate func formatProperty(_ prop: KripkeStateProperty, _ indent: Int) -> String? {
         switch prop.type {
         case .Optional(let property):
@@ -142,5 +162,5 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             return "\(prop.value)"
         }
     }
-    
+
 }

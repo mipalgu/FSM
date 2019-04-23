@@ -60,32 +60,32 @@ import KripkeStructure
 import Utilities
 
 public final class AnyKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
-    
+
     public let base: Any
-    
+
     fileprivate let _commit: (State, Bool) -> Void
-    
+
     fileprivate let _finish: () -> Void
-    
+
     fileprivate let _reset: () -> Void
-    
+
     public init<View: KripkeStructureView>(_ base: View) where View.State == State {
         self.base = base
         self._commit = { base.commit(state: $0, isInitial: $1) }
         self._finish = { base.finish() }
         self._reset = { base.reset() }
     }
-    
+
     public func commit(state: State, isInitial: Bool) {
         self._commit(state, isInitial)
     }
-    
+
     public func finish() {
         self._finish()
     }
-    
+
     public func reset() {
         self._reset()
     }
-    
+
 }

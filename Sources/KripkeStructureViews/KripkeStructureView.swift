@@ -59,11 +59,11 @@
 import KripkeStructure
 
 public protocol KripkeStructureView: class, KripkeStateContainer {
-    
+
     func commit(state: State, isInitial: Bool)
-    
+
     func finish()
-    
+
     func reset()
-    
+
 }

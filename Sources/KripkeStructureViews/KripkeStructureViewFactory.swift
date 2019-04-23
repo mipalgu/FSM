@@ -59,9 +59,9 @@
 import KripkeStructureViews
 
 public protocol KripkeStructureViewFactory {
-    
+
     associatedtype View: KripkeStructureView
-    
+
     func make(identifier: String) -> View
-    
+
 }
