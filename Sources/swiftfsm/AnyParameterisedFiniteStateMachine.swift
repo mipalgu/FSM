@@ -61,6 +61,7 @@ import KripkeStructure
 import ModelChecking
 import Utilities
 
+//swiftlint:disable:next colon
 public struct AnyParameterisedFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,
@@ -91,7 +92,7 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _externalVariables: () -> [AnySnapshotController]
 
     private let _setExternalVariables: ([AnySnapshotController]) -> Void
-    
+
     private let _getParameters: () -> Any
 
     private let _hasFinished: () -> Bool
@@ -103,17 +104,17 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _name: () -> String
 
     private let _next: () -> Void
-    
+
     private let _restart: () -> Void
-    
+
     private let _resetResult: () -> Void
-    
+
     private let _resultContainer: () -> AnyResultContainer<Any>
-    
+
     private let _setParameters: (Any) -> Void
-    
+
     private let _setParametersFromDictionary: ([String: Any]) -> Bool
-    
+
     private let _setParametersFromStringDictionary: ([String: String]) -> Bool
 
     private let _submachines: () -> [AnyScheduleableFiniteStateMachine]
@@ -179,11 +180,11 @@ public struct AnyParameterisedFiniteStateMachine:
     public var name: String {
         return self._name()
     }
-    
+
     public var parameters: Any {
         return self._getParameters()
     }
-    
+
     public var resultContainer: AnyResultContainer<Any> {
         return self._resultContainer()
     }
@@ -192,7 +193,14 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable, FSM.ParametersContainerType.Vars: DictionaryConvertible, FSM.ParametersContainerType.Vars: ConvertibleFromDictionary {
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where
+        FSM: Restartable,
+        FSM: ResultContainerHolder,
+        FSM: ParametersContainerHolder,
+        FSM: ResultResettable,
+        FSM.ParametersContainerType.Vars: DictionaryConvertible,
+        FSM.ParametersContainerType.Vars: ConvertibleFromDictionary
+    {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
         self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
@@ -222,7 +230,6 @@ public struct AnyParameterisedFiniteStateMachine:
                 fatalError("Attempting to set parameters of \(ref.value.name) with an incorrect parameter type.")
             }
             ref.value.parameters.vars = parameters
-            
         }
         self._resetResult = { ref.value.resetResult() }
         self._restart = { ref.value.restart() }
@@ -238,7 +245,14 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where FSM: Restartable, FSM: ResultContainerHolder, FSM: ParametersContainerHolder, FSM: ResultResettable, FSM.ParametersContainerType.Vars: DictionaryConvertible, FSM.ParametersContainerType.Vars: ConvertibleFromDictionary {
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where
+        FSM: Restartable,
+        FSM: ResultContainerHolder,
+        FSM: ParametersContainerHolder,
+        FSM: ResultResettable,
+        FSM.ParametersContainerType.Vars: DictionaryConvertible,
+        FSM.ParametersContainerType.Vars: ConvertibleFromDictionary
+    {
         let ref = Ref(value: base)
         self.init(ref)
     }
@@ -253,23 +267,23 @@ public struct AnyParameterisedFiniteStateMachine:
     public func next() {
         self._next()
     }
-    
+
     public func resetResult() {
         self._resetResult()
     }
-    
+
     public func restart() {
         self._restart()
     }
-    
+
     public func setParameters<P: Variables>(_ newParameters: P) {
         self._setParameters(newParameters)
     }
-    
+
     public func parametersFromDictionary(_ dictionary: [String: Any]) -> Bool {
         return self._setParametersFromDictionary(dictionary)
     }
-    
+
     public func parametersFromStringDictionary(_ dictionary: [String: String]) -> Bool {
         return self._setParametersFromStringDictionary(dictionary)
     }

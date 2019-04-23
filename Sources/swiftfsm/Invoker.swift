@@ -60,7 +60,7 @@ import FSM
 import Utilities
 
 public protocol Invoker {
-    
+
     /**
      *  'Call' a parameterised machine.
      *
@@ -83,7 +83,7 @@ public protocol Invoker {
      *  containing the returned value once the invocation has been complete.
      */
     func call<R>(_ id: FSM_ID, withParameters parameters: [String: Any], caller: FSM_ID) -> Promise<R>
-    
+
     /**
      *  'Call' yourself recursively.
      *
@@ -103,7 +103,7 @@ public protocol Invoker {
      *  containing the returned value once the invocation has been complete.
      */
     func callSelf<R>(_: FSM_ID, withParameters: [String: Any]) -> Promise<R>
-    
+
     /**
      *  'Invoke' a parameterised machine.
      *

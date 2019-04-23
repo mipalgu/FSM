@@ -62,6 +62,7 @@ import ModelChecking
 /**
  *  The base class for all states that conform to `MiPalAction`s.
  */
+//swiftlint:disable:next colon
 open class MiPalState:
     StateType,
     CloneableState,
@@ -127,5 +128,5 @@ open class MiPalState:
     open func clone() -> Self {
         fatalError("Please implement your own clone")
     }
-    
+
 }

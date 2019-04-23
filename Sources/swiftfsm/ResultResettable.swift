@@ -57,7 +57,7 @@
  */
 
 public protocol ResultResettable {
-    
-    mutating func resetResult() -> Void
-    
+
+    mutating func resetResult()
+
 }

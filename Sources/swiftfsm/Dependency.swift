@@ -57,13 +57,13 @@
  */
 
 public enum Dependency {
-    
+
     indirect case callableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
-    
+
     indirect case invokableParameterisedMachine(AnyParameterisedFiniteStateMachine, [Dependency])
 
     indirect case submachine(AnyControllableFiniteStateMachine, [Dependency])
-    
+
     public var dependencies: [Dependency] {
         switch self {
         case .callableParameterisedMachine(_, let dependencies), .invokableParameterisedMachine(_, let dependencies):
@@ -72,7 +72,7 @@ public enum Dependency {
             return dependencies
         }
     }
-    
+
     public var fsm: FSMType {
         switch self {
         case .callableParameterisedMachine(let fsm, _), .invokableParameterisedMachine(let fsm, _):

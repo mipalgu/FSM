@@ -59,6 +59,7 @@
 import FSM
 import ModelChecking
 
+//swiftlint:disable:next colon
 public protocol ConvertibleToScheduleableFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,

@@ -57,7 +57,7 @@
  */
 
 public protocol DictionaryConvertible {
-    
+
     init?(_ dictionary: [String: String])
-    
+
 }

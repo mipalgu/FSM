@@ -257,7 +257,6 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         self.suspendState = suspendState
     }
 
-    //swiftlint:disable:next function_body_length
     public func clone() -> FiniteStateMachine<R, KR, V, SM>{
         var stateCache: [String: R._StateType] = [:]
         let allStates = self.allStates

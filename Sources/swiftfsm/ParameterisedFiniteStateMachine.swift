@@ -93,7 +93,6 @@ import ModelChecking
  *  `vars`.
  *  
  */
-// swiftlint:disable:next line_length
 public struct ParameterisedFiniteStateMachine<
     R: Ringlet,
     KR: KripkePropertiesRecorder,
@@ -286,7 +285,6 @@ public struct ParameterisedFiniteStateMachine<
         self.suspendState = suspendState
     }
 
-    //swiftlint:disable:next function_body_length
     public func clone() -> ParameterisedFiniteStateMachine<R, KR, V, P, RS, SM>{
         var stateCache: [String: R._StateType] = [:]
         let allStates = self.allStates
@@ -332,7 +330,7 @@ public struct ParameterisedFiniteStateMachine<
         }
         return fsm
     }
-    
+
     public func resetResult() {
         self.results.vars.result = nil
     }

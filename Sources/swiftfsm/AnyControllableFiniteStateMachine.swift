@@ -72,6 +72,7 @@ import Utilities
  *  - SeeAlso: `AnyState`
  *  - SeeAlso: `FiniteStateMachineType`
  */
+//swiftlint:disable:next colon
 public struct AnyControllableFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,

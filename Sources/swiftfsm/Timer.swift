@@ -57,9 +57,9 @@
  */
 
 public protocol Timer {
-    
+
     func after(_: UInt) -> Bool
-    
+
     func after_ms(_: UInt) -> Bool
-    
+
 }

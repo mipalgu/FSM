@@ -63,7 +63,7 @@ import ModelChecking
 import Utilities
 
 public enum FSMType {
-    
+
     public var asControllableFiniteStateMachine: AnyControllableFiniteStateMachine? {
         switch self {
         case .controllableFSM(let fsm):
@@ -72,7 +72,7 @@ public enum FSMType {
             return nil
         }
     }
-    
+
     public var asParameterisedFiniteStateMachine: AnyParameterisedFiniteStateMachine? {
         switch self {
         case .controllableFSM(let fsm):
@@ -81,7 +81,7 @@ public enum FSMType {
             return fsm
         }
     }
-    
+
     public var asScheduleableFiniteStateMachine: AnyScheduleableFiniteStateMachine {
         switch self {
         case .controllableFSM(let fsm):
@@ -90,11 +90,11 @@ public enum FSMType {
             return fsm.asScheduleableFiniteStateMachine
         }
     }
-    
+
     case parameterisedFSM(AnyParameterisedFiniteStateMachine)
-    
+
     case controllableFSM(AnyControllableFiniteStateMachine)
-    
+
 }
 
 extension FSMType: Equatable {}
@@ -119,9 +119,9 @@ public func == (lhs: FSMType, rhs: FSMType) -> Bool {
 }
 
 extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
-    
+
     public typealias _StateType = AnyState
-    
+
     public var currentState: AnyState {
         get {
             switch self {
@@ -132,7 +132,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             }
         } set {}
     }
-    
+
     public var externalVariables: [AnySnapshotController] {
         get {
             switch self {
@@ -151,7 +151,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             }
         }
     }
-    
+
     public var hasFinished: Bool {
         switch self {
         case .controllableFSM(let fsm):
@@ -160,7 +160,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.hasFinished
         }
     }
-    
+
     public var initialState: AnyState {
         switch self {
         case .controllableFSM(let fsm):
@@ -169,7 +169,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.initialState
         }
     }
-    
+
     public var isSuspended: Bool {
         switch self {
         case .controllableFSM(let fsm):
@@ -178,7 +178,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.isSuspended
         }
     }
-    
+
     public var name: String {
         switch self {
         case .controllableFSM(let fsm):
@@ -187,7 +187,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.name
         }
     }
-    
+
     public var submachines: [AnyScheduleableFiniteStateMachine] {
         switch self {
         case .controllableFSM(let fsm):
@@ -196,7 +196,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return fsm.submachines
         }
     }
-    
+
     public func clone() -> FSMType {
         switch self {
         case .controllableFSM(let fsm):
@@ -205,7 +205,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             return .parameterisedFSM(fsm.clone())
         }
     }
-    
+
     public mutating func next() {
         switch self {
         case .controllableFSM(let fsm):
@@ -214,7 +214,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             fsm.next()
         }
     }
-    
+
     public mutating func suspend() {
         switch self {
         case .controllableFSM(let fsm):
@@ -223,7 +223,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             fsm.suspend()
         }
     }
-    
+
     public mutating func saveSnapshot() {
         switch self {
         case .controllableFSM(let fsm):
@@ -232,7 +232,7 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             fsm.saveSnapshot()
         }
     }
-    
+
     public mutating func takeSnapshot() {
         switch self {
         case .controllableFSM(let fsm):
@@ -241,11 +241,11 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             fsm.takeSnapshot()
         }
     }
-    
+
 }
 
 extension FSMType {
-    
+
     public var parameters: Any? {
         switch self {
         case .parameterisedFSM(let fsm):
@@ -254,7 +254,7 @@ extension FSMType {
             return nil
         }
     }
-    
+
     public var resultContainer: AnyResultContainer<Any>? {
         switch self {
         case .controllableFSM:
@@ -263,5 +263,5 @@ extension FSMType {
             return fsm.resultContainer
         }
     }
-    
+
 }

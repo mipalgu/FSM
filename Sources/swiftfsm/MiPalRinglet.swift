@@ -79,7 +79,7 @@ public final class MiPalRinglet: Ringlet, Cloneable, KripkeVariablesModifier {
         return [:]
     }
 
-    public var manipulators: [String : (Any) -> Any] {
+    public var manipulators: [String: (Any) -> Any] {
         return [:]
     }
 

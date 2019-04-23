@@ -73,6 +73,7 @@ import Utilities
  *  - SeeAlso: `AnyState`
  *  - SeeAlso: `FiniteStateMachineType`
  */
+//swiftlint:disable:next colon
 public struct AnyScheduleableFiniteStateMachine:
     FiniteStateMachineType,
     Cloneable,
@@ -174,7 +175,7 @@ public struct AnyScheduleableFiniteStateMachine:
     public var submachines: [AnyScheduleableFiniteStateMachine] {
         return self._submachines()
     }
-    
+
     internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(
         _ ref: Ref<FSM>
     ) {
