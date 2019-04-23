@@ -57,7 +57,7 @@
  */
 
 public protocol ConvertibleFromDictionary {
-    
+
     /**
      *  Create a new instance from a dictionary where the key represents the
      *  variables label and the value represents the value of the variable.
@@ -65,5 +65,5 @@ public protocol ConvertibleFromDictionary {
      *  - Parameter fromDictionary: The variables in a dictionary.
      */
     init(fromDictionary: [String: Any])
-    
+
 }
