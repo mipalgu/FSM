@@ -60,18 +60,18 @@ import XCTest
 @testable import ModelChecking
 
 public class KripkeStatePropertySpinnerConverterTests: XCTestCase {
-    
+
     public static var allTests: [(String, (KripkeStatePropertySpinnerConverterTests) -> () throws -> Void)] {
         return [
         ]
     }
-    
+
     fileprivate var converter: KripkeStatePropertySpinnerConverter!
-    
+
     public override func setUp() {
         self.converter = KripkeStatePropertySpinnerConverter()
     }
-    
+
     public func test_canConvertSequence() {
         /*let arr = [[1, 2], [3, 4, 5]]
         guard let (defaultValue, spinner) = self.converter.convert(arr) else {
@@ -99,14 +99,13 @@ public class KripkeStatePropertySpinnerConverterTests: XCTestCase {
             print(result)
         }*/
     }
-    
+
     fileprivate struct A: Equatable {
-        
+
         var bool: Bool
-        
+
         var dependencies: [A]
-        
+
     }
-    
-    
+
 }
