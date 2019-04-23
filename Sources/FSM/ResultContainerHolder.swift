@@ -57,7 +57,7 @@
  */
 
 public protocol ResultContainerHolder {
-    
+
     associatedtype ResultContainerType: VariablesContainer where ResultContainerType.Vars: ResultContainer
 
     var results: ResultContainerType { get }
