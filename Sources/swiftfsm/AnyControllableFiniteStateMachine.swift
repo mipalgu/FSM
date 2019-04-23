@@ -62,6 +62,8 @@ import KripkeStructure
 import ModelChecking
 import Utilities
 
+//swiftlint:disable unused_setter_value
+
 /**
  *  A type-erased Finite State Machine that can be controlled.
  *

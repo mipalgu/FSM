@@ -62,6 +62,8 @@ import KripkeStructure
 import ModelChecking
 import Utilities
 
+//swiftlint:disable unused_setter_value
+
 public enum FSMType {
 
     public var asControllableFiniteStateMachine: AnyControllableFiniteStateMachine? {
