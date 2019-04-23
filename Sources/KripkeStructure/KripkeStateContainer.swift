@@ -56,10 +56,8 @@
  *
  */
 
-import KripkeStructure
-
 public protocol KripkeStateContainer {
-    
+
     associatedtype State: KripkeStateType
-    
+
 }

@@ -67,7 +67,7 @@ import Functional
 public struct KripkeStatePropertyList {
 
     public fileprivate(set) var properties: [String: KripkeStateProperty]
-    
+
     public var propertiesDictionary: [String: Any] {
         var d: [String: Any] = [String: Any](minimumCapacity: self.properties.count)
         self.properties.forEach {
@@ -109,7 +109,10 @@ extension KripkeStatePropertyList: Equatable {
         if lhs.properties.count < rhs.properties.count {
             return false
         }
-        return nil == zip(lhs.properties.sorted { $0.key < $1.key}, rhs.properties.sorted { $0.key < $1.key }).first { $0 != $1 }
+        return nil == zip(
+            lhs.properties.sorted { $0.key < $1.key},
+            rhs.properties.sorted { $0.key < $1.key }
+        ).first { $0 != $1 }
     }
 
 }

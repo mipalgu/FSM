@@ -56,21 +56,24 @@
  *
  */
 
+//swiftlint:disable force_cast
+//swiftlint:disable cyclomatic_complexity
+
 /**
  *  A property within a Kripke State.
  */
 public struct KripkeStateProperty: Equatable {
-    
+
     /**
      *  The type of the property.
      */
     public let type: KripkeStatePropertyTypes
-    
+
     /**
      *  The value of the property.
      */
     public let value: Any
-    
+
     /**
      *  Create a new `KripkeStateProperty`.
      *
@@ -125,11 +128,11 @@ public struct KripkeStateProperty: Equatable {
     }
 
     private func equalValues(other: KripkeStateProperty) -> Bool {
-        if (Swift.type(of: self.value) != Swift.type(of: other.value)) {
+        if Swift.type(of: self.value) != Swift.type(of: other.value) {
             return false
         }
         // Cast the values to the correct type and perform the equality check.
-        switch (self.value) {
+        switch self.value {
         case is Bool:
             return self.value as? Bool == other.value as? Bool
         case is UInt:
@@ -164,13 +167,13 @@ public struct KripkeStateProperty: Equatable {
             return true
         }
     }
-    
+
 }
 
 extension KripkeStateProperty: CustomStringConvertible {
-    
+
     public var description: String {
-        switch (self.type) {
+        switch self.type {
         case .Bool:
             return (self.value as! Bool).description
         case .UInt:
@@ -209,13 +212,13 @@ extension KripkeStateProperty: CustomStringConvertible {
             return "Some"
         }
     }
-    
+
 }
 
 extension KripkeStateProperty: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        switch (self.type) {
+        switch self.type {
         case .Bool:
             hasher.combine((self.value as! Bool))
         case .UInt:
@@ -257,6 +260,6 @@ extension KripkeStateProperty: Hashable {
 
 }
 
-public func ==(lhs: KripkeStateProperty, rhs: KripkeStateProperty) -> Bool {
+public func == (lhs: KripkeStateProperty, rhs: KripkeStateProperty) -> Bool {
     return lhs.equals(other: rhs)
 }

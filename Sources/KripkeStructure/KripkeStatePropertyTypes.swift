@@ -56,6 +56,8 @@
  *
  */
 
+//swiftlint:disable cyclomatic_complexity
+
 /**
  *  Supported types for `KripkeStructure`s.
  */
@@ -74,50 +76,48 @@ public enum KripkeStatePropertyTypes: Equatable {
 /**
  *  Are two types equal?
  */
-public func ==(
-    lhs: KripkeStatePropertyTypes,
-    rhs: KripkeStatePropertyTypes
-) -> Bool {
+//swiftlint:disable:next function_body_length
+public func == (lhs: KripkeStatePropertyTypes, rhs: KripkeStatePropertyTypes) -> Bool {
     switch (lhs, rhs) {
-        case (.Bool, .Bool):
-            return true
-        case (.Int, .Int):
-            return true
-        case (.Int8, .Int8):
-            return true
-        case (.Int16, .Int16):
-            return true
-        case (.Int32, .Int32):
-            return true
-        case (.Int64, .Int64):
-            return true
-        case (.UInt, .UInt):
-            return true
-        case (.UInt8, .UInt8):
-            return true
-        case (.UInt16, .UInt16):
-            return true
-        case (.UInt32, .UInt32):
-            return true
-        case (.UInt64, .UInt64):
-            return true
-        case (.Float, .Float):
-            return true
-        case (.Float80, .Float80):
-            return true
-        case (.Double, .Double):
-            return true
-        case (.String, .String):
-            return true
-        case (.EmptyCollection, .EmptyCollection):
-            return true
-        case (let .Collection(p1), let .Collection(p2)):
-            return p1 == p2
-        case (let .Compound(c1), let .Compound(c2)):
-            return c1 == c2
-        case (.Optional(let lo), .Optional(let ro)):
-            return lo == ro
-        default:
-            return false
+    case (.Bool, .Bool):
+        return true
+    case (.Int, .Int):
+        return true
+    case (.Int8, .Int8):
+        return true
+    case (.Int16, .Int16):
+        return true
+    case (.Int32, .Int32):
+        return true
+    case (.Int64, .Int64):
+        return true
+    case (.UInt, .UInt):
+        return true
+    case (.UInt8, .UInt8):
+        return true
+    case (.UInt16, .UInt16):
+        return true
+    case (.UInt32, .UInt32):
+        return true
+    case (.UInt64, .UInt64):
+        return true
+    case (.Float, .Float):
+        return true
+    case (.Float80, .Float80):
+        return true
+    case (.Double, .Double):
+        return true
+    case (.String, .String):
+        return true
+    case (.EmptyCollection, .EmptyCollection):
+        return true
+    case (let .Collection(p1), let .Collection(p2)):
+        return p1 == p2
+    case (let .Compound(c1), let .Compound(c2)):
+        return c1 == c2
+    case (.Optional(let lo), .Optional(let ro)):
+        return lo == ro
+    default:
+        return false
     }
 }
