@@ -59,15 +59,15 @@
 import KripkeStructure
 import Utilities
 
+//swiftlint:disable line_length
+
 /**
  *  Provides a way to convert a `KripkeStateProperty` to a `Spinners.Spinner`.
  */
-public class KripkeStatePropertySpinnerConverter:
-    KripkeStatePropertySpinnerConverterType
-{
+public class KripkeStatePropertySpinnerConverter: KripkeStatePropertySpinnerConverterType {
 
     private let spinners: Spinners
-    
+
     fileprivate let recorder = MirrorKripkePropertiesRecorder()
     fileprivate let runner = SpinnerRunner()
 
@@ -124,7 +124,7 @@ public class KripkeStatePropertySpinnerConverter:
             return (ksp.value, self.spinners.nilSpinner)
         }
     }
-    
+
     fileprivate func convertCompound<T>(_ props: KripkeStatePropertyList, type: T.Type) -> (T, (T) -> T?)? {
         guard let ConvertibleType = T.self as? ConvertibleFromDictionary.Type else {
             return nil
@@ -157,7 +157,7 @@ public class KripkeStatePropertySpinnerConverter:
             return ConvertibleType.init(fromDictionary: vs.propertiesDictionary) as? T
         })
     }
-    
+
     public func convert<S: Sequence>(_ sequence: S) -> (AnySequence<S.Iterator.Element>, (AnySequence<S.Iterator.Element>) -> AnySequence<S.Iterator.Element>?)? {
         guard let data: [(String, S.Iterator.Element, (S.Iterator.Element) -> S.Iterator.Element?)] = sequence.enumerated().failMap({
             guard let (defaultValue, spinner) = self.convert($1) else {
@@ -180,7 +180,7 @@ public class KripkeStatePropertySpinnerConverter:
             case .EmptyCollection:
                 return nil
             case .Collection(let arr):
-                let vars: Array<(key: String, value: KripkeStateProperty)> = Array(arr.enumerated().map { (offset, element) in
+                let vars: [(key: String, value: KripkeStateProperty)] = Array(arr.enumerated().map { (offset, element) in
                     let (type, value) = self.recorder.getKripkeStatePropertyType(element)
                     return ("\(offset)", KripkeStateProperty(type: type, value: value))
                 })
@@ -201,7 +201,7 @@ public class KripkeStatePropertySpinnerConverter:
             }
         })
     }
-    
+
     public func convert<T>(_ value: T) -> (T, (T) -> T?)? {
         let (type, kripkeValue) = self.recorder.getKripkeStatePropertyType(value)
         switch type {
@@ -228,5 +228,5 @@ public class KripkeStatePropertySpinnerConverter:
             })
         }
     }
-    
+
 }

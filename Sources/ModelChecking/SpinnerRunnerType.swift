@@ -84,8 +84,8 @@ public protocol SpinnerRunnerType {
      *  - Returns: The next set of values on the series.
      */
      func spin(
-        index: Array<(key: String, value: KripkeStateProperty)>.Index,
-        vars: Array<(key: String, value: KripkeStateProperty)>,
+        index: [(key: String, value: KripkeStateProperty)].Index,
+        vars: [(key: String, value: KripkeStateProperty)],
         defaultValues: KripkeStatePropertyList,
         spinners: [String: (Any) -> Any?]
     ) -> KripkeStatePropertyList?

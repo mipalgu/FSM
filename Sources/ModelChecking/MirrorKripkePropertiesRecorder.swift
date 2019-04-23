@@ -59,6 +59,7 @@
 import KripkeStructure
 
 //swiftlint:disable force_cast
+//swiftlint:disable line_length
 
 public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
 
@@ -67,7 +68,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
     public func takeRecord(of object: Any) -> KripkeStatePropertyList {
         return self._takeRecord(of: object, withMemoryCache: [])
     }
-    
+
     public func getKripkeStatePropertyType(_ val: Any) -> (KripkeStatePropertyTypes, Any) {
         return self.getKripkeStatePropertyType(val, validValues: [val], withMemoryCache: [])
     }
@@ -104,6 +105,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
      *  are also extracted, giving the child values preference over the
      *  superclass values.
      */
+    //swiftlint:disable:next function_body_length
     private func getPropertiesFromMirror(
         mirror: Mirror,
         computedVars: [String: Any] = [:],
@@ -234,7 +236,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             }
             return (
                 .Optional(self.convertValue(value: value, validValues: values, withMemoryCache: memoryCache)),
-                Optional<Any>.some(self.getKripkeStatePropertyType(value, validValues: values, withMemoryCache: memoryCache).1) as Any
+                Any?.some(self.getKripkeStatePropertyType(value, validValues: values, withMemoryCache: memoryCache).1) as Any
             )
         }
         switch val {

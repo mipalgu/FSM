@@ -85,18 +85,18 @@ extension Dictionary: KripkeCollection {}
 extension AnySequence: KripkeCollection {}
 
 extension Optional: KripkeVariablesModifier {
-    
+
     public var computedVars: [String: Any] {
         switch self {
         case .none:
             return [
-                "__optionalValue": Optional<Any>.some(Optional<Any>.none)
+                "__optionalValue": Any?.some(Any?.none)
             ]
         case .some(let value):
             return [
-                "__optionalValue": Optional<Any>.some(Optional<Any>.some(value as Any))
+                "__optionalValue": Any?.some(Any?.some(value as Any))
             ]
         }
     }
-    
+
 }
