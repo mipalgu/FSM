@@ -67,8 +67,9 @@ import GUSimpleWhiteboard
 
 import XCTest
 
+//swiftlint:disable line_length
 class MultipleExternalsSpinnerConstructorTests: XCTestCase {
-    
+
     static var allTests: [(String, (MultipleExternalsSpinnerConstructorTests) -> () throws -> Void)] {
         return [
             ("test_canSpinMicrowaveVariables", test_canSpinMicrowaveVariables),
@@ -77,13 +78,13 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             ("test_canSpinMultupleButtonExternalVariables", test_canSpinMultupleButtonExternalVariables),
             ("test_canSpinNoVariables", test_canSpinNoVariables),
             ("test_canSpinMultipleMicrowaveStatusAndButton", test_canSpinMultipleMicrowaveStatusAndButton),
-            ("test_canSpinMicrowaveStatusAndButton", test_canSpinMicrowaveStatusAndButton),
+            ("test_canSpinMicrowaveStatusAndButton", test_canSpinMicrowaveStatusAndButton)
         ]
     }
-    
+
     fileprivate var constructor: MultipleExternalsSpinnerConstructor<ExternalsSpinnerConstructor<SpinnerRunner>>!
     fileprivate var extractor: ExternalsSpinnerDataExtractor<MirrorKripkePropertiesRecorder, KripkeStatePropertySpinnerConverter>!
-    
+
     override func setUp() {
         self.constructor = MultipleExternalsSpinnerConstructor(
             constructor: ExternalsSpinnerConstructor(
@@ -95,7 +96,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             extractor: MirrorKripkePropertiesRecorder()
         )
     }
-    
+
     func test_canSpinMicrowaveVariables() {
         let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
             "kMicrowaveStatus_v",
@@ -139,7 +140,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         ]
         self.check(externals: [microwave_status, microwave_status], against: [expected, expected])
     }
-    
+
     func test_canSpinButtonExternalVariables() {
         let button = AnySnapshotController(ButtonSnapshotController())
         let expected: [KripkeStatePropertyList] = [
@@ -148,7 +149,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         ]
         self.check(externals: [button], against: [expected])
     }
-    
+
     func test_canSpinMultupleButtonExternalVariables() {
         let button = AnySnapshotController(ButtonSnapshotController())
         let expected: [KripkeStatePropertyList] = [
@@ -184,7 +185,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         ]
         self.check(externals: [microwave_status, button], against: [microwaveExpected, buttonExpected])
     }
-    
+
     func test_canSpinMultipleMicrowaveStatusAndButton() {
         let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
             "kMicrowaveStatus_v",
@@ -263,7 +264,7 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         }
         return KripkeStatePropertyList(d)
     }
-    
+
     fileprivate func makeSpinner(_ externalVariables: [AnySnapshotController]) -> () -> [(AnySnapshotController, KripkeStatePropertyList)]? {
         let externals = externalVariables.map { (externals: AnySnapshotController) -> ExternalVariablesVerificationData in
             let (defaultValues, spinners) = self.extractor.extract(externalVariables: externals)
@@ -275,10 +276,10 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
         }
         return self.constructor.makeSpinner(forExternals: externals)
     }
-    
+
 }
 
-fileprivate struct ButtonExternalVariables: ExternalVariables {
+private struct ButtonExternalVariables: ExternalVariables {
 
     var button: Bool
 
@@ -295,7 +296,7 @@ fileprivate struct ButtonExternalVariables: ExternalVariables {
 
 }
 
-fileprivate class ButtonSnapshotController: Identifiable, ExternalVariablesContainer, Snapshotable {
+private class ButtonSnapshotController: Identifiable, ExternalVariablesContainer, Snapshotable {
 
     let name: String = "ButtonSnapshotController"
 
@@ -305,11 +306,10 @@ fileprivate class ButtonSnapshotController: Identifiable, ExternalVariablesConta
 
     func saveSnapshot() {}
 
-
 }
 
 extension ButtonExternalVariables: Equatable {}
 
-fileprivate func == (lhs: ButtonExternalVariables, rhs: ButtonExternalVariables) -> Bool {
+private func == (lhs: ButtonExternalVariables, rhs: ButtonExternalVariables) -> Bool {
     return lhs.button == rhs.button
 }
