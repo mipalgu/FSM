@@ -12,7 +12,7 @@ EXT=dylib
 EXT=so
 .endif
 
-.include "../../mk/prefs.mk"
+.include "../../../mk/prefs.mk"
 
 CFLAGS=-I${GUNAO_DIR}/posix/CLReflect -I${GUNAO_DIR}/Common
 CXXFLAGS=-I${GUNAO_DIR}/posix/CLReflect
