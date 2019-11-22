@@ -14,9 +14,9 @@ EXT=so
 
 .include "../../../mk/prefs.mk"
 
-CFLAGS=-I${GUNAO_DIR}/posix/CLReflect -I${GUNAO_DIR}/Common
-CXXFLAGS=-I${GUNAO_DIR}/posix/CLReflect
-LDFLAGS=-lgusimplewhiteboard
+CFLAGS+=-I${GUNAO_DIR}/posix/CLReflect -I${GUNAO_DIR}/Common
+CXXFLAGS+=-I${GUNAO_DIR}/posix/CLReflect
+LDFLAGS+=-lgusimplewhiteboard
 
 all:	all-real
 
