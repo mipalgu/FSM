@@ -32,7 +32,7 @@ let package = Package(
         .target(name: "KripkeStructureViews", dependencies: ["Hashing", "IO", "KripkeStructure", "swift_helpers"]),
         .target(name: "ModelChecking", dependencies: ["Functional", "Hashing", "IO", "swift_helpers", "Utilities", "KripkeStructure", "KripkeStructureViews"]),
         .target(name: "FSM", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking"]),
-        .target(name: "ExternalVariables", dependencies: ["GUSimpleWhiteboard", "Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
+        .target(name: "ExternalVariables", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
         .target(name: "FSMVerification", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
         .target(name: "swiftfsm", dependencies: ["Functional", "Utilities", "KripkeStructure", "FSM", "ModelChecking"]),
         .testTarget(name: "ModelCheckingTests", dependencies: [
@@ -44,7 +44,8 @@ let package = Package(
             .target(name: "ModelChecking"),
             .target(name: "FSMVerification"),
             .target(name: "ExternalVariables"),
-            .target(name: "KripkeStructure")
+            .target(name: "KripkeStructure"),
+            "GUSimpleWhiteboard"
         ])
     ]
 )
