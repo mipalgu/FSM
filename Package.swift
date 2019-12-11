@@ -11,13 +11,6 @@ let package = Package(
             name: "FSM",
             type: .dynamic,
             targets: [
-                "Utilities",
-                "KripkeStructure",
-                "KripkeStructureViews",
-                "ModelChecking",
-                "FSM",
-                "ExternalVariables",
-                "FSMVerification",
                 "swiftfsm"
             ]
         )
@@ -34,7 +27,7 @@ let package = Package(
         .target(name: "FSM", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking"]),
         .target(name: "ExternalVariables", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
         .target(name: "FSMVerification", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
-        .target(name: "swiftfsm", dependencies: ["Functional", "Utilities", "KripkeStructure", "FSM", "ModelChecking"]),
+        .target(name: "swiftfsm", dependencies: ["Functional", "Utilities", "KripkeStructure", "KripkeStructureViews", "ModelChecking", "FSM", "ExternalVariables", "FSMVerification"]),
         .testTarget(name: "ModelCheckingTests", dependencies: [
             .target(name: "ModelChecking")
         ]),
