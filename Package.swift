@@ -27,7 +27,20 @@ let package = Package(
         .target(name: "FSM", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking"]),
         .target(name: "ExternalVariables", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
         .target(name: "FSMVerification", dependencies: ["Functional", "Utilities", "KripkeStructure", "ModelChecking", "FSM"]),
-        .target(name: "swiftfsm", dependencies: ["Functional", "Utilities", "KripkeStructure", "KripkeStructureViews", "ModelChecking", "FSM", "ExternalVariables", "FSMVerification"]),
+        .target(name: "swiftfsm", dependencies: [
+            "Functional",
+            "Utilities",
+            "KripkeStructure",
+            "KripkeStructureViews",
+            "ModelChecking",
+            "FSM",
+            "ExternalVariables",
+            "FSMVerification",
+            "Hashing",
+            "IO",
+            "Trees",
+            "swift_helpers"
+        ]),
         .testTarget(name: "ModelCheckingTests", dependencies: [
             .target(name: "ModelChecking")
         ]),

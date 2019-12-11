@@ -56,7 +56,6 @@
  *
  */
 
-@_exported import Functional
 @_exported import Utilities
 @_exported import KripkeStructure
 @_exported import KripkeStructureViews
@@ -64,3 +63,8 @@
 @_exported import FSM
 @_exported import ExternalVariables
 @_exported import FSMVerification
+@_exported import Functional
+@_exported import Hashing
+@_exported import IO
+@_exported import Trees
+@_exported import swift_helpers
