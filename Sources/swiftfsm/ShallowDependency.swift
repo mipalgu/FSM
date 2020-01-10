@@ -58,6 +58,40 @@
 
 public enum ShallowDependency {
     
+    public var isCallable: Bool {
+        switch self {
+        case .callableMachine:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isInvokable: Bool {
+        switch self {
+        case.invokableMachine:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isSubMachine: Bool {
+        switch self {
+        case .submachine:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var name: String {
+        switch self {
+        case .callableMachine(let name), .invokableMachine(let name), .submachine(let name):
+            return name
+        }
+    }
+    
     case callableMachine(name: String)
     
     case invokableMachine(name: String)
