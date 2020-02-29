@@ -4,7 +4,6 @@ import XCTest
 
 XCTMain([
      testCase(CArrayTests.allTests),
-     testCase(FactoriesTests.allTests),
      testCase(HashTableCycleDetectorTests.allTests),
      testCase(MultipleExternalsSpinnerConstructorTests.allTests)
      //testCase(SpinnerTests.allTests),
