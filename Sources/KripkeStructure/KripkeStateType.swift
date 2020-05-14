@@ -65,7 +65,7 @@ public protocol _KripkeStateType: class, Equatable {
 
     var properties: KripkeStatePropertyList { get }
 
-    var effects: Set<KripkeStatePropertyList> { get set }
+    var edges: Set<KripkeEdge> { get set }
 
 }
 
@@ -78,7 +78,7 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
         str += self.properties.description
         str += "\n},\n"
         str += "effects: [\n"
-        str += self.effects.first?.description ?? "" + self.effects.dropFirst().reduce("") {
+        str += (self.edges.first?.description ?? "") + self.edges.dropFirst().reduce("") {
             $0 + ",\n    " + $1.description
         }
         str += "\n}"
@@ -87,7 +87,7 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(properties)
-        hasher.combine(effects)
+        hasher.combine(edges)
     }
 
 }
@@ -114,11 +114,11 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
    lhs: T,
    rhs: U
 ) -> Bool {
-    if lhs.effects.count != rhs.effects.count {
+    if lhs.edges.count != rhs.edges.count {
         return false
     }
     return lhs.properties == rhs.properties &&
-        nil == lhs.effects.first { false == rhs.effects.contains($0) }
+        nil == lhs.edges.first { false == rhs.edges.contains($0) }
 }
 
 public protocol KripkeStateType: _KripkeStateType,

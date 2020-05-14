@@ -69,5 +69,16 @@ public struct KripkeEdge {
     
 }
 
+extension KripkeEdge: CustomStringConvertible {
+    
+    public var description: String {
+        guard let constraint = constraint else {
+            return "\(target)"
+        }
+        return "(\(constraint), \(target))"
+    }
+    
+}
+
 extension KripkeEdge: Equatable {}
 extension KripkeEdge: Hashable {}
