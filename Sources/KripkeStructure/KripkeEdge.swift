@@ -58,9 +58,9 @@
 
 public struct KripkeEdge {
     
-    var constraint: ClockConstraint?
+    public var constraint: ClockConstraint?
     
-    var target: KripkeStatePropertyList
+    public var target: KripkeStatePropertyList
     
     public init(constraint: ClockConstraint? = nil, target: KripkeStatePropertyList) {
         self.constraint = constraint

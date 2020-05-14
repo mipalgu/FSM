@@ -73,8 +73,8 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
         usingStream stream: inout OutputStream
     ) {
         let source = data.fetchId(of: state.properties)
-        state.effects.forEach {
-            stream.write(self.createEdge(id: data.nextId(), source: source, target: data.fetchId(of: $0)))
+        state.edges.forEach {
+            stream.write(self.createEdge(id: data.nextId(), source: source, constraint: $0.constraint?.description, target: data.fetchId(of: $0.target)))
         }
     }
 
@@ -98,7 +98,7 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
             """
         stream.write(mid)
         initials.forEach {
-            stream.write(self.createEdge(id: data.nextId(), source: $0, target: $1))
+            stream.write(self.createEdge(id: data.nextId(), source: $0, constraint: nil, target: $1))
         }
     }
 
@@ -128,7 +128,7 @@ public final class GexfKripkeStructureViewHandler<State: KripkeStateType>: Gener
         stream.write("            <node id=\"\(id)\" label=\"\(label)\"><viz:color r=\"255\" g=\"255\" b=\"255\" /><viz:size value=\"1.0\" /></node>\n")
     }
 
-    fileprivate func createEdge(id: Int, source: Int, target: Int) -> String {
+    fileprivate func createEdge(id: Int, source: Int, constraint _: String?, target: Int) -> String {
         return "            <edge id=\"\(id)\" source=\"\(source)\" target=\"\(target)\"><viz:color r=\"0\" g=\"0\" b=\"0\" /><viz:shape value=\"solid\" /></edge>\n"
     }
 

@@ -208,8 +208,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createCase(of state: State) -> String? {
         let props = self.extractor.extract(from: state.properties)
-        let effects = state.effects.map {
-            self.extractor.extract(from: $0)
+        let effects = state.edges.map {
+            self.extractor.extract(from: $0.target)
         }
         let conditions = self.createConditions(of: props)
         guard let firstEffect = effects.first else {

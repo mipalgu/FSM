@@ -79,7 +79,7 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         isInitial: Bool,
         usingStream stream: inout OutputStream
     ) {
-        let shape = state.effects.isEmpty ? "doublecircle" : "circle"
+        let shape = state.edges.isEmpty ? "doublecircle" : "circle"
         let label = self.formatProperties(list: state.properties, indent: 1, includeBraces: false) ?? "\(id)"
         if true == isInitial {
             stream.write("node [shape=point] si\(id);")
@@ -104,8 +104,8 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         withId id: Int,
         usingStream stream: inout OutputStream
     ) {
-        state.effects.forEach {
-            stream.write("s\(id) -> s\(data.fetchId(of: $0));\n")
+        state.edges.forEach {
+            stream.write("s\(id) -> s\(data.fetchId(of: $0.target));\n")
         }
     }
 
