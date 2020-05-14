@@ -68,3 +68,6 @@ public struct KripkeEdge {
     }
     
 }
+
+extension KripkeEdge: Equatable {}
+extension KripkeEdge: Hashable {}
