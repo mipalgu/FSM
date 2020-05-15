@@ -129,11 +129,11 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             let time = $0.time == 0 ? nil : $0.time
             let label: String
             if let time = time, let constraint = $0.constraint {
-                label = "\(time), \(expression(for: constraint))"
+                label = "\(time), \(expression(for: constraint.reduced))"
             } else if let time = time {
                 label = "\(time)"
             } else if let constraint = $0.constraint {
-                label = "\(expression(for: constraint))"
+                label = "\(expression(for: constraint.reduced))"
             } else {
                 label = ""
             }

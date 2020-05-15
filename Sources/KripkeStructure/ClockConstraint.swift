@@ -93,7 +93,7 @@ public enum Constraint<T: Comparable> {
         }
     }
     
-    var reduced: Constraint<T> {
+    public var reduced: Constraint<T> {
         switch self {
         case .not(let value):
             return value.inverse
