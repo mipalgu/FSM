@@ -230,13 +230,13 @@ public enum Constraint<T: Comparable> {
             // Reduce sub constraints.
             switch constraint {
             case .and(let lhs, let rhs):
-                return .and(lhs: lhs.reduced, rhs: rhs.reduced)
+                return .and(lhs: reduce(lhs), rhs: reduce(rhs))
             case .or(let lhs, let rhs):
-                return .or(lhs: lhs.reduced, rhs: rhs.reduced)
+                return .or(lhs: reduce(lhs), rhs: reduce(rhs))
             case .implies(let lhs, let rhs):
-                return .implies(lhs: lhs.reduced, rhs: rhs.reduced)
+                return .implies(lhs: reduce(lhs), rhs: reduce(rhs))
             case .not(let con):
-                return .not(value: con.reduced)
+                return .not(value: reduce(con))
             default:
                 break;
             }
@@ -331,10 +331,130 @@ extension Constraint {
     
 }
 
-extension Constraint where T: Numeric {
+extension Constraint where T: Numeric, T: FixedWidthInteger {
     
     private var numericReduced: Constraint<T> {
-        return self
+        func convertToRange(_ constraint: Constraint<T>) -> Range<T>? {
+            switch constraint {
+            case .lessThan(let value):
+                return T.min..<value.advanced(by: -1)
+            case .lessThanEqual(let value):
+                return Range(T.min..<value)
+            case .greaterThan(let value):
+                if value == T.max {
+                    return Range(T.max..<T.max)
+                }
+                return Range(value.advanced(by: 1)..<T.max)
+            case .greaterThanEqual(let value):
+                return Range(value..<T.max)
+            case .and(let lhs, let rhs):
+                guard let lRange = convertToRange(lhs), let rRange = convertToRange(rhs), rRange.overlaps(lRange) else {
+                    return nil
+                }
+                let lowerBound = max(lRange.lowerBound, rRange.lowerBound)
+                let upperBound = min(lRange.upperBound, rRange.upperBound)
+                return Range(uncheckedBounds: (lowerBound, upperBound))
+            default:
+                return nil
+            }
+        }
+        func reduce(_ constraint: Constraint<T>) -> Constraint<T> {
+            // Clamp intersecting ranges.
+            switch constraint {
+            case .and(let lhs, let rhs):
+                switch (lhs, rhs) {
+                case (.lessThan, .lessThan), (.lessThanEqual, .lessThan), (.lessThan, .lessThanEqual), (.lessThanEqual, .lessThanEqual), (.greaterThan, .greaterThan), (.greaterThanEqual, .greaterThan), (.greaterThan, .greaterThanEqual), (.greaterThanEqual, .greaterThanEqual), (.and, _), (.or, _), (_, .and), (_, .or):
+                    guard let lRange = convertToRange(lhs), let rRange = convertToRange(rhs), rRange.overlaps(lRange) else {
+                        break
+                    }
+                    let lowerBound = max(lRange.lowerBound, rRange.lowerBound)
+                    let upperBound = min(lRange.upperBound, rRange.upperBound)
+                    return reduce(.and(lhs: .greaterThanEqual(value: lowerBound), rhs: .lessThanEqual(value: upperBound)))
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Remove overlapping ranges.
+            switch constraint {
+            case .or(let lhs, let rhs):
+                guard let lRange = convertToRange(lhs), let rRange = convertToRange(rhs) else {
+                    break
+                }
+                if rRange.lowerBound >= lRange.lowerBound && rRange.upperBound <= lRange.upperBound {
+                    return reduce(lhs)
+                }
+                if lRange.lowerBound >= rRange.lowerBound && lRange.upperBound <= rRange.upperBound {
+                    return reduce(rhs)
+                }
+            default:
+                break
+            }
+            // Remove p = <value> || p > <value + 1>
+            switch constraint {
+            case .or(let lhs, let rhs):
+                switch (lhs, rhs) {
+                case (.equal(let value), let rangeConstraint), (let rangeConstraint, .equal(let value)):
+                    guard let range = convertToRange(rangeConstraint) else {
+                        break
+                    }
+                    if range.lowerBound > value, range.lowerBound.advanced(by: -1) == value {
+                        return reduce(.and(lhs: .greaterThanEqual(value: value), rhs: .lessThanEqual(value: range.upperBound)))
+                    }
+                    if range.upperBound < value, range.upperBound.advanced(by: 1) == value {
+                        return reduce(.and(lhs: .greaterThanEqual(value: range.lowerBound), rhs: .lessThanEqual(value: value)))
+                    }
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Remove less than equal to max
+            switch constraint {
+            case .and(let p, let q), .or(let p, let q):
+                switch (p, q) {
+                case (.lessThanEqual(value: T.max), _):
+                    return reduce(q)
+                case (_, .lessThanEqual(value: T.max)):
+                    return reduce(p)
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Remove greater than equal to min
+            switch constraint {
+            case .and(let p, let q), .or(let p, let q):
+                switch (p, q) {
+                case (.greaterThanEqual(value: T.min), _):
+                    return reduce(q)
+                case (_, .greaterThanEqual(value: T.min)):
+                    return reduce(p)
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Reduce sub constraints.
+            switch constraint {
+            case .and(let lhs, let rhs):
+                return .and(lhs: reduce(lhs), rhs: reduce(rhs))
+            case .or(let lhs, let rhs):
+                return .or(lhs: reduce(lhs), rhs: reduce(rhs))
+            case .implies(let lhs, let rhs):
+                return .implies(lhs: reduce(lhs), rhs: reduce(rhs))
+            case .not(let con):
+                return .not(value: reduce(con))
+            default:
+                break;
+            }
+            return constraint
+        }
+        return reduce(self)
     }
     
     public var reduced: Constraint<T> {

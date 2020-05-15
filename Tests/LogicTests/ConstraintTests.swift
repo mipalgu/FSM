@@ -73,13 +73,16 @@ public class ConstraintTests: XCTestCase {
             ("test_doubleNegation", test_doubleNegation),
             ("test_disjunctiveSimplification", test_disjunctiveSimplification),
             ("test_resolution", test_resolution),
-            ("test_demorgans", test_demorgans)
+            ("test_demorgans", test_demorgans),
+            ("test_clampIntersectingRanges", test_clampIntersectingRanges),
+            ("test_removesOverlappingRanges", test_removesOverlappingRanges),
+            ("test_redundantOrs", test_redundantOrs)
         ]
     }
     
-    let p: Constraint<UInt> = .lessThan(value: 3)
-    let q: Constraint<UInt> = .lessThan(value: 5)
-    let r: Constraint<UInt> = .lessThan(value: 7)
+    let p: Constraint<UInt> = .equal(value: 3)
+    let q: Constraint<UInt> = .equal(value: 5)
+    let r: Constraint<UInt> = .equal(value: 7)
 
     public override func setUp() {}
     
@@ -183,6 +186,27 @@ public class ConstraintTests: XCTestCase {
         let constraint2: Constraint<UInt> = .not(value: .or(lhs: p, rhs: q))
         let expected2: Constraint<UInt> = .and(lhs: p.inverse, rhs: q.inverse)
         XCTAssertEqual(constraint2.reduced, expected2)
+    }
+    
+    public func test_clampIntersectingRanges() {
+        let constraint: Constraint<UInt> = .and(lhs: .lessThanEqual(value: 3), rhs: .lessThanEqual(value: 2))
+        let expected: Constraint<UInt> = .lessThanEqual(value: 2)
+        XCTAssertEqual(constraint.reduced, expected)
+        let complexConstraint: Constraint<UInt> = .and(lhs: .and(lhs: .greaterThan(value: 3), rhs: .lessThan(value: 10)), rhs: .greaterThan(value: 5))
+        let complexExpected: Constraint<UInt> = .and(lhs: .greaterThanEqual(value: 6), rhs: .lessThanEqual(value: 9))
+        XCTAssertEqual(complexConstraint.reduced, complexExpected)
+    }
+    
+    public func test_removesOverlappingRanges() {
+        let constraint: Constraint<UInt> = .or(lhs: .lessThanEqual(value: 3), rhs: .lessThanEqual(value: 2))
+        let expected: Constraint<UInt> = .lessThanEqual(value: 3)
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_redundantOrs() {
+        let constraint: Constraint<UInt> = .or(lhs: .equal(value: 3), rhs: .greaterThan(value: 3))
+        let expected: Constraint<UInt> = .greaterThanEqual(value: 3)
+        XCTAssertEqual(constraint.reduced, expected)
     }
 
 }
