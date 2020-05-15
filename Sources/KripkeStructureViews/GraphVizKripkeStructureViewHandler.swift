@@ -120,6 +120,7 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
                 greaterThanEqual: { "\($0) &ge; \($1) " },
                 and: { "\($0) &and; \($1)" },
                 or: { "\($0) &or; \($1)" },
+                implies: { "\($0) &rarr; \($1)" },
                 not: { "&not;\($0)" },
                 group: { "&#40;\($0)&#41;" }
             )

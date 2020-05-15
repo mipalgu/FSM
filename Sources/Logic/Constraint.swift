@@ -183,7 +183,7 @@ public enum Constraint<T: Comparable> {
         greaterThanEqual: (String, String) -> String = { "\($0) >= \($1)" },
         and: (String, String) -> String = { "\($0) && \($1)" },
         or: (String, String) -> String = { "\($0) || \($1)" },
-        implies: (String, String) -> String = { "\($0) &rarr; \($1)" },
+        implies: (String, String) -> String = { "\($0) -> \($1)" },
         not: (String) -> String = { "!\($0)" },
         group: (String) -> String = { "(\($0)" },
         label: (String) -> String = { $0 },
