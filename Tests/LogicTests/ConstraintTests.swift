@@ -1,8 +1,8 @@
 /*
- * ClockConstraint.swift
- * KripkeStructure
+ * ConstraintTests.swift 
+ * LogicTests 
  *
- * Created by Callum McColl on 14/5/20.
+ * Created by Callum McColl on 15/05/2020.
  * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,6 +56,55 @@
  *
  */
 
-@_exported import Logic
+import XCTest
+@testable import Logic
 
-public typealias ClockConstraint = Constraint<UInt>
+public class ConstraintTests: XCTestCase {
+
+    public static var allTests: [(String, (ConstraintTests) -> () throws -> Void)] {
+        return [
+            ("test_distributivity", test_distributivity),
+            ("test_disjunctiveSyllogism", test_disjunctiveSyllogism),
+            ("test_doubleNegation", test_doubleNegation),
+            ("test_disjunctiveSimplification", test_disjunctiveSimplification),
+            ("test_resolution", test_resolution)
+        ]
+    }
+    
+    let p: Constraint<UInt> = .lessThan(value: 3)
+    let q: Constraint<UInt> = .lessThan(value: 5)
+    let r: Constraint<UInt> = .lessThan(value: 7)
+
+    public override func setUp() {}
+    
+    public func test_distributivity() {
+        let constraint: Constraint<UInt> = .and(lhs: .or(lhs: p, rhs: q), rhs: r)
+        let expected: Constraint<UInt> = .or(lhs: .and(lhs: p, rhs: r), rhs: .and(lhs: q, rhs: r))
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_disjunctiveSyllogism() {
+        let constraint: Constraint<UInt> = .and(lhs: .or(lhs: p, rhs: q), rhs: .not(value: p))
+        let expected: Constraint<UInt> = q
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_doubleNegation() {
+        let constraint: Constraint<UInt> = .not(value: .not(value: p))
+        let expected: Constraint<UInt> = p
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_disjunctiveSimplification() {
+        let constraint: Constraint<UInt> = .or(lhs: p, rhs: p)
+        let expected: Constraint<UInt> = p
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_resolution() {
+        let constraint: Constraint<UInt> = .and(lhs: .or(lhs: p, rhs: q), rhs: .or(lhs: .not(value: p), rhs: r))
+        let expected: Constraint<UInt> = .or(lhs: q, rhs: r)
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+
+}
