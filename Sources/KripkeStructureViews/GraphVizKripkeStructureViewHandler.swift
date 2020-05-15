@@ -62,7 +62,12 @@ import swift_helpers
 
 public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
 
-    public init() {}
+    
+    private let clockLabel: String
+    
+    public init(clockLabel: String = "clock") {
+        self.clockLabel = clockLabel
+    }
 
     public func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         stream.write("digraph finite_state_machine {\n")
@@ -109,11 +114,11 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             let time = $0.time == 0 ? nil : $0.time
             let label: String
             if let time = time, let constraint = $0.constraint {
-                label = "\(time), \(constraint)"
+                label = "\(time), \(constraint.expressionString(referencing: self.clockLabel))"
             } else if let time = time {
                 label = "\(time)"
             } else if let constraint = $0.constraint {
-                label = "\($0.constraint)"
+                label = "\($0.constraint?.expressionString(referencing: self.clockLabel))"
             } else {
                 label = ""
             }
