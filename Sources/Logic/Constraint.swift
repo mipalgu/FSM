@@ -96,6 +96,18 @@ public enum Constraint<T: Comparable> {
     
     public var reduced: Constraint<T> {
         func reduce(_ constraint: Constraint<T>) -> Constraint<T> {
+            // Material Implication
+            switch constraint {
+            case .or(let lhs, let q):
+                switch lhs {
+                case .not(let p):
+                    return reduce(.implies(lhs: p, rhs: q))
+                default:
+                    break
+                }
+            default:
+                break
+            }
             // Modus Ponens
             switch constraint {
             case .and(let p, rhs: let wrap):

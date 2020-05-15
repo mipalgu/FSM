@@ -95,6 +95,12 @@ public class ConstraintTests: XCTestCase {
         XCTAssertEqual(constraint.reduced, expected)
     }
     
+    public func test_materialImplication() {
+        let constraint: Constraint<UInt> = .or(lhs: .not(value: p), rhs: q)
+        let expected: Constraint<UInt> = .implies(lhs: p, rhs: q)
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
     public func test_distributivity() {
         let constraint: Constraint<UInt> = .and(lhs: .or(lhs: p, rhs: q), rhs: r)
         let expected: Constraint<UInt> = .or(lhs: .and(lhs: p, rhs: r), rhs: .and(lhs: q, rhs: r))
