@@ -63,6 +63,7 @@ public class ConstraintTests: XCTestCase {
 
     public static var allTests: [(String, (ConstraintTests) -> () throws -> Void)] {
         return [
+            ("test_inverse", test_inverse)
             ("test_modusPonens", test_modusPonens),
             ("test_modusTollens", test_modusTollens),
             ("test_hypotheticalSyllogism", test_hypotheticalSyllogism),
@@ -81,6 +82,45 @@ public class ConstraintTests: XCTestCase {
     let r: Constraint<UInt> = .lessThan(value: 7)
 
     public override func setUp() {}
+    
+    public func test_inverse() {
+        XCTAssertEqual(
+            Constraint<UInt>.lessThan(value: 0).inverse,
+            Constraint<UInt>.greaterThanEqual(value: 0)
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.lessThanEqual(value: 0).inverse,
+            Constraint<UInt>.greaterThan(value: 0)
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.equal(value: 0).inverse,
+            Constraint<UInt>.notEqual(value: 0)
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.greaterThan(value: 0).inverse,
+            Constraint<UInt>.lessThanEqual(value: 0)
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.greaterThanEqual(value: 0).inverse,
+            Constraint<UInt>.lessThan(value: 0)
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.and(lhs: .equal(value: 0), rhs: .equal(value: 0)).inverse,
+            Constraint<UInt>.or(lhs: .notEqual(value: 0), rhs: .notEqual(value: 0))
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.or(lhs: .equal(value: 0), rhs: .equal(value: 0)).inverse,
+            Constraint<UInt>.and(lhs: .notEqual(value: 0), rhs: .notEqual(value: 0))
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.implies(lhs: .equal(value: 0), rhs: .equal(value: 0)).inverse,
+            Constraint<UInt>.and(lhs: .equal(value: 0), rhs: .notEqual(value: 0))
+        )
+        XCTAssertEqual(
+            Constraint<UInt>.not(value: .equal(value: 0)).inverse,
+            Constraint<UInt>.equal(value: 0)
+        )
+    }
     
     public func test_modusPonens() {
         let constraint: Constraint<UInt> = .and(lhs: p, rhs: .implies(lhs: p, rhs: q))
