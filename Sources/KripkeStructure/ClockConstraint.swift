@@ -63,11 +63,44 @@ public enum Constraint<T: Comparable> {
     case lessThan(value: T)
     case lessThanEqual(value: T)
     case equal(value: T)
+    case notEqual(value: T)
     case greaterThan(value: T)
     case greaterThanEqual(value: T)
     indirect case and(lhs: Constraint<T>, rhs: Constraint<T>)
     indirect case or(lhs: Constraint<T>, rhs: Constraint<T>)
     indirect case not(value: Constraint<T>)
+    
+    var inverse: Constraint<T> {
+        switch self {
+        case .lessThan(let value):
+            return .greaterThanEqual(value: value)
+        case .lessThanEqual(let value):
+            return .greaterThan(value: value)
+        case .equal(let value):
+            return .notEqual(value: value)
+        case .notEqual(let value):
+            return .equal(value: value)
+        case .greaterThan(let value):
+            return .lessThanEqual(value: value)
+        case .greaterThanEqual(let value):
+            return .lessThan(value: value)
+        case .and(let lhs, let rhs):
+            return .or(lhs: lhs.inverse, rhs: rhs.inverse)
+        case .or(let lhs, let rhs):
+            return .and(lhs: lhs.inverse, rhs: rhs.inverse)
+        case .not(let value):
+            return value
+        }
+    }
+    
+    var reduced: Constraint<T> {
+        switch self {
+        case .not(let value):
+            return value.inverse
+        default:
+            return self
+        }
+    }
     
 }
 
@@ -77,23 +110,29 @@ extension Constraint: Hashable where T: Hashable {}
 extension Constraint: CustomStringConvertible {
     
     public var description: String {
-        switch self {
+        return self.expressionString(referencing: "")
+    }
+    
+    public func expressionString(referencing label: String) -> String {
+        switch self.reduced {
         case .lessThan(let value):
-            return " < \(value)"
+            return "\(label) < \(value)"
         case .lessThanEqual(let value):
-            return " <= \(value)"
+            return "\(label) <= \(value)"
         case .equal(let value):
-            return " == \(value)"
+            return "\(label) == \(value)"
+        case .notEqual(let value):
+            return "\(label) != \(value)"
         case .greaterThan(let value):
-            return " > \(value)"
+            return "\(label) > \(value)"
         case .greaterThanEqual(let value):
-            return " >= \(value)"
+            return "\(label) >= \(value)"
         case .and(let lhs, let rhs):
-            return "(\(lhs)) && (\(rhs))"
+            return "(\(lhs.expressionString(referencing: label))) && (\(rhs.expressionString(referencing: label)))"
         case .or(let lhs, let rhs):
-            return "(\(lhs)) && (\(rhs))"
+            return "(\(lhs.expressionString(referencing: label))) && (\(rhs.expressionString(referencing: label)))"
         case .not(let constraint):
-            return "!(\(constraint))"
+            return "!(\(constraint.expressionString(referencing: label)))"
         }
     }
     
