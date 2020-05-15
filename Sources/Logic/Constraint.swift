@@ -92,12 +92,82 @@ public enum Constraint<T: Comparable> {
     }
     
     public var reduced: Constraint<T> {
-        switch self {
-        case .not(let value):
-            return value.inverse
-        default:
-            return self
+        func reduce(_ constraint: Constraint<T>) -> Constraint<T> {
+            // Remove Negation.
+            switch constraint {
+            case .not(let value):
+                return reduce(value.inverse)
+            default:
+                break
+            }
+            // Disjunctive Simplification.
+            switch constraint {
+            case .or(let p, let q):
+                if p == q {
+                    return reduce(p)
+                }
+            default:
+                break
+            }
+            // Resolution.
+            switch constraint {
+            case .and(let lhs, let rhs):
+                switch lhs {
+                case .or(let p, let q):
+                    switch rhs {
+                    case .or(let pp, let r):
+                        if pp == .not(value: p) {
+                            return reduce(.or(lhs: q, rhs: r))
+                        }
+                        break
+                    default:
+                        break
+                    }
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Disjunctive Syllogism
+            switch constraint {
+            case .and(let constraint, let r):
+                switch constraint {
+                case .or(let p, let q):
+                    switch r {
+                    case .not(let innerR):
+                        if p != innerR {
+                            break
+                        }
+                        return reduce(q)
+                    default:
+                        break
+                    }
+                default:
+                    break
+                }
+                fallthrough
+            default:
+                break
+            }
+            //Distrubitivty
+            switch constraint {
+            case .and(let con, let r):
+                switch con {
+                case .or(let p, let q):
+                    return reduce(.or(
+                        lhs: .and(lhs: p, rhs: r),
+                        rhs: .and(lhs: q, rhs: r)
+                    ))
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            return constraint
         }
+        return reduce(self)
     }
     
     public func expression(
