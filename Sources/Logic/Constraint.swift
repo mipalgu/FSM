@@ -66,6 +66,7 @@ public enum Constraint<T: Comparable> {
     case greaterThanEqual(value: T)
     indirect case and(lhs: Constraint<T>, rhs: Constraint<T>)
     indirect case or(lhs: Constraint<T>, rhs: Constraint<T>)
+    indirect case implies(lhs: Constraint<T>, rhs: Constraint<T>)
     indirect case not(value: Constraint<T>)
     
     var inverse: Constraint<T> {
@@ -86,6 +87,8 @@ public enum Constraint<T: Comparable> {
             return .or(lhs: lhs.inverse, rhs: rhs.inverse)
         case .or(let lhs, let rhs):
             return .and(lhs: lhs.inverse, rhs: rhs.inverse)
+        case .implies(let lhs, let rhs):
+            return .and(lhs: lhs, rhs: .not(value: rhs))
         case .not(let value):
             return value
         }
@@ -180,6 +183,7 @@ public enum Constraint<T: Comparable> {
         greaterThanEqual: (String, String) -> String = { "\($0) >= \($1)" },
         and: (String, String) -> String = { "\($0) && \($1)" },
         or: (String, String) -> String = { "\($0) || \($1)" },
+        implies: (String, String) -> String = { "\($0) &rarr; \($1)" },
         not: (String) -> String = { "!\($0)" },
         group: (String) -> String = { "(\($0)" },
         label: (String) -> String = { $0 },
@@ -204,7 +208,7 @@ public enum Constraint<T: Comparable> {
         }
         func groupIfNeeded(_ constraint: Constraint<T>) -> String {
             switch constraint {
-            case .or, .and:
+            case .or, .and, .implies:
                 return group(expression(constraint))
             default:
                 return expression(constraint)
@@ -227,6 +231,8 @@ public enum Constraint<T: Comparable> {
             return and(groupIfNeeded(lhs), groupIfNeeded(rhs))
         case .or(let lhs, let rhs):
             return or(groupIfNeeded(lhs), groupIfNeeded(rhs))
+        case .implies(let lhs, let rhs):
+            return implies(groupIfNeeded(lhs), groupIfNeeded(rhs))
         case .not(let constraint):
             return not(group(expression(constraint)))
         }
