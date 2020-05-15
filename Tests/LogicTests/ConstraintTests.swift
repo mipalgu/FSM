@@ -77,6 +77,24 @@ public class ConstraintTests: XCTestCase {
 
     public override func setUp() {}
     
+    public func test_modusPonens() {
+        let constraint: Constraint<UInt> = .and(lhs: p, rhs: .implies(lhs: p, rhs: q))
+        let expected: Constraint<UInt> = q
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_modusTollens() {
+        let constraint: Constraint<UInt> = .and(lhs: .not(value: q), rhs: .implies(lhs: p, rhs: q))
+        let expected: Constraint<UInt> = p.inverse
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_hypotheticalSyllogism() {
+        let constraint: Constraint<UInt> = .and(lhs: .implies(lhs: p, rhs: q), rhs: .implies(lhs: q, rhs: r))
+        let expected: Constraint<UInt> = .implies(lhs: p, rhs: r)
+        XCTAssertEqual(constraint.reduced, expected)
+    }
+    
     public func test_distributivity() {
         let constraint: Constraint<UInt> = .and(lhs: .or(lhs: p, rhs: q), rhs: r)
         let expected: Constraint<UInt> = .or(lhs: .and(lhs: p, rhs: r), rhs: .and(lhs: q, rhs: r))

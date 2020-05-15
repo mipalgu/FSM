@@ -88,7 +88,7 @@ public enum Constraint<T: Comparable> {
         case .or(let lhs, let rhs):
             return .and(lhs: lhs.inverse, rhs: rhs.inverse)
         case .implies(let lhs, let rhs):
-            return .and(lhs: lhs, rhs: .not(value: rhs))
+            return .and(lhs: lhs, rhs: rhs.inverse)
         case .not(let value):
             return value
         }
@@ -96,10 +96,50 @@ public enum Constraint<T: Comparable> {
     
     public var reduced: Constraint<T> {
         func reduce(_ constraint: Constraint<T>) -> Constraint<T> {
-            // Remove Negation.
+            // Modus Ponens
             switch constraint {
-            case .not(let value):
-                return reduce(value.inverse)
+            case .and(let p, rhs: let wrap):
+                switch wrap {
+                case .implies(let q, let r):
+                    if q == p {
+                        return reduce(r)
+                    }
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Modus Tollens
+            switch constraint {
+            case .and(let lhs, let rhs):
+                switch rhs {
+                case .implies(let p, let q):
+                    if lhs == .not(value: q) || lhs == q.inverse {
+                        return reduce(.not(value: p))
+                    }
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            // Hypothetical Syllogism
+            switch constraint {
+            case .and(let lhs, let rhs):
+                switch lhs {
+                case .implies(let p, let q):
+                    switch rhs {
+                    case .implies(let qq, let r):
+                        if q == qq {
+                            return reduce(.implies(lhs: p, rhs: r))
+                        }
+                    default:
+                        break
+                    }
+                default:
+                    break
+                }
             default:
                 break
             }
@@ -165,6 +205,13 @@ public enum Constraint<T: Comparable> {
                 default:
                     break
                 }
+            default:
+                break
+            }
+            // Remove Negation.
+            switch constraint {
+            case .not(let value):
+                return reduce(value.inverse)
             default:
                 break
             }
