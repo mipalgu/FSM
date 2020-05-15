@@ -118,7 +118,7 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             } else if let time = time {
                 label = "\(time)"
             } else if let constraint = $0.constraint {
-                label = "\($0.constraint?.expressionString(referencing: self.clockLabel))"
+                label = "\(constraint.expressionString(referencing: self.clockLabel))"
             } else {
                 label = ""
             }
