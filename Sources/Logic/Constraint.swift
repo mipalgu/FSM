@@ -168,6 +168,19 @@ public enum Constraint<T: Comparable> {
             default:
                 break
             }
+            // Reduce sub constraints.
+            switch constraint {
+            case .and(let lhs, let rhs):
+                return .and(lhs: lhs.reduced, rhs: rhs.reduced)
+            case .or(let lhs, let rhs):
+                return .or(lhs: lhs.reduced, rhs: rhs.reduced)
+            case .implies(let lhs, let rhs):
+                return .implies(lhs: lhs.reduced, rhs: rhs.reduced)
+            case .not(let con):
+                return .not(value: con.reduced)
+            default:
+                break;
+            }
             return constraint
         }
         return reduce(self)
