@@ -109,8 +109,8 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         withId id: Int,
         usingStream stream: inout OutputStream
     ) {
-        func expressionString(for constraint: ClockConstraint) -> String {
-            return constraint.expressionString(
+        func expression(for constraint: ClockConstraint) -> String {
+            return constraint.expression(
                 referencing: self.clockLabel,
                 lessThan: { "\($0) &lt; \($1)" },
                 lessThanEqual: { "\($0) &le; \($1)" },
@@ -129,11 +129,11 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             let time = $0.time == 0 ? nil : $0.time
             let label: String
             if let time = time, let constraint = $0.constraint {
-                label = "\(time), \(expressionString(for: constraint))"
+                label = "\(time), \(expression(for: constraint))"
             } else if let time = time {
                 label = "\(time)"
             } else if let constraint = $0.constraint {
-                label = "\(expressionString(for: constraint))"
+                label = "\(expression(for: constraint))"
             } else {
                 label = ""
             }

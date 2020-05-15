@@ -102,18 +102,7 @@ public enum Constraint<T: Comparable> {
         }
     }
     
-}
-
-extension Constraint: Equatable {}
-extension Constraint: Hashable where T: Hashable {}
-
-extension Constraint: CustomStringConvertible {
-    
-    public var description: String {
-        return self.expressionString(referencing: "")
-    }
-    
-    public func expressionString(
+    public func expression(
         referencing label: String,
         lessThan: (String, String) -> String = { "\($0) < \($1)" },
         lessThanEqual: (String, String) -> String = { "\($0) <= \($1)" },
@@ -148,7 +137,7 @@ extension Constraint: CustomStringConvertible {
         case .greaterThanEqual(let value):
             return greaterThanEqual(label, "\(value)")
         case .and(let lhs, let rhs):
-            let lhsStr = lhs.expressionString(
+            let lhsStr = lhs.expression(
                 referencing: label,
                 lessThan: lessThan,
                 lessThanEqual: lessThanEqual,
@@ -161,7 +150,7 @@ extension Constraint: CustomStringConvertible {
                 not: not,
                 group: group
             )
-            let rhsStr = rhs.expressionString(
+            let rhsStr = rhs.expression(
                 referencing: label,
                 lessThan: lessThan,
                 lessThanEqual: lessThanEqual,
@@ -176,7 +165,7 @@ extension Constraint: CustomStringConvertible {
             )
             return and(groupIfNeeded(lhs, lhsStr), groupIfNeeded(rhs, rhsStr))
         case .or(let lhs, let rhs):
-            let lhsStr = lhs.expressionString(
+            let lhsStr = lhs.expression(
                 referencing: label,
                 lessThan: lessThan,
                 lessThanEqual: lessThanEqual,
@@ -189,7 +178,7 @@ extension Constraint: CustomStringConvertible {
                 not: not,
                 group: group
             )
-            let rhsStr = rhs.expressionString(
+            let rhsStr = rhs.expression(
                 referencing: label,
                 lessThan: lessThan,
                 lessThanEqual: lessThanEqual,
@@ -204,7 +193,7 @@ extension Constraint: CustomStringConvertible {
             )
             return or(groupIfNeeded(lhs, lhsStr), groupIfNeeded(rhs, rhsStr))
         case .not(let constraint):
-            let constraintStr = constraint.expressionString(
+            let constraintStr = constraint.expression(
                 referencing: label,
                 lessThan: lessThan,
                 lessThanEqual: lessThanEqual,
@@ -219,6 +208,17 @@ extension Constraint: CustomStringConvertible {
             )
             return not(group(constraintStr))
         }
+    }
+    
+}
+
+extension Constraint: Equatable {}
+extension Constraint: Hashable where T: Hashable {}
+
+extension Constraint: CustomStringConvertible {
+    
+    public var description: String {
+        return self.expression(referencing: "")
     }
     
 }
