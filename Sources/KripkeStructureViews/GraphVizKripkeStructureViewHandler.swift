@@ -109,16 +109,31 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         withId id: Int,
         usingStream stream: inout OutputStream
     ) {
+        func expressionString(for constraint: ClockConstraint) -> String {
+            return constraint.expressionString(
+                referencing: self.clockLabel,
+                lessThan: { "\($0) &lt; \($1)" },
+                lessThanEqual: { "\($0) &le; \($1)" },
+                equal: { "\($0) = \($1)" },
+                notEqual: { "\($0) &ne; \($1)" },
+                greaterThan: { "\($0) &gt; \($1)" },
+                greaterThanEqual: { "\($0) &ge; \($1) " },
+                and: { "\($0) &and; \($1)" },
+                or: { "\($0) &or; \($1)" },
+                not: { "&not;\($0)" },
+                group: { "&#40;\($0)&#41;" }
+            )
+        }
         state.edges.forEach {
             let target = data.fetchId(of: $0.target)
             let time = $0.time == 0 ? nil : $0.time
             let label: String
             if let time = time, let constraint = $0.constraint {
-                label = "\(time), \(constraint.expressionString(referencing: self.clockLabel))"
+                label = "\(time), \(expressionString(for: constraint))"
             } else if let time = time {
                 label = "\(time)"
             } else if let constraint = $0.constraint {
-                label = "\(constraint.expressionString(referencing: self.clockLabel))"
+                label = "\(expressionString(for: constraint))"
             } else {
                 label = ""
             }
