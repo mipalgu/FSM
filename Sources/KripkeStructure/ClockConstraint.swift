@@ -113,26 +113,103 @@ extension Constraint: CustomStringConvertible {
         return self.expressionString(referencing: "")
     }
     
-    public func expressionString(referencing label: String) -> String {
+    public func expressionString(
+        referencing label: String,
+        lessThan: (String, String) -> String = { "\($0) < \($1)" },
+        lessThanEqual: (String, String) -> String = { "\($0) <= \($1)" },
+        equal: (String, String) -> String = { "\($0) == \($1)" },
+        notEqual: (String, String) -> String = { "\($0) != \($1)" },
+        greaterThan: (String, String) -> String = { "\($0) > \($1)" },
+        greaterThanEqual: (String, String) -> String = { "\($0) >= \($1)" },
+        and: (String, String) -> String = { "\($0) && \($1)" },
+        or: (String, String) -> String = { "\($0) || \($1)" },
+        not: (String) -> String = { "!\($0)" },
+        group: (String) -> String = { "(\($0)" }
+    ) -> String {
         switch self.reduced {
         case .lessThan(let value):
-            return "\(label) < \(value)"
+            return lessThan(label, "\(value)")
         case .lessThanEqual(let value):
-            return "\(label) <= \(value)"
+            return lessThanEqual(label, "\(value)")
         case .equal(let value):
-            return "\(label) == \(value)"
+            return equal(label, "\(value)")
         case .notEqual(let value):
-            return "\(label) != \(value)"
+            return notEqual(label, "\(value)")
         case .greaterThan(let value):
-            return "\(label) > \(value)"
+            return greaterThan(label, "\(value)")
         case .greaterThanEqual(let value):
-            return "\(label) >= \(value)"
+            return greaterThanEqual(label, "\(value)")
         case .and(let lhs, let rhs):
-            return "(\(lhs.expressionString(referencing: label))) && (\(rhs.expressionString(referencing: label)))"
+            let lhsStr = lhs.expressionString(
+                referencing: label,
+                lessThan: lessThan,
+                lessThanEqual: lessThanEqual,
+                equal: equal,
+                notEqual: notEqual,
+                greaterThan: greaterThan,
+                greaterThanEqual: greaterThanEqual,
+                and: and,
+                or: or,
+                not: not,
+                group: group
+            )
+            let rhsStr = rhs.expressionString(
+                referencing: label,
+                lessThan: lessThan,
+                lessThanEqual: lessThanEqual,
+                equal: equal,
+                notEqual: notEqual,
+                greaterThan: greaterThan,
+                greaterThanEqual: greaterThanEqual,
+                and: and,
+                or: or,
+                not: not,
+                group: group
+            )
+            return and(lhsStr, rhsStr)
         case .or(let lhs, let rhs):
-            return "(\(lhs.expressionString(referencing: label))) && (\(rhs.expressionString(referencing: label)))"
+            let lhsStr = lhs.expressionString(
+                referencing: label,
+                lessThan: lessThan,
+                lessThanEqual: lessThanEqual,
+                equal: equal,
+                notEqual: notEqual,
+                greaterThan: greaterThan,
+                greaterThanEqual: greaterThanEqual,
+                and: and,
+                or: or,
+                not: not,
+                group: group
+            )
+            let rhsStr = rhs.expressionString(
+                referencing: label,
+                lessThan: lessThan,
+                lessThanEqual: lessThanEqual,
+                equal: equal,
+                notEqual: notEqual,
+                greaterThan: greaterThan,
+                greaterThanEqual: greaterThanEqual,
+                and: and,
+                or: or,
+                not: not,
+                group: group
+            )
+            return or(lhsStr, rhsStr)
         case .not(let constraint):
-            return "!(\(constraint.expressionString(referencing: label)))"
+            let constraintStr = constraint.expressionString(
+                referencing: label,
+                lessThan: lessThan,
+                lessThanEqual: lessThanEqual,
+                equal: equal,
+                notEqual: notEqual,
+                greaterThan: greaterThan,
+                greaterThanEqual: greaterThanEqual,
+                and: and,
+                or: or,
+                not: not,
+                group: group
+            )
+            return not(group(constraintStr))
         }
     }
     
