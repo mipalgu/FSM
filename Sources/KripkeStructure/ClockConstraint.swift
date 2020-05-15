@@ -126,6 +126,14 @@ extension Constraint: CustomStringConvertible {
         not: (String) -> String = { "!\($0)" },
         group: (String) -> String = { "(\($0)" }
     ) -> String {
+        func groupIfNeeded(_ constraint: Constraint<T>, _ expression: String) -> String {
+            switch constraint {
+            case .or, .and:
+                return group(expression)
+            default:
+                return expression
+            }
+        }
         switch self.reduced {
         case .lessThan(let value):
             return lessThan(label, "\(value)")
@@ -166,7 +174,7 @@ extension Constraint: CustomStringConvertible {
                 not: not,
                 group: group
             )
-            return and(lhsStr, rhsStr)
+            return and(groupIfNeeded(lhs, lhsStr), groupIfNeeded(rhs, rhsStr))
         case .or(let lhs, let rhs):
             let lhsStr = lhs.expressionString(
                 referencing: label,
@@ -194,7 +202,7 @@ extension Constraint: CustomStringConvertible {
                 not: not,
                 group: group
             )
-            return or(lhsStr, rhsStr)
+            return or(groupIfNeeded(lhs, lhsStr), groupIfNeeded(rhs, rhsStr))
         case .not(let constraint):
             let constraintStr = constraint.expressionString(
                 referencing: label,
