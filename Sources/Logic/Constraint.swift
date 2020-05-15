@@ -94,7 +94,7 @@ public enum Constraint<T: Comparable> {
         }
     }
     
-    public var reduced: Constraint<T> {
+    private var logicalReduced: Constraint<T> {
         func reduce(_ constraint: Constraint<T>) -> Constraint<T> {
             // Material Implication
             switch constraint {
@@ -319,6 +319,26 @@ extension Constraint: CustomStringConvertible {
     
     public var description: String {
         return self.expression(referencing: "")
+    }
+    
+}
+
+extension Constraint {
+    
+    public var reduced: Constraint<T> {
+        return self.logicalReduced
+    }
+    
+}
+
+extension Constraint where T: Numeric {
+    
+    private var numericReduced: Constraint<T> {
+        return self
+    }
+    
+    public var reduced: Constraint<T> {
+        return self.logicalReduced.numericReduced
     }
     
 }

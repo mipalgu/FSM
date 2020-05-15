@@ -63,7 +63,7 @@ public class ConstraintTests: XCTestCase {
 
     public static var allTests: [(String, (ConstraintTests) -> () throws -> Void)] {
         return [
-            ("test_inverse", test_inverse)
+            ("test_inverse", test_inverse),
             ("test_modusPonens", test_modusPonens),
             ("test_modusTollens", test_modusTollens),
             ("test_hypotheticalSyllogism", test_hypotheticalSyllogism),
