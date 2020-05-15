@@ -103,7 +103,7 @@ public enum Constraint<T: Comparable> {
     }
     
     public func expression(
-        referencing label: String,
+        referencing reference: String,
         lessThan: (String, String) -> String = { "\($0) < \($1)" },
         lessThanEqual: (String, String) -> String = { "\($0) <= \($1)" },
         equal: (String, String) -> String = { "\($0) == \($1)" },
@@ -113,100 +113,54 @@ public enum Constraint<T: Comparable> {
         and: (String, String) -> String = { "\($0) && \($1)" },
         or: (String, String) -> String = { "\($0) || \($1)" },
         not: (String) -> String = { "!\($0)" },
-        group: (String) -> String = { "(\($0)" }
+        group: (String) -> String = { "(\($0)" },
+        label: (String) -> String = { $0 },
+        value: (T) -> String = { "\($0)" }
     ) -> String {
-        func groupIfNeeded(_ constraint: Constraint<T>, _ expression: String) -> String {
+        func expression(_ constraint: Constraint<T>) -> String {
+            return constraint.expression(
+                referencing: reference,
+                lessThan: lessThan,
+                lessThanEqual: lessThanEqual,
+                equal: equal,
+                notEqual: notEqual,
+                greaterThan: greaterThan,
+                greaterThanEqual: greaterThanEqual,
+                and: and,
+                or: or,
+                not: not,
+                group: group,
+                label: label,
+                value: value
+            )
+        }
+        func groupIfNeeded(_ constraint: Constraint<T>) -> String {
             switch constraint {
             case .or, .and:
-                return group(expression)
+                return group(expression(constraint))
             default:
-                return expression
+                return expression(constraint)
             }
         }
         switch self.reduced {
-        case .lessThan(let value):
-            return lessThan(label, "\(value)")
-        case .lessThanEqual(let value):
-            return lessThanEqual(label, "\(value)")
-        case .equal(let value):
-            return equal(label, "\(value)")
-        case .notEqual(let value):
-            return notEqual(label, "\(value)")
-        case .greaterThan(let value):
-            return greaterThan(label, "\(value)")
-        case .greaterThanEqual(let value):
-            return greaterThanEqual(label, "\(value)")
+        case .lessThan(let val):
+            return lessThan(reference, value(val))
+        case .lessThanEqual(let val):
+            return lessThanEqual(reference, value(val))
+        case .equal(let val):
+            return equal(reference, value(val))
+        case .notEqual(let val):
+            return notEqual(reference, value(val))
+        case .greaterThan(let val):
+            return greaterThan(reference, value(val))
+        case .greaterThanEqual(let val):
+            return greaterThanEqual(reference, value(val))
         case .and(let lhs, let rhs):
-            let lhsStr = lhs.expression(
-                referencing: label,
-                lessThan: lessThan,
-                lessThanEqual: lessThanEqual,
-                equal: equal,
-                notEqual: notEqual,
-                greaterThan: greaterThan,
-                greaterThanEqual: greaterThanEqual,
-                and: and,
-                or: or,
-                not: not,
-                group: group
-            )
-            let rhsStr = rhs.expression(
-                referencing: label,
-                lessThan: lessThan,
-                lessThanEqual: lessThanEqual,
-                equal: equal,
-                notEqual: notEqual,
-                greaterThan: greaterThan,
-                greaterThanEqual: greaterThanEqual,
-                and: and,
-                or: or,
-                not: not,
-                group: group
-            )
-            return and(groupIfNeeded(lhs, lhsStr), groupIfNeeded(rhs, rhsStr))
+            return and(groupIfNeeded(lhs), groupIfNeeded(rhs))
         case .or(let lhs, let rhs):
-            let lhsStr = lhs.expression(
-                referencing: label,
-                lessThan: lessThan,
-                lessThanEqual: lessThanEqual,
-                equal: equal,
-                notEqual: notEqual,
-                greaterThan: greaterThan,
-                greaterThanEqual: greaterThanEqual,
-                and: and,
-                or: or,
-                not: not,
-                group: group
-            )
-            let rhsStr = rhs.expression(
-                referencing: label,
-                lessThan: lessThan,
-                lessThanEqual: lessThanEqual,
-                equal: equal,
-                notEqual: notEqual,
-                greaterThan: greaterThan,
-                greaterThanEqual: greaterThanEqual,
-                and: and,
-                or: or,
-                not: not,
-                group: group
-            )
-            return or(groupIfNeeded(lhs, lhsStr), groupIfNeeded(rhs, rhsStr))
+            return or(groupIfNeeded(lhs), groupIfNeeded(rhs))
         case .not(let constraint):
-            let constraintStr = constraint.expression(
-                referencing: label,
-                lessThan: lessThan,
-                lessThanEqual: lessThanEqual,
-                equal: equal,
-                notEqual: notEqual,
-                greaterThan: greaterThan,
-                greaterThanEqual: greaterThanEqual,
-                and: and,
-                or: or,
-                not: not,
-                group: group
-            )
-            return not(group(constraintStr))
+            return not(group(expression(constraint)))
         }
     }
     
