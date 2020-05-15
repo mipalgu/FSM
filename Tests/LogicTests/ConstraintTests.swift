@@ -63,11 +63,16 @@ public class ConstraintTests: XCTestCase {
 
     public static var allTests: [(String, (ConstraintTests) -> () throws -> Void)] {
         return [
+            ("test_modusPonens", test_modusPonens),
+            ("test_modusTollens", test_modusTollens),
+            ("test_hypotheticalSyllogism", test_hypotheticalSyllogism),
+            ("test_materialImplication", test_materialImplication),
             ("test_distributivity", test_distributivity),
             ("test_disjunctiveSyllogism", test_disjunctiveSyllogism),
             ("test_doubleNegation", test_doubleNegation),
             ("test_disjunctiveSimplification", test_disjunctiveSimplification),
-            ("test_resolution", test_resolution)
+            ("test_resolution", test_resolution),
+            ("test_demorgans", test_demorgans)
         ]
     }
     
@@ -129,6 +134,15 @@ public class ConstraintTests: XCTestCase {
         let constraint: Constraint<UInt> = .and(lhs: .or(lhs: p, rhs: q), rhs: .or(lhs: .not(value: p), rhs: r))
         let expected: Constraint<UInt> = .or(lhs: q, rhs: r)
         XCTAssertEqual(constraint.reduced, expected)
+    }
+    
+    public func test_demorgans() {
+        let constraint1: Constraint<UInt> = .not(value: .and(lhs: p, rhs: q))
+        let expected1: Constraint<UInt> = .or(lhs: p.inverse, rhs: q.inverse)
+        XCTAssertEqual(constraint1.reduced, expected1)
+        let constraint2: Constraint<UInt> = .not(value: .or(lhs: p, rhs: q))
+        let expected2: Constraint<UInt> = .and(lhs: p.inverse, rhs: q.inverse)
+        XCTAssertEqual(constraint2.reduced, expected2)
     }
 
 }
