@@ -180,9 +180,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createInitial(usingStream stream: inout TextOutputStream) {
         if self.initials.isEmpty && (self.clocks.isEmpty || !self.usingClocks) {
-            stream.write("INIT()\n")
+            stream.write("INIT();\n")
             return
         }
+        stream.write("INIT\n")
         let initials = self.initials.lazy.map {
             self.createConditions(of: $0)
         }
@@ -190,8 +191,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         let all = ((clocks.isEmpty ? [] : ["(" + clocks + ")"]) + Array(initials)).combine("") {
             $0 + " | (" + $1 + ")"
         }
-        stream.write(all)
-        stream.write("\n")
+        stream.write(all + ";")
+        stream.write("\n\n")
     }
 
     fileprivate func createTransitions(
@@ -223,26 +224,31 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createCase(of state: State) -> String? {
         let props = self.extractor.extract(from: state.properties)
-        let effects: [[String: String]] = state.edges.map {
+        let conditions = self.createConditions(of: props)
+        let transitions: String = state.edges.lazy.map {
             if false == self.sink.contains($0.target) {
                 self.acceptingStates.insert($0.target)
             }
             let props = self.extractor.extract(from: $0.target)
-            return props
-        }
-        let conditions = self.createConditions(of: props)
-        guard let firstEffect = effects.first else {
+            let effect: String
+            if self.usingClocks {
+                effect = self.createEffect(from: props, clockName: $0.clockName, resetClock: $0.resetClock, duration: $0.time)
+            } else {
+                effect = self.createEffect(from: props)
+            }
+            return "    (\(effect))"
+        }.combine("") { $0 + " |\n" + $1 }
+        if transitions.isEmpty {
             return nil
         }
-        let firstEffects = "    (" + self.createEffect(from: firstEffect) + ")"
-        //swiftlint:disable:next line_length
-        let effectsList = effects.dropFirst().reduce(firstEffects) { (last: String, props: [String: String]) -> String in
-            last + " |\n    (" + self.createEffect(from: props) + ")"
-        }
-        return conditions + ":\n" + effectsList + ";"
+        return conditions + ":\n" + transitions + ";"
     }
 
     fileprivate func createConditions(of props: [String: String]) -> String {
+        var props = props
+        if self.usingClocks {
+            props["time"] = "c"
+        }
         guard let firstProp = props.first else {
             return ""
         }
@@ -252,7 +258,20 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
     }
 
-    fileprivate func createEffect(from props: [String: String], forcePC: String? = nil) -> String {
+    fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
+        var props = props
+        if self.usingClocks, let duration = duration {
+            props["c"] = "c+\(duration)"
+        } else if self.usingClocks {
+            props["c"] = "c"
+        }
+        if self.usingClocks, let clockName = clockName {
+            if let duration = duration {
+                props[clockName] = resetClock ? "0" : clockName + "\(duration)"
+            } else {
+                props[clockName] = resetClock ? "0" : clockName
+            }
+        }
         return props.lazy.map {
             if let newPC = forcePC, $0.key == "pc" {
                 return "next(pc)=" + newPC
