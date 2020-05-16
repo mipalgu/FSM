@@ -56,45 +56,6 @@
  *
  */
 
+@_exported import Logic
+
 public typealias ClockConstraint = Constraint<UInt>
-
-public enum Constraint<T: Comparable> {
-    
-    case lessThan(value: T)
-    case lessThanEqual(value: T)
-    case equal(value: T)
-    case greaterThan(value: T)
-    case greaterThanEqual(value: T)
-    indirect case and(lhs: Constraint<T>, rhs: Constraint<T>)
-    indirect case or(lhs: Constraint<T>, rhs: Constraint<T>)
-    indirect case not(value: Constraint<T>)
-    
-}
-
-extension Constraint: Equatable {}
-extension Constraint: Hashable where T: Hashable {}
-
-extension Constraint: CustomStringConvertible {
-    
-    public var description: String {
-        switch self {
-        case .lessThan(let value):
-            return " < \(value)"
-        case .lessThanEqual(let value):
-            return " <= \(value)"
-        case .equal(let value):
-            return " == \(value)"
-        case .greaterThan(let value):
-            return " > \(value)"
-        case .greaterThanEqual(let value):
-            return " >= \(value)"
-        case .and(let lhs, let rhs):
-            return "(\(lhs)) && (\(rhs))"
-        case .or(let lhs, let rhs):
-            return "(\(lhs)) && (\(rhs))"
-        case .not(let constraint):
-            return "!(\(constraint))"
-        }
-    }
-    
-}

@@ -58,13 +58,27 @@
 
 public struct KripkeEdge {
     
-    var constraint: ClockConstraint?
+    public var constraint: ClockConstraint?
     
-    var target: KripkeStatePropertyList
+    public var time: UInt
     
-    public init(constraint: ClockConstraint? = nil, target: KripkeStatePropertyList) {
+    public var target: KripkeStatePropertyList
+    
+    public init(constraint: ClockConstraint? = nil, time: UInt = 0, target: KripkeStatePropertyList) {
         self.constraint = constraint
+        self.time = time
         self.target = target
+    }
+    
+}
+
+extension KripkeEdge: CustomStringConvertible {
+    
+    public var description: String {
+        guard let constraint = constraint else {
+            return "(time: \(time), target: \(target))"
+        }
+        return "(constraint: \(constraint), time: \(time), target: \(target))"
     }
     
 }

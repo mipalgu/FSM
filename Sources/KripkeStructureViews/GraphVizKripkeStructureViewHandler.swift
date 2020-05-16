@@ -62,7 +62,12 @@ import swift_helpers
 
 public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
 
-    public init() {}
+    
+    private let clockLabel: String
+    
+    public init(clockLabel: String = "clock") {
+        self.clockLabel = clockLabel
+    }
 
     public func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         stream.write("digraph finite_state_machine {\n")
@@ -79,7 +84,7 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         isInitial: Bool,
         usingStream stream: inout OutputStream
     ) {
-        let shape = state.effects.isEmpty ? "doublecircle" : "circle"
+        let shape = state.edges.isEmpty ? "doublecircle" : "circle"
         let label = self.formatProperties(list: state.properties, indent: 1, includeBraces: false) ?? "\(id)"
         if true == isInitial {
             stream.write("node [shape=point] si\(id);")
@@ -104,8 +109,37 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         withId id: Int,
         usingStream stream: inout OutputStream
     ) {
-        state.effects.forEach {
-            stream.write("s\(id) -> s\(data.fetchId(of: $0));\n")
+        func expression(for constraint: ClockConstraint) -> String {
+            return constraint.expression(
+                referencing: self.clockLabel,
+                lessThan: { "\($0) &lt; \($1)" },
+                lessThanEqual: { "\($0) &le; \($1)" },
+                equal: { "\($0) = \($1)" },
+                notEqual: { "\($0) &ne; \($1)" },
+                greaterThan: { "\($0) &gt; \($1)" },
+                greaterThanEqual: { "\($0) &ge; \($1) " },
+                and: { "\($0) &and; \($1)" },
+                or: { "\($0) &or; \($1)" },
+                implies: { "\($0) &rarr; \($1)" },
+                not: { "&not;\($0)" },
+                group: { "&#40;\($0)&#41;" }
+            )
+        }
+        state.edges.forEach {
+            let target = data.fetchId(of: $0.target)
+            let time = $0.time == 0 ? nil : $0.time
+            let label: String
+            if let time = time, let constraint = $0.constraint, constraint != .equal(value: 0) {
+                label = "\(time), \(expression(for: constraint.reduced))"
+            } else if let time = time {
+                label = "\(time)"
+            } else if let constraint = $0.constraint, constraint != .equal(value: 0) {
+                label = "\(expression(for: constraint.reduced))"
+            } else {
+                label = ""
+            }
+            let labelStr = label == "" ? "" : " [ label=\"\(label)\" ]"
+            stream.write("s\(id) -> s\(target)\(labelStr);\n")
         }
     }
 

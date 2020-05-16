@@ -66,7 +66,7 @@ public final class KripkeState: KripkeStateType {
      */
     public let properties: KripkeStatePropertyList
 
-    public var effects: Set<KripkeStatePropertyList>
+    public var edges: Set<KripkeEdge>
 
     /**
      *  Create a new `KripkeState`.
@@ -77,10 +77,10 @@ public final class KripkeState: KripkeStateType {
      */
     public init(
         properties: KripkeStatePropertyList,
-        effects: Set<KripkeStatePropertyList> = []
+        edges: Set<KripkeEdge> = []
     ) {
         self.properties = properties
-        self.effects = effects
+        self.edges = edges
     }
 
 }
