@@ -59,6 +59,7 @@
 import Hashing
 import IO
 import KripkeStructure
+import swift_helpers
 import Utilities
 
 #if os(macOS)
@@ -82,6 +83,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate var properties: [String: Ref<Set<String>>] = [:]
 
     fileprivate var sink: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
+    
+    private var acceptingStates: Set<KripkeStatePropertyList> = Set()
 
     fileprivate var firstState: State?
 
@@ -100,6 +103,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
 
     public func reset() {
+        self.acceptingStates = Set()
         self.sink = HashSink(minimumCapacity: 500000)
         self.stream = self.inputOutputStreamFactory.make(id: self.identifier + ".transitions.smv")
         self.properties = [:]
@@ -115,6 +119,9 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             return
         }
         sink.insert(state.properties)
+        if state.edges.count > 0 {
+            self.acceptingStates.remove(state.properties)
+        }
         let props = self.extractor.extract(from: state.properties)
         if true == isInitial {
             self.initials.insert(props)
@@ -136,6 +143,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     public func finish() {
         self.stream.flush()
         self.stream.rewind()
+        self.properties["pc"]?.value.insert("\"error\"")
+        self.properties["pc"]?.value.insert("\"finish\"")
         var combinedStream = self.outputStreamFactory.make(id: "main.smv")
         defer { combinedStream.close() }
         combinedStream.write("MODULE main\n\n")
@@ -195,21 +204,26 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             outputStream.write(line)
             outputStream.write("\n")
         }
-        outputStream.write(self.createTrueCase(with: first))
-        outputStream.write("\n")
+        self.acceptingStates.forEach {
+            let props = self.extractor.extract(from: $0)
+            let conditions = self.createConditions(of: props)
+            let effects = self.createEffect(from: props, forcePC: "\"finish\"")
+            outputStream.write(conditions + ":" + "\n")
+            outputStream.write("    " + effects + ";\n")
+        }
+        outputStream.write("pc=\"finish\":next(pc)=\"finish\";\n")
+        outputStream.write("TRUE:next(pc)=\"error\";\n")
         outputStream.write(endTrans)
-    }
-
-    fileprivate func createTrueCase(with state: State) -> String {
-        let props = self.extractor.extract(from: state.properties)
-        let effects = self.createEffect(from: props)
-        return "TRUE:" + effects + ";"
     }
 
     fileprivate func createCase(of state: State) -> String? {
         let props = self.extractor.extract(from: state.properties)
-        let effects = state.edges.map {
-            self.extractor.extract(from: $0.target)
+        let effects: [[String: String]] = state.edges.map {
+            if false == self.sink.contains($0.target) {
+                self.acceptingStates.insert($0.target)
+            }
+            let props = self.extractor.extract(from: $0.target)
+            return props
         }
         let conditions = self.createConditions(of: props)
         guard let firstEffect = effects.first else {
@@ -233,15 +247,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
     }
 
-    fileprivate func createEffect(from props: [String: String]) -> String {
-        guard let firstProp = props.first else {
-            return ""
-        }
-        let firstEffect = "next(" + firstProp.0 + ")=" + firstProp.1
-        let effects = props.dropFirst().reduce(firstEffect) {
-            $0 + " & next(" + $1.0 + ")=" + $1.1
-        }
-        return effects
+    fileprivate func createEffect(from props: [String: String], forcePC: String? = nil) -> String {
+        return props.lazy.map {
+            if let newPC = forcePC, $0.key == "pc" {
+                return "next(pc)=" + newPC
+            }
+            return "next(" + $0.key + ")=" + $0.value
+        }.combine("") { $0 + " & " + $1}
     }
 
 }
