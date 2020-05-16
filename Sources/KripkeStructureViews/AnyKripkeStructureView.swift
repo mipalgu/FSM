@@ -67,13 +67,13 @@ public final class AnyKripkeStructureView<State: KripkeStateType>: KripkeStructu
 
     fileprivate let _finish: () -> Void
 
-    fileprivate let _reset: () -> Void
+    fileprivate let _reset: (Bool) -> Void
 
     public init<View: KripkeStructureView>(_ base: View) where View.State == State {
         self.base = base
         self._commit = { base.commit(state: $0, isInitial: $1) }
         self._finish = { base.finish() }
-        self._reset = { base.reset() }
+        self._reset = { base.reset(usingClocks: $0) }
     }
 
     public func commit(state: State, isInitial: Bool) {
@@ -84,8 +84,8 @@ public final class AnyKripkeStructureView<State: KripkeStateType>: KripkeStructu
         self._finish()
     }
 
-    public func reset() {
-        self._reset()
+    public func reset(usingClocks: Bool) {
+        self._reset(usingClocks)
     }
 
 }

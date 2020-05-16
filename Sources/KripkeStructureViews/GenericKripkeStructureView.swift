@@ -65,7 +65,7 @@ public final class GenericKripkeStructureView<
     State
 >: KripkeStructureView where Handler.State == State {
 
-    fileprivate var data: GenericKripkeStructureViewData = GenericKripkeStructureViewData()
+    fileprivate var data: GenericKripkeStructureViewData = GenericKripkeStructureViewData(usingClocks: false)
 
     fileprivate let handler: Handler
 
@@ -95,10 +95,10 @@ public final class GenericKripkeStructureView<
         self.filename = filename
     }
 
-    public func reset() {
+    public func reset(usingClocks: Bool) {
         self.edgeStream = self.inputOutputStreamFactory.make(id: self.edgeFilename)
         self.combinedStream = self.outputStreamFactory.make(id: self.filename)
-        self.data = GenericKripkeStructureViewData()
+        self.data = GenericKripkeStructureViewData(usingClocks: usingClocks)
         self.handler.handleStart(data, usingStream: &self.combinedStream)
     }
 

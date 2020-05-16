@@ -64,6 +64,6 @@ public protocol KripkeStructureView: class, KripkeStateContainer {
 
     func finish()
 
-    func reset()
+    func reset(usingClocks: Bool)
 
 }

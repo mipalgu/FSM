@@ -69,8 +69,12 @@ public final class GenericKripkeStructureViewData {
     fileprivate var initialsDict: [Int: Int] = [:]
 
     fileprivate var latest: Int = 0
+    
+    internal var usingClocks: Bool
 
-    public init() {}
+    public init(usingClocks: Bool) {
+        self.usingClocks = usingClocks
+    }
 
     public var initials: [(Int, Int)] {
         return self.initialsDict.map { ($0, $1) }

@@ -74,8 +74,8 @@ public final class AggregateKripkeStructureView<State: KripkeStateType>: KripkeS
         self.views.forEach { $0.finish() }
     }
 
-    public func reset() {
-        self.views.forEach { $0.reset() }
+    public func reset(usingClocks: Bool) {
+        self.views.forEach { $0.reset(usingClocks: usingClocks) }
     }
 
 }

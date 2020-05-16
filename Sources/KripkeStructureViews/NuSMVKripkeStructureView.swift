@@ -85,6 +85,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate var sink: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
     
     private var acceptingStates: Set<KripkeStatePropertyList> = Set()
+    
+    private var clocks: Set<String> = Set()
+    
+    private var usingClocks: Bool = false
 
     fileprivate var firstState: State?
 
@@ -102,8 +106,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.outputStreamFactory = outputStreamFactory
     }
 
-    public func reset() {
+    public func reset(usingClocks: Bool) {
         self.acceptingStates = Set()
+        self.clocks = usingClocks ? ["c"] : []
+        self.usingClocks = usingClocks
         self.sink = HashSink(minimumCapacity: 500000)
         self.stream = self.inputOutputStreamFactory.make(id: self.identifier + ".transitions.smv")
         self.properties = [:]
@@ -173,19 +179,18 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
 
     fileprivate func createInitial(usingStream stream: inout TextOutputStream) {
-        guard let firstProperties = self.initials.first else {
+        if self.initials.isEmpty && (self.clocks.isEmpty || !self.usingClocks) {
             stream.write("INIT()\n")
             return
         }
-        stream.write("INIT\n")
-        stream.write("(")
-        stream.write(self.createConditions(of: firstProperties))
-        stream.write(")")
-        self.initials.dropFirst().forEach {
-            stream.write(" | (")
-            stream.write(self.createConditions(of: $0))
-            stream.write(")")
+        let initials = self.initials.lazy.map {
+            self.createConditions(of: $0)
         }
+        let clocks = self.usingClocks ? self.clocks.sorted().lazy.map { $0 + "=0" }.combine("") { $0 + " & " + $1 } : ""
+        let all = ((clocks.isEmpty ? [] : ["(" + clocks + ")"]) + Array(initials)).combine("") {
+            $0 + " | (" + $1 + ")"
+        }
+        stream.write(all)
         stream.write("\n")
     }
 
