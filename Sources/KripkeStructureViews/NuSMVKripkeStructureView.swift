@@ -74,15 +74,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate let identifier: String
 
-    fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
-
     fileprivate let outputStreamFactory: OutputStreamFactory
-
-    fileprivate var stream: InputOutputStream!
+    
+    fileprivate var stream: OutputStream!
 
     fileprivate var properties: [String: Ref<Set<String>>] = [:]
 
-    fileprivate var sink: HashSink<KripkeStatePropertyList, KripkeStatePropertyList> = HashSink(minimumCapacity: 500000)
+    fileprivate var states: [KripkeStatePropertyList: State] = [:]
     
     private var acceptingStates: Set<KripkeStatePropertyList> = Set()
     
@@ -97,12 +95,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     public init(
         identifier: String,
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
-        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
         outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
     ) {
         self.identifier = identifier
         self.extractor = extractor
-        self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
     }
 
@@ -110,8 +106,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.acceptingStates = Set()
         self.clocks = usingClocks ? ["c"] : []
         self.usingClocks = usingClocks
-        self.sink = HashSink(minimumCapacity: 500000)
-        self.stream = self.inputOutputStreamFactory.make(id: self.identifier + ".transitions.smv")
+        self.states = Dictionary(minimumCapacity: 500000)
+        self.stream = self.outputStreamFactory.make(id: self.identifier + ".smv")
         self.properties = [:]
         self.firstState = nil
         self.initials = []
@@ -121,10 +117,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         if nil == self.firstState {
             self.firstState = state
         }
-        if sink.contains(state.properties) {
+        if nil != self.states[state.properties] {
             return
         }
-        sink.insert(state.properties)
+        states[state.properties] = state
         if state.edges.count > 0 {
             self.acceptingStates.remove(state.properties)
         }
@@ -139,31 +135,32 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
             list.value.insert(value)
         }
-        guard let content = self.createCase(of: state) else {
-            return
-        }
-        self.stream.write(content)
-        self.stream.write("\n")
     }
 
     public func finish() {
+        defer { self.stream.close() }
         self.stream.flush()
-        self.stream.rewind()
         self.properties["pc"]?.value.insert("\"error\"")
         self.properties["pc"]?.value.insert("\"finish\"")
-        var combinedStream = self.outputStreamFactory.make(id: "main.smv")
-        defer { combinedStream.close() }
-        combinedStream.write("MODULE main\n\n")
-        var outputStream: TextOutputStream = combinedStream
+        if self.usingClocks {
+            self.stream.write("@TIME_DOMAIN continuous\n\n")
+        }
+        self.stream.write("MODULE main\n\n")
+        var outputStream: TextOutputStream = self.stream
         self.createPropertiesList(usingStream: &outputStream)
         self.createInitial(usingStream: &outputStream)
-        self.createTransitions(readingFrom: self.stream, writingTo: &outputStream)
-        combinedStream.flush()
-        self.stream.close()
+        self.createTransitions(writingTo: &outputStream)
+        self.stream.flush()
     }
 
     fileprivate func createPropertiesList(usingStream stream: inout TextOutputStream) {
         stream.write("VAR\n\n")
+        if self.usingClocks {
+            self.clocks.sorted().forEach {
+                stream.write("\($0): real;\n")
+            }
+            stream.write("\n")
+        }
         self.properties.forEach {
             guard let first = $1.value.first else {
                 stream.write("\($0) : {};\n\n")
@@ -179,36 +176,41 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
 
     fileprivate func createInitial(usingStream stream: inout TextOutputStream) {
-        if self.initials.isEmpty && (self.clocks.isEmpty || !self.usingClocks) {
+        if self.initials.isEmpty {
             stream.write("INIT();\n")
             return
         }
+        let allClocks = self.clocks.sorted()
         stream.write("INIT\n")
         let initials = self.initials.lazy.map {
-            self.createConditions(of: $0)
+            var props = $0
+            allClocks.forEach {
+                props[$0] = "0"
+            }
+            return "(" + self.createConditions(of: props, includeTime: false) + ")"
+        }.combine("") {
+            $0 + " | " + $1
         }
-        let clocks = self.usingClocks ? self.clocks.sorted().lazy.map { $0 + "=0" }.combine("") { $0 + " & " + $1 } : ""
-        let all = ((clocks.isEmpty ? [] : ["(" + clocks + ")"]) + Array(initials)).combine("") {
-            $0 + " | (" + $1 + ")"
-        }
-        stream.write(all + ";")
+        stream.write(initials + ";")
         stream.write("\n\n")
     }
 
     fileprivate func createTransitions(
-        readingFrom inputStream: TextInputStream,
         writingTo outputStream: inout TextOutputStream
     ) {
         let trans = "TRANS\ncase\n"
         let endTrans = "esac"
         outputStream.write(trans)
-        guard let first = self.firstState else {
+        guard nil != self.firstState else {
             outputStream.write(endTrans)
             return
         }
-        while let line = inputStream.readLine() {
-            outputStream.write(line)
-            outputStream.write("\n")
+        self.states.forEach {
+            guard let content = self.createCase(of: $1) else {
+                return
+            }
+            self.stream.write(content)
+            self.stream.write("\n")
         }
         self.acceptingStates.forEach {
             let props = self.extractor.extract(from: $0)
@@ -226,7 +228,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         let props = self.extractor.extract(from: state.properties)
         let conditions = self.createConditions(of: props)
         let transitions: String = state.edges.lazy.map {
-            if false == self.sink.contains($0.target) {
+            if nil == self.states[$0.target] {
                 self.acceptingStates.insert($0.target)
             }
             let props = self.extractor.extract(from: $0.target)
@@ -244,9 +246,9 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         return conditions + ":\n" + transitions + ";"
     }
 
-    fileprivate func createConditions(of props: [String: String]) -> String {
+    fileprivate func createConditions(of props: [String: String], includeTime: Bool = true) -> String {
         var props = props
-        if self.usingClocks {
+        if self.usingClocks && includeTime {
             props["time"] = "c"
         }
         guard let firstProp = props.first else {
@@ -266,11 +268,17 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             props["c"] = "c"
         }
         if self.usingClocks, let clockName = clockName {
+            let clockName = self.extractor.convert(label: clockName)
+            self.clocks.insert(clockName)
             if let duration = duration {
-                props[clockName] = resetClock ? "0" : clockName + "\(duration)"
+                props[clockName] = resetClock ? "0" : clockName + "+\(duration)"
             } else {
                 props[clockName] = resetClock ? "0" : clockName
             }
+        }
+        let missingKeys = Set(self.properties.keys).subtracting(Set(props.keys))
+        missingKeys.forEach {
+            props[$0] = $0
         }
         return props.lazy.map {
             if let newPC = forcePC, $0.key == "pc" {

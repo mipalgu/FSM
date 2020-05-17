@@ -63,17 +63,13 @@ public final class NuSMVKripkeStructureViewFactory<State: KripkeStateType>: Krip
 
     fileprivate let extractor: PropertyExtractor<NuSMVPropertyFormatter>
 
-    fileprivate let inputOutputStreamFactory: InputOutputStreamFactory
-
     fileprivate let outputStreamFactory: OutputStreamFactory
 
     public init(
         extractor: PropertyExtractor<NuSMVPropertyFormatter> = PropertyExtractor(formatter: NuSMVPropertyFormatter()),
-        inputOutputStreamFactory: InputOutputStreamFactory = FileInputOutputStreamFactory(),
         outputStreamFactory: OutputStreamFactory = FileOutputStreamFactory()
     ) {
         self.extractor = extractor
-        self.inputOutputStreamFactory = inputOutputStreamFactory
         self.outputStreamFactory = outputStreamFactory
     }
 
@@ -81,7 +77,6 @@ public final class NuSMVKripkeStructureViewFactory<State: KripkeStateType>: Krip
         return NuSMVKripkeStructureView(
             identifier: identifier,
             extractor: extractor,
-            inputOutputStreamFactory: inputOutputStreamFactory,
             outputStreamFactory: outputStreamFactory
         )
     }
