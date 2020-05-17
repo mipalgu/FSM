@@ -165,7 +165,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 stream.write("INVAR TRUE -> \($0) <= \($0)-sync;\n\n")
             }
         }
-        self.properties.forEach {
+        self.properties.sorted { $0.key < $1.key }.forEach {
             guard let first = $1.value.first else {
                 stream.write("\($0) : {};\n\n")
                 return
@@ -190,11 +190,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             var props = $0
             allClocks.forEach {
                 props[$0] = "0"
+                props[$0 + "-sync"] = "0"
             }
-            return "(" + self.createConditions(of: props, includeTime: false) + ")"
-        }.combine("") {
-            $0 + " | " + $1
-        }
+            return "(" + self.createConditions(of: props) + ")"
+        }.sorted().combine("") { $0 + " | " + $1 }
         stream.write(initials + ";")
         stream.write("\n\n")
     }
@@ -202,13 +201,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createTransitions(
         writingTo outputStream: inout TextOutputStream
     ) {
-        let trans = "TRANS\ncase\n"
-        let endTrans = "esac"
-        outputStream.write(trans)
-        guard nil != self.firstState else {
-            outputStream.write(endTrans)
-            return
-        }
         self.states.forEach {
             guard let content = self.createCase(of: $1) else {
                 return
@@ -218,51 +210,53 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
         self.acceptingStates.forEach {
             let props = self.extractor.extract(from: $0)
-            let conditions = self.createConditions(of: props)
-            let effects = self.createEffect(from: props, forcePC: "\"finish\"")
-            outputStream.write(conditions + ":" + "\n")
-            outputStream.write("    " + effects + ";\n")
+            let conditions = self.createAcceptingTansition(for: props)
+            outputStream.write("\n" + conditions)
         }
-        outputStream.write("pc=\"finish\":next(pc)=\"finish\";\n")
-        outputStream.write("TRUE:next(pc)=\"error\";\n")
-        outputStream.write(endTrans)
+        outputStream.write("\n")
     }
 
     fileprivate func createCase(of state: State) -> String? {
-        let props = self.extractor.extract(from: state.properties)
-        let conditions = self.createConditions(of: props, referencingClock: state.edges.first { $0.clockName != nil }?.clockName)
-        let transitions: String = state.edges.lazy.map {
+        let transitions = state.edges.lazy.map {
             if nil == self.states[$0.target] {
                 self.acceptingStates.insert($0.target)
             }
-            let props = self.extractor.extract(from: $0.target)
+            var sourceProps = self.extractor.extract(from: state.properties)
+            if self.usingClocks, let referencingClock = $0.clockName {
+                let clockName = self.extractor.convert(label: referencingClock)
+                sourceProps[clockName] = clockName + "-sync"
+            }
+            let conditions = self.createConditions(of: sourceProps)
+            let targetProps = self.extractor.extract(from: $0.target)
             let effect: String
             if self.usingClocks {
-                effect = self.createEffect(from: props, clockName: $0.clockName, resetClock: $0.resetClock, duration: $0.time)
+                effect = self.createEffect(from: targetProps, clockName: $0.clockName, resetClock: $0.resetClock, duration: $0.time)
             } else {
-                effect = self.createEffect(from: props)
+                effect = self.createEffect(from: targetProps)
             }
-            return "    (\(effect))"
-        }.combine("") { $0 + " |\n" + $1 }
-        if transitions.isEmpty {
-            return nil
+            return "TRANS (" + conditions + ") & \n    (" + effect + ");\n"
+        }.combine("") { $0 + "\n" + $1 }
+        return transitions.isEmpty ? nil : transitions
+    }
+    
+    private func createAcceptingTansition(for props: [String: String]) -> String {
+        let condition = self.createConditions(of: props)
+        var targetProps = Dictionary<String, String>(minimumCapacity: props.count + self.clocks.count)
+        props.forEach {
+            targetProps[$0.0] = $0.0
         }
-        return conditions + ":\n" + transitions + ";"
+        if self.usingClocks {
+            self.clocks.forEach {
+                targetProps[$0] = $0
+            }
+        }
+        targetProps["pc"] = "\"finish\""
+        let effect = self.createEffect(from: targetProps)
+        return "TRANS (" + condition + ") & (" + effect + ");"
     }
 
-    fileprivate func createConditions(of props: [String: String], includeTime: Bool = true, referencingClock: String? = nil) -> String {
-        var props = props
-        if self.usingClocks && includeTime, let referencingClock = referencingClock {
-            let clockName = self.extractor.convert(label: referencingClock)
-            props[clockName] = clockName + "-sync"
-        }
-        guard let firstProp = props.first else {
-            return ""
-        }
-        let firstCondition = firstProp.0 + "=" + firstProp.1
-        return props.dropFirst().reduce(firstCondition) {
-            $0 + " & " + $1.0 + "=" + $1.1
-        }
+    fileprivate func createConditions(of props: [String: String]) -> String {
+        return props.sorted { $0.key <= $1.key }.lazy.map { $0 + " = " + $1 }.combine("") { $0 + " & " + $1 }
     }
 
     fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
@@ -282,7 +276,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         missingKeys.forEach {
             props[$0] = $0
         }
-        return props.lazy.map {
+        return props.sorted { $0.key <= $1.key }.lazy.map {
             if let newPC = forcePC, $0.key == "pc" {
                 return "next(pc)=" + newPC
             }
