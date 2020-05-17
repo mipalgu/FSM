@@ -104,7 +104,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     public func reset(usingClocks: Bool) {
         self.acceptingStates = Set()
-        self.clocks = usingClocks ? ["c"] : []
+        self.clocks = []
         self.usingClocks = usingClocks
         self.states = Dictionary(minimumCapacity: 500000)
         self.stream = self.outputStreamFactory.make(id: self.identifier + ".smv")
@@ -123,6 +123,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         states[state.properties] = state
         if state.edges.count > 0 {
             self.acceptingStates.remove(state.properties)
+        }
+        state.edges.lazy.compactMap { $0.clockName }.forEach {
+            let clockName = self.extractor.convert(label: $0)
+            self.clocks.insert(clockName)
         }
         let props = self.extractor.extract(from: state.properties)
         if true == isInitial {
@@ -154,19 +158,19 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
 
     fileprivate func createPropertiesList(usingStream stream: inout TextOutputStream) {
-        stream.write("VAR\n\n")
         if self.usingClocks {
             self.clocks.sorted().forEach {
-                stream.write("\($0): real;\n")
+                stream.write("VAR \($0)-sync: real;\n")
+                stream.write("VAR \($0): clock;\n")
+                stream.write("INVAR TRUE -> \($0) <= \($0)-sync;\n\n")
             }
-            stream.write("\n")
         }
         self.properties.forEach {
             guard let first = $1.value.first else {
                 stream.write("\($0) : {};\n\n")
                 return
             }
-            stream.write("\($0) : {\n")
+            stream.write("VAR \($0) : {\n")
             stream.write("    " + first)
             $1.value.dropFirst().forEach {
                 stream.write(",\n    " + $0)
@@ -226,7 +230,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createCase(of state: State) -> String? {
         let props = self.extractor.extract(from: state.properties)
-        let conditions = self.createConditions(of: props)
+        let conditions = self.createConditions(of: props, referencingClock: state.edges.first { $0.clockName != nil }?.clockName)
         let transitions: String = state.edges.lazy.map {
             if nil == self.states[$0.target] {
                 self.acceptingStates.insert($0.target)
@@ -246,10 +250,11 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         return conditions + ":\n" + transitions + ";"
     }
 
-    fileprivate func createConditions(of props: [String: String], includeTime: Bool = true) -> String {
+    fileprivate func createConditions(of props: [String: String], includeTime: Bool = true, referencingClock: String? = nil) -> String {
         var props = props
-        if self.usingClocks && includeTime {
-            props["time"] = "c"
+        if self.usingClocks && includeTime, let referencingClock = referencingClock {
+            let clockName = self.extractor.convert(label: referencingClock)
+            props[clockName] = clockName + "-sync"
         }
         guard let firstProp = props.first else {
             return ""
@@ -262,21 +267,18 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
         var props = props
-        if self.usingClocks, let duration = duration {
-            props["c"] = "c+\(duration)"
-        } else if self.usingClocks {
-            props["c"] = "c"
-        }
         if self.usingClocks, let clockName = clockName {
             let clockName = self.extractor.convert(label: clockName)
-            self.clocks.insert(clockName)
+            let syncName = clockName + "-sync"
             if let duration = duration {
-                props[clockName] = resetClock ? "0" : clockName + "+\(duration)"
+                props[clockName] = resetClock ? "0" : clockName
+                props[syncName] = resetClock ? "0" : syncName + "+\(duration)"
             } else {
                 props[clockName] = resetClock ? "0" : clockName
+                props[syncName] = resetClock ? "0" : syncName
             }
         }
-        let missingKeys = Set(self.properties.keys).subtracting(Set(props.keys))
+        let missingKeys = (Set(self.properties.keys).union(self.clocks)).subtracting(Set(props.keys))
         missingKeys.forEach {
             props[$0] = $0
         }
