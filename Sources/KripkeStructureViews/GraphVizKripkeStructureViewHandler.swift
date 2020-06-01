@@ -128,16 +128,18 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         state.edges.forEach {
             let target = data.fetchId(of: $0.target)
             let time = $0.time == 0 ? nil : $0.time
-            let label: String
-            if let time = time, let constraint = $0.constraint, constraint != .equal(value: 0) {
-                label = "\(time), \(expression(for: constraint.reduced))"
-            } else if let time = time {
-                label = "\(time)"
-            } else if let constraint = $0.constraint, constraint != .equal(value: 0) {
-                label = "\(expression(for: constraint.reduced))"
-            } else {
-                label = ""
+            var labels: [String] = []
+            labels.reserveCapacity(3)
+            if let time = time {
+                labels.append("\(time)")
             }
+            if let constraint = $0.constraint, constraint != .equal(value: 0) {
+                labels.append(expression(for: constraint.reduced))
+            }
+            if $0.resetClock {
+                labels.append("clock=0")
+            }
+            let label = labels.combine("") { $0 + ", " + $1 }
             let labelStr = label == "" ? "" : " [ label=\"\(label)\" ]"
             stream.write("s\(id) -> s\(target)\(labelStr);\n")
         }
