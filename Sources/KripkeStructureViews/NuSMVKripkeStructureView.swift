@@ -201,18 +201,23 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createTransitions(
         writingTo outputStream: inout TextOutputStream
     ) {
+        outputStream.write("TRANS\ncase\n")
         self.states.forEach {
             guard let content = self.createCase(of: $1) else {
                 return
             }
-            self.stream.write(content)
-            self.stream.write("\n")
+            outputStream.write(content)
+            outputStream.write("\n")
         }
         self.acceptingStates.forEach {
             let props = self.extractor.extract(from: $0)
             let conditions = self.createAcceptingTansition(for: props)
             outputStream.write("\n" + conditions)
         }
+        outputStream.write("pc = \"finish\": next(pc) = \"finish\";\n\n")
+        let trueCase = self.createTrueCase()
+        outputStream.write(trueCase + "\n")
+        outputStream.write("esac\n")
         outputStream.write("\n")
     }
 
@@ -234,13 +239,25 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             } else {
                 effect = self.createEffect(from: targetProps)
             }
-            return "TRANS (" + conditions + ") & \n    (" + effect + ");\n"
+            let transition = conditions + ":\n    " + effect
+            return transition + ";\n"
         }.combine("") { $0 + "\n" + $1 }
         return transitions.isEmpty ? nil : transitions
     }
     
+    private func createTrueCase() -> String {
+        let condition = "TRUE"
+        let effect = self.createEffect(from: [:])
+        return condition + ": " + effect
+    }
+    
     private func createAcceptingTansition(for props: [String: String]) -> String {
         let condition = self.createConditions(of: props)
+        let effect = self.createAcceptingEffect(for: props)
+        return condition + ":\n    " + effect + ";"
+    }
+    
+    private func createAcceptingEffect(for props: [String: String]) -> String {
         var targetProps = Dictionary<String, String>(minimumCapacity: props.count + self.clocks.count)
         props.forEach {
             targetProps[$0.0] = $0.0
@@ -251,8 +268,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
         }
         targetProps["pc"] = "\"finish\""
-        let effect = self.createEffect(from: targetProps)
-        return "TRANS (" + condition + ") & (" + effect + ");"
+        return self.createEffect(from: targetProps)
     }
 
     fileprivate func createConditions(of props: [String: String]) -> String {
