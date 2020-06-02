@@ -62,12 +62,7 @@ import swift_helpers
 
 public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: GenericKripkeStructureViewHandler {
 
-    
-    private let clockLabel: String
-    
-    public init(clockLabel: String = "clock") {
-        self.clockLabel = clockLabel
-    }
+    public init() {}
 
     public func handleStart(_: GenericKripkeStructureViewData, usingStream stream: inout OutputStream) {
         stream.write("digraph finite_state_machine {\n")
@@ -109,9 +104,9 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         withId id: Int,
         usingStream stream: inout OutputStream
     ) {
-        func expression(for constraint: ClockConstraint) -> String {
+        func expression(for constraint: ClockConstraint, clockLabel: String) -> String {
             return constraint.expression(
-                referencing: self.clockLabel,
+                referencing: clockLabel,
                 lessThan: { "\($0) &lt; \($1)" },
                 lessThanEqual: { "\($0) &le; \($1)" },
                 equal: { "\($0) = \($1)" },
@@ -133,11 +128,12 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             if let time = time {
                 labels.append("\(time)")
             }
+            let clockName = $0.clockName ?? "CLOCK"
             if let constraint = $0.constraint, constraint != .equal(value: 0) {
-                labels.append(expression(for: constraint.reduced))
+                labels.append(expression(for: constraint.reduced, clockLabel: clockName))
             }
             if $0.resetClock {
-                labels.append("clock=0")
+                labels.append("\(clockName)=0")
             }
             let label = labels.combine("") { $0 + ", " + $1 }
             let labelStr = label == "" ? "" : " [ label=\"\(label)\" ]"
