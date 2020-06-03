@@ -128,12 +128,13 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
             if let time = time {
                 labels.append("\(time)")
             }
-            let clockName = $0.clockName ?? "CLOCK"
-            if let constraint = $0.constraint, constraint != .equal(value: 0) {
-                labels.append(expression(for: constraint.reduced, clockLabel: clockName))
-            }
-            if $0.resetClock {
-                labels.append("\(clockName)=0")
+            if let clockName = $0.clockName {
+                if let constraint = $0.constraint, constraint != .equal(value: 0) {
+                    labels.append(expression(for: constraint.reduced, clockLabel: clockName))
+                }
+                if $0.resetClock {
+                    labels.append("\(clockName) := 0")
+                }
             }
             let label = labels.combine("") { $0 + ", " + $1 }
             let labelStr = label == "" ? "" : " [ label=\"\(label)\" ]"
