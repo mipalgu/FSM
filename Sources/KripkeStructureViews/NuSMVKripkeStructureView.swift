@@ -82,8 +82,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate var states: [KripkeStatePropertyList: State] = [:]
     
-    private var transitions: [KripkeStatePropertyList: Set<KripkeEdge>] = [:]
-    
     private var acceptingStates: Set<KripkeStatePropertyList> = Set()
     
     private var clocks: Set<String> = Set()
@@ -107,7 +105,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     public func reset(usingClocks: Bool) {
         self.acceptingStates = Set()
         self.clocks = ["c"]
-        self.transitions = [:]
         self.usingClocks = usingClocks
         self.states = Dictionary(minimumCapacity: 500000)
         self.stream = self.outputStreamFactory.make(id: self.identifier + ".smv")
@@ -141,17 +138,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 continue
             }
             list.value.insert(value)
-        }
-        self.addTransitions(from: state)
-    }
-    
-    private func addTransitions(from state: State) {
-        for edge in state.edges {
-            if nil == self.transitions[edge.target] {
-                self.transitions[edge.target] = [edge]
-            } else {
-                self.transitions[edge.target]?.insert(edge)
-            }
         }
     }
 
@@ -230,9 +216,9 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.acceptingStates.forEach {
             let props = self.extractor.extract(from: $0)
             let conditions = self.createAcceptingTansition(for: props)
-            outputStream.write("\n" + conditions)
+            outputStream.write(conditions + "\n")
         }
-        outputStream.write("pc = \"finish\": next(pc) = \"finish\";\n\n")
+        outputStream.write("\npc = \"finish\": next(pc) = \"finish\";\n\n")
         let trueCase = self.createTrueCase()
         outputStream.write(trueCase + "\n")
         outputStream.write("esac\n")
@@ -240,38 +226,41 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
 
     fileprivate func createCase(of state: State) -> String? {
-        let transitions = (self.transitions[state.properties] ?? [KripkeEdge(target: state.properties)]).lazy.map {
-            if nil == self.states[$0.target] {
-                self.acceptingStates.insert($0.target)
+        if state.edges.isEmpty {
+            self.acceptingStates.insert(state.properties)
+            return nil
+        }
+        let transitions: [String] = state.edges.lazy.map { (edge) -> String in
+            if nil == self.states[edge.target] {
+                self.acceptingStates.insert(edge.target)
             }
             let sourceProps = self.extractor.extract(from: state.properties)
             var constraints: [String: ClockConstraint] = [:]
-            if self.usingClocks, let referencingClock = $0.clockName, let constraint = $0.constraint {
+            if self.usingClocks, let referencingClock = edge.clockName, let constraint = edge.constraint {
                 let clockName = self.extractor.convert(label: referencingClock)
                 constraints[clockName] = constraint
             }
             let conditions = self.createConditions(of: sourceProps, constraints: constraints)
-            let targetProps = self.extractor.extract(from: $0.target)
+            let targetProps = self.extractor.extract(from: edge.target)
             let effect: String
-            if state.edges.isEmpty {
-                effect = self.createAcceptingEffect(for: targetProps)
+            if self.usingClocks {
+                effect = self.createEffect(from: targetProps, clockName: edge.clockName, resetClock: edge.resetClock, duration: edge.time)
             } else {
-                if self.usingClocks {
-                    effect = self.createEffect(from: targetProps, clockName: $0.clockName, resetClock: $0.resetClock, duration: $0.time)
-                } else {
-                    effect = self.createEffect(from: targetProps)
-                }
+                effect = self.createEffect(from: targetProps)
             }
             let transition = conditions + ":\n    " + effect
             return transition + ";\n"
-        }.combine("") { $0 + "\n" + $1 }
-        return transitions.isEmpty ? nil : transitions
+        }
+        let combined = transitions.combine("") { $0 + "\n" + $1 }
+        return combined.isEmpty ? nil : combined
     }
     
     private func createTrueCase() -> String {
         let condition = "TRUE"
-        let effect = self.createEffect(from: [:])
-        return condition + ": " + effect + ";"
+        let extras = self.usingClocks ? ["next(sync) = sync", "next(c) = sync"] : []
+        let effects = self.properties.keys.map { "next(" + $0 + ") = " + $0 } + extras
+        let effectList = effects.combine("") { $0 + "\n    & " + $1 }
+        return condition + ": " + effectList + ";"
     }
     
     private func createAcceptingTansition(for props: [String: String]) -> String {
@@ -315,12 +304,15 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
         var props = props
         if self.usingClocks {
+            props["c"] = resetClock ? "0" : "c"
+            if let rawClockName = clockName {
+                let clockName = self.extractor.convert(label: rawClockName)
+                props[clockName] = resetClock ? "0" : clockName
+            }
             if let duration = duration {
-                props["c"] = resetClock ? "0" : "c"
-                props["sync"] = resetClock ? "0" : "\(duration)"
+                props["sync"] = "\(duration)"
             } else {
-                props["c"] = resetClock ? "0" : "c"
-                props["sync"] = resetClock ? "0" : "sync"
+                props["sync"] = "sync"
             }
         }
         let missingKeys = (Set(self.properties.keys).union(self.clocks)).subtracting(Set(props.keys))
@@ -332,7 +324,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 return "next(pc)=" + newPC
             }
             return "next(" + $0.key + ")=" + $0.value
-        }.combine("") { $0 + " & " + $1}
+        }.combine("") { $0 + "\n    & " + $1}
     }
 
 }
