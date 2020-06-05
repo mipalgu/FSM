@@ -108,7 +108,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.usingClocks = usingClocks
         self.states = Dictionary(minimumCapacity: 500000)
         self.stream = self.outputStreamFactory.make(id: self.identifier + ".smv")
-        self.properties = [:]
+        self.properties = ["status": Ref(value: Set(["\"executing\"", "\"finished\"", "\"error\""]))]
         self.firstState = nil
         self.initials = []
     }
@@ -144,8 +144,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     public func finish() {
         defer { self.stream.close() }
         self.stream.flush()
-        self.properties["pc"]?.value.insert("\"error\"")
-        self.properties["pc"]?.value.insert("\"finish\"")
         if self.usingClocks {
             self.stream.write("@TIME_DOMAIN continuous\n\n")
         }
@@ -193,6 +191,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         let initials = self.initials.lazy.map {
             var props = $0
             props["sync"] = "0"
+            props["status"] = "\"executing\""
             allClocks.forEach {
                 props[$0] = "0"
             }
@@ -218,7 +217,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             let conditions = self.createAcceptingTansition(for: props)
             outputStream.write(conditions + "\n")
         }
-        outputStream.write("\npc = \"finish\": next(pc) = \"finish\";\n\n")
+        outputStream.write("\nstatus = \"finished\": next(status) = \"finished\";\n\n")
+        outputStream.write("\nstatus = \"error\": next(status) = \"error\";\n\n")
         let trueCase = self.createTrueCase()
         outputStream.write(trueCase + "\n")
         outputStream.write("esac\n")
@@ -279,7 +279,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 targetProps[$0] = $0
             }
         }
-        targetProps["pc"] = "\"finish\""
+        targetProps["status"] = "\"finished\""
         return self.createEffect(from: targetProps)
     }
 
@@ -303,6 +303,9 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
         var props = props
+        if nil == props["status"] {
+            props["status"] = "\"executing\""
+        }
         if self.usingClocks {
             if nil == props["c"] {
                 props["c"] = "0"
