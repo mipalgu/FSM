@@ -304,10 +304,12 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
         var props = props
         if self.usingClocks {
-            props["c"] = resetClock ? "0" : "c"
-            if let rawClockName = clockName {
+            if nil == props["c"] {
+                props["c"] = "0"
+            }
+            if resetClock, let rawClockName = clockName {
                 let clockName = self.extractor.convert(label: rawClockName)
-                props[clockName] = resetClock ? "0" : clockName
+                props[clockName] = "0"
             }
             if let duration = duration {
                 props["sync"] = "\(duration)"
