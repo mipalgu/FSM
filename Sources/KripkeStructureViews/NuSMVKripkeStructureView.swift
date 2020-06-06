@@ -215,10 +215,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.acceptingStates.forEach {
             let props = self.extractor.extract(from: $0)
             let conditions = self.createAcceptingTansition(for: props)
-            outputStream.write(conditions + "\n")
+            outputStream.write(conditions + "\n\n")
         }
-        outputStream.write("\nstatus = \"finished\": next(status) = \"finished\";\n\n")
-        outputStream.write("\nstatus = \"error\": next(status) = \"error\";\n\n")
+        outputStream.write("status = \"finished\": next(status) = \"finished\";\n\n")
+        outputStream.write("status = \"error\": next(status) = \"error\";\n\n")
         let trueCase = self.createTrueCase()
         outputStream.write(trueCase + "\n")
         outputStream.write("esac\n")
@@ -287,12 +287,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createConditions(of props: [String: String], constraints: [String: ClockConstraint] = [:]) -> String {
         var props = props
-        let allKeys = Set(self.properties.keys).union(self.clocks)
-        props["c"] = "sync"
-        allKeys.forEach {
-            if nil == props[$0] && nil == constraints[$0] {
-                props[$0] = $0
-            }
+        if nil == props["c"] {
+            props["c"] = "sync"
         }
         let propValues = props.sorted { $0.key <= $1.key }.map { $0 + " = " + $1 }
         let constraintValues = constraints.sorted { $0.key <= $1.key }.map { "(" + self.expression(for: $1.reduced, referencing: $0) + ")" }
