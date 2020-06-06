@@ -258,7 +258,9 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     private func createTrueCase() -> String {
         let condition = "TRUE"
         let extras = self.usingClocks ? ["next(sync) = sync", "next(c) = sync"] : []
-        let effects = self.properties.keys.map { "next(" + $0 + ") = " + $0 } + extras
+        let clockNames = self.clocks.subtracting(["c"])
+        let fullList = (Array(self.properties.keys) + Array(clockNames))
+        let effects = fullList.sorted().map { "next(" + $0 + ") = " + $0 } + extras
         let effectList = effects.combine("") { $0 + "\n    & " + $1 }
         return condition + ": " + effectList + ";"
     }
