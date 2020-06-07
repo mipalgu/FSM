@@ -204,7 +204,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createTransitions(
         writingTo outputStream: inout TextOutputStream
     ) {
-        outputStream.write("TRANS\ncase\n")
+        //outputStream.write("TRANS\ncase\n")
         self.states.forEach {
             guard let content = self.createCase(of: $1) else {
                 return
@@ -217,14 +217,16 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             let conditions = self.createAcceptingTansition(for: props)
             outputStream.write(conditions + "\n\n")
         }
-        outputStream.write("status = \"finished\": next(status) = \"finished\";\n\n")
-        outputStream.write("status = \"error\": next(status) = \"error\";\n\n")
+        outputStream.write("TRANS status = \"finished\" -> next(status) = \"finished\";\n\n")
+        outputStream.write("TRANS status = \"error\" -> next(status) = \"error\";\n\n")
         if self.usingClocks {
             outputStream.write(self.createWaitingCase() + "\n\n")
+            outputStream.write(self.createWaitingToExecutingCase() + "\n\n")
         }
+        /*
         let trueCase = self.createTrueCase()
         outputStream.write(trueCase + "\n")
-        outputStream.write("esac\n")
+        outputStream.write("esac\n")*/
         outputStream.write("\n")
     }
 
@@ -251,7 +253,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             } else {
                 effect = self.createEffect(from: targetProps)
             }
-            let transition = conditions + ":\n    " + effect
+            let transition = "TRANS " + conditions + " ->\n    " + effect
             return transition + ";\n"
         }
         let combined = transitions.combine("") { $0 + "\n" + $1 }
@@ -259,24 +261,23 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     }
     
     private func createWaitingCase() -> String {
+        let effects = self.createEffect(from: ["status": "status", "c": "sync"])
+        return "TRANS status = \"waiting\" & c < sync ->\n    " + effects + ";"
+    }
+    
+    private func createWaitingToExecutingCase() -> String {
         let effects = self.createEffect(from: ["status": "\"executing\"", "c": "c"])
-        return "status = \"waiting\" & c = sync:\n    " + effects + ";"
+        return "TRANS status = \"waiting\" & c = sync ->\n    " + effects + ";"
     }
     
     private func createTrueCase() -> String {
-        let condition = "TRUE"
-        let extras = self.usingClocks ? ["next(sync) = sync", "next(c) = sync"] : []
-        let clockNames = self.clocks.subtracting(["c"])
-        let fullList = (Array(self.properties.keys) + Array(clockNames))
-        let effects = fullList.sorted().map { "next(" + $0 + ") = " + $0 } + extras
-        let effectList = effects.combine("") { $0 + "\n    & " + $1 }
-        return condition + ": " + effectList + ";"
+        return "TRANS next(status) = \"error\";"
     }
     
     private func createAcceptingTansition(for props: [String: String]) -> String {
         let condition = self.createConditions(of: props)
         let effect = self.createAcceptingEffect(for: props)
-        return condition + ":\n    " + effect + ";"
+        return "TRANS " + condition + " ->\n    " + effect + ";"
     }
     
     private func createAcceptingEffect(for props: [String: String]) -> String {
