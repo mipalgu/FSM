@@ -168,13 +168,14 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
         }
         self.properties.sorted { $0.key < $1.key }.forEach {
-            guard let first = $1.value.first else {
+            let values = $1.value.sorted()
+            guard let first = values.first else {
                 stream.write("\($0) : {};\n\n")
                 return
             }
             stream.write("VAR \($0) : {\n")
             stream.write("    " + first)
-            $1.value.dropFirst().forEach {
+            values.dropFirst().forEach {
                 stream.write(",\n    " + $0)
             }
             stream.write("\n};\n\n")
