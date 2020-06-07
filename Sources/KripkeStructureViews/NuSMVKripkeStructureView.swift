@@ -187,15 +187,17 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             stream.write("INIT();\n")
             return
         }
-        let allClocks = self.clocks.sorted()
+        let allClocks = self.usingClocks ? self.clocks.sorted() : []
         stream.write("INIT\n")
         let initials = self.initials.lazy.map {
             var props = $0
-            props["sync"] = "0"
-            props["status"] = "\"executing\""
-            allClocks.forEach {
-                props[$0] = "0"
+            if self.usingClocks {
+                props["sync"] = "0"
+                allClocks.forEach {
+                    props[$0] = "0"
+                }
             }
+            props["status"] = "\"executing\""
             return "(" + self.createConditions(of: props) + ")"
         }.sorted().combine("") { $0 + " | " + $1 }
         stream.write(initials + ";")
@@ -286,7 +288,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
 
     fileprivate func createConditions(of props: [String: String], constraints: [String: ClockConstraint] = [:]) -> String {
         var props = props
-        if nil == props["c"] {
+        if self.usingClocks, nil == props["c"] {
             props["c"] = "sync"
         }
         let propValues = props.sorted { $0.key <= $1.key }.map { $0 + " = " + $1 }
@@ -317,7 +319,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 props["sync"] = "sync"
             }
         }
-        let missingKeys = (Set(self.properties.keys).union(self.clocks)).subtracting(Set(props.keys))
+        let allKeys: Set<String>
+        if self.usingClocks {
+            allKeys = Set(self.properties.keys).union(self.clocks)
+        } else {
+            allKeys = Set(self.properties.keys)
+        }
+        let missingKeys = allKeys.subtracting(Set(props.keys))
         missingKeys.forEach {
             props[$0] = $0
         }
