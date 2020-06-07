@@ -204,7 +204,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createTransitions(
         writingTo outputStream: inout TextOutputStream
     ) {
-        outputStream.write("TRANS\ncase\n")
         self.states.forEach {
             guard let content = self.createCase(of: $1) else {
                 return
@@ -217,12 +216,11 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             let conditions = self.createAcceptingTansition(for: props)
             outputStream.write(conditions + "\n\n")
         }
-        outputStream.write("status = \"finished\": next(status) = \"finished\";\n\n")
-        outputStream.write("status = \"error\": next(status) = \"error\";\n\n")
-        let trueCase = self.createTrueCase()
-        outputStream.write(trueCase + "\n")
-        outputStream.write("esac\n")
-        outputStream.write("\n")
+        if self.usingClocks {
+            outputStream.write(self.createWaitCase() + "\n\n")
+        }
+        outputStream.write("TRANS status = \"finished\" -> next(status) = \"finished\";\n\n")
+        outputStream.write("TRANS status = \"error\" -> next(status) = \"error\";\n\n")
     }
 
     fileprivate func createCase(of state: State) -> String? {
@@ -248,27 +246,27 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             } else {
                 effect = self.createEffect(from: targetProps)
             }
-            let transition = conditions + ":\n    " + effect
+            let transition = "TRANS " + conditions + "\n    -> " + effect
             return transition + ";\n"
         }
         let combined = transitions.combine("") { $0 + "\n" + $1 }
         return combined.isEmpty ? nil : combined
     }
     
-    private func createTrueCase() -> String {
-        let condition = "TRUE"
+    private func createWaitCase() -> String {
+        let condition = "TRANS c < sync"
         let extras = self.usingClocks ? ["next(sync) = sync", "next(c) = sync"] : []
         let clockNames = self.clocks.subtracting(["c"])
         let fullList = (Array(self.properties.keys) + Array(clockNames))
         let effects = fullList.sorted().map { "next(" + $0 + ") = " + $0 } + extras
         let effectList = effects.combine("") { $0 + "\n    & " + $1 }
-        return condition + ": " + effectList + ";"
+        return condition + " -> " + effectList + ";"
     }
     
     private func createAcceptingTansition(for props: [String: String]) -> String {
         let condition = self.createConditions(of: props)
         let effect = self.createAcceptingEffect(for: props)
-        return condition + ":\n    " + effect + ";"
+        return "TRANS " + condition + "\n    -> " + effect + ";"
     }
     
     private func createAcceptingEffect(for props: [String: String]) -> String {
