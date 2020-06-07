@@ -261,7 +261,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         let fullList = (Array(self.properties.keys) + Array(clockNames))
         let effects = fullList.sorted().map { "next(" + $0 + ") = " + $0 } + extras
         let effectList = effects.combine("") { $0 + "\n    & " + $1 }
-        return condition + " -> " + effectList + ";"
+        return condition + "\n    -> " + effectList + ";"
     }
     
     private func createAcceptingTansition(for props: [String: String]) -> String {
