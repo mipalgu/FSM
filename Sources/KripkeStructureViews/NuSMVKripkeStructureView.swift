@@ -108,7 +108,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.usingClocks = usingClocks
         self.states = Dictionary(minimumCapacity: 500000)
         self.stream = self.outputStreamFactory.make(id: self.identifier + ".smv")
-        self.properties = ["status": Ref(value: Set(["\"executing\"", "\"finished\"", "\"waiting\"", "\"error\""]))]
+        self.properties = ["status": Ref(value: Set(["\"executing\"", "\"finished\"", "\"error\""]))]
         self.firstState = nil
         self.initials = []
     }
@@ -219,9 +219,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
         outputStream.write("status = \"finished\": next(status) = \"finished\";\n\n")
         outputStream.write("status = \"error\": next(status) = \"error\";\n\n")
-        if self.usingClocks {
-            outputStream.write(self.createWaitingCase() + "\n\n")
-        }
         let trueCase = self.createTrueCase()
         outputStream.write(trueCase + "\n")
         outputStream.write("esac\n")
@@ -256,11 +253,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
         let combined = transitions.combine("") { $0 + "\n" + $1 }
         return combined.isEmpty ? nil : combined
-    }
-    
-    private func createWaitingCase() -> String {
-        let effects = self.createEffect(from: ["status": "\"executing\"", "c": "c"])
-        return "status = \"waiting\" & c = sync:\n    " + effects + ";"
     }
     
     private func createTrueCase() -> String {
@@ -298,9 +290,6 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         if nil == props["c"] {
             props["c"] = "sync"
         }
-        if nil == props["status"] {
-            props["status"] = "\"executing\""
-        }
         let propValues = props.sorted { $0.key <= $1.key }.map { $0 + " = " + $1 }
         let constraintValues = constraints.sorted { $0.key <= $1.key }.map { "(" + self.expression(for: $1.reduced, referencing: $0) + ")" }
         return (propValues + constraintValues).combine("") { $0 + " & " + $1 }
@@ -313,7 +302,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
     fileprivate func createEffect(from props: [String: String], clockName: String? = nil, resetClock: Bool = false, duration: UInt? = nil, forcePC: String? = nil) -> String {
         var props = props
         if nil == props["status"] {
-            props["status"] = self.usingClocks ? "\"waiting\"" : "\"executing\""
+            props["status"] = "\"executing\""
         }
         if self.usingClocks {
             if nil == props["c"] {
