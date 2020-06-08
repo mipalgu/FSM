@@ -231,11 +231,13 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             self.acceptingStates.insert(state.properties)
             return nil
         }
-        let transitions: [String] = state.edges.lazy.map { (edge) -> String in
+        var cases: [String: Set<String>] = [:]
+        cases.reserveCapacity(state.edges.count)
+        let sourceProps = self.extractor.extract(from: state.properties)
+        state.edges.forEach { edge in
             if nil == self.states[edge.target] {
                 self.acceptingStates.insert(edge.target)
             }
-            let sourceProps = self.extractor.extract(from: state.properties)
             var constraints: [String: ClockConstraint] = [:]
             if self.usingClocks, let referencingClock = edge.clockName, let constraint = edge.constraint {
                 let clockName = self.extractor.convert(label: referencingClock)
@@ -249,8 +251,20 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             } else {
                 effect = self.createEffect(from: targetProps)
             }
-            let transition = "TRANS " + conditions + "\n    -> " + effect
-            return transition + ";\n"
+            if nil == cases[conditions] {
+                cases[conditions] = [effect]
+            } else {
+                cases[conditions]?.insert(effect)
+            }
+            /*let transition = "TRANS " + conditions + "\n    -> " + effect
+            return transition + ";\n"*/
+        }
+        let transitions = cases.lazy.compactMap { (condition, effects) -> String? in
+            let effect = effects.sorted().lazy.map { "(" + $0 + ")" }.combine("") { $0 + "\n    | " + $1  }
+            if effect.isEmpty {
+                return nil
+            }
+            return "TRANS " + condition + "\n    -> " + effect + ";\n"
         }
         let combined = transitions.combine("") { $0 + "\n" + $1 }
         return combined.isEmpty ? nil : combined
