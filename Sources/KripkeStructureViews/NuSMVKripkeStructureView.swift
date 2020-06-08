@@ -198,8 +198,8 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 }
             }
             props["status"] = "\"executing\""
-            return "(" + self.createConditions(of: props) + ")"
-        }.sorted().combine("") { $0 + " | " + $1 }
+            return "(" + self.createConditions(of: props) { $0 + "\n    & " + $1 } + ")"
+        }.sorted().combine("") { $0 + "\n| " + $1 }
         stream.write(initials + ";")
         stream.write("\n\n")
     }
@@ -264,7 +264,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             if effect.isEmpty {
                 return nil
             }
-            return "TRANS " + condition + "\n    -> " + effect + ";\n"
+            return "TRANS " + condition + "\n    -> (" + effect + ");\n"
         }
         let combined = transitions.combine("") { $0 + "\n" + $1 }
         return combined.isEmpty ? nil : combined
@@ -300,14 +300,17 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         return self.createEffect(from: targetProps)
     }
 
-    fileprivate func createConditions(of props: [String: String], constraints: [String: ClockConstraint] = [:]) -> String {
+    fileprivate func createConditions(of props: [String: String], constraints: [String: ClockConstraint] = [:], combine: (String, String) -> String = { $0 + " & " + $1 }) -> String {
         var props = props
         if self.usingClocks, nil == props["c"] {
             props["c"] = "sync"
         }
+        if nil == props["status"] {
+            props["status"] = "\"executing\""
+        }
         let propValues = props.sorted { $0.key <= $1.key }.map { $0 + " = " + $1 }
         let constraintValues = constraints.sorted { $0.key <= $1.key }.map { "(" + self.expression(for: $1.reduced, referencing: $0) + ")" }
-        return (propValues + constraintValues).combine("") { $0 + " & " + $1 }
+        return (propValues + constraintValues).combine("", combine)
     }
     
     private func expression(for constraint: ClockConstraint, referencing label: String) -> String {
