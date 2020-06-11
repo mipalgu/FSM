@@ -62,6 +62,8 @@
  *  - Warning: Do not use this type directly.  Instead use `KripkeState`.
  */
 public protocol _KripkeStateType: class, Equatable {
+    
+    var isInitial: Bool { get }
 
     var properties: KripkeStatePropertyList { get }
 
@@ -73,6 +75,7 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
 
     public var description: String {
         var str: String = ""
+        str += "initial: \(self.isInitial),\n"
         //str += "previous = \(self.previous?.state)\n"
         str += "properties: {\n"
         str += self.properties.description
@@ -86,6 +89,7 @@ extension _KripkeStateType where Self: CustomStringConvertible, Self: Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
+        hasher.combine(isInitial)
         hasher.combine(properties)
         hasher.combine(edges)
     }
@@ -114,6 +118,9 @@ public func ==<T: _KripkeStateType, U: _KripkeStateType>(
    lhs: T,
    rhs: U
 ) -> Bool {
+    if lhs.isInitial != rhs.isInitial {
+        return false
+    }
     if lhs.edges.count != rhs.edges.count {
         return false
     }

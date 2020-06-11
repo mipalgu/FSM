@@ -108,12 +108,12 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         self.usingClocks = usingClocks
         self.states = Dictionary(minimumCapacity: 500000)
         self.stream = self.outputStreamFactory.make(id: self.identifier + ".smv")
-        self.properties = ["status": Ref(value: Set(["\"executing\"", "\"finished\"", "\"error\""]))]
+        self.properties = ["status": Ref(value: Set(["\"executing\"", "\"transitioning\"", "\"finished\"", "\"error\""]))]
         self.firstState = nil
         self.initials = []
     }
 
-    public func commit(state: State, isInitial: Bool) {
+    public func commit(state: State) {
         if nil == self.firstState {
             self.firstState = state
         }
@@ -129,7 +129,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             self.clocks.insert(clockName)
         }
         let props = self.extractor.extract(from: state.properties)
-        if true == isInitial {
+        if true == state.isInitial {
             self.initials.insert(props)
         }
         for (key, value) in props {
@@ -197,7 +197,7 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                     props[$0] = "0"
                 }
             }
-            props["status"] = "\"executing\""
+            props["status"] = self.usingClocks ? "\"transitioning\"" : "\"executing\""
             return "(" + self.createConditions(of: props) { $0 + "\n    & " + $1 } + ")"
         }.sorted().combine("") { $0 + "\n| " + $1 }
         stream.write(initials + ";")
@@ -233,7 +233,12 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
         }
         var cases: [String: Set<String>] = [:]
         cases.reserveCapacity(state.edges.count)
-        let sourceProps = self.extractor.extract(from: state.properties)
+        var urgentCases: [String: Set<String>] = [:]
+        urgentCases.reserveCapacity(state.edges.count)
+        var sourceProps = self.extractor.extract(from: state.properties)
+        if self.usingClocks {
+            sourceProps["status"] = "\"transitioning\""
+        }
         state.edges.forEach { edge in
             if nil == self.states[edge.target] {
                 self.acceptingStates.insert(edge.target)
@@ -245,28 +250,43 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             }
             let conditions = self.createConditions(of: sourceProps, constraints: constraints)
             let targetProps = self.extractor.extract(from: edge.target)
-            let effect: String
+            var newCases: [String: String] = [:]
+            newCases.reserveCapacity(2)
             if self.usingClocks {
-                effect = self.createEffect(from: targetProps, clockName: edge.clockName, resetClock: edge.resetClock, duration: edge.time)
+                newCases[conditions] = self.createEffect(from: [:], clockName: edge.clockName, resetClock: edge.resetClock, duration: edge.time)
+                var sourceProps = sourceProps
+                sourceProps["status"] = "\"executing\""
+                let executingCondition = self.createConditions(of: sourceProps)
+                var targetProps = targetProps
+                targetProps["status"] = "\"transitioning\""
+                targetProps["c"] = "c"
+                targetProps["sync"] = "sync"
+                newCases[executingCondition] = self.createEffect(from: targetProps)
             } else {
-                effect = self.createEffect(from: targetProps)
+                newCases[conditions] = self.createEffect(from: targetProps)
             }
-            if nil == cases[conditions] {
-                cases[conditions] = [effect]
-            } else {
-                cases[conditions]?.insert(effect)
+            for (conditions, effect) in newCases {
+                if nil == cases[conditions] {
+                    cases[conditions] = [effect]
+                } else {
+                    cases[conditions]?.insert(effect)
+                }
             }
             /*let transition = "TRANS " + conditions + "\n    -> " + effect
             return transition + ";\n"*/
         }
-        let transitions = cases.lazy.compactMap { (condition, effects) -> String? in
-            let effect = effects.sorted().lazy.map { "(" + $0 + ")" }.combine("") { $0 + "\n    | " + $1  }
-            if effect.isEmpty {
-                return nil
+        func combine(label: String) -> (String, Set<String>) -> String? {
+            return { (condition, effects) in
+                let effect = effects.sorted().lazy.map { "(" + $0 + ")" }.combine("") { $0 + "\n    | " + $1  }
+                if effect.isEmpty {
+                    return nil
+                }
+                return label + " " + condition + "\n    -> (" + effect + ");\n"
             }
-            return "TRANS " + condition + "\n    -> (" + effect + ");\n"
         }
-        let combined = transitions.combine("") { $0 + "\n" + $1 }
+        let transitions = cases.compactMap(combine(label: "TRANS"))
+        let urgentTransitions = urgentCases.compactMap(combine(label: "URGENT"))
+        let combined = (transitions + urgentTransitions).sorted().combine("") { $0 + "\n" + $1 }
         return combined.isEmpty ? nil : combined
     }
     

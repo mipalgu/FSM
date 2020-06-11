@@ -102,7 +102,7 @@ public final class GenericKripkeStructureView<
         self.handler.handleStart(data, usingStream: &self.combinedStream)
     }
 
-    public func commit(state: State, isInitial: Bool) {
+    public func commit(state: State) {
         if true == self.data.alreadyProcessed(state.properties) {
             return
         }
@@ -112,7 +112,7 @@ public final class GenericKripkeStructureView<
             self.data,
             state: state,
             withId: id,
-            isInitial: isInitial,
+            isInitial: state.isInitial,
             usingStream: &self.combinedStream
         )
         var edgeOutputStream: OutputStream = self.edgeStream

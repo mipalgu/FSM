@@ -66,8 +66,8 @@ public final class AggregateKripkeStructureView<State: KripkeStateType>: KripkeS
         self.views = views
     }
 
-    public func commit(state: State, isInitial: Bool) {
-        self.views.forEach { $0.commit(state: state, isInitial: isInitial) }
+    public func commit(state: State) {
+        self.views.forEach { $0.commit(state: state) }
     }
 
     public func finish() {

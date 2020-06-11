@@ -61,6 +61,8 @@
  */
 public final class KripkeState: KripkeStateType {
 
+    public let isInitial: Bool
+    
     /**
      *  A snapshot of all properties that affected the execution of `state`.
      */
@@ -76,9 +78,11 @@ public final class KripkeState: KripkeStateType {
      *  - Parameter effects: All changes to properties.
      */
     public init(
+        isInitial: Bool,
         properties: KripkeStatePropertyList,
         edges: Set<KripkeEdge> = []
     ) {
+        self.isInitial = isInitial
         self.properties = properties
         self.edges = edges
     }

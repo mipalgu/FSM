@@ -60,7 +60,7 @@ import KripkeStructure
 
 public protocol KripkeStructureView: class, KripkeStateContainer {
 
-    func commit(state: State, isInitial: Bool)
+    func commit(state: State)
 
     func finish()
 
