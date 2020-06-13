@@ -259,14 +259,14 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
                 var sourceProps = sourceProps
                 sourceProps["status"] = "\"executing\""
                 let conditions = self.createConditions(of: sourceProps, constraints: constraints)
-                newCases[conditions] = self.createEffect(from: ["status": "\"waiting\""], clockName: edge.clockName, duration: edge.time, readTime: true)
+                newCases[conditions] = self.createEffect(from: ["status": "\"waiting\""], duration: edge.time)
                 sourceProps["status"] = "\"waiting\""
                 let executingCondition = self.createConditions(of: sourceProps, constraints: constraints)
                 var targetProps = targetProps
                 targetProps["c"] = "0"
                 targetProps["sync"] = "0"
                 targetProps["status"] = "\"executing\""
-                newCases[executingCondition] = self.createEffect(from: targetProps, clockName: edge.clockName, resetClock: edge.resetClock)
+                newCases[executingCondition] = self.createEffect(from: targetProps, clockName: edge.clockName, resetClock: edge.resetClock, readTime: edge.takeSnapshot)
             } else {
                 let conditions = self.createConditions(of: sourceProps, constraints: constraints)
                 newCases[conditions] = self.createEffect(from: targetProps)
@@ -357,10 +357,10 @@ public final class NuSMVKripkeStructureView<State: KripkeStateType>: KripkeStruc
             if let rawClockName = clockName {
                 let clockName = self.extractor.convert(label: rawClockName)
                 if resetClock {
-                    props[clockName] = "0"
                     props[clockName + "-time"] = "0"
-                } else if readTime {
-                    props[clockName] = clockName + "-time"
+                }
+                if readTime {
+                    props[clockName] = resetClock ? "0" : clockName + "-time"
                 }
             }
             if let duration = duration {
