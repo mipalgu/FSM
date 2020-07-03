@@ -110,68 +110,12 @@ public func FSM(
         name,
         initialState: initialState,
         externalVariables: [],
+        sensors: [],
+        actuators: [],
         fsmVars: SimpleVariablesContainer(vars: EmptyVariables()),
         ringlet: MiPalRingletFactory.make(
             previousState: initialPreviousState
         ),
-        initialPreviousState: initialPreviousState,
-        suspendedState: suspendedState,
-        suspendState: suspendState,
-        exitState: exitState
-    )
-}
-
-/**
- *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
- *
- *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
- *
- *  The `Ringlet` that is used will be a `MiPalRinglet`.
- *
- *  - Parameter name: The name of the `FiniteStateMachineType`.
- *
- *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
- *
- *  - Parameter initialPreviousState: The initial previous state.  This
- *  satisfies requirements from `OptimizedStateExecuter`.
- *
- *  - Parameter externalVariables: The `ExternalVariables`.
- *
- *  - Parameter suspendedState: When this is not nil, the
- *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
- *  set to this state.  This partially satisfies requirements from
- *  `Suspendable`.
- *
- *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
- *  `currentState` is set to this state.  This partially satisfies requirements
- *  from `Suspendable`.
- *
- *  - Parameter exitState: When `exit()` is called, `currentState` is set to
- *  this state.  This satisfies requirements from `ExitableState`.
- *
- *  - SeeAlso: `AnyControllableFiniteStateMachine`
- *  - SeeAlso: `FiniteStateMachineType`
- *  - SeeAlso: `FiniteStateMachine`
- *  - SeeAlso: `KRIPKE`
- *  - SeeAlso: `KripkeFiniteStateMachine`
- *  - SeeAlso: `KripkeMiPalRinglet`
- *  - SeeAlso: `MiPalRinglet`
- *  - SeeAlso: `Ringlet`
- */
-public func FSM<EV: ExternalVariablesContainer>(
-    _ name: String,
-    initialState: MiPalState,
-    externalVariables: EV,
-    initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
-    suspendedState: MiPalState? = nil,
-    suspendState: MiPalState = EmptyMiPalState("_suspend"),
-    exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyControllableFiniteStateMachine where EV: Snapshotable {
-    return FSM(
-        name,
-        initialState: initialState,
-        externalVariables: [AnySnapshotController(externalVariables)],
-        fsmVars: SimpleVariablesContainer(vars: EmptyVariables()),
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
         suspendState: suspendState,
@@ -231,69 +175,8 @@ public func FSM<V: VariablesContainer>(
         name,
         initialState: initialState,
         externalVariables: [],
-        fsmVars: fsmVars,
-        initialPreviousState: initialPreviousState,
-        suspendedState: suspendedState,
-        suspendState: suspendState,
-        exitState: exitState
-    )
-}
-
-/**
- *  Create an `AnyControllableFiniteStateMachine` that uses `MiPalState`s.
- *
- *  The underlying `FiniteStateMachineType` will be `FiniteStateMachine`.
- *
- *  The `Ringlet` that is used will be a `MiPalRinglet`.
- *
- *  - Parameter name: The name of the `FiniteStateMachineType`.
- *
- *  - Parameter initialState: The initial state of the `FiniteStateMachineType`.
- *
- *  - Parameter initialPreviousState: The initial previous state.  This
- *  satisfies requirements from `OptimizedStateExecuter`.
- *
- *  - Parameter externalVariables: The `ExternalVariables`.
- *
- *  - Parameter fsmVars: The FSM local variables.
- *
- *  - Parameter suspendedState: When this is not nil, the
- *  `FiniteStateMachineType` is suspended.  Upon resuming `currentState` will be
- *  set to this state.  This partially satisfies requirements from
- *  `Suspendable`.
- *
- *  - Parameter suspendState: When the `FiniteStateMachineType` is suspended, 
- *  `currentState` is set to this state.  This partially satisfies requirements
- *  from `Suspendable`.
- *
- *  - Parameter exitState: When `exit()` is called, `currentState` is set to
- *  this state.  This satisfies requirements from `ExitableState`.
- *
- *  - Returns: A new instance of `AnyControllableFiniteStateMachine`.
- *
- *  - SeeAlso: `AnyControllableFiniteStateMachine`
- *  - SeeAlso: `FiniteStateMachineType`
- *  - SeeAlso: `FiniteStateMachine`
- *  - SeeAlso: `KRIPKE`
- *  - SeeAlso: `KripkeFiniteStateMachine`
- *  - SeeAlso: `KripkeMiPalRinglet`
- *  - SeeAlso: `MiPalRinglet`
- *  - SeeAlso: `Ringlet`
- */
-public func FSM<EV: ExternalVariablesContainer, V: VariablesContainer>(
-    _ name: String,
-    initialState: MiPalState,
-    externalVariables: EV,
-    fsmVars: V,
-    initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
-    suspendedState: MiPalState? = nil,
-    suspendState: MiPalState = EmptyMiPalState("_suspend"),
-    exitState: MiPalState = EmptyMiPalState("_exit")
-) -> AnyControllableFiniteStateMachine where EV: Snapshotable {
-    return FSM(
-        name,
-        initialState: initialState,
-        externalVariables: [AnySnapshotController(externalVariables)],
+        sensors: [],
+        actuators: [],
         fsmVars: fsmVars,
         initialPreviousState: initialPreviousState,
         suspendedState: suspendedState,
@@ -306,6 +189,8 @@ public func FSM<V: VariablesContainer>(
     _ name: String,
     initialState: MiPalState,
     externalVariables: [AnySnapshotController],
+    sensors: [AnySnapshotController],
+    actuators: [AnySnapshotController],
     fsmVars: V,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
     suspendedState: MiPalState? = nil,
@@ -316,6 +201,8 @@ public func FSM<V: VariablesContainer>(
         name,
         initialState: initialState,
         externalVariables: externalVariables,
+        sensors: sensors,
+        actuators: actuators,
         fsmVars: fsmVars,
         ringlet: MiPalRinglet(
             previousState: initialPreviousState
@@ -365,6 +252,8 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
     _ name: String,
     initialState: MiPalState,
     externalVariables: [AnySnapshotController],
+    sensors: [AnySnapshotController],
+    actuators: [AnySnapshotController],
     fsmVars: V,
     ringlet: R,
     initialPreviousState: MiPalState = EmptyMiPalState("_previous"),
@@ -377,6 +266,8 @@ public func FSM<R: Ringlet, V: VariablesContainer>(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            sensors: sensors,
+            actuators: actuators,
             fsmVars: fsmVars,
             recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,
@@ -392,6 +283,8 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
     _ name: String,
     initialState: R._StateType,
     externalVariables: [AnySnapshotController],
+    sensors: [AnySnapshotController],
+    actuators: [AnySnapshotController],
     fsmVars: V,
     parameters: P,
     results: RS,
@@ -416,6 +309,8 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            sensors: sensors,
+            actuators: actuators,
             fsmVars: fsmVars,
             parameters: parameters,
             recorder: MirrorKripkePropertiesRecorder(),
@@ -434,6 +329,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     _ name: String,
     initialState: R._StateType,
     externalVariables: [AnySnapshotController],
+    sensors: [AnySnapshotController],
+    actuators: [AnySnapshotController],
     fsmVars: V,
     ringlet: R,
     initialPreviousState: R._StateType,
@@ -453,6 +350,8 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
             name,
             initialState: initialState,
             externalVariables: externalVariables,
+            sensors: sensors,
+            actuators: actuators,
             fsmVars: fsmVars,
             recorder: MirrorKripkePropertiesRecorder(),
             ringlet: ringlet,

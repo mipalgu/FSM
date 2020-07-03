@@ -168,6 +168,10 @@ public struct ParameterisedFiniteStateMachine<
     public let exitState: R._StateType
 
     public var externalVariables: [AnySnapshotController]
+    
+    public var sensors: [AnySnapshotController]
+    
+    public var actuators: [AnySnapshotController]
 
     public let fsmVars: V
 
@@ -250,6 +254,8 @@ public struct ParameterisedFiniteStateMachine<
         _ name: String,
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
+        sensors: [AnySnapshotController],
+        actuators: [AnySnapshotController],
         fsmVars: V,
         parameters: P,
         recorder: KR,
@@ -264,6 +270,8 @@ public struct ParameterisedFiniteStateMachine<
         self.currentState = initialState
         self.exitState = exitState
         self.externalVariables = externalVariables
+        self.sensors = sensors
+        self.actuators = actuators
         self.fsmVars = fsmVars
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
@@ -305,6 +313,8 @@ public struct ParameterisedFiniteStateMachine<
             self.name,
             initialState: apply(self.initialState.clone()),
             externalVariables: self.externalVariables,
+            sensors: self.sensors,
+            actuators: self.actuators,
             fsmVars: self.fsmVars,
             parameters: self.parameters,
             recorder: self.recorder,

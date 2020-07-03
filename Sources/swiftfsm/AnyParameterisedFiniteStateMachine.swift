@@ -94,6 +94,14 @@ public struct AnyParameterisedFiniteStateMachine:
     private let _externalVariables: () -> [AnySnapshotController]
 
     private let _setExternalVariables: ([AnySnapshotController]) -> Void
+    
+    private let _sensors: () -> [AnySnapshotController]
+    
+    private let _setSensors: ([AnySnapshotController]) -> Void
+    
+    private let _actuators: () -> [AnySnapshotController]
+    
+    private let _setActuators: ([AnySnapshotController]) -> Void
 
     private let _getParameters: () -> Any
 
@@ -150,6 +158,22 @@ public struct AnyParameterisedFiniteStateMachine:
             return self._externalVariables()
         } set {
             self._setExternalVariables(newValue)
+        }
+    }
+    
+    public var sensors: [AnySnapshotController] {
+        get {
+            return self._sensors()
+        } set {
+            self._setSensors(newValue)
+        }
+    }
+    
+    public var actuators: [AnySnapshotController] {
+        get {
+            return self._actuators()
+        } set {
+            self._setSensors(newValue)
         }
     }
 
@@ -209,6 +233,10 @@ public struct AnyParameterisedFiniteStateMachine:
         self._currentState = { AnyState(ref.value.currentState) }
         self._setExternalVariables = { ref.value.externalVariables = $0 }
         self._externalVariables = { ref.value.externalVariables }
+        self._sensors = { ref.value.sensors }
+        self._setSensors = { ref.value.sensors = $0 }
+        self._actuators = { ref.value.actuators }
+        self._setActuators = { ref.value.actuators = $0 }
         self._getParameters = { ref.value.parameters.vars }
         self._hasFinished = { ref.value.hasFinished }
         self._initialState = { AnyState(ref.value.initialState) }

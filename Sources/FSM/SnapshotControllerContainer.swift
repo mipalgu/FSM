@@ -59,5 +59,9 @@
 public protocol SnapshotControllerContainer {
 
     var externalVariables: [AnySnapshotController] { get set }
+    
+    var sensors: [AnySnapshotController] { get set }
+    
+    var actuators: [AnySnapshotController] { get set }
 
 }

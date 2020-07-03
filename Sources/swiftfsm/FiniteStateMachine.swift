@@ -153,6 +153,10 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     public let exitState: R._StateType
 
     public var externalVariables: [AnySnapshotController]
+    
+    public var sensors: [AnySnapshotController]
+    
+    public var actuators: [AnySnapshotController]
 
     public let fsmVars: V
 
@@ -228,6 +232,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         _ name: String,
         initialState: R._StateType,
         externalVariables: [AnySnapshotController],
+        sensors: [AnySnapshotController],
+        actuators: [AnySnapshotController],
         fsmVars: V,
         recorder: KR,
         ringlet: R,
@@ -240,6 +246,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
         self.currentState = initialState
         self.exitState = exitState
         self.externalVariables = externalVariables
+        self.sensors = sensors
+        self.actuators = actuators
         self.fsmVars = fsmVars
         self.initialState = initialState
         self.initialPreviousState = initialPreviousState
@@ -277,6 +285,8 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
             self.name,
             initialState: apply(self.initialState.clone()),
             externalVariables: self.externalVariables,
+            sensors: self.sensors,
+            actuators: self.actuators,
             fsmVars: self.fsmVars,
             recorder: self.recorder,
             ringlet: self.ringlet.clone(),
