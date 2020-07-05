@@ -79,6 +79,19 @@ public class KripkeStatePropertySpinnerConverter: KripkeStatePropertySpinnerConv
     public init(spinners: Spinners = Spinners()) {
         self.spinners = spinners
     }
+    
+    public func emptySpinner(from ksp: KripkeStateProperty) -> (Any, (Any) -> Any?) {
+        let (initialValue, _) = self.convert(from: ksp)
+        var spun = false
+        let spinner: (Any) -> Any? = { element in
+            if spun {
+                return nil
+            }
+            defer { spun = true }
+            return element
+        }
+        return (initialValue, spinner)
+    }
 
     /**
      *  Convert a `KripkeStateProperty` to a `Spinners.Spinner`.

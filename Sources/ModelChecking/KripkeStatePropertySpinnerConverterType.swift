@@ -72,6 +72,8 @@ public protocol KripkeStatePropertySpinnerConverterType {
      *  - Returns: A tuple where the first element is the starting value of the
      *  `Spinners.Spinner` and the second element is the `Spinners.Spinner`.
      */
-     func convert(from: KripkeStateProperty) -> (Any, (Any) -> Any?)
+    func convert(from: KripkeStateProperty) -> (Any, (Any) -> Any?)
+    
+    func emptySpinner(from: KripkeStateProperty) -> (Any, (Any) -> Any?)
 
 }

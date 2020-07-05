@@ -82,5 +82,7 @@ public protocol ExternalsSpinnerDataExtractorType {
         KripkeStatePropertyList,
         [String: (Any) -> Any?]
     )
+    
+    func extract(actuators: AnySnapshotController) -> (KripkeStatePropertyList, [String: (Any) -> Any?])
 
 }

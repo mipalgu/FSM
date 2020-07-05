@@ -114,5 +114,20 @@ public class ExternalsSpinnerDataExtractor<
         }
         return (list, spinners)
     }
+    
+    public func extract(
+        actuators: AnySnapshotController
+    ) -> (
+        KripkeStatePropertyList,
+        [String: (Any) -> Any?]
+    ) {
+        // Get Global Properties Info
+        let list = self.extractor.extract(externalVariables: actuators)
+        var spinners: [String: (Any) -> Any?] = [:]
+        list.forEach {
+            spinners[$0] = self.converter.emptySpinner(from: $1).1
+        }
+        return (list, spinners)
+    }
 
 }
