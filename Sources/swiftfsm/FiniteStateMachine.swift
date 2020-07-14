@@ -108,6 +108,7 @@ public struct FiniteStateMachine<R: Ringlet, KR: KripkePropertiesRecorder, V: Va
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
     R._StateType: Cloneable,
+    R._StateType: SnapshotListContainer,
     SM: ConvertibleToScheduleableFiniteStateMachine,
     SM: Resumeable,
     SM: Restartable

@@ -299,6 +299,7 @@ public func parameterisedFSM<R: Ringlet, V: VariablesContainer, P: VariablesCont
     R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
+    R._StateType: SnapshotListContainer,
     R._StateType: KripkeVariablesModifier,
     RS.Vars: MutableResultContainer,
     P.Vars: DictionaryConvertible,
@@ -343,6 +344,7 @@ public func MachineFSM<R: Ringlet, V: VariablesContainer>(
     R._StateType: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
+    R._StateType: SnapshotListContainer,
     R._StateType: KripkeVariablesModifier
 {
     return AnyControllableFiniteStateMachine(

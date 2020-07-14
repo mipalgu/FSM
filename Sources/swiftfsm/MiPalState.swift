@@ -68,7 +68,8 @@ open class MiPalState:
     CloneableState,
     MiPalActions,
     Transitionable,
-    KripkeVariablesModifier
+    KripkeVariablesModifier,
+    SnapshotListContainer
 {
 
     /**
@@ -83,6 +84,10 @@ open class MiPalState:
      *  state.
      */
     public var transitions: [Transition<MiPalState, MiPalState>]
+    
+    public var snapshotSensors: Set<String>?
+    
+    public var snapshotActuators: Set<String>?
 
     open var validVars: [String: [Any]] {
         return [
@@ -98,9 +103,11 @@ open class MiPalState:
      *
      *  - transitions: All transitions to other states that this state can use.
      */
-    public init(_ name: String, transitions: [Transition<MiPalState, MiPalState>] = []) {
+    public init(_ name: String, transitions: [Transition<MiPalState, MiPalState>] = [], snapshotSensors: Set<String>? = nil, snapshotActuators: Set<String>? = nil) {
         self.name = name
         self.transitions = transitions
+        self.snapshotSensors = snapshotSensors
+        self.snapshotActuators = snapshotActuators
     }
 
     /**

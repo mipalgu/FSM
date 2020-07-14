@@ -189,6 +189,24 @@ extension FSMType: ConvertibleToScheduleableFiniteStateMachine {
             }
         }
     }
+    
+    public var snapshotSensors: [AnySnapshotController] {
+        switch self {
+        case .controllableFSM(let fsm):
+            return fsm.snapshotSensors
+        case .parameterisedFSM(let fsm):
+            return fsm.snapshotSensors
+        }
+    }
+    
+    public var snapshotActuators: [AnySnapshotController] {
+        switch self {
+        case .controllableFSM(let fsm):
+            return fsm.snapshotActuators
+        case .parameterisedFSM(let fsm):
+            return fsm.snapshotActuators
+        }
+    }
 
     public var hasFinished: Bool {
         switch self {

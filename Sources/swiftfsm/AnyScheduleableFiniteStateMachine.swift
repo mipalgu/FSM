@@ -111,6 +111,10 @@ public struct AnyScheduleableFiniteStateMachine:
     private let _actuators: () -> [AnySnapshotController]
     
     private let _setActuators: ([AnySnapshotController]) -> Void
+    
+    private let _snapshotSensors: () -> [AnySnapshotController]
+    
+    private let _snapshotActuators: () -> [AnySnapshotController]
 
     private let _hasFinished: () -> Bool
 
@@ -167,6 +171,14 @@ public struct AnyScheduleableFiniteStateMachine:
             self._setSensors(newValue)
         }
     }
+    
+    public var snapshotSensors: [AnySnapshotController] {
+        return self._snapshotSensors()
+    }
+    
+    public var snapshotActuators: [AnySnapshotController] {
+        return self._snapshotActuators()
+    }
 
     /**
      *  Has the Finite State Machine finished?
@@ -214,6 +226,8 @@ public struct AnyScheduleableFiniteStateMachine:
         self._setSensors = { ref.value.sensors = $0 }
         self._actuators = { ref.value.actuators }
         self._setActuators = { ref.value.actuators = $0 }
+        self._snapshotSensors = { ref.value.snapshotSensors }
+        self._snapshotActuators = { ref.value.snapshotActuators }
         self._hasFinished = { ref.value.hasFinished }
         self._initialState = { AnyState(ref.value.initialState) }
         self._isSuspended = { ref.value.isSuspended }

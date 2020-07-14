@@ -84,7 +84,7 @@ public final class EmptyMiPalState: MiPalState {
     public override final func onExit() {}
 
     public override final func clone() -> EmptyMiPalState {
-        return EmptyMiPalState(self.name, transitions: self.transitions)
+        return EmptyMiPalState(self.name, transitions: self.transitions, snapshotSensors: self.snapshotSensors, snapshotActuators: self.snapshotActuators)
     }
 
 }

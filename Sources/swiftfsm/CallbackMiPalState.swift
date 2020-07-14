@@ -105,6 +105,8 @@ public final class CallbackMiPalState: MiPalState {
     public init(
         _ name: String,
         transitions: [Transition<CallbackMiPalState, MiPalState>] = [],
+        snapshotSensors: Set<String>? = nil,
+        snapshotActuators: Set<String>? = nil,
         onEntry: @escaping () -> Void = {},
         main: @escaping () -> Void = {},
         onExit: @escaping () -> Void = {}
@@ -114,7 +116,9 @@ public final class CallbackMiPalState: MiPalState {
         self._onExit = onExit
         super.init(
             name,
-            transitions: cast(transitions: transitions)
+            transitions: cast(transitions: transitions),
+            snapshotSensors: snapshotSensors,
+            snapshotActuators: snapshotActuators
         )
     }
 
@@ -146,6 +150,8 @@ public final class CallbackMiPalState: MiPalState {
         return CallbackMiPalState(
             self.name,
             transitions: cast(transitions: self.transitions),
+            snapshotSensors: self.snapshotSensors,
+            snapshotActuators: self.snapshotActuators,
             onEntry: self._onEntry,
             main: self._main,
             onExit: self._onExit

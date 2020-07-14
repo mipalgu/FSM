@@ -116,6 +116,7 @@ public struct ParameterisedFiniteStateMachine<
     R: Cloneable,
     R._StateType: Transitionable,
     R._StateType._TransitionType == Transition<R._StateType, R._StateType>,
+    R._StateType: SnapshotListContainer,
     R._StateType: Cloneable,
     SM: Resumeable,
     SM: Restartable

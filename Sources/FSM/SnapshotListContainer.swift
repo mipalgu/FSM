@@ -1,9 +1,9 @@
 /*
- * SnapshotContainer.swift 
- * FSM 
+ * SnapshotListContainer.swift
+ * FSM
  *
- * Created by Callum McColl on 28/07/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/7/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,34 +56,10 @@
  *
  */
 
-public protocol SnapshotControllerContainer {
-
-    var externalVariables: [AnySnapshotController] { get set }
+public protocol SnapshotListContainer {
     
-    var sensors: [AnySnapshotController] { get set }
+    var snapshotSensors: Set<String>? { get }
     
-    var actuators: [AnySnapshotController] { get set }
-    
-    var snapshotSensors: [AnySnapshotController] { get }
-    
-    var snapshotActuators: [AnySnapshotController] { get }
-
-}
-
-extension SnapshotControllerContainer where Self: StateExecuter, _StateType: SnapshotListContainer {
-    
-    public var snapshotSensors: [AnySnapshotController] {
-        guard let snapshotSensors = self.currentState.snapshotSensors else {
-            return self.sensors
-        }
-        return self.sensors.filter { snapshotSensors.contains($0.name) }
-    }
-    
-    public var snapshotActuators: [AnySnapshotController] {
-        guard let snapshotActuators = self.currentState.snapshotActuators else {
-            return self.actuators
-        }
-        return self.actuators.filter { snapshotActuators.contains($0.name) }
-    }
+    var snapshotActuators: Set<String>? { get }
     
 }
