@@ -122,21 +122,26 @@ public final class GraphVizKripkeStructureViewHandler<State: KripkeStateType>: G
         }
         state.edges.forEach {
             let target = data.fetchId(of: $0.target)
-            let time = $0.time == 0 ? nil : $0.time
-            var labels: [String] = []
-            labels.reserveCapacity(3)
-            if let time = time {
-                labels.append("\(time)")
-            }
-            if let clockName = $0.clockName {
-                if let constraint = $0.constraint, constraint != .equal(value: 0) {
-                    labels.append(expression(for: constraint.reduced, clockLabel: clockName))
+            let label: String
+            if data.usingClocks {
+                let time = $0.time == 0 ? nil : $0.time
+                var labels: [String] = []
+                labels.reserveCapacity(3)
+                if let time = time {
+                    labels.append("\(time)")
                 }
-                if $0.resetClock {
-                    labels.append("\(clockName) := 0")
+                if let clockName = $0.clockName {
+                    if let constraint = $0.constraint, constraint != .equal(value: 0) {
+                        labels.append(expression(for: constraint.reduced, clockLabel: clockName))
+                    }
+                    if $0.resetClock {
+                        labels.append("\(clockName) := 0")
+                    }
                 }
+                label = labels.combine("") { $0 + ", " + $1 }
+            } else {
+                label = ""
             }
-            let label = labels.combine("") { $0 + ", " + $1 }
             let labelStr = label == "" ? "" : " [ label=\"\(label)\" ]"
             stream.write("s\(id) -> s\(target)\(labelStr);\n")
         }
