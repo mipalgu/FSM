@@ -308,7 +308,7 @@ public final class MirrorKripkePropertiesRecorder: KripkePropertiesRecorder {
             var val: Double = ((val as! Double) + values[0])
             val = val.truncatingRemainder(dividingBy: Double(values.count))
             return (
-                .Float80,
+                .Double,
                 values.lazy.map { abs(val - $0) }.lazy.sorted { $0 < $1 }.first!
             )
         case is String:
