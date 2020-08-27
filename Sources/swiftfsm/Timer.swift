@@ -57,6 +57,10 @@
  */
 
 public protocol Timer {
+    
+    var ringletLength: UInt { get }
+    
+    var scheduleLength: UInt { get }
 
     func after(_: UInt) -> Bool
 
