@@ -59,6 +59,8 @@
 public protocol PropertyFormatter: LabelFormatter, ValueFormatter {
 
     var delimiter: Character { get }
+    
+    var nilValue: String { get }
 
     func formatString(_ str: String) -> String
 

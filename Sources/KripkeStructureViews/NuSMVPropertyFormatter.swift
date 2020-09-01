@@ -61,6 +61,8 @@ import KripkeStructure
 public final class NuSMVPropertyFormatter: PropertyFormatter {
 
     public let delimiter: Character
+    
+    public let nilValue: String = "Nothing"
 
     public init(delimiter: Character = "-") {
         self.delimiter = delimiter

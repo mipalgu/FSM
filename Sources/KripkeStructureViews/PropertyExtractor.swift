@@ -61,7 +61,7 @@ import Utilities
 
 public final class PropertyExtractor<Formatter: PropertyFormatter> {
 
-    fileprivate let formatter: Formatter
+    public let formatter: Formatter
 
     public init(formatter: Formatter) {
         self.formatter = formatter
@@ -94,7 +94,7 @@ public final class PropertyExtractor<Formatter: PropertyFormatter> {
         case .Optional(let property):
             switch property {
             case .none:
-                properties.value[label] = self.formatter.formatString("Nothing")
+                properties.value[label] = self.formatter.nilValue
             case .some(let prop):
                 self.convert(prop, properties: properties, label: label)
             }
