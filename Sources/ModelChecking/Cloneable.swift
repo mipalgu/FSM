@@ -68,3 +68,40 @@ public protocol Cloneable {
     func clone() -> Self
 
 }
+
+extension Optional: Cloneable where Wrapped: Cloneable {
+    
+    public func clone() -> Optional<Wrapped> {
+        switch self {
+        case .none:
+            return .none
+        case .some(let wrappedValue):
+            return .some(wrappedValue.clone())
+        }
+    }
+    
+}
+
+extension Array: Cloneable where Self.Iterator.Element: Cloneable {
+    
+    public func clone() -> Array<Element> {
+        return self.map { $0.clone() }
+    }
+    
+}
+
+extension Dictionary: Cloneable where Value: Cloneable {
+    
+    public func clone() -> Dictionary<Key, Value> {
+        return self.mapValues({ $0.clone() })
+    }
+    
+}
+
+extension Set: Cloneable where Self.Iterator.Element: Cloneable {
+    
+    public func clone() -> Set<Element> {
+        return Set(self.map({ $0.clone() }))
+    }
+    
+}
