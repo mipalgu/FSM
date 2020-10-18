@@ -96,6 +96,54 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
             extractor: MirrorKripkePropertiesRecorder()
         )
     }
+    
+    func test_canSpinBoolVariables() {
+        let timeLeft = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<Bool>>(
+            "Bool",
+            collection: GenericWhiteboard<Bool>(
+                msgType: ktimeLeft_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let expected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["value": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["value": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [timeLeft], against: [expected])
+    }
+
+    func test_canSpinMutlipleBoolVariables() {
+        let timeLeft = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<Bool>>(
+            "Bool",
+            collection: GenericWhiteboard<Bool>(
+                msgType: ktimeLeft_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let doorOpen = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<Bool>>(
+            "Bool",
+            collection: GenericWhiteboard<Bool>(
+                msgType: kdoorOpen_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let buttonPushed = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<Bool>>(
+            "Bool",
+            collection: GenericWhiteboard<Bool>(
+                msgType: kbuttonPushed_v,
+                atomic: false,
+                shouldNotifySubscribers: true
+            )
+        ))
+        let expected: [KripkeStatePropertyList] = [
+            KripkeStatePropertyList(["value": KripkeStateProperty(type: .Bool, value: false)]),
+            KripkeStatePropertyList(["value": KripkeStateProperty(type: .Bool, value: true)])
+        ]
+        self.check(externals: [timeLeft, doorOpen, buttonPushed], against: [expected, expected, expected])
+    }
 
     func test_canSpinMicrowaveVariables() {
         let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<MicrowaveStatus>>(

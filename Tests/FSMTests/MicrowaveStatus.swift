@@ -60,16 +60,16 @@ import FSM
 import CGUSimpleWhiteboard
 import GUSimpleWhiteboard
 
-#if canImport(swiftfsm)
-import swiftfsm
-#endif
-
 //swiftlint:disable superfluous_disable_command
 //swiftlint:disable type_body_length
 //swiftlint:disable function_body_length
 //swiftlint:disable file_length
 //swiftlint:disable line_length
 //swiftlint:disable identifier_name
+
+#if canImport(swiftfsm)
+import swiftfsm
+#endif
 
 /**
  * Contains properties of the one minute microwave.
@@ -140,12 +140,6 @@ public struct MicrowaveStatus {
      */
     public init(fromDictionary dictionary: [String: Any]) {
         self.init()
-        if let raw = dictionary["_raw"] as? wb_microwave_status {
-            self.timeLeft = raw.timeLeft
-            self.doorOpen = raw.doorOpen
-            self.buttonPushed = raw.buttonPushed
-            return
-        }
         guard
             let timeLeft = dictionary["timeLeft"] as? Bool,
             let doorOpen = dictionary["doorOpen"] as? Bool,
@@ -184,6 +178,8 @@ public func == (lhs: MicrowaveStatus, rhs: MicrowaveStatus) -> Bool {
         && lhs.doorOpen == rhs.doorOpen
         && lhs.buttonPushed == rhs.buttonPushed
 }
+
+extension wb_microwave_status: Equatable {}
 
 public func == (lhs: wb_microwave_status, rhs: wb_microwave_status) -> Bool {
     return MicrowaveStatus(lhs) == MicrowaveStatus(rhs)
