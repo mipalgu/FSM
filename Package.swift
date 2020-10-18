@@ -9,7 +9,6 @@ let package = Package(
     products: [
         .library(
             name: "FSM",
-            type: .dynamic,
             targets: [
                 "swiftfsm"
             ]
