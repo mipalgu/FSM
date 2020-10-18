@@ -60,4 +60,135 @@ import FSM
 import CGUSimpleWhiteboard
 import GUSimpleWhiteboard
 
-extension wb_microwave_status: ExternalVariables {}
+#if canImport(swiftfsm)
+import swiftfsm
+#endif
+
+//swiftlint:disable superfluous_disable_command
+//swiftlint:disable type_body_length
+//swiftlint:disable function_body_length
+//swiftlint:disable file_length
+//swiftlint:disable line_length
+//swiftlint:disable identifier_name
+
+/**
+ * Contains properties of the one minute microwave.
+ */
+public struct MicrowaveStatus {
+
+    public var _raw: wb_microwave_status
+
+    public var timeLeft: Bool {
+        get {
+            return self._raw.timeLeft
+        } set {
+            self._raw.timeLeft = newValue
+        }
+    }
+
+    public var doorOpen: Bool {
+        get {
+            return self._raw.doorOpen
+        } set {
+            self._raw.doorOpen = newValue
+        }
+    }
+
+    public var buttonPushed: Bool {
+        get {
+            return self._raw.buttonPushed
+        } set {
+            self._raw.buttonPushed = newValue
+        }
+    }
+
+    public var computedVars: [String: Any] {
+        return [
+            "timeLeft": self._raw.timeLeft,
+            "doorOpen": self._raw.doorOpen,
+            "buttonPushed": self._raw.buttonPushed
+        ]
+    }
+
+    public var manipulators: [String: (Any) -> Any] {
+        return [:]
+    }
+
+    public var validVars: [String: [Any]] {
+        return ["_raw": []]
+    }
+
+    /**
+     * Create a new `wb_microwave_status`.
+     */
+    public init(timeLeft: Bool = true, doorOpen: Bool = true, buttonPushed: Bool = true) {
+        self._raw = wb_microwave_status()
+        self.timeLeft = timeLeft
+        self.doorOpen = doorOpen
+        self.buttonPushed = buttonPushed
+    }
+
+    /**
+     * Create a new `wb_microwave_status`.
+     */
+    public init(_ rawValue: wb_microwave_status) {
+        self._raw = rawValue
+    }
+
+    /**
+     * Create a `wb_microwave_status` from a dictionary.
+     */
+    public init(fromDictionary dictionary: [String: Any]) {
+        self.init()
+        if let raw = dictionary["_raw"] as? wb_microwave_status {
+            self.timeLeft = raw.timeLeft
+            self.doorOpen = raw.doorOpen
+            self.buttonPushed = raw.buttonPushed
+            return
+        }
+        guard
+            let timeLeft = dictionary["timeLeft"] as? Bool,
+            let doorOpen = dictionary["doorOpen"] as? Bool,
+            let buttonPushed = dictionary["buttonPushed"] as? Bool
+        else {
+            fatalError("Unable to convert \(dictionary) to wb_microwave_status.")
+        }
+        self.timeLeft = timeLeft
+        self.doorOpen = doorOpen
+        self.buttonPushed = buttonPushed
+    }
+
+}
+
+extension MicrowaveStatus: CustomStringConvertible {
+
+    /**
+     * Convert to a description String.
+     */
+    public var description: String {
+        var descString = ""
+        descString += "timeLeft=\(self.timeLeft)"
+        descString += ", "
+        descString += "doorOpen=\(self.doorOpen)"
+        descString += ", "
+        descString += "buttonPushed=\(self.buttonPushed)"
+        return descString
+    }
+
+}
+
+extension MicrowaveStatus: Equatable {}
+
+public func == (lhs: MicrowaveStatus, rhs: MicrowaveStatus) -> Bool {
+    return lhs.timeLeft == rhs.timeLeft
+        && lhs.doorOpen == rhs.doorOpen
+        && lhs.buttonPushed == rhs.buttonPushed
+}
+
+public func == (lhs: wb_microwave_status, rhs: wb_microwave_status) -> Bool {
+    return MicrowaveStatus(lhs) == MicrowaveStatus(rhs)
+}
+
+#if canImport(swiftfsm)
+extension MicrowaveStatus: ExternalVariables, KripkeVariablesModifier {}
+#endif

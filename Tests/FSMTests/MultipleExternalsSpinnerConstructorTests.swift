@@ -98,9 +98,9 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     }
 
     func test_canSpinMicrowaveVariables() {
-        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<MicrowaveStatus>>(
             "kMicrowaveStatus_v",
-            collection: GenericWhiteboard<wb_microwave_status>(
+            collection: GenericWhiteboard<MicrowaveStatus>(
                 msgType: kMicrowaveStatus_v,
                 atomic: false,
                 shouldNotifySubscribers: true
@@ -120,9 +120,9 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     }
 
     func test_canSpinMutlipleMicrowaveVariables() {
-        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<MicrowaveStatus>>(
             "kMicrowaveStatus_v",
-            collection: GenericWhiteboard<wb_microwave_status>(
+            collection: GenericWhiteboard<MicrowaveStatus>(
                 msgType: kMicrowaveStatus_v,
                 atomic: false,
                 shouldNotifySubscribers: true
@@ -160,9 +160,9 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     }
 
     func test_canSpinMicrowaveStatusAndButton() {
-        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<MicrowaveStatus>>(
             "kMicrowaveStatus_v",
-            collection: GenericWhiteboard<wb_microwave_status>(
+            collection: GenericWhiteboard<MicrowaveStatus>(
                 msgType: kMicrowaveStatus_v,
                 atomic: false,
                 shouldNotifySubscribers: true
@@ -187,9 +187,9 @@ class MultipleExternalsSpinnerConstructorTests: XCTestCase {
     }
 
     func test_canSpinMultipleMicrowaveStatusAndButton() {
-        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<wb_microwave_status>>(
+        let microwave_status = AnySnapshotController(SnapshotCollectionController<GenericWhiteboard<MicrowaveStatus>>(
             "kMicrowaveStatus_v",
-            collection: GenericWhiteboard<wb_microwave_status>(
+            collection: GenericWhiteboard<MicrowaveStatus>(
                 msgType: kMicrowaveStatus_v,
                 atomic: false,
                 shouldNotifySubscribers: true
