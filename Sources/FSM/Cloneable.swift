@@ -1,8 +1,8 @@
 /*
- * SnapshotContainer.swift 
+ * Cloneable.swift 
  * FSM 
  *
- * Created by Callum McColl on 28/07/2016.
+ * Created by Callum McColl on 27/09/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,19 +56,52 @@
  *
  */
 
-import KripkeStructure
-
 /**
- *  Conforming types are responsible for storing `KripkeStatePropertyList`s,
- *  which represents snapshots at different points in time of the
- *  `GlobalVaraibles`, Finite State Machine `Variables` and the `StateType`
- *  variables.
+ *  Provides a common interface for types that are able to create copies of
+ *  themselves.
  */
-public protocol SnapshotContainer {
+public protocol Cloneable {
 
     /**
-     *  The list of snapshots.
+     *  Create a copy of `self`.
      */
-    var snapshots: [KripkeStatePropertyList] { get }
+    func clone() -> Self
 
+}
+
+extension Optional: Cloneable where Wrapped: Cloneable {
+    
+    public func clone() -> Optional<Wrapped> {
+        switch self {
+        case .none:
+            return .none
+        case .some(let wrappedValue):
+            return .some(wrappedValue.clone())
+        }
+    }
+    
+}
+
+extension Array: Cloneable where Self.Iterator.Element: Cloneable {
+    
+    public func clone() -> Array<Element> {
+        return self.map { $0.clone() }
+    }
+    
+}
+
+extension Dictionary: Cloneable where Value: Cloneable {
+    
+    public func clone() -> Dictionary<Key, Value> {
+        return self.mapValues({ $0.clone() })
+    }
+    
+}
+
+extension Set: Cloneable where Self.Iterator.Element: Cloneable {
+    
+    public func clone() -> Set<Element> {
+        return Set(self.map({ $0.clone() }))
+    }
+    
 }

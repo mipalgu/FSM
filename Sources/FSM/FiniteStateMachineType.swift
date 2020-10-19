@@ -56,8 +56,6 @@
  *
  */
 
-import KripkeStructure
-
 /**
  *  The top level type for Finite State Machines.
  *

@@ -1,9 +1,9 @@
 /*
- * AnyKripkeStructureView.swift
- * ModelChecking
+ * StateType+KripkeVariablesModifier.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 15/10/18.
- * Copyright © 2018 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 20/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,36 +56,18 @@
  *
  */
 
-import KripkeStructure
-import Utilities
+public extension StateType where Self: KripkeVariablesModifier {
 
-public final class AnyKripkeStructureView<State: KripkeStateType>: KripkeStructureView {
-
-    public let base: Any
-
-    fileprivate let _commit: (State) -> Void
-
-    fileprivate let _finish: () -> Void
-
-    fileprivate let _reset: (Bool) -> Void
-
-    public init<View: KripkeStructureView>(_ base: View) where View.State == State {
-        self.base = base
-        self._commit = { base.commit(state: $0) }
-        self._finish = { base.finish() }
-        self._reset = { base.reset(usingClocks: $0) }
+    var computedVars: [String: Any] {
+        return [:]
     }
 
-    public func commit(state: State) {
-        self._commit(state)
+    var manipulators: [String: (Any) -> Any] {
+        return [:]
     }
 
-    public func finish() {
-        self._finish()
-    }
-
-    public func reset(usingClocks: Bool) {
-        self._reset(usingClocks)
+    var validVars: [String: [Any]] {
+        return [:]
     }
 
 }

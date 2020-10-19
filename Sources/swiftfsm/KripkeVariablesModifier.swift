@@ -1,9 +1,9 @@
 /*
- * KripkeEdge.swift
- * KripkeStructure
+ * KripkeVariablesModifier.swift 
+ * FSM 
  *
- * Created by Callum McColl on 14/5/20.
- * Copyright © 2020 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 05/10/2016.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,41 +56,51 @@
  *
  */
 
-public struct KripkeEdge {
-    
-    public var clockName: String?
-    
-    public var constraint: ClockConstraint?
-    
-    public var resetClock: Bool
-    
-    public var takeSnapshot: Bool
-    
-    public var time: UInt
-    
-    public var target: KripkeStatePropertyList
-    
-    public init(clockName: String? = nil, constraint: ClockConstraint? = nil, resetClock: Bool = false, takeSnapshot: Bool = false, time: UInt = 0, target: KripkeStatePropertyList) {
-        self.clockName = clockName
-        self.constraint = constraint
-        self.resetClock = resetClock
-        self.takeSnapshot = takeSnapshot
-        self.time = time
-        self.target = target
-    }
-    
+/**
+ *  Allows conforming types to manipulate the values of variables that are used
+ *  in `KripkeStructures`.
+ */
+public protocol KripkeVariablesModifier {
+
+    /**
+     * Allows conforming types to create computed variables that are only seen
+     * by the model generation.  This is especially useful when representing
+     * conditions that influence the execution.  For example: when executing
+     * a state using the `MiPalRinglet`, the onEntry action is not executed
+     * if the previous state equals the current state.  In order to minimise
+     * combinatorial state explosion, it is worth ignoring the previous state,
+     * and simply using a 'shouldExecuteOnEntry' computedVar instead.  This
+     * means that there are only 2 possible combinations, either
+     * 'shouldExecuteOnEntry' is false, or 'shouldExecuteOnEntry' is true,
+     * rather than the 'n' possible situations where the previous state could
+     * be set to some arbitrary value.
+     */
+    var computedVars: [String: Any] { get }
+
+    /**
+     *  A dictionary where the keys represent the label of each variables and
+     *  the values represent a function which takes a current value and
+     *  manipulates it and returns the new value, which the `KripkeStructure`
+     *  should use.
+     */
+    var manipulators: [String: (Any) -> Any] { get }
+
+    /**
+     *  A dictionary where the keys represent the labels of each variable and
+     *  the values represent all possible valid values of the variables.
+     */
+    var validVars: [String: [Any]] { get }
+
 }
 
-extension KripkeEdge: CustomStringConvertible {
-    
-    public var description: String {
-        guard let constraint = constraint else {
-            return "(time: \(time), target: \(target))"
-        }
-        return "(constraint: \(constraint), time: \(time), target: \(target))"
-    }
-    
-}
+extension KripkeVariablesModifier {
 
-extension KripkeEdge: Equatable {}
-extension KripkeEdge: Hashable {}
+    public var computedVars: [String: Any] { return [:] }
+
+    public var manipulators: [String: (Any) -> Any] { return [:] }
+
+    public var validVars: [String: [Any]] { return [:] }
+
+    public var spinVars: [String: [Any]] { return [:] }
+
+}

@@ -57,12 +57,8 @@
  */
 
 @_exported import Utilities
-@_exported import KripkeStructure
-@_exported import KripkeStructureViews
-@_exported import ModelChecking
 @_exported import FSM
 @_exported import ExternalVariables
-@_exported import FSMVerification
 @_exported import Functional
 @_exported import Hashing
 @_exported import IO

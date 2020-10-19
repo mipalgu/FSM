@@ -56,8 +56,6 @@
  *
  */
 
-import ModelChecking
-
 /**
  *  States that are `Cloneable` must also be able to be updated from a clone.
  *

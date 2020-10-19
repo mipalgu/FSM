@@ -57,7 +57,6 @@
  */
 
 import FSM
-import ModelChecking
 
 /**
  *  A standard ringlet.

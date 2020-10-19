@@ -56,8 +56,6 @@
  *
  */
 
-import ModelChecking
-
 /**
  *  An empty set of variables.
  *

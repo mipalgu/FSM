@@ -56,8 +56,6 @@
  *
  */
 
-import ModelChecking
-
 /**
  *  Implement this protocol for any states that you wish to create within your
  *  machines.
@@ -76,22 +74,6 @@ extension StateType where Self: Transitionable {
      */
     public mutating func addTransition(_ transitions: _TransitionType ...) {
         self.transitions.append(contentsOf: transitions)
-    }
-
-}
-
-public extension StateType where Self: KripkeVariablesModifier {
-
-    var computedVars: [String: Any] {
-        return [:]
-    }
-
-    var manipulators: [String: (Any) -> Any] {
-        return [:]
-    }
-
-    var validVars: [String: [Any]] {
-        return [:]
     }
 
 }

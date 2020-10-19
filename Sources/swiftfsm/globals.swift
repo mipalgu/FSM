@@ -64,7 +64,6 @@ import Glibc
 
 import FSM
 import Functional
-import KripkeStructure
 import IO
 
 /**
