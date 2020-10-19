@@ -15,7 +15,6 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "ssh://git.mipal.net/git/swift_wb.git", .branch("master")),
         .package(url: "ssh://git.mipal.net/git/swift_helpers.git", .branch("master"))
     ],
     targets: [
@@ -35,8 +34,7 @@ let package = Package(
         .testTarget(name: "FSMTests", dependencies: [
             .target(name: "FSM"),
             .target(name: "swiftfsm"),
-            .target(name: "ExternalVariables"),
-            "GUSimpleWhiteboard"
+            .target(name: "ExternalVariables")
         ])
     ]
 )
