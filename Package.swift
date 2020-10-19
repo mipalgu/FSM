@@ -1,7 +1,5 @@
 // swift-tools-version:4.0
 
-//swiftlint:disable line_length
-
 import PackageDescription
 
 let package = Package(
