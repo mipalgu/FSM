@@ -1,5 +1,5 @@
 /*
- * FlattenedMetaFSM.swift
+ * FlattenedMetaDependency.swift
  * swiftfsm
  *
  * Created by Callum McColl on 24/10/20.
@@ -56,20 +56,51 @@
  *
  */
 
-public struct FlattenedMetaFSM {
+public enum FlattenedMetaDependency {
     
-    public typealias MachineFactory = () -> (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
+    case controllable(prefixedName: String, name: String)
+    case invocable(prefixedName: String, name: String)
+    case callable(prefixedName: String, name: String)
     
-    public var name: String
+    public var isControllable: Bool {
+        switch self {
+        case .controllable:
+            return true
+        default:
+            return false
+        }
+    }
     
-    public var factory: MachineFactory
+    public var isInvocable: Bool {
+        switch self {
+        case .invocable:
+            return true
+        default:
+            return false
+        }
+    }
     
-    public var dependencies: [FlattenedMetaDependency]
+    public var isCallable: Bool {
+        switch self {
+        case .callable:
+            return true
+        default:
+            return false
+        }
+    }
     
-    public init(name: String, factory: @escaping MachineFactory, dependencies: [FlattenedMetaDependency]) {
-        self.name = name
-        self.factory = factory
-        self.dependencies = dependencies
+    public var prefixedName: String {
+        switch self {
+        case .controllable(let prefixedName, _), .invocable(let prefixedName, _), .callable(let prefixedName, _):
+            return prefixedName
+        }
+    }
+    
+    public var name: String {
+        switch self {
+        case .controllable(_, let name), .invocable(_, let name), .callable(_, let name):
+            return name
+        }
     }
     
 }

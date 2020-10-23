@@ -96,14 +96,14 @@ public enum MetaDependency {
         }
     }
     
-    public func toShallowDependency(name: String) -> ShallowDependency {
+    public func flattened(prefixedName: String) -> FlattenedMetaDependency {
         switch self {
         case .controllable:
-            return .submachine(name: name)
+            return .controllable(prefixedName: prefixedName, name: fsm.name)
         case .invocable:
-            return .invokableMachine(name: name)
+            return .invocable(prefixedName: prefixedName, name: fsm.name)
         case .callable:
-            return .callableMachine(name: name)
+            return .callable(prefixedName: prefixedName, name: fsm.name)
         }
     }
     

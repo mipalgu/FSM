@@ -62,12 +62,12 @@ public struct FlattenedMetaArrangement {
     
     public var fsms: [String: FlattenedMetaFSM]
     
-    public var scheduleOrder: [String]
+    public var rootFSMs: [String]
     
-    public init(name: String, fsms: [String: FlattenedMetaFSM], scheduleOrder: [String]) {
+    public init(name: String, fsms: [String: FlattenedMetaFSM], rootFSMs: [String]) {
         self.name = name
         self.fsms = fsms
-        self.scheduleOrder = scheduleOrder
+        self.rootFSMs = rootFSMs
     }
     
 }
