@@ -67,4 +67,21 @@ public struct MetaArrangement {
         self.machines = machines
     }
     
+    public var flattened: FlattenedMetaArrangement {
+        var scheduleOrder: [String] = []
+        var fsms: [String: FlattenedMetaFSM] = [:]
+        func process(_ fsm: MetaFSM, prefix: String) -> String {
+            let prefixedName = prefix + fsm.name
+            scheduleOrder.append(prefixedName)
+            let dependencies: [ShallowDependency] = fsm.dependencies.map {
+                let depName = process($0.fsm, prefix: prefixedName + ".")
+                return $0.toShallowDependency(name: depName)
+            }
+            fsms[prefixedName] = FlattenedMetaFSM(name: prefixedName, factory: fsm.factory, dependencies: dependencies)
+            return prefixedName
+        }
+        self.machines.forEach { _ = process($0.fsm, prefix: $0.name + ".") }
+        return FlattenedMetaArrangement(name: self.name, fsms: fsms, scheduleOrder: scheduleOrder)
+    }
+    
 }

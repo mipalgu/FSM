@@ -1,5 +1,5 @@
 /*
- * MetaFSM.swift
+ * FlattenedMetaFSM.swift
  * swiftfsm
  *
  * Created by Callum McColl on 24/10/20.
@@ -56,7 +56,7 @@
  *
  */
 
-public struct MetaFSM {
+public struct FlattenedMetaFSM {
     
     public typealias MachineFactory = () -> (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
     
@@ -64,9 +64,9 @@ public struct MetaFSM {
     
     public var factory: MachineFactory
     
-    public var dependencies: [MetaDependency]
+    public var dependencies: [ShallowDependency]
     
-    public init(name: String, factory: @escaping MachineFactory, dependencies: [MetaDependency]) {
+    public init(name: String, factory: @escaping MachineFactory, dependencies: [ShallowDependency]) {
         self.name = name
         self.factory = factory
         self.dependencies = dependencies

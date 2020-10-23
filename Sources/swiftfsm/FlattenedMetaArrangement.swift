@@ -1,5 +1,5 @@
 /*
- * MetaFSM.swift
+ * FlattenedMetaArrangement.swift
  * swiftfsm
  *
  * Created by Callum McColl on 24/10/20.
@@ -56,20 +56,18 @@
  *
  */
 
-public struct MetaFSM {
-    
-    public typealias MachineFactory = () -> (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
+public struct FlattenedMetaArrangement {
     
     public var name: String
     
-    public var factory: MachineFactory
+    public var fsms: [String: FlattenedMetaFSM]
     
-    public var dependencies: [MetaDependency]
+    public var scheduleOrder: [String]
     
-    public init(name: String, factory: @escaping MachineFactory, dependencies: [MetaDependency]) {
+    public init(name: String, fsms: [String: FlattenedMetaFSM], scheduleOrder: [String]) {
         self.name = name
-        self.factory = factory
-        self.dependencies = dependencies
+        self.fsms = fsms
+        self.scheduleOrder = scheduleOrder
     }
     
 }

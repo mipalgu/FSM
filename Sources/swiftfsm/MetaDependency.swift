@@ -1,5 +1,5 @@
 /*
- * MetaFSM.swift
+ * MetaDependency.swift
  * swiftfsm
  *
  * Created by Callum McColl on 24/10/20.
@@ -56,20 +56,55 @@
  *
  */
 
-public struct MetaFSM {
+public enum MetaDependency {
     
-    public typealias MachineFactory = () -> (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
+    case controllable(fsm: MetaFSM)
+    case invocable(fsm: MetaFSM)
+    case callable(fsm: MetaFSM)
     
-    public var name: String
+    public var isControllable: Bool {
+        switch self {
+        case .controllable:
+            return true
+        default:
+            return false
+        }
+    }
     
-    public var factory: MachineFactory
+    public var isInvocable: Bool {
+        switch self {
+        case .invocable:
+            return true
+        default:
+            return false
+        }
+    }
     
-    public var dependencies: [MetaDependency]
+    public var isCallable: Bool {
+        switch self {
+        case .callable:
+            return true
+        default:
+            return false
+        }
+    }
     
-    public init(name: String, factory: @escaping MachineFactory, dependencies: [MetaDependency]) {
-        self.name = name
-        self.factory = factory
-        self.dependencies = dependencies
+    public var fsm: MetaFSM {
+        switch self {
+        case .controllable(let fsm), .invocable(let fsm), .callable(let fsm):
+            return fsm
+        }
+    }
+    
+    public func toShallowDependency(name: String) -> ShallowDependency {
+        switch self {
+        case .controllable:
+            return .submachine(name: name)
+        case .invocable:
+            return .invokableMachine(name: name)
+        case .callable:
+            return .callableMachine(name: name)
+        }
     }
     
 }
