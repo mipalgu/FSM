@@ -63,8 +63,10 @@ import Glibc
 #endif
 
 import FSM
-import Functional
-import IO
+
+#if !NO_FOUNDATION && canImport(Foundation)
+import Foundation
+#endif
 
 /**
  *  Set to true when debugging is turned on.
@@ -139,21 +141,37 @@ public func stopAll() {
     STOP = true
 }
 
-private let printer = CommandLinePrinter(
-    errorStream: StderrOutputStream(),
-    messageStream: StdoutOutputStream(),
-    warningStream: StdoutOutputStream()
-)
-
 public func swiftfsmError(_ errorMessage: String) -> Never {
-    printer.error(str: errorMessage)
+    let pre = "error: "
+    let str = space(errorMessage, length: pre.count)
+    print(
+        "\u{001B}[1;31m\(pre)\u{001B}[0m\(str)",
+        terminator: "\n"
+    )
     exit(EXIT_FAILURE)
 }
 
 public func swiftfsmMessage(_ message: String) {
-    printer.message(str: message)
+    print(message, terminator: "\n")
 }
 
 public func swiftfsmWarning(_ warningMessage: String) {
-    printer.warning(str: warningMessage)
+    let pre = "warning: "
+    let str = space(warningMessage, length: pre.count)
+    print(
+        "\u{001B}[1;93m\(pre)\u{001B}[0m\(str)",
+        terminator: "\n"
+    )
+}
+
+private func space(_ str: String, length: Int) -> String {
+#if NO_FOUNDATION || !canImport(Foundation)
+    let lines = str.split(separator: "\n")
+#else
+    let lines = str.components(separatedBy: .newlines)
+#endif
+    let spacedLines = lines.enumerated().map {
+        $0 == 0 ? $1 : String([Character](repeating: " ", count: length)) + $1
+    }
+    return String(spacedLines.joined(separator: "\n"))
 }

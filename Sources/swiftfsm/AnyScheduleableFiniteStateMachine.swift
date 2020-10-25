@@ -57,7 +57,6 @@
  */
 
 import FSM
-import Functional
 import Utilities
 
 //swiftlint:disable unused_setter_value

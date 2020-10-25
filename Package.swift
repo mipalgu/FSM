@@ -13,22 +13,15 @@ let package = Package(
             ]
         )
     ],
-    dependencies: [
-        .package(url: "ssh://git.mipal.net/git/swift_helpers.git", .branch("master"))
-    ],
+    dependencies: [],
     targets: [
         .target(name: "Utilities", dependencies: []),
-        .target(name: "FSM", dependencies: ["Functional", "Utilities"]),
-        .target(name: "ExternalVariables", dependencies: ["Functional", "Utilities", "FSM"]),
+        .target(name: "FSM", dependencies: ["Utilities"]),
+        .target(name: "ExternalVariables", dependencies: ["Utilities", "FSM"]),
         .target(name: "swiftfsm", dependencies: [
-            "Functional",
             "Utilities",
             "FSM",
-            "ExternalVariables",
-            "Hashing",
-            "IO",
-            "Trees",
-            "swift_helpers"
+            "ExternalVariables"
         ]),
         .testTarget(name: "FSMTests", dependencies: [
             .target(name: "FSM"),

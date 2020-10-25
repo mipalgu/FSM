@@ -59,8 +59,3 @@
 @_exported import Utilities
 @_exported import FSM
 @_exported import ExternalVariables
-@_exported import Functional
-@_exported import Hashing
-@_exported import IO
-@_exported import Trees
-@_exported import swift_helpers

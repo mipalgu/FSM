@@ -56,8 +56,6 @@
  *
  */
 
-import Functional
-
 /**
  *  Models a transition between `StateType`s.
  */
