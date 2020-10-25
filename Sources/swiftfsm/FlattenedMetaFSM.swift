@@ -58,7 +58,7 @@
 
 public struct FlattenedMetaFSM {
     
-    public typealias MachineFactory = () -> (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
+    public typealias MachineFactory = (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
     
     public var name: String
     
