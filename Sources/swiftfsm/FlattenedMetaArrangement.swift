@@ -56,6 +56,12 @@
  *
  */
 
+#if os(macOS)
+import Darwin
+#else
+import Glibc
+#endif
+
 public struct FlattenedMetaArrangement {
     
     public var name: String
@@ -68,6 +74,42 @@ public struct FlattenedMetaArrangement {
         self.name = name
         self.fsms = fsms
         self.rootFSMs = rootFSMs
+    }
+    
+    public init(fromSharedLibrary path: String, factorySymbol symbolName: String = "make_Arrangement") throws {
+        #if os(macOS)
+        // Can the dylib be opened?
+        if false == dlopen_preflight(path) {
+            throw DynamicLoadingError.loadingError(message: String(cString: dlerror()))
+        }
+        #endif
+        // Attempt to open the library.
+        guard let handler = dlopen(path, RTLD_NOW | RTLD_LOCAL) else {
+            throw DynamicLoadingError.loadingError(message: String(cString: dlerror()))
+        }
+        guard let symbol = dlsym(handler, symbolName) else {
+            throw DynamicLoadingError.loadingError(message: String(cString: dlerror()))
+        }
+        let factoryFunc = unsafeBitCast(symbol, to: (@convention(c) (UnsafeRawPointer) -> Void).self)
+        var arrangement = FlattenedMetaArrangement(name: "", fsms: [:], rootFSMs: [])
+        var loaded: Bool = false
+        let callback: (FlattenedMetaArrangement) -> Void = {
+            arrangement = $0
+            loaded = true
+        }
+        withUnsafePointer(to: callback) {
+            factoryFunc(UnsafeRawPointer($0))
+        }
+        if !loaded {
+            throw DynamicLoadingError.loadingError(message: "Called factory function, but did not store result.")
+        }
+        self = arrangement
+    }
+    
+    public enum DynamicLoadingError: Error {
+        
+        case loadingError(message: String)
+        
     }
     
 }
