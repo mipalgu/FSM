@@ -1,9 +1,9 @@
 /*
- * imports.swift 
- * swiftfsm 
+ * MetaDependency.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 11/12/2019.
- * Copyright © 2019 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 24/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,6 +56,55 @@
  *
  */
 
-@_exported import Utilities
-@_exported import FSM
-@_exported import ExternalVariables
+public enum MetaDependency {
+    
+    case controllable(fsm: MetaFSM)
+    case invocable(fsm: MetaFSM)
+    case callable(fsm: MetaFSM)
+    
+    public var isControllable: Bool {
+        switch self {
+        case .controllable:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isInvocable: Bool {
+        switch self {
+        case .invocable:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isCallable: Bool {
+        switch self {
+        case .callable:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var fsm: MetaFSM {
+        switch self {
+        case .controllable(let fsm), .invocable(let fsm), .callable(let fsm):
+            return fsm
+        }
+    }
+    
+    public func flattened(prefixedName: String) -> FlattenedMetaDependency {
+        switch self {
+        case .controllable:
+            return .controllable(prefixedName: prefixedName, name: fsm.name)
+        case .invocable:
+            return .invocable(prefixedName: prefixedName, name: fsm.name)
+        case .callable:
+            return .callable(prefixedName: prefixedName, name: fsm.name)
+        }
+    }
+    
+}

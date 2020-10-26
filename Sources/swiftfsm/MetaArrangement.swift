@@ -1,9 +1,9 @@
 /*
- * imports.swift 
- * swiftfsm 
+ * MetaArrangement.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 11/12/2019.
- * Copyright © 2019 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 24/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,6 +56,31 @@
  *
  */
 
-@_exported import Utilities
-@_exported import FSM
-@_exported import ExternalVariables
+public struct MetaArrangement {
+    
+    public var name: String
+    
+    public var machines: [MetaMachine]
+    
+    public init(name: String, machines: [MetaMachine]) {
+        self.name = name
+        self.machines = machines
+    }
+    
+    public var flattened: FlattenedMetaArrangement {
+        var rootFSMs: [String] = []
+        var fsms: [String: FlattenedMetaFSM] = [:]
+        func process(_ fsm: MetaFSM, prefix: String) -> String {
+            let prefixedName = prefix + fsm.name
+            let dependencies: [FlattenedMetaDependency] = fsm.dependencies.map {
+                let depName = process($0.fsm, prefix: prefixedName + ".")
+                return $0.flattened(prefixedName: depName)
+            }
+            fsms[prefixedName] = FlattenedMetaFSM(name: prefixedName, factory: fsm.factory, dependencies: dependencies)
+            return prefixedName
+        }
+        self.machines.forEach { rootFSMs.append(process($0.fsm, prefix: $0.name + ".")) }
+        return FlattenedMetaArrangement(name: self.name, fsms: fsms, rootFSMs: rootFSMs)
+    }
+    
+}

@@ -1,9 +1,9 @@
 /*
- * imports.swift 
- * swiftfsm 
+ * FlattenedMetaArrangement.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 11/12/2019.
- * Copyright © 2019 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 24/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,6 +56,60 @@
  *
  */
 
-@_exported import Utilities
-@_exported import FSM
-@_exported import ExternalVariables
+#if os(macOS)
+import Darwin
+#else
+import Glibc
+#endif
+
+public struct FlattenedMetaArrangement {
+    
+    public var name: String
+    
+    public var fsms: [String: FlattenedMetaFSM]
+    
+    public var rootFSMs: [String]
+    
+    public init(name: String, fsms: [String: FlattenedMetaFSM], rootFSMs: [String]) {
+        self.name = name
+        self.fsms = fsms
+        self.rootFSMs = rootFSMs
+    }
+    
+    public init(fromSharedLibrary path: String, factorySymbol symbolName: String = "make_Arrangement") throws {
+        #if os(macOS)
+        // Can the dylib be opened?
+        if false == dlopen_preflight(path) {
+            throw DynamicLoadingError.loadingError(message: String(cString: dlerror()))
+        }
+        #endif
+        // Attempt to open the library.
+        guard let handler = dlopen(path, RTLD_NOW | RTLD_LOCAL) else {
+            throw DynamicLoadingError.loadingError(message: String(cString: dlerror()))
+        }
+        guard let symbol = dlsym(handler, symbolName) else {
+            throw DynamicLoadingError.loadingError(message: String(cString: dlerror()))
+        }
+        let factoryFunc = unsafeBitCast(symbol, to: (@convention(c) (UnsafeRawPointer) -> Void).self)
+        var arrangement = FlattenedMetaArrangement(name: "", fsms: [:], rootFSMs: [])
+        var loaded: Bool = false
+        let callback: (FlattenedMetaArrangement) -> Void = {
+            arrangement = $0
+            loaded = true
+        }
+        withUnsafePointer(to: callback) {
+            factoryFunc(UnsafeRawPointer($0))
+        }
+        if !loaded {
+            throw DynamicLoadingError.loadingError(message: "Called factory function, but did not store result.")
+        }
+        self = arrangement
+    }
+    
+    public enum DynamicLoadingError: Error {
+        
+        case loadingError(message: String)
+        
+    }
+    
+}

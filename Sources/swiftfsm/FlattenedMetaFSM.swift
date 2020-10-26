@@ -1,9 +1,9 @@
 /*
- * imports.swift 
- * swiftfsm 
+ * FlattenedMetaFSM.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 11/12/2019.
- * Copyright © 2019 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 24/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,6 +56,20 @@
  *
  */
 
-@_exported import Utilities
-@_exported import FSM
-@_exported import ExternalVariables
+public struct FlattenedMetaFSM {
+    
+    public typealias MachineFactory = (String, FSMGateway, Timer, FSM_ID) -> (FSMType, [ShallowDependency])
+    
+    public var name: String
+    
+    public var factory: MachineFactory
+    
+    public var dependencies: [FlattenedMetaDependency]
+    
+    public init(name: String, factory: @escaping MachineFactory, dependencies: [FlattenedMetaDependency]) {
+        self.name = name
+        self.factory = factory
+        self.dependencies = dependencies
+    }
+    
+}

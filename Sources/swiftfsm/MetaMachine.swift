@@ -1,9 +1,9 @@
 /*
- * imports.swift 
- * swiftfsm 
+ * MetaMachine.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 11/12/2019.
- * Copyright © 2019 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 24/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,6 +56,15 @@
  *
  */
 
-@_exported import Utilities
-@_exported import FSM
-@_exported import ExternalVariables
+public struct MetaMachine {
+    
+    public var name: String
+    
+    public var fsm: MetaFSM
+    
+    public init(name: String, fsm: MetaFSM) {
+        self.name = name
+        self.fsm = fsm
+    }
+    
+}

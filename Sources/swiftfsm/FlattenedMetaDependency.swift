@@ -1,9 +1,9 @@
 /*
- * imports.swift 
- * swiftfsm 
+ * FlattenedMetaDependency.swift
+ * swiftfsm
  *
- * Created by Callum McColl on 11/12/2019.
- * Copyright © 2019 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 24/10/20.
+ * Copyright © 2020 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,6 +56,51 @@
  *
  */
 
-@_exported import Utilities
-@_exported import FSM
-@_exported import ExternalVariables
+public enum FlattenedMetaDependency {
+    
+    case controllable(prefixedName: String, name: String)
+    case invocable(prefixedName: String, name: String)
+    case callable(prefixedName: String, name: String)
+    
+    public var isControllable: Bool {
+        switch self {
+        case .controllable:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isInvocable: Bool {
+        switch self {
+        case .invocable:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isCallable: Bool {
+        switch self {
+        case .callable:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var prefixedName: String {
+        switch self {
+        case .controllable(let prefixedName, _), .invocable(let prefixedName, _), .callable(let prefixedName, _):
+            return prefixedName
+        }
+    }
+    
+    public var name: String {
+        switch self {
+        case .controllable(_, let name), .invocable(_, let name), .callable(_, let name):
+            return name
+        }
+    }
+    
+}
