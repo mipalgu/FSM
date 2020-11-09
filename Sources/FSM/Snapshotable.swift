@@ -79,11 +79,11 @@ public protocol Snapshotable {
 extension Snapshotable where Self: SnapshotControllerContainer {
 
     public func saveSnapshot() {
-        (self.externalVariables + self.actuators).forEach { $0.saveSnapshot() }
+        self.snapshotActuators.forEach { $0.saveSnapshot() }
     }
 
     public func takeSnapshot() {
-        (self.externalVariables + self.sensors).forEach { $0.takeSnapshot() }
+        self.snapshotSensors.forEach { $0.takeSnapshot() }
     }
 
 }
