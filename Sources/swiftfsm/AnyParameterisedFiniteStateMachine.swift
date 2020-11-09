@@ -125,7 +125,7 @@ public struct AnyParameterisedFiniteStateMachine:
 
     private let _setParameters: (Any) -> Void
 
-    private let _setParametersFromDictionary: ([String: Any]) -> Bool
+    private let _setParametersFromDictionary: ([String: Any?]) -> Bool
 
     private let _setParametersFromStringDictionary: ([String: String]) -> Bool
 
@@ -322,7 +322,7 @@ public struct AnyParameterisedFiniteStateMachine:
         self._setParameters(newParameters)
     }
 
-    public func parametersFromDictionary(_ dictionary: [String: Any]) -> Bool {
+    public func parametersFromDictionary(_ dictionary: [String: Any?]) -> Bool {
         return self._setParametersFromDictionary(dictionary)
     }
 
