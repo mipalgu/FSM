@@ -1,6 +1,6 @@
 /*
- * EmptyVariables.swift 
- * FSM 
+ * EmptyVariables.swift
+ * FSM
  *
  * Created by Callum McColl on 15/01/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
@@ -78,7 +78,7 @@ public final class EmptyVariables: Variables, ExternalVariables {
      *  Since this class contains no properties, nothing is every taken from the
      *  dictionary.
      */
-    public init(fromDictionary dictionary: [String: Any]) {}
+    public init(fromDictionary dictionary: [String: Any?]) {}
 
     /**
      *  Create a new isntance of `EmptyVariables`.

@@ -1,6 +1,6 @@
 /*
- * StdoutContainer.swift 
- * FSM 
+ * StdoutContainer.swift
+ * FSM
  *
  * Created by Callum McColl on 08/07/2018.
  * Copyright © 2018 Callum McColl. All rights reserved.
@@ -78,7 +78,7 @@ public final class StdoutContainer: ExternalVariables {
 
     public init() {}
 
-    public init(fromDictionary dictionary: [String: Any]) {
+    public init(fromDictionary dictionary: [String: Any?]) {
         guard let stdout = dictionary["stdout"] as? [String] else {
             fatalError("Unable to initialise StdoutContainer from dictionary.")
         }

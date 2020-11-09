@@ -64,6 +64,6 @@ public protocol ConvertibleFromDictionary {
      *
      *  - Parameter fromDictionary: The variables in a dictionary.
      */
-    init(fromDictionary: [String: Any])
+    init(fromDictionary: [String: Any?])
 
 }

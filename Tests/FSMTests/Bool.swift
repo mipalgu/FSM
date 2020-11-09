@@ -72,7 +72,7 @@ extension Bool: ExternalVariables, KripkeVariablesModifier {
         return [:]
     }
 
-    public init(fromDictionary dict: [String: Any]) {
+    public init(fromDictionary dict: [String: Any?]) {
         guard let value = dict["value"] as? Bool else {
             fatalError("Unable to convert \(dict) to Bool.")
         }
