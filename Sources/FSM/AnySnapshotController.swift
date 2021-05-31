@@ -64,7 +64,8 @@ public struct AnySnapshotController: Snapshotable, KripkeVariablesModifier {
         "_saveSnapshot": [],
         "_takeSnapshot": [],
         "_getval": [],
-        "_setval": []
+        "_setval": [],
+        "validVars": []
     ]
     
     public var base: Any
