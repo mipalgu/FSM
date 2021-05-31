@@ -56,9 +56,18 @@
  *
  */
 
-public struct AnySnapshotController: Snapshotable {
+public struct AnySnapshotController: Snapshotable, KripkeVariablesModifier {
 
-    var base: Any
+    public let validVars: [String : [Any]] = [
+        "_create": [],
+        "_name": [],
+        "_saveSnapshot": [],
+        "_takeSnapshot": [],
+        "_getval": [],
+        "_setval": []
+    ]
+    
+    public var base: Any
 
     private let _create: ([String: Any]) -> Any
 
