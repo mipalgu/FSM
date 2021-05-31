@@ -77,7 +77,7 @@ public struct AnySnapshotController: Snapshotable {
     public var val: Any {
         get {
             return self._getval()
-        } set {
+        } nonmutating set {
             self._setval(newValue)
         }
     }
