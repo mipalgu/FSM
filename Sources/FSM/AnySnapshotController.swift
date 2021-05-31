@@ -58,6 +58,8 @@
 
 public struct AnySnapshotController: Snapshotable {
 
+    var base: Any
+
     private let _create: ([String: Any]) -> Any
 
     private let _name: () -> String
@@ -95,6 +97,7 @@ public struct AnySnapshotController: Snapshotable {
             }
             base.val = newBase
         }
+        self.base = base
     }
 
     public func create(fromDictionary dictionary: [String: Any]) -> Any {
