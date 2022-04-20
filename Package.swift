@@ -7,7 +7,10 @@ let package = Package(
     products: [
         .library(
             name: "FSM",
-            targets: ["swiftfsm"]
+            type: .dynamic,
+            targets: [
+                "swiftfsm"
+            ]
         )
     ],
     dependencies: [],
