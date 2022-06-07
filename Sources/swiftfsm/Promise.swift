@@ -60,6 +60,8 @@ import FSM
 
 public final class Promise<T>: Finishable {
 
+    private var base: Any?
+
     fileprivate var _hasFinished: () -> Bool
 
     fileprivate var _result: () -> T
@@ -76,11 +78,13 @@ public final class Promise<T>: Finishable {
         Container: Finishable,
         Container.ResultType == T
     {
+        self.base = container
         self._hasFinished = { container.hasFinished }
         self._result = { container.result! }
     }
 
     public init(hasFinished: @escaping () -> Bool, result: @escaping () -> T) {
+        self.base = nil
         self._hasFinished = hasFinished
         self._result = result
     }
