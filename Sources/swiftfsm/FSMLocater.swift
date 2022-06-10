@@ -70,24 +70,6 @@
 public protocol FSMLocator: class {
 
     /**
-     *  Fetch a parameterised FSM from its associated unique identifier.
-     *
-     *  - Parameter id: The id associated with an instance of
-     *  `AnyScheduleableFiniteStateMachine`. How this id is fetched or assigned
-     *  is beyond the scope of this protocol.
-     *
-     *  - Returns: The `AnyParameterisedFiniteStateMachine` associated with the
-     *  provided identifier.
-     *
-     *  - Attention: This function assumes that the id specified is already
-     *  associated with an FSM. If this is not the case then this function
-     *  will cause a fatal error.
-     *
-     *  - Complexity: O(1)
-     */
-    func parameterisedFSM(fromID id: FSM_ID) -> AnyParameterisedFiniteStateMachine
-
-    /**
      *  Fetch an FSM from its associated unique identifier.
      *
      *  - Parameter id: The id associated with an instance of
