@@ -58,7 +58,18 @@
 
 import FSM
 
-public final class Promise<T>: Finishable {
+public final class Promise<T>: Finishable, KripkeVariablesModifier {
+
+    public var validVars: [String : [Any]] {
+        ["base": []]
+    }
+
+    public var computedVars: [String : Any] {
+        [
+            "hasFinished": _hasFinished(),
+            "result": (_hasFinished() ? Optional<T>.some(_result()) : Optional<T>.none) as Any
+        ]
+    }
 
     private var base: Any?
 
