@@ -71,7 +71,7 @@ public final class Promise<T>: Finishable, KripkeVariablesModifier {
         ]
     }
 
-    private var base: Any?
+    public var base: Any?
 
     fileprivate var _hasFinished: () -> Bool
 
