@@ -61,7 +61,11 @@ import FSM
 public final class Promise<T>: Finishable, KripkeVariablesModifier {
 
     public var validVars: [String : [Any]] {
-        ["base": []]
+        [
+            "base": [],
+            "_hasFinished": [],
+            "_result": []
+        ]
     }
 
     public var computedVars: [String : Any] {
