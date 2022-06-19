@@ -64,7 +64,8 @@ public final class Promise<T>: Finishable, KripkeVariablesModifier {
         [
             "base": [],
             "_hasFinished": [],
-            "_result": []
+            "_result": [],
+            "some": []
         ]
     }
 
