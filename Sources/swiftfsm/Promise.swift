@@ -58,7 +58,25 @@
 
 import FSM
 
-public final class Promise<T>: Finishable {
+public final class Promise<T>: Finishable, KripkeVariablesModifier {
+
+    public var validVars: [String : [Any]] {
+        [
+            "base": [],
+            "_hasFinished": [],
+            "_result": [],
+            "some": []
+        ]
+    }
+
+    public var computedVars: [String : Any] {
+        [
+            "hasFinished": _hasFinished(),
+            "result": (_hasFinished() ? Optional<T>.some(_result()) : Optional<T>.none) as Any
+        ]
+    }
+
+    public var base: Any?
 
     fileprivate var _hasFinished: () -> Bool
 
@@ -76,11 +94,13 @@ public final class Promise<T>: Finishable {
         Container: Finishable,
         Container.ResultType == T
     {
+        self.base = container
         self._hasFinished = { container.hasFinished }
         self._result = { container.result! }
     }
 
     public init(hasFinished: @escaping () -> Bool, result: @escaping () -> T) {
+        self.base = nil
         self._hasFinished = hasFinished
         self._result = result
     }
