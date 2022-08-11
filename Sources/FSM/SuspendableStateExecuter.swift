@@ -60,9 +60,9 @@
 public protocol SuspendableStateExecuter: Suspendable, StateExecuter {
 
     /// The id of `currentState` before the suspension.
-    var suspendedState: _StateType.ID? { get set }
+    var suspendedState: StateID? { get set }
 
     /// The id representing the state that we get set to when we are suspended.
-    var suspendState: _StateType.ID { get }
+    var suspendState: StateID { get }
 
 }

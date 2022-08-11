@@ -58,32 +58,8 @@
 
 public protocol SnapshotControllerContainer {
 
-    var externalVariables: [AnySnapshotController] { get set }
-    
-    var sensors: [AnySnapshotController] { get set }
-    
-    var actuators: [AnySnapshotController] { get set }
-    
     var snapshotSensors: [AnySnapshotController] { get }
-    
+
     var snapshotActuators: [AnySnapshotController] { get }
 
-}
-
-extension SnapshotControllerContainer where Self: StateExecuter, _StateType: SnapshotListContainer {
-    
-    public var snapshotSensors: [AnySnapshotController] {
-        guard let snapshotSensors = self.currentState.snapshotSensors else {
-            return self.sensors + self.externalVariables
-        }
-        return (self.externalVariables + self.sensors).filter { snapshotSensors.contains($0.name) }
-    }
-    
-    public var snapshotActuators: [AnySnapshotController] {
-        guard let snapshotActuators = self.currentState.snapshotActuators else {
-            return self.externalVariables + self.actuators
-        }
-        return (self.externalVariables + self.actuators).filter { snapshotActuators.contains($0.name) }
-    }
-    
 }

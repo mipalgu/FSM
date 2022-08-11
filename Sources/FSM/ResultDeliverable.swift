@@ -1,9 +1,9 @@
 /*
- * ExternalVariablesContainerHolder.swift 
+ * ResultDeliverable.swift 
  * FSM 
  *
- * Created by Callum McColl on 29/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/08/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,15 +56,14 @@
  *
  */
 
-/**
- *  Conforming types hold references to `ExternalVariables` within
- *  `AnySnapshotController`s.
- *
- *  This provides a standard way for objects to modify `ExternalVariables`
- *  indirectly through the `AnySnapshotController`s.
- */
-public protocol ExternalVariablesContainerHolder {
+/// A type that can return results.
+public protocol ResultDeliverable: Hashable, Codable, Sendable {
 
-    var externalVariables: [AnySnapshotController] { get }
+    /// The type of result that can be returned.
+    associatedtype ResultType: Hashable, Codable, Sendable
+
+    /// The result of the operation.
+    var result: ResultType { get }
+
 
 }

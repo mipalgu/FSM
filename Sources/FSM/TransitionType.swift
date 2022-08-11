@@ -65,6 +65,10 @@
  */
 public protocol TransitionType {
 
+    /// The type of the context that contains any data needed to evaluate the
+    /// transition.
+    associatedtype Context
+
     /**
      *  The type of the source of the transition.
      */
@@ -76,13 +80,18 @@ public protocol TransitionType {
     associatedtype Target
 
     /**
-     *  Can we transition yet?
-     */
-    var canTransition: (Source) -> Bool { get }
-
-    /**
      *  The target of the transition.
      */
     var target: Target { get }
+
+    /// Is this transition valid?
+    /// 
+    /// - Parameter source: The source of the transition.
+    /// 
+    /// - Parameter context: The context that contains any data needed to
+    /// evaluate the transition.
+    /// 
+    /// - Returns: True if the transition is valid, false otherwise.
+    func canTransition(from source: Source, context: Context) -> Bool
 
 }

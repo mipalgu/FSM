@@ -68,6 +68,6 @@ public protocol PreviousStateContainer: StateContainer {
     /**
      *  The `StateType` that was last executed.
      */
-    var previousState: _StateType.ID { get set }
+    var previousState: StateID { get set }
 
 }

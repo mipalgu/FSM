@@ -59,8 +59,13 @@
 /**
  *  Models a transition between `StateType`s.
  */
-public struct Transition<S: StateType, T: StateType>: TransitionType {
+public struct Transition<C, S, T>: TransitionType {
 
+    /// The type of the context that contains any data needed to evaluate the
+    /// transition.
+    public typealias Context = C
+
+    /// The type of the source of the transition.
     public typealias Source = S
 
     /**
@@ -71,7 +76,7 @@ public struct Transition<S: StateType, T: StateType>: TransitionType {
     /**
      *   Can we transition?
      */
-    public let canTransition: (Source) -> Bool
+    private let _canTransition: (Source, Context) -> Bool
 
     /**
      *  The `Target` state.
@@ -88,10 +93,22 @@ public struct Transition<S: StateType, T: StateType>: TransitionType {
      */
     public init(
         _ target: Target,
-        _ canTransition: @escaping (Source) -> Bool = { _ in true }
+        _ canTransition: @escaping (Source, Context) -> Bool = { (_, _) in true }
     ) {
-        self.canTransition = canTransition
+        self._canTransition = canTransition
         self.target = target
+    }
+
+    /// Is the condition labelling the transtion valid?
+    /// 
+    /// - Parameter source: The source of the transition.
+    /// 
+    /// - Parameter context: The context containing any data for processing the
+    /// transition.
+    /// 
+    /// - Returns: True if the transition is valid, false otherwise.
+    public func canTransition(from source: S, context: C) -> Bool {
+         _canTransition(source, context)
     }
 
     /**
@@ -101,8 +118,8 @@ public struct Transition<S: StateType, T: StateType>: TransitionType {
      *
      *  - Returns: The new `Transition`.
      */
-    public func map<S: StateType>(_ f: (Target) -> S) -> Transition<Source, S> {
-        return Transition<Source, S>(f(self.target), self.canTransition)
+    public func map<S: StateType>(_ f: (Target) -> S) -> Transition<C, Source, S> {
+        Transition<C, Source, S>(f(self.target), self.canTransition)
     }
 
     /**
@@ -114,8 +131,8 @@ public struct Transition<S: StateType, T: StateType>: TransitionType {
      *
      *  - Returns: The new `Transition`.
      */
-    public func apply<S1: StateType, S2: StateType>(_ t: Transition<S1, S2>) -> Transition<S1, Target> {
-        return Transition<S1, Target>(self.target, t.canTransition)
+    public func apply<S1: StateType, S2: StateType>(_ t: Transition<C, S1, S2>) -> Transition<C, S1, Target> {
+        Transition<C, S1, Target>(self.target, t.canTransition)
     }
 
     /**
@@ -127,42 +144,9 @@ public struct Transition<S: StateType, T: StateType>: TransitionType {
      *  - Returns: The new `Transition`.
      */
     public func flatMap<S: StateType>(
-        _ f: (Target) -> Transition<Source, S>
-    ) -> Transition<Source, S> {
-        return f(self.target)
+        _ f: (Target) -> Transition<C, Source, S>
+    ) -> Transition<C, Source, S> {
+        f(self.target)
     }
 
 }
-
-/*public func <^> <
-    T: StateType, U: StateType
->(_ f: (T) -> U, a: Transition<T>) -> Transition<U> {
-    return a.map(f)
-}
-
-public func <*> <
-    T: StateType, U: StateType
->(_ f: Transition<U>, a: Transition<T>) -> Transition<T> {
-    return a.apply(f)
-}
-
-public func >>- <
-    T: StateType, U: StateType
->(a: Transition<T>, _ f: (T) -> Transition<U>) -> Transition<U> {
-    return a.flatMap(f)
-}*/
-
-/*
-public protocol Transition {
-    
-    /**
-     *  The state which we are transitioning to.
-     */
-    var target: State { get }
-    
-    /**
-     *  Do we meet all of the conditions to transition?
-     */
-    var canTransition: Bool { get }
-    
-}*/

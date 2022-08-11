@@ -61,13 +61,23 @@
  */
 public protocol StateContainer {
 
+    /// The type of a unique identifier that will be used to identify a state.
+    associatedtype StateID
+
     /**
      *  The type of the `StateType` that the conforming type is working with.
      */
     associatedtype _StateType: StateType
 
     /// Fetch a state from it corresponding id.
-    func state(fromID id: _StateType.ID) -> _StateType
+    func state(fromID id: StateID) -> _StateType
+
+    /// Replace a state with a new one.
+    /// 
+    /// - Parameter id: The id of the state to replace.
+    /// 
+    /// - Parmaeter state: The new state to replace the old one with.
+    mutating func replaceState(forID id: StateID, _ state: _StateType)
 
 }
 
@@ -80,7 +90,7 @@ public extension StateContainer where _StateType: Transitionable {
     /// - Parameter id: The id of the state to fetch the transitions for.
     /// 
     /// - Returns: The transitions for the state.
-    func transitions(for id: _StateType.ID) -> [_StateType._TransitionType] {
+    func transitions(for id: StateID) -> [_StateType._TransitionType] {
         self.state(fromID: id).transitions
     }
 

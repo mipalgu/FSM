@@ -56,6 +56,7 @@
  *
  */
 
+/// Represents a type that can be created from a dictionary of key/value pairs.
 public protocol ConvertibleFromDictionary {
 
     /**

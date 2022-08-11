@@ -1,8 +1,8 @@
 /*
- * FSMVariablesContainerHolder.swift 
+ * ExternalVariables.swift 
  * FSM 
  *
- * Created by Callum McColl on 29/09/2016.
+ * Created by Callum McColl on 16/01/2016.
  * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,18 +57,13 @@
  */
 
 /**
- *  Conforming types are able to hold references to `VariablesContainer`s.
+ *  Conforming types represent all possible variables that are external to the
+ *  application.
+ *
+ *  This is generally used when developer create their machines as a way to
+ *  share external variables from the environment.  Types conforming to this
+ *  protocol are used extensively with `KripkeStructure` generation.
+ *
+ *  - SeeAlso: `KripkeRingletKripkeStructureGenerator`
  */
-public protocol FSMVariablesContainerHolder {
-
-    /**
-     *  The actual type of the `VariablesContainer`.
-     */
-    associatedtype FSMVariables: VariablesContainer
-
-    /**
-     *  The container.
-     */
-    var fsmVars: FSMVariables { get }
-
-}
+public protocol ExternalVariable: Hashable, Codable, Sendable, ConvertibleFromDictionary {}

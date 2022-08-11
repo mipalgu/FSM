@@ -65,7 +65,11 @@
  *  make a Finite State Machine that is suspendable, then you should conform to
  *  the `Suspendable` protocol.
  */
-public protocol FiniteStateMachineType: Identifiable, StateContainer {
+public protocol FiniteStateMachineType: Nameable, StateContainer where
+    _StateType: Transitionable,
+    _StateType._TransitionType.Context == Context,
+    _StateType._TransitionType.Source == StateID,
+    _StateType._TransitionType.Target == StateID {
 
     /// The type of the context that stores any data associated with the FSM.
     associatedtype Context
@@ -74,31 +78,15 @@ public protocol FiniteStateMachineType: Identifiable, StateContainer {
     var context: Context { get set }
 
     /// The state that this finite state machine is in when it is initialised.
-    var initialState: _StateType.ID { get }
+    var initialState: StateID { get }
 
 }
 
 /// Default implementations when the Context is also a `StateContainer`.
-public extension FiniteStateMachineType where Context: StateContainer, Context._StateType == _StateType {
-
-    /// Fetch a state given its ID.
-    ///
-    /// - Parameter id: The ID of the state to fetch.
-    ///
-    /// - Returns: The state with the given ID.
-    @inlinable
-    func state(fromID id: _StateType.ID) -> _StateType {
-        self.context.state(fromID: id)
-    }
-
-}
-
-/// Default implementations when the Context is also a `StateContainer` and `Context._StateType`
-/// conforms to `Transitionable`.
 public extension FiniteStateMachineType where
-    Self._StateType: Transitionable,
     Context: StateContainer,
-    Context._StateType == _StateType
+    Context._StateType == _StateType,
+    Context.StateID == StateID
 {
 
     /// Fetch a state given its ID.
@@ -107,7 +95,27 @@ public extension FiniteStateMachineType where
     ///
     /// - Returns: The state with the given ID.
     @inlinable
-    func transitions(for id: _StateType.ID) -> [_StateType._TransitionType] {
+    func state(fromID id: StateID) -> _StateType {
+        self.context.state(fromID: id)
+    }
+
+    /// Replace a state within the Finite State Machine with a new state.
+    /// 
+    /// - Parameter id: The ID of the state to replace.
+    /// 
+    /// - Parameter state: The new state to replace the old state with.
+    @inlinable
+    mutating func replaceState(forID id: StateID, _ state: _StateType) {
+        self.context.replaceState(forID: id, state)
+    }
+
+    /// Fetch a state given its ID.
+    ///
+    /// - Parameter id: The ID of the state to fetch.
+    ///
+    /// - Returns: The state with the given ID.
+    @inlinable
+    func transitions(for id: StateID) -> [_StateType._TransitionType] {
         self.context.transitions(for: id)
     }
 
@@ -143,6 +151,7 @@ public extension FiniteStateMachineType where
  */
 public extension FiniteStateMachineType where
     Self._StateType: Transitionable,
+    Self.StateID: Equatable,
     Self: Finishable,
 	Self: PreviousStateContainer,
     Self: SuspendableStateExecuter
@@ -179,10 +188,10 @@ public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
      *  - Precondition: The Finite State Machine must be suspended.
      */
     mutating func resume() {
-        guard self.suspendedState != nil else {
+        guard let suspendedState = self.suspendedState else {
             return
         }
-        self.currentState = self.suspendedState!
+        self.currentState = suspendedState
         self.suspendedState = nil
     }
 
@@ -192,7 +201,7 @@ public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
  *  Provide default implementations for when a Finite State Machine is
  *  `Suspendable`.
  */
-public extension FiniteStateMachineType where Self: SuspendableStateExecuter {
+public extension FiniteStateMachineType where Self: SuspendableStateExecuter, Self.StateID: Equatable {
 
     /**
      *  Is the Finite State Machine currently suspended?
@@ -255,7 +264,8 @@ public extension FiniteStateMachineType where
 	Self: PreviousStateContainer,
     Self: StateExecuterDelegator,
     Self._StateType == Self.RingletType.State,
-    Self.Context == Self.RingletType.Context
+    Self.Context == Self.RingletType.Context,
+    Self.StateID == Context.StateID
 {
 
     /**
@@ -271,7 +281,7 @@ public extension FiniteStateMachineType where
      */
     mutating func next() {
         let previous = self.currentState
-        self.currentState = self.ringlet.execute(state: &self.currentState, context: &self.context)
+        self.currentState = self.ringlet.execute(state: currentState, context: &context)
         self.previousState = previous
     }
 

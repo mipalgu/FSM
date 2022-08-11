@@ -95,12 +95,12 @@ public protocol KripkeVariablesModifier {
 
 extension KripkeVariablesModifier {
 
-    public var computedVars: [String: Any] { return [:] }
+    public var computedVars: [String: Any] { [:] }
 
-    public var manipulators: [String: (Any) -> Any] { return [:] }
+    public var manipulators: [String: (Any) -> Any] { [:] }
 
-    public var validVars: [String: [Any]] { return [:] }
+    public var validVars: [String: [Any]] { [:] }
 
-    public var spinVars: [String: [Any]] { return [:] }
+    public var spinVars: [String: [Any]] { [:] }
 
 }

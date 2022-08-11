@@ -60,7 +60,7 @@
  *  Implement this protocol for any states that you wish to create within your
  *  machines.
  */
-public protocol StateType: Identifiable {}
+public protocol StateType: Nameable {}
 
 /**
  *  Default implementation for adding transitions to a state.

@@ -63,16 +63,25 @@
  *  application since the the container must be a class and will pass by
  *  reference.
  */
-public protocol ExternalVariablesContainer: class, Identifiable {
+public protocol ExternalVariablesContainer: Identifiable, Sendable where Self.ID == String {
 
     /**
-     *  The type of the `ExternalVariables`.
+     *  The type of the `ExternalVariable`.
      */
-    associatedtype Class: ExternalVariables
+    associatedtype Value: ExternalVariable
 
     /**
-     *  An instance of `Class`.
+     *  An instance of `Value`.
      */
-    var val: Class { get set }
+    var value: Value { get set }
+
+}
+
+/// Provide a default implementation of fetching the name of the
+/// `ExternalVariablesContainer`.
+public extension ExternalVariablesContainer {
+
+    /// The ID of the `ExternalVariablesContainer`.
+    @inlinable var name: String { id }
 
 }

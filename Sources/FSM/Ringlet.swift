@@ -76,6 +76,6 @@ public protocol Ringlet {
      *
      *  Returns the next state to execute.
      */
-    func execute(state: inout State.ID, context: inout Context) -> State.ID
+    func execute(state: Context.StateID, context: inout Context) -> Context.StateID
 
 }

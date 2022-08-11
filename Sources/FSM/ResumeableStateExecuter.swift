@@ -56,4 +56,5 @@
  *
  */
 
-public protocol ResumeableStateExecuter: Resumeable, SuspendableStateExecuter {}
+/// A `StateExecuter` that is `Resumeable`.
+public typealias ResumeableStateExecuter = Resumeable & SuspendableStateExecuter

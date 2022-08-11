@@ -1,9 +1,9 @@
 /*
- * SimpleVariablesContainer.swift 
+ * Parameterisable.swift 
  * FSM 
  *
- * Created by Callum McColl on 27/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/08/2018.
+ * Copyright © 2018 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,27 +56,14 @@
  *
  */
 
-/**
- *  Provides a bare-bones way of storing a reference to some `Variables`.
- */
-public class SimpleVariablesContainer<V: Variables>: VariablesContainer {
+/// Conforming types are able to declare parameters that can be used to
+/// configure the behaviour of the type.
+public protocol Parameterisable {
 
-    /**
-     *  The type of the `Variables`.
-     */
-    public typealias Vars = V
+    /// The type of the parameters.
+    associatedtype ParametersType: Hashable, Codable, Sendable
 
-    /**
-     *  The `Variables`.
-     */
-    public var vars: V
+    /// The parameters that can be used to configure the behaviour of the type.
+    var parameters: ParametersType { get }
 
-    /**
-     *  Create a new `SimpleVariablesContainer`.
-     *
-     *  - Parameter vars: The `Variables` to store.
-     */
-    public init(vars: V) {
-        self.vars = vars
-    }
 }

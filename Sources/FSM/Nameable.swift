@@ -1,9 +1,9 @@
 /*
- * ResultContainerHolder.swift 
+ * Nameable.swift 
  * FSM 
  *
- * Created by Callum McColl on 26/08/2018.
- * Copyright © 2018 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 11/08/2022.
+ * Copyright © 2016 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,10 +56,9 @@
  *
  */
 
-public protocol ResultContainerHolder {
+/// Conforming types contain a unique name.
+public protocol Nameable {
 
-    associatedtype ResultContainerType: VariablesContainer where ResultContainerType.Vars: ResultContainer
-
-    var results: ResultContainerType { get }
-
+    /// The unique name for this instance.
+    var name: String { get }
 }
