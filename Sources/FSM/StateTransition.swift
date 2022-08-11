@@ -1,5 +1,5 @@
 /*
- * Transition.swift
+ * StateTransition.swift
  * swiftfsm
  *
  * Created by Callum McColl on 11/08/2015.
@@ -59,29 +59,19 @@
 /**
  *  Models a transition between `StateType`s.
  */
-public struct Transition<C, S, T>: TransitionType {
-
-    /// The type of the context that contains any data needed to evaluate the
-    /// transition.
-    public typealias Context = C
-
-    /// The type of the source of the transition.
-    public typealias Source = S
-
-    /**
-     *  The type of the target state.
-     */
-    public typealias Target = T
+public struct StateTransition<C: StateContainer, S: StateType>: TransitionType where
+    C._StateType == AnyState
+{
 
     /**
      *   Can we transition?
      */
-    private let _canTransition: (Source, Context) -> Bool
+    private let _canTransition: (S, Context) -> Bool
 
     /**
      *  The `Target` state.
      */
-    public let target: Target
+    public let target: C.StateID
 
     /**
      *  Create a new `Transition`.
@@ -92,8 +82,8 @@ public struct Transition<C, S, T>: TransitionType {
      *  not.
      */
     public init(
-        _ target: Target,
-        _ canTransition: @escaping (Source, Context) -> Bool = { (_, _) in true }
+        _ target: C.StateID,
+        _ canTransition: @escaping (S, C) -> Bool = { (_, _) in true }
     ) {
         self._canTransition = canTransition
         self.target = target
@@ -107,46 +97,11 @@ public struct Transition<C, S, T>: TransitionType {
     /// transition.
     /// 
     /// - Returns: True if the transition is valid, false otherwise.
-    public func canTransition(from source: S, context: C) -> Bool {
-         _canTransition(source, context)
-    }
-
-    /**
-     *  Create a new `Transition` by applying `f` to `target`.
-     *
-     *  - Parameter _: The function that changes the target.
-     *
-     *  - Returns: The new `Transition`.
-     */
-    public func map<S: StateType>(_ f: (Target) -> S) -> Transition<C, Source, S> {
-        Transition<C, Source, S>(f(self.target), self.canTransition)
-    }
-
-    /**
-     *  Create a new `Transition` to the same `Target` but use the new
-     *  `canTransition` function.
-     *
-     *  - Parameter _: The `Transition` that contains the new `canTransition`
-     *  function.
-     *
-     *  - Returns: The new `Transition`.
-     */
-    public func apply<S1: StateType, S2: StateType>(_ t: Transition<C, S1, S2>) -> Transition<C, S1, Target> {
-        Transition<C, S1, Target>(self.target, t.canTransition)
-    }
-
-    /**
-     *  Create a new `Transition` by applying `f` to `target`.
-     *
-     *  - Parameter _: The function that takes `target` and returns the new
-     *  `Transition`.
-     *
-     *  - Returns: The new `Transition`.
-     */
-    public func flatMap<S: StateType>(
-        _ f: (Target) -> Transition<C, Source, S>
-    ) -> Transition<C, Source, S> {
-        f(self.target)
+    public func canTransition(from source: C.StateID, context: C) -> Bool {
+        guard let state = context.state(fromID: source) as? S else {
+            fatalError("State \(source) is not of type \(S.self)")
+        }
+        return _canTransition(state, context)
     }
 
 }
