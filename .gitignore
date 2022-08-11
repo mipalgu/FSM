@@ -1,2 +1,4 @@
 *.xcodeproj
 config.sh
+.build
+Package.resolved
