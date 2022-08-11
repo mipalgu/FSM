@@ -1,0 +1,82 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "swift",
+			"command": "swift",
+			"args": [
+				"build",
+			],
+			"cwd": "${workspaceFolder}",
+			"problemMatcher": [
+				"$swiftc"
+			],
+			"group": "build",
+			"label": "swift: Build",
+			"detail": "swift build"
+		},
+		{
+			"type": "swift",
+			"command": "swift",
+			"args": [
+				"build",
+				"-c",
+				"release"
+			],
+			"cwd": "${workspaceFolder}",
+			"problemMatcher": [
+				"$swiftc"
+			],
+			"group": "build",
+			"label": "swift: Release Build",
+			"detail": "swift build -c release"
+		},
+		{
+			"type": "swift",
+			"command": "swift",
+			"args": [
+				"build",
+				"--build-tests"
+			],
+			"cwd": "${workspaceFolder}",
+			"problemMatcher": [
+				"$swiftc"
+			],
+			"group": "build",
+			"label": "swift: Build Tests",
+			"detail": "swift build --build-tests"
+		},
+		{
+			"type": "swift",
+			"command": "swift",
+			"args": [
+				"test",
+			],
+			"cwd": "${workspaceFolder}",
+			"problemMatcher": [
+				"$swiftc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "swift: Test",
+			"detail": "swift test"
+		},
+		{
+			"type": "swift",
+			"command": "swift",
+			"args": [
+				"package",
+				"clean"
+			],
+			"cwd": "${workspaceFolder}",
+			"problemMatcher": [
+				"$swiftc"
+			],
+			"group": "build",
+			"label": "swift: Clean",
+			"detail": "swift package clean"
+		},
+	]
+}

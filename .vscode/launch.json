@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Test FSM",
+            "program": "${workspaceFolder:FSM}/.build/debug/FSMPackageTests.xctest",
+            "cwd": "${workspaceFolder:FSM}",
+            "preLaunchTask": "swift: Build All"        }
+    ]
+}
