@@ -1,0 +1,29 @@
+name: DocC Documentation
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  generate-documentation:
+    runs-on: macos-latest
+
+    steps:
+      - name: Install guunits
+        uses: mipalgu/install-guunits@main
+
+      - name: Clone Repository 
+        uses: actions/checkout@v2
+
+      - name: Generate Documentation
+        uses: mipalgu/swiftpm-generate-documentation@main
+        with:
+          swift-version: "5.6.1"
+
+      - name: Pages Deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          force_orphan: true

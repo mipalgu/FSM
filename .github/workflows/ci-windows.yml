@@ -1,0 +1,27 @@
+name: Windows Latest Swift CI
+
+on:
+  push:
+    branches: [development, main]
+
+jobs:
+
+  exec-ci:
+    runs-on: windows-latest
+
+    steps:
+      - uses: compnerd/gha-setup-swift@main
+        with:
+            branch: swift-5.6.2-release
+            tag: 5.6.2-RELEASE
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Debug Build
+        shell: pwsh
+        run: swift build -c debug
+
+      - name: Release build
+        shell: pwsh
+        run: swift build -c release
