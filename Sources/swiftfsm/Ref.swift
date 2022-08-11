@@ -1,9 +1,9 @@
 /*
- * SpinnerRunner.swift 
+ * Ref.swift 
  * FSM 
  *
- * Created by Callum McColl on 27/09/2016.
- * Copyright © 2016 Callum McColl. All rights reserved.
+ * Created by Callum McColl on 15/06/2017.
+ * Copyright © 2017 Callum McColl. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -56,63 +56,20 @@
  *
  */
 
-import KripkeStructure
-import swift_helpers
+class Ref<Value> {
 
-/**
- *  Provides a way to retrieve the next values within a `Spinners.Spinner`.
- */
-public class SpinnerRunner: SpinnerRunnerType {
+    var value: Value
 
-    public init() {}
+    init(value: Value) {
+        self.value = value
+    }
 
-    /**
-     *  Retrieve the next within a `Spinners.Spinner`.
-     *
-     *  - Parameter index: The index of the `vars` which is currently spinning.
-     *
-     *  - Parameter vars: A dictionary where the keys represent the labels
-     *  of the variables and the values represent the current values of the
-     *  variables.
-     *
-     *  - Parameter defaultValues: A dictionary where the keys represent the
-     *  labels of the variables and the values represent the starting values
-     *  of the variables.
-     *
-     *  - Parameter spinners: A dictionary where the keys represent the labels
-     *  of the variables and the values represent the `Spinners.Spinner` for
-     *  the variables.
-     *
-     *  - Returns: The next set of values on the series.
-     */
-    public func spin(
-        index: Int,
-        vars: [(key: String, value: KripkeStateProperty)],
-        defaultValues: KripkeStatePropertyList,
-        spinners: [String: (Any) -> Any?]
-    ) -> KripkeStatePropertyList? {
-        if index == vars.endIndex {
-            return nil
-        }
-        var vars = vars
-        var props: KripkeStatePropertyList = KripkeStatePropertyList(Dictionary(uniqueKeysWithValues: vars))
-        let name: String = vars[index].key
-        let currentValue = vars[index].value
-        guard let newValue = spinners[name]?(currentValue.value) else {
-            props[vars[index].key] = defaultValues[name]!
-            vars[index] = (vars[index].key, defaultValues[name]!)
-            return self.spin(
-                index: vars.index(after: index),
-                vars: vars,
-                defaultValues: defaultValues,
-                spinners: spinners
-            )
-        }
-        props[vars[index].key] = KripkeStateProperty(
-            type: vars[index].value.type,
-            value: newValue
-        )
-        return props
+}
+
+extension Ref: CustomStringConvertible {
+
+    var description: String {
+        return "\(self.value)"
     }
 
 }

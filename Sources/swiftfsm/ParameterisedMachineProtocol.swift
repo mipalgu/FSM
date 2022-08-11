@@ -57,7 +57,6 @@
  */
 
 import FSM
-import Utilities
 
 //swiftlint:disable:next colon
 public protocol ParameterisedMachineProtocol:

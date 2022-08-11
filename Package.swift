@@ -17,18 +17,11 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],
     targets: [
-        .target(name: "Utilities", dependencies: []),
-        .target(name: "FSM", dependencies: ["Utilities"]),
-        .target(name: "ExternalVariables", dependencies: ["Utilities", "FSM"]),
-        .target(name: "swiftfsm", dependencies: [
-            "Utilities",
-            "FSM",
-            "ExternalVariables"
-        ]),
+        .target(name: "FSM", dependencies: []),
+        .target(name: "swiftfsm", dependencies: ["FSM"]),
         .testTarget(name: "FSMTests", dependencies: [
             .target(name: "FSM"),
             .target(name: "swiftfsm"),
-            .target(name: "ExternalVariables")
         ])
     ]
 )
