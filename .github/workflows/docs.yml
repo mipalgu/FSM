@@ -7,9 +7,19 @@ on:
 jobs:
 
   generate-documentation:
-    runs-on: macos-latest
+    runs-on: ubuntu-20.04
 
     steps:
+      - name: Setup SSH Key
+        run: | 
+            rm -rf ~/.ssh
+            mkdir -m 0700 ~/.ssh
+            echo "${{ secrets.DEPLOYSSHSECRET }}" > ~/.ssh/id_ed25519
+            echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJSXIu3pdrF5VbgvvBt6rKzVidV6olrGIbxJDDUgIhsi lay-preps-0h@icloud.com" > ~/.ssh/id_ed25519.pub
+            chmod 0600 ~/.ssh/id_ed25519
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_ed25519
+
       - name: Install guunits
         uses: mipalgu/install-guunits@main
 
@@ -20,6 +30,7 @@ jobs:
         uses: mipalgu/swiftpm-generate-documentation@main
         with:
           swift-version: "5.6.1"
+          hosting-base-path: "/"
 
       - name: Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
