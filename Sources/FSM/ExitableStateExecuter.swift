@@ -71,6 +71,6 @@ public protocol ExitableStateExecuter: StateExecuter, Exitable {
      *
      *  - SeeAlso: `StateExecuter`
      */
-    var exitState: _StateType { get }
+    var exitState: _StateType.ID { get }
 
 }

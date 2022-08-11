@@ -67,7 +67,49 @@
  */
 public protocol FiniteStateMachineType: Identifiable, StateContainer {
 
-    var initialState: _StateType { get }
+    /// The type of the context that stores any data associated with the FSM.
+    associatedtype Context
+
+    /// A context that stores any data associated with the FSM.
+    var context: Context { get set }
+
+    /// The state that this finite state machine is in when it is initialised.
+    var initialState: _StateType.ID { get }
+
+}
+
+/// Default implementations when the Context is also a `StateContainer`.
+public extension FiniteStateMachineType where Context: StateContainer, Context._StateType == _StateType {
+
+    /// Fetch a state given its ID.
+    ///
+    /// - Parameter id: The ID of the state to fetch.
+    ///
+    /// - Returns: The state with the given ID.
+    @inlinable
+    func state(fromID id: _StateType.ID) -> _StateType {
+        self.context.state(fromID: id)
+    }
+
+}
+
+/// Default implementations when the Context is also a `StateContainer` and `Context._StateType`
+/// conforms to `Transitionable`.
+public extension FiniteStateMachineType where
+    Self._StateType: Transitionable,
+    Context: StateContainer,
+    Context._StateType == _StateType
+{
+
+    /// Fetch a state given its ID.
+    ///
+    /// - Parameter id: The ID of the state to fetch.
+    ///
+    /// - Returns: The state with the given ID.
+    @inlinable
+    func transitions(for id: _StateType.ID) -> [_StateType._TransitionType] {
+        self.context.transitions(for: id)
+    }
 
 }
 
@@ -112,8 +154,8 @@ public extension FiniteStateMachineType where
      *  executed.
      */
     var hasFinished: Bool {
-        return false == self.isSuspended &&
-            0 == self.currentState.transitions.count &&
+        false == self.isSuspended &&
+            0 == self.transitions(for: currentState).count &&
             self.currentState == self.previousState
     }
 
@@ -123,11 +165,7 @@ public extension FiniteStateMachineType where
  *  Provide default implemtations for when a Finite State Machine is
  *  `Resumeable`.
  */
-public extension FiniteStateMachineType where
-    Self: ResumeableStateExecuter,
-    Self: MutableSubmachinesContainer,
-    Self.Submachine: Resumeable
-{
+public extension FiniteStateMachineType where Self: ResumeableStateExecuter {
 
     /**
      *  Resume the Finite State Machine.
@@ -141,16 +179,11 @@ public extension FiniteStateMachineType where
      *  - Precondition: The Finite State Machine must be suspended.
      */
     mutating func resume() {
-        if nil == self.suspendedState {
+        guard self.suspendedState != nil else {
             return
         }
         self.currentState = self.suspendedState!
         self.suspendedState = nil
-        self.submachines = self.submachines.map {
-            var submachine = $0
-            submachine.resume()
-            return submachine
-        }
     }
 
 }
@@ -159,12 +192,7 @@ public extension FiniteStateMachineType where
  *  Provide default implementations for when a Finite State Machine is
  *  `Suspendable`.
  */
-public extension FiniteStateMachineType where
-    Self._StateType: Equatable,
-    Self: SuspendableStateExecuter,
-    Self: MutableSubmachinesContainer,
-    Self.Submachine: Suspendable
-{
+public extension FiniteStateMachineType where Self: SuspendableStateExecuter {
 
     /**
      *  Is the Finite State Machine currently suspended?
@@ -172,7 +200,7 @@ public extension FiniteStateMachineType where
      *  This is only true if `suspendState` equals `currentState`.
      */
     var isSuspended: Bool {
-        return self.suspendState == self.currentState && nil == self.submachines.first { !$0.isSuspended }
+        self.suspendState == self.currentState
     }
 
     /**
@@ -184,16 +212,11 @@ public extension FiniteStateMachineType where
      *  - Precondition: The Finite State Machine must not be suspended.
      */
     mutating func suspend() {
-        if true == self.isSuspended {
+        guard !self.isSuspended else {
             return
         }
         self.suspendedState = self.currentState
         self.currentState = self.suspendState
-        self.submachines = self.submachines.map {
-            var submachine = $0
-            submachine.suspend()
-            return submachine
-        }
     }
 
 }
@@ -205,9 +228,7 @@ public extension FiniteStateMachineType where
 public extension FiniteStateMachineType where
     Self: Restartable,
     Self: Resumeable,
-    Self: OptimizedStateExecuter,
-    Self: MutableSubmachinesContainer,
-    Self.Submachine: Restartable
+    Self: OptimizedStateExecuter
 {
 
     /**
@@ -222,11 +243,6 @@ public extension FiniteStateMachineType where
         self.resume()
         self.previousState = self.initialPreviousState
         self.currentState = self.initialState
-        self.submachines = self.submachines.map {
-            var submachine = $0
-            submachine.restart()
-            return submachine
-        }
     }
 
 }
@@ -238,7 +254,8 @@ public extension FiniteStateMachineType where
 public extension FiniteStateMachineType where
 	Self: PreviousStateContainer,
     Self: StateExecuterDelegator,
-    Self._StateType == Self.RingletType._StateType
+    Self._StateType == Self.RingletType.State,
+    Self.Context == Self.RingletType.Context
 {
 
     /**
@@ -254,7 +271,7 @@ public extension FiniteStateMachineType where
      */
     mutating func next() {
         let previous = self.currentState
-        self.currentState = self.ringlet.execute(state: self.currentState)
+        self.currentState = self.ringlet.execute(state: &self.currentState, context: &self.context)
         self.previousState = previous
     }
 

@@ -65,16 +65,17 @@
  */
 public protocol Ringlet {
 
-    /**
-     *  The type that the `Ringlet` is executing.
-     */
-    associatedtype _StateType: StateType
+    /// The type of the state that the ringlet executes.
+    associatedtype State: StateType
+
+    /// The type that contains any data associated with a state.
+    associatedtype Context: StateContainer
 
     /**
      *  Execute a state.
      *
      *  Returns the next state to execute.
      */
-    func execute(state: _StateType) -> _StateType
+    func execute(state: inout State.ID, context: inout Context) -> State.ID
 
 }

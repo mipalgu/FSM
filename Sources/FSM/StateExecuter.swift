@@ -61,9 +61,7 @@
  */
 public protocol StateExecuter: StateContainer, IncrementalExecuter {
 
-    /**
-     *  The `StateType` that is going to be executed.
-     */
-    var currentState: _StateType { get set }
+    /// The id for the state that we are about to execute.
+    var currentState: _StateType.ID { get set }
 
 }

@@ -64,6 +64,6 @@ public protocol OptimizedStateExecuter: StateExecuter, PreviousStateContainer {
     /**
      *  An initial value for `previousState`.
      */
-    var initialPreviousState: _StateType { get }
+    var initialPreviousState: _StateType.ID { get }
 
 }

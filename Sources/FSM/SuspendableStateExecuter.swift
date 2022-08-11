@@ -56,16 +56,13 @@
  *
  */
 
+/// A state executer that can be suspended.
 public protocol SuspendableStateExecuter: Suspendable, StateExecuter {
 
-    /**
-     *  The `StateType` that was the `currentState` before the suspension.
-     */
-    var suspendedState: _StateType? { get set }
+    /// The id of `currentState` before the suspension.
+    var suspendedState: _StateType.ID? { get set }
 
-    /**
-     *  The `StateType` that is set to `currentState` when we get suspended.
-     */
-    var suspendState: _StateType { get }
+    /// The id representing the state that we get set to when we are suspended.
+    var suspendState: _StateType.ID { get }
 
 }

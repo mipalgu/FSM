@@ -66,4 +66,22 @@ public protocol StateContainer {
      */
     associatedtype _StateType: StateType
 
+    /// Fetch a state from it corresponding id.
+    func state(fromID id: _StateType.ID) -> _StateType
+
+}
+
+/// Provide default implementations for fetching transitions from states
+/// that conform to `Transitionable`.
+public extension StateContainer where _StateType: Transitionable {
+
+    /// Fetch the transitions for a particular state.
+    /// 
+    /// - Parameter id: The id of the state to fetch the transitions for.
+    /// 
+    /// - Returns: The transitions for the state.
+    func transitions(for id: _StateType.ID) -> [_StateType._TransitionType] {
+        self.state(fromID: id).transitions
+    }
+
 }
