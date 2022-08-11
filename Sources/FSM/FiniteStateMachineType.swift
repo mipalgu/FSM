@@ -121,6 +121,36 @@ public extension FiniteStateMachineType where
 
 }
 
+/// Default Implementations for `Parameterisable` when `Context` is
+/// `Parameterisable``.
+public extension FiniteStateMachineType where
+    Self: Parameterisable,
+    Context: Parameterisable,
+    ParametersType == Context.ParametersType
+{
+
+    /// The parameters that are associated with the FSM.
+    @inlinable var parameters: ParametersType {
+        context.parameters
+    }
+
+}
+
+/// Default Implementations for `ResultDeliverable` when `Context` is also
+/// `ResultDeliverable`.
+public extension FiniteStateMachineType where
+    Self: ResultDeliverable,
+    Context: ResultDeliverable,
+    ResultType == Context.ResultType
+{
+
+        /// The result that is associated with the FSM.
+        @inlinable var result: ResultType {
+            context.result
+        }
+
+}
+
 /**
  *  Provide default implementations for when a Finite State Machine is
  *  `Exitable`.
