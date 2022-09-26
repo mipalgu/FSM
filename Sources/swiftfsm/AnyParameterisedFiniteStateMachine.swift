@@ -80,10 +80,12 @@ public struct AnyParameterisedFiniteStateMachine:
     public var base: Any {
         return self._base()
     }
-
+    
     private let _asScheduleableFiniteStateMachine: () -> AnyScheduleableFiniteStateMachine
 
     private let _base: () -> Any
+    
+    private let _newMachine: ([String: Any?]) -> AnyParameterisedFiniteStateMachine
 
     private let _clone: () -> AnyParameterisedFiniteStateMachine
 
@@ -229,7 +231,7 @@ public struct AnyParameterisedFiniteStateMachine:
         return self._submachines()
     }
 
-    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>) where
+    internal init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ ref: Ref<FSM>, newMachine: @escaping ([String: Any?]) -> AnyParameterisedFiniteStateMachine) where
         FSM: Restartable,
         FSM: ResultContainerHolder,
         FSM: ParametersContainerHolder,
@@ -239,7 +241,8 @@ public struct AnyParameterisedFiniteStateMachine:
     {
         self._asScheduleableFiniteStateMachine = { AnyScheduleableFiniteStateMachine(ref) }
         self._base = { ref.value as Any }
-        self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone()) }
+        self._newMachine = newMachine
+        self._clone = { AnyParameterisedFiniteStateMachine(ref.value.clone(), newMachine: newMachine) }
         self._currentState = { AnyState(ref.value.currentState) }
         self._setExternalVariables = { ref.value.externalVariables = $0 }
         self._externalVariables = { ref.value.externalVariables }
@@ -287,7 +290,7 @@ public struct AnyParameterisedFiniteStateMachine:
      *  Creates a new `AnyScheduleableFiniteStateMachine` that wraps and
      *  forwards operations to `base`.
      */
-    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM) where
+    public init<FSM: ConvertibleToScheduleableFiniteStateMachine>(_ base: FSM, newMachine: @escaping ([String: Any?]) -> AnyParameterisedFiniteStateMachine) where
         FSM: Restartable,
         FSM: ResultContainerHolder,
         FSM: ParametersContainerHolder,
@@ -296,7 +299,7 @@ public struct AnyParameterisedFiniteStateMachine:
         FSM.ParametersContainerType.Vars: ConvertibleFromDictionary
     {
         let ref = Ref(value: base)
-        self.init(ref)
+        self.init(ref, newMachine: newMachine)
     }
 
     public func clone() -> AnyParameterisedFiniteStateMachine {
@@ -316,6 +319,10 @@ public struct AnyParameterisedFiniteStateMachine:
 
     public func restart() {
         self._restart()
+    }
+    
+    public func newMachine(parameters: [String: Any?]) -> AnyParameterisedFiniteStateMachine {
+        self._newMachine(parameters)
     }
 
     public func setParameters<P: Variables>(_ newParameters: P) {

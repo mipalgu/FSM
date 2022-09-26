@@ -74,16 +74,16 @@ extension SnapshotControllerContainer where Self: StateExecuter, _StateType: Sna
     
     public var snapshotSensors: [AnySnapshotController] {
         guard let snapshotSensors = self.currentState.snapshotSensors else {
-            return self.sensors
+            return self.sensors + self.externalVariables
         }
-        return self.sensors.filter { snapshotSensors.contains($0.name) }
+        return (self.externalVariables + self.sensors).filter { snapshotSensors.contains($0.name) }
     }
     
     public var snapshotActuators: [AnySnapshotController] {
         guard let snapshotActuators = self.currentState.snapshotActuators else {
-            return self.actuators
+            return self.externalVariables + self.actuators
         }
-        return self.actuators.filter { snapshotActuators.contains($0.name) }
+        return (self.externalVariables + self.actuators).filter { snapshotActuators.contains($0.name) }
     }
     
 }

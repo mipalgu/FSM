@@ -56,7 +56,19 @@
  *
  */
 
-public struct AnySnapshotController: Snapshotable {
+public struct AnySnapshotController: Snapshotable, KripkeVariablesModifier {
+
+    public let validVars: [String : [Any]] = [
+        "_create": [],
+        "_name": [],
+        "_saveSnapshot": [],
+        "_takeSnapshot": [],
+        "_getval": [],
+        "_setval": [],
+        "validVars": []
+    ]
+    
+    public var base: Any
 
     private let _create: ([String: Any]) -> Any
 
@@ -77,7 +89,7 @@ public struct AnySnapshotController: Snapshotable {
     public var val: Any {
         get {
             return self._getval()
-        } set {
+        } nonmutating set {
             self._setval(newValue)
         }
     }
@@ -95,6 +107,7 @@ public struct AnySnapshotController: Snapshotable {
             }
             base.val = newBase
         }
+        self.base = base
     }
 
     public func create(fromDictionary dictionary: [String: Any]) -> Any {
