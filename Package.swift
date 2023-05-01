@@ -13,10 +13,12 @@ let package = Package(
             ]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/mipalgu/KripkeStructures", from: "1.0.0")
+    ],
     targets: [
         .target(name: "Utilities", dependencies: []),
-        .target(name: "FSM", dependencies: ["Utilities"]),
+        .target(name: "FSM", dependencies: ["Utilities", .product(name: "KripkeStructures", package: "KripkeStructures")]),
         .target(name: "ExternalVariables", dependencies: ["Utilities", "FSM"]),
         .target(name: "swiftfsm", dependencies: [
             "Utilities",
